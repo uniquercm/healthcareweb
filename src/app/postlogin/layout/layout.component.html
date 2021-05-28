@@ -1,0 +1,60 @@
+<div class="mat-elevation-z6" style="position: fixed; width: 100%;">
+    <mat-toolbar style="background-color: #0bbca6; color: white;">
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <span>Home</span>
+
+        <div class="example-spacer"> </div>
+
+        <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [routerLink]="['/apps/home']">
+            Registration
+        </button>
+
+        <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [routerLink]="['/apps/list']">
+            List
+        </button>
+
+        <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [routerLink]="['/apps/reception']">
+            Reception
+        </button>
+
+        <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [routerLink]="['/apps/schedule']">
+            Sheduling
+        </button>
+
+        <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [routerLink]="['/apps/drcell']">
+            Dr Call
+        </button>
+
+        <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [routerLink]="['/apps/nursecell']">
+            Nurse call
+        </button>
+
+
+        <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [routerLink]="['/apps/fieldallocation/nurse']">
+            Field Allocation
+        </button>
+
+
+        <button mat-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [routerLink]="['/apps/report']">
+            Reports
+        </button>
+
+        <span class="example-spacer"></span>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+            (click)="logout()">
+            <mat-icon>power_settings_new</mat-icon>
+        </button>
+    </mat-toolbar>
+</div>
+
+<router-outlet></router-outlet>
