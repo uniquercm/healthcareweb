@@ -1,0 +1,113 @@
+<div class="header">
+    <h3>REGISTER</h3>
+</div>
+
+
+<div class="p-3">
+    <form [formGroup]="form">
+        <mat-card>
+            <div class="row p-3">
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Request Type</mat-label>
+                        <mat-select formControlName="requestType">
+                            <mat-option *ngFor="let value of requestarray" [value]="value.requestCRMId">
+                                {{value.requestCRMName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>CRM / Request No</mat-label>
+                        <input matInput formControlName="crm">
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4  col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="name">
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>EID</mat-label>
+                        <input matInput placeholder="xxx-xxxx-xxxxxxx-x" formControlName="eid">
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Mobile No</mat-label>
+                        <input matInput formControlName="mobileno">
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Age</mat-label>
+                        <input matInput formControlName="age">
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Sex</mat-label>
+                        <mat-select formControlName="sex">
+                            <mat-option value="male"> Male </mat-option>
+                            <mat-option value="female"> Female </mat-option>
+                            <mat-option value="other"> Others </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>DOB</mat-label>
+                        <input matInput [matDatepicker]="dob" formControlName="dob">
+                        <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #dob></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Nationality</mat-label>
+                        <mat-select formControlName="nationality">
+                            <mat-option *ngFor="let value of nationalityarray" [value]="value.nationalityId">
+                                {{value.nationalityName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                    <mat-form-field class="full-width" appearance="outline">
+                        <mat-label>Assigned Date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="assignedDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker touchUi #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="text-center">
+                <button mat-raised-button color="primary" class="login-button" (click)="submit()">Submit</button>
+            </div>
+
+            <hr />
+
+            <div class="text-center mt-5">
+                <mat-form-field class="w-30">
+                    <input [hidden]="true" (change)="onFileSelect($event)" type="file" accept=".xlsx , .xls"
+                        #fileSelect>
+                    <input readonly matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="filename"
+                        placeholder="Select file..." />
+                    <button *ngIf="this.base64File" (click)="this.base64File = ''; this.filename = ''" matSuffix
+                        matTooltip="Remove selected file" [matTooltipPosition]="'above'" type="button" color="warn"
+                        mat-icon-button>
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <button matSuffix mat-icon-button (click)="fileSelect.click();" matTooltip="Select a file"
+                        [matTooltipPosition]="'above'">
+                        <mat-icon>file_upload</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <button mat-raised-button class="login-button login-button-upload">Upload</button>
+
+            </div>
+        </mat-card>
+    </form>
+</div>

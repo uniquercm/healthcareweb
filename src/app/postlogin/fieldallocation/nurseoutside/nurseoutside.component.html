@@ -1,0 +1,203 @@
+<div class="header">
+  <h3>NURSE OUTSIDE</h3>
+</div>
+
+
+<div class="p-3">
+
+  <mat-card>
+
+    <div class="row pt-5 pl-5 pr-5">
+      <div class="col-lg-4 col-md-2 col-sm-12">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>CRM Type</mat-label>
+          <input matInput value="HQP" required readonly>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-4 col-md-2 col-sm-12">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>CRM no</mat-label>
+          <input matInput value="1234" required readonly>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-4 col-md-2 col-sm-12">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput value="Ahmed" required readonly>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-4 col-md-2 col-sm-12">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>EID</mat-label>
+          <input matInput value="111-1111-1111111-6" required readonly>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-4 col-md-2 col-sm-12">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Mbile No</mat-label>
+          <input matInput value="+971 55 378 2134" required readonly>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-horizontal-stepper labelPosition="bottom" #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Address Data</ng-template>
+          <div class="row">
+            <div class="col-lg-4 col-md-2 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Address</mat-label>
+                <textarea matInput formControlName="address" required readonly></textarea>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-2 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Land Mark</mat-label>
+                <input matInput formControlName="landmark" required readonly>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-2 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Area</mat-label>
+                <input matInput formControlName="area" required readonly>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-2 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Region</mat-label>
+                <input matInput formControlName="region" required readonly>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-2 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Google Map Link</mat-label>
+                <input matInput formControlName="map" required readonly>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="text-end">
+            <button mat-raised-button class="login-button" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Home Inmates</ng-template>
+          <div class="row">
+            <div class="col-lg-4 col-md-2 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>No Of Adults</mat-label>
+                <input matInput formControlName="adults" required readonly>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4 col-md-2 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>No Of Children</mat-label>
+                <input matInput formControlName="childern" required readonly>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="text-end">
+            <button mat-raised-button class="warning-button" matStepperPrevious>Back</button>
+            <button mat-raised-button class="login-button ml-4" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Service Plan</ng-template>
+
+        <div class="row">
+          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Sticker Application</mat-label>
+              <mat-select>
+                <mat-option>Yes</mat-option>
+                <mat-option> No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tracker Application</mat-label>
+              <mat-select>
+                <mat-option>Yes</mat-option>
+                <mat-option> No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>PCR</mat-label>
+              <mat-select>
+                <mat-option>Yes</mat-option>
+                <mat-option> No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Sticker Removal</mat-label>
+              <mat-select>
+                <mat-option>Yes</mat-option>
+                <mat-option> No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Tracker Removal</mat-label>
+              <mat-select>
+                <mat-option>Yes</mat-option>
+                <mat-option> No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+          <button mat-button>Save</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+
+    <div class="p-3 row">
+      <div class="col-lg-4 col-md-2 col-sm-12">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Visit Status</mat-label>
+          <mat-select>
+            <mat-option>Visited</mat-option>
+            <mat-option> Pending</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+      <div class="col-lg-4 col-md-2 col-sm-12">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Remarks</mat-label>
+          <input matInput required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-4 col-md-2 col-sm-12">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Visited Date</mat-label>
+          <input matInput [matDatepicker]="vpicker">
+          <mat-datepicker-toggle matSuffix [for]="vpicker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #vpicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="text-end">
+        <button mat-raised-button class="login-button">Save</button>
+      </div>
+    </div>
+
+  </mat-card>
+
+</div>

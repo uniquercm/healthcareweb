@@ -1,0 +1,96 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+   background: #f2f2f2;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.login-button {
+    padding: 0px 3em !important;
+    height: 40px;
+}
+
+.router-link-active {
+    background: transparent;
+}
+
+.login-button,
+.login-button-upload {
+    background: #167f72;
+    color: #fff;
+}
+
+.warning-button {
+    padding: 0px 3em !important;
+    height: 40px;
+    background: #ffc107;
+    color: #fff;
+}
+
+.ml-5, .ml-4 {
+    margin-left: 2rem !important;
+}
+
+
+.mr-5 {
+    margin-right: 2rem !important;
+}
+
+.pt-5 {
+    padding-top: 2rem !important;
+}
+
+.pl-5 {
+    padding-left: 2rem !important;
+}
+
+.pr-5 {
+    padding-right: 2rem !important;
+}
+
+.header {
+    padding: 20px 25px;
+    background: white;
+
+    h3 {
+        margin: auto;
+        font-weight: bold;
+        margin-top: 65px;
+    }
+}
+
+// ScrollBar------------------------
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 8px;
+    cursor: pointer;
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    cursor: pointer;
+    scroll-behavior: smooth;
+    background-color: rgba(80, 78, 78, 0.5);
+    -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.151);
+} 
+
+.cursor { 
+    cursor: pointer;
+
+} 
