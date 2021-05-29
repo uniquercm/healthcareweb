@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatStepper } from '@angular/material/stepper';
+import { CommonService } from 'src/app/service/common.service';
 import Swal from 'sweetalert2'
 
 
@@ -21,7 +22,9 @@ export class SheduleComponent implements OnInit {
   dischargedate = false;
   check = false;
 
-  constructor(private _formBuilder: FormBuilder) {
+  localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+  constructor(private _formBuilder: FormBuilder, private commonService: CommonService) {
     this.firstFormGroup = this._formBuilder.group({
       conducteddate: ['', Validators.required],
       result: ['p', Validators.required],
@@ -32,7 +35,14 @@ export class SheduleComponent implements OnInit {
     });
     this.secondFormGroup = this._formBuilder.group({
       startdate: ['', Validators.required],
-      enddate: ['', Validators.required]
+      enddate: ['', Validators.required],
+      fourpicker: ['', Validators.required],
+      fourspicker: ['', Validators.required],
+      fourresult: ['', Validators.required],
+      eightpciker: ['', Validators.required],
+      eightspicker: ['', Validators.required],
+      eightresult: ['', Validators.required],
+      dischargepicker: ['', Validators.required] 
     });
     this.thirdFormGroup = this._formBuilder.group({
       isostartdate: ['', Validators.required],
@@ -97,7 +107,33 @@ export class SheduleComponent implements OnInit {
     // if (this.firstFormGroup.invalid) {
     //   return;
     // }
-    Swal.fire('SUCCESS', 'Saved Sucessfully', 'success')
+   let map = { 
+      "patientStaffId": 1 ,
+      "pcrTestDate": this.firstFormGroup.value.conducteddate,
+      "pcrResult": this.firstFormGroup.value.result,
+      "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+      "dischargeDate":this.firstFormGroup.value.dischargedate,
+      "allocatedTeamName": "",
+      "reAllocatedTeamName": "",
+      "treatmentType": "",
+      "treatmentFromDate": this.secondFormGroup.value.startdate,
+      "treatmentToDate": this.secondFormGroup.value.enddate,
+      "pcR4DayTestDate": this.secondFormGroup.value.fourpicker,
+      "pcR4DaySampleDate":  this.secondFormGroup.value.fourspicker,
+      "pcR4DayResult":  this.secondFormGroup.value.fourresult,
+      "pcR8DayTestDate": this.secondFormGroup.value.eightpicker,
+      "pcR8DaySampleDate":  this.secondFormGroup.value.eightspicker,
+      "pcR8DayResult": this.secondFormGroup.value.eightresult,
+      "firstCallScheduledDate":  this.secondFormGroup.value.dischargepicker,
+      "createdBy": this.localvalues.userName,
+      "modifiedBy": this.localvalues.userName,
+      "isUpdate": true
+    }
+    this.commonService.postmethod('scheduled', map).subscribe((data) => {
+      Swal.fire('SUCCESS', 'Saved Sucessfully', 'success')
+    }, err => {
+      console.log(err);
+    })
 
   }
 

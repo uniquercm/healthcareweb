@@ -87,24 +87,25 @@ export class RegisterComponent implements OnInit {
       "requestId": this.form.value.requestType,
       "crmNo": this.form.value.crm,
       "eidNo": this.form.value.eid,
-      "dateOfBirth": this.form.value.dob,
-      "age": this.form.value.age,
+      "dateOfBirth": this.form.value.dob.toLocaleString(),
+      "age": Number(this.form.value.age),
       "sex": this.form.value.sex,
       "address": "",
       "landMark": "",
       "area": "",
       "cityId": 0,
-      "nationalityId": this.form.value.nationality,
-      "mobileNo": this.form.value.mobile,
+      "nationalityId": Number(this.form.value.nationality),
+      "mobileNo": this.form.value.mobileno,
       "googleMapLink": "",
       "stickerApplication": "",
       "stickerRemoval": "",
-      "createdBy": this.localvalues.userId,
+      "createdBy": this.localvalues.userName,
       "isUpdate": false
     }
 
     this.commonService.postmethod('patient', map).subscribe((data) => {
       alert('Saved Successfully');  
+         this.form.reset();
     }, err => {
       console.log(err);
     })

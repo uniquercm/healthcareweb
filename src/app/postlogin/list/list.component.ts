@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { CommonService } from 'src/app/service/common.service';
 
 @Component({
   selector: 'app-list',
@@ -17,7 +18,7 @@ export class ListComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   
 
-  constructor() { }
+  constructor(private commonService: CommonService) { }
 
   ngOnInit(): void {
   }
@@ -31,6 +32,15 @@ export class ListComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getPatent() {
+    this.commonService.getmethod('patient').subscribe((data) => {
+      let value = data.details;
+    }, err => {
+      console.log(err);
+    })
+
   }
 
 }

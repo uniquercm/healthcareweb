@@ -96,23 +96,23 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="fourpicker">
+                                        <input matInput [matDatepicker]="fourpicker"  formControlName="fourpicker">
                                         <mat-datepicker-toggle matSuffix [for]="fourpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fourpicker></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Sampled Date</mat-label>
-                                        <input matInput [matDatepicker]="fourspicker">
+                                        <input matInput [matDatepicker]="fourspicker"  formControlName="fourspicker">
                                         <mat-datepicker-toggle matSuffix [for]="fourspicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fourspicker></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Result</mat-label>
-                                        <mat-select>
-                                            <mat-option value='p'>Positive </mat-option>
-                                            <mat-option value='n'> Negative</mat-option>
+                                        <mat-select  formControlName="fourresult"> 
+                                            <mat-option value='positive'>Positive </mat-option>
+                                            <mat-option value='negative'> Negative</mat-option>
                                         </mat-select>
                                     </mat-form-field>
 
@@ -128,23 +128,23 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="eightpicker">
+                                        <input matInput [matDatepicker]="eightpicker"   formControlName="eightpicker">
                                         <mat-datepicker-toggle matSuffix [for]="eightpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #eightpicker></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Sampled Date</mat-label>
-                                        <input matInput [matDatepicker]="eightspicker">
+                                        <input matInput [matDatepicker]="eightspicker"   formControlName="eightspicker">
                                         <mat-datepicker-toggle matSuffix [for]="eightspicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #eightspicker></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Result</mat-label>
-                                        <mat-select>
-                                            <mat-option value='p'>Positive </mat-option>
-                                            <mat-option value='n'> Negative</mat-option>
+                                        <mat-select   formControlName="eightresult"> 
+                                            <mat-option value='positive'>Positive </mat-option>
+                                            <mat-option value='negative'> Negative</mat-option>
                                         </mat-select>
                                     </mat-form-field>
 
@@ -159,8 +159,8 @@
                                 </mat-card-header>
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
-                                        <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="dispicker">
+                                        <mat-label>Discharge Date</mat-label>
+                                        <input matInput [matDatepicker]="dispicker"   formControlName="dischargepicker">
                                         <mat-datepicker-toggle matSuffix [for]="dispicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #dispicker></mat-datepicker>
                                     </mat-form-field>
