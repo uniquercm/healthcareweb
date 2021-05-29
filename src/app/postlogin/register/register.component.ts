@@ -105,7 +105,8 @@ export class RegisterComponent implements OnInit {
 
     this.commonService.postmethod('patient', map).subscribe((data) => {
       alert('Saved Successfully');  
-         this.form.reset();
+      this.form.reset();
+      this.router.navigateByUrl('/apps/list'); 
     }, err => {
       console.log(err);
     })
