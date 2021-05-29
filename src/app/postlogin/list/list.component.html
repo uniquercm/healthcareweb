@@ -22,29 +22,29 @@
             <!-- Name Column -->
             <ng-container matColumnDef="crmtype">
                 <th mat-header-cell *matHeaderCellDef> CRM Type </th>
-                <td mat-cell *matCellDef="let element"> {{element.crmtype}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.requestId}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="crmno">
                 <th mat-header-cell *matHeaderCellDef> CRM Number </th>
-                <td mat-cell *matCellDef="let element"> {{element.crmno}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.crmNo}} </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="eid">
                 <th mat-header-cell *matHeaderCellDef> EID </th>
-                <td mat-cell *matCellDef="let element"> {{element.eid}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.eidNo}} </td>
             </ng-container>
 
             <ng-container matColumnDef="mobile">
                 <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
-                <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
             </ng-container>
 
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="reception">
@@ -86,7 +86,7 @@
                 <th mat-header-cell *matHeaderCellDef> Edit </th>
                 <td mat-cell *matCellDef="let element">
                     <img src="https://img.icons8.com/color/48/000000/edit-property.png" style="width: 25px;" />
-                    <img src="https://img.icons8.com/color/48/000000/delete-property.png" style="width: 25px;" />
+                    <!-- <img src="https://img.icons8.com/color/48/000000/delete-property.png" style="width: 25px;" /> -->
                 </td>
             </ng-container>
  

@@ -27,8 +27,8 @@ export class SheduleComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService) {
     this.firstFormGroup = this._formBuilder.group({
       conducteddate: ['', Validators.required],
-      result: ['p', Validators.required],
-      vaccinestatus: ['no', Validators.required],
+      result: ['', Validators.required],
+      vaccinestatus: ['', Validators.required],
       dischargedate: ['', Validators.nullValidator],
       quarantine: ['', Validators.nullValidator],
       isolation: ['', Validators.nullValidator]

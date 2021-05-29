@@ -11,19 +11,21 @@ import { CommonService } from 'src/app/service/common.service';
 })
 export class ListComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'reception', 'schedule', 'drcall', 'nursecall', 'print'];
+  array = [];
+  displayedColumns: string[] = ['crmtype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'reception', 'schedule', 'drcall', 'nursecall', 'print'];
   dataSource: any = new MatTableDataSource(array);
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
-  
 
-  constructor(private commonService: CommonService) { }
+
+  constructor(private commonService: CommonService) {
+    this.getPatent();
+  }
 
   ngOnInit(): void {
   }
 
-  
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -36,7 +38,11 @@ export class ListComponent implements OnInit {
 
   getPatent() {
     this.commonService.getmethod('patient').subscribe((data) => {
-      let value = data.details;
+      this.array = data.details;
+      this.dataSource = new MatTableDataSource(this.array);
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }, err => {
       console.log(err);
     })
