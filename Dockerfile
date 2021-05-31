@@ -30,7 +30,7 @@ COPY . /app
 
 # generate build
 #RUN ng build --output-path=dist
-RUN npm run build
+RUN npm run build:prod
 
 ############
 ### prod ###
