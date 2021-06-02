@@ -46,7 +46,7 @@ RUN rm -rf /var/www/web/*
 
 
 # copy artifact build from the 'build environment'
-COPY --from=builder /app/dist /var/www/web
+COPY --from=build /app/dist/healthcare /var/www/web
 
 # expose port 80
 EXPOSE 80
