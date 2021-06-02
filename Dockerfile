@@ -37,14 +37,19 @@ RUN npm run build
 ############
 
 # base image
-FROM nginx:1.16.0-alpine
+#FROM nginx:1.16.0-alpine
 
-COPY /etc/nginx/sites-enabled/healthcare_web
+#COPY /etc/nginx/sites-enabled/healthcare_web
+
+## Remove default nginx index page
+RUN rm -rf /var/www/web/*
+
+
 # copy artifact build from the 'build environment'
-COPY --from=build /app/dist/healthcare /usr/share/nginx/html
+COPY --from=build /app/dist/healthcare /var/www/web/
 
 # expose port 80
-EXPOSE 80
+EXPOSE 5005 80
 
 # run nginx
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
