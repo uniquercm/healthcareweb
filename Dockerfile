@@ -39,7 +39,7 @@ RUN npm run build
 # base image
 FROM nginx:1.16.0-alpine
 
-COPY nginx.conf /etc/nginx/
+COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 # copy artifact build from the 'build environment'
 COPY --from=build /app/dist/healthcare /usr/share/nginx/html
 
@@ -47,7 +47,7 @@ COPY --from=build /app/dist/healthcare /usr/share/nginx/html
 EXPOSE 80
 
 # run nginx
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
 #docker build --network host -t  appplaza:dev .
 #docker run --name appplaza -d -it --rm -p 80:80 appplaza:dev
 #docker rm -f appplaza
