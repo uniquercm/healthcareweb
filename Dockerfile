@@ -46,10 +46,10 @@ RUN rm -rf /var/www/web/*
 
 
 # copy artifact build from the 'build environment'
-COPY --from=build /app/dist/healthcare /var/www/web/
+COPY --from=builder /app/dist /var/www/web
 
 # expose port 80
-EXPOSE 5005 80
+EXPOSE 80
 
 # run nginx
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
