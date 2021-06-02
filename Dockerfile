@@ -30,7 +30,7 @@ COPY . /app
 
 # generate build
 #RUN ng build --output-path=dist
-RUN npm build
+RUN npm run build:prod
 
 ############
 ### prod ###
@@ -48,6 +48,6 @@ EXPOSE 80
 
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
-#docker build --network host -t  healthcareweb:web .
-#docker run --name healthcareweb -d -it --rm -p 80:80 healthcareweb:web
-#docker rm -f healthcareweb
+#docker build --network host -t  appplaza:dev .
+#docker run --name appplaza -d -it --rm -p 80:80 appplaza:dev
+#docker rm -f appplaza
