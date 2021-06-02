@@ -39,7 +39,7 @@ RUN npm run build
 # base image
 FROM nginx:1.16.0-alpine
 
-COPY healthcare_web /etc/nginx/sites-enabled/
+COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 # copy artifact build from the 'build environment'
 COPY --from=build /app/dist/healthcare /usr/share/nginx/html
 
