@@ -49,7 +49,7 @@ RUN npm run build -prod
 #COPY --from=build /app/dist/healthcare /usr/share/nginx/html
 
 # expose port 80
-EXPOSE 80
+EXPOSE 5001
 
 # run nginx
 CMD ["npm", "start"]
