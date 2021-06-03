@@ -30,7 +30,7 @@ COPY . /app
 
 # generate build
 #RUN ng build --output-path=dist
-RUN npm run build
+RUN npm run build:prod
 
 ############
 ### prod ###
@@ -46,13 +46,13 @@ RUN rm -rf /var/www/web/*
 
 
 # copy artifact build from the 'build environment'
-COPY --from=build /app/dist/healthcare /var/www/web
+COPY --from=build /app/dist/healthcare /usr/share/nginx/html
 
 # expose port 80
 EXPOSE 80
 
 # run nginx
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
 #docker build --network host -t  appplaza:dev .
 #docker run --name appplaza -d -it --rm -p 80:80 appplaza:dev
 #docker rm -f appplaza
