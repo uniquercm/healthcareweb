@@ -49,10 +49,10 @@ RUN npm run build -prod
 #COPY --from=build /app/dist/healthcare /usr/share/nginx/html
 
 # expose port 80
-EXPOSE 80
+EXPOSE 5001
 
 # run nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"]
 #docker build --network host -t  appplaza:dev .
 #docker run --name appplaza -d -it --rm -p 80:80 appplaza:dev
 #docker rm -f appplaza
