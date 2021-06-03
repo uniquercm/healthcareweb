@@ -39,14 +39,14 @@ RUN npm run build -prod
 # base image
 #FROM nginx:1.16.0-alpine
 
-COPY healthcare.conf /etc/nginx/conf.d/healthcare.conf
+#COPY healthcare.conf /etc/nginx/conf.d/healthcare.conf
 
 ## Remove default nginx index page
-RUN rm -rf /var/www/web/*
+#RUN rm -rf /var/www/web/*
 
 
 # copy artifact build from the 'build environment'
-COPY --from=build /app/dist/healthcare /usr/share/nginx/html
+#COPY --from=build /app/dist/healthcare /usr/share/nginx/html
 
 # expose port 80
 EXPOSE 80
