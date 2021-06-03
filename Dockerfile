@@ -39,7 +39,7 @@ RUN npm run build
 # base image
 #FROM nginx:1.16.0-alpine
 
-#COPY /etc/nginx/sites-enabled/healthcare_web
+COPY nginx.conf /etc/nginx/nginx.conf
 
 ## Remove default nginx index page
 RUN rm -rf /var/www/web/*
