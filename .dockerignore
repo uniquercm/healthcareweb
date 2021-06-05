@@ -1,0 +1,8 @@
+# ignore or exclude build directory
+*/build*
+*/*/build*
+.idea
+node_modules
+npm-debug.log
+Jenkinsfile
+*.conf
