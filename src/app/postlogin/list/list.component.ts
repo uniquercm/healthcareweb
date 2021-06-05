@@ -3,6 +3,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/service/common.service';
+import { editvalues } from '../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-list',
@@ -12,15 +13,24 @@ import { CommonService } from 'src/app/service/common.service';
 export class ListComponent implements OnInit {
 
   array = [];
-  displayedColumns: string[] = ['crmtype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'reception', 'schedule', 'drcall', 'nursecall', 'print'];
+  displayedColumns: string[] = ['no', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'reception', 'schedule', 'drcall', 'nursecall'];
   dataSource: any = new MatTableDataSource(array);
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
+  localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+  fromdate: any;
+  todate: any;
 
   constructor(private commonService: CommonService) {
-    this.getPatent();
+    if (this.localvalues.userType === 6) {
+      this.displayedColumns = ['no', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'reception', 'print'];
+    } else if (this.localvalues.userType === 1) {
+    }
+
+    this.getPatent('');
   }
 
   ngOnInit(): void {
@@ -36,9 +46,24 @@ export class ListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  getPatent() {
-    this.commonService.getmethod('patient').subscribe((data) => {
+  change(element: any) {
+    editvalues.scheduleid = element.scheduledId;
+    editvalues.drcallid = element.drCallId
+    editvalues.patientid = element.patientId
+  }
+
+  getPatent(value: any) {
+    let url = '';
+    if (value === '') {
+      url = 'patient'
+    } else {
+      url = 'patient?fromDate='+ this.fromdate.toLocaleString() + '&toDate=' + this.todate.toLocaleString()
+      + '&isDoctorCall=false&isNurseCall=false'
+    }
+    this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
+      this.array.forEach((o: any,i)=>o.id=i+1);
+
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;

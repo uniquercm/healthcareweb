@@ -1,8 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import * as XLSX from 'xlsx';
+import { editvalues } from '../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-register',
@@ -24,25 +26,30 @@ export class RegisterComponent implements OnInit {
 
   form: FormGroup;
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  datas: any;
 
-  constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService) {
+  constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService,
+    public datepipe: DatePipe) {
     this.form = this._formBuilder.group({
       requestType: ['', Validators.required],
       crm: ['', Validators.required],
       name: ['', Validators.required],
       eid: ['', Validators.required],
-      mobileno: ['', Validators.required],
+      mobileno: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
       age: ['', Validators.required],
       sex: ['', Validators.required],
       dob: ['', Validators.required],
       nationality: ['', Validators.required],
-      assignedDate: ['', Validators.required]
+      assignedDate: ['', Validators.required] 
     });
   }
 
   ngOnInit(): void {
     this.getnationality();
     this.getreq();
+    if (editvalues.patientid !== 0) {
+      this.getdata();
+    }
   }
 
   onFileSelect(e: any): void {
@@ -80,37 +87,101 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  submit() {
-    let map = { 
-      "patientName": this.form.value.name,
-      "companyId": this.localvalues.companyId,
-      "requestId": this.form.value.requestType,
-      "crmNo": this.form.value.crm,
-      "eidNo": this.form.value.eid,
-      "dateOfBirth": this.form.value.dob.toLocaleString(),
-      "age": Number(this.form.value.age),
-      "sex": this.form.value.sex,
-      "address": "",
-      "landMark": "",
-      "area": "",
-      "cityId": 0,
-      "nationalityId": Number(this.form.value.nationality),
-      "mobileNo": this.form.value.mobileno,
-      "googleMapLink": "",
-      "stickerApplication": "",
-      "stickerRemoval": "",
-      "createdBy": this.localvalues.userName,
-      "isUpdate": false
-    }
+  calculateAge(): void {
+    var timeDiff = Math.abs(Date.now() - this.form.value.dob);
+    
+    let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+    this.form.controls['age'].setValue(age);
+  }
 
-    this.commonService.postmethod('patient', map).subscribe((data) => {
-      alert('Saved Successfully');  
-      this.form.reset();
-      this.router.navigateByUrl('/apps/list'); 
+  getdata() {
+    this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
+      this.datas = data.details[0];
+      this.form.controls['requestType'].setValue(this.datas.requestId);
+      this.form.controls['crm'].setValue(this.datas.crmNo);
+      this.form.controls['name'].setValue(this.datas.patientName);
+      this.form.controls['eid'].setValue(this.datas.eidNo);
+      this.form.controls['mobileno'].setValue(this.datas.mobileNo);
+
+      this.form.controls['age'].setValue(this.datas.age);
+      this.form.controls['sex'].setValue(this.datas.sex);
+      this.form.controls['dob'].setValue(this.datas.dateOfBirth);
+      this.form.controls['nationality'].setValue(this.datas.nationalityId);
+      this.form.controls['assignedDate'].setValue(this.datas.googleMapLink);
+
+
     }, err => {
       console.log(err);
     })
+  }
 
+
+  submit() {
+    if (editvalues.patientid !== 0) {
+
+      let map = {
+        "patientName": this.form.value.name,
+        "companyId": this.localvalues.companyId,
+        "requestId": this.form.value.requestType,
+        "crmNo": this.form.value.crm,
+        "eidNo": this.form.value.eid,
+        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
+        "age": Number(this.form.value.age),
+        "sex": this.form.value.sex,
+        "nationalityId": Number(this.form.value.nationality),
+        "mobileNo": this.form.value.mobileno,
+        "modifiedBy": this.localvalues.userId,
+        "isUpdate": true
+      }
+
+      this.commonService.putmethod('patient', map).subscribe((data) => {
+        alert('Saved Successfully');
+        this.form.reset();
+        this.router.navigateByUrl('/apps/list');
+      }, err => {
+        console.log(err);
+      })
+
+    } else {
+
+      let map = {
+        "patientName": this.form.value.name,
+        "companyId": this.localvalues.companyId,
+        "requestId": this.form.value.requestType,
+        "crmNo": this.form.value.crm,
+        "eidNo": this.form.value.eid,
+        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
+        "age": Number(this.form.value.age),
+        "sex": this.form.value.sex,
+        "address": "",
+        "landMark": "",
+        "area": "",
+        "cityId": 0,
+        "nationalityId": Number(this.form.value.nationality),
+        "mobileNo": this.form.value.mobileno,
+        "googleMapLink": "",
+        "adultsCount": 0,
+        "childrensCount": 0,
+        "stickerApplication": "",
+        "trackerApplication": 0,
+        "stickerRemoval": "",   
+        "trackerRemoval": 0,
+        "createdBy": this.localvalues.userId,
+        "isUpdate": false,
+        "isReception": false
+      } 
+ 
+
+      this.commonService.postmethod('patient', map).subscribe((data) => {
+        alert('Saved Successfully');
+        this.form.reset();
+        this.router.navigateByUrl('/apps/list');
+      }, err => {
+        console.log(err);
+      })
+
+
+    }
   }
 
   getnationality() {
@@ -128,6 +199,6 @@ export class RegisterComponent implements OnInit {
     }, err => {
       console.log(err);
     })
-
   }
+
 }

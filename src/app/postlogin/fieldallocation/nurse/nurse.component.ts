@@ -2,6 +2,9 @@ import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { CommonService } from 'src/app/service/common.service';
+import { editvalues } from '../../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-nurse',
@@ -10,18 +13,49 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class NurseComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'sdate','crmtype', 'crmno', 'name', 'eid', 'mobile', 'region', 'view', 'status'];
-  dataSource: any = new MatTableDataSource(array); 																
+  displayedColumns: string[] = ['no', 'crmno', 'sdate', 'name', 'eid', 'mobile', 'view'];
+  dataSource: any = new MatTableDataSource([]);
+
+  title = 'DR Call';
+  array = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
-  
-  constructor() { }
+
+  localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+  constructor(private router: Router, private commonService: CommonService) {
+    this.getvalue();
+  }
 
   ngOnInit(): void {
   }
 
-  
+  getvalue() {
+    let date = new Date();
+    let url = 'patient?isDoctorCall=false&isNurseCall=true';;
+   
+    if (editvalues.patientid !== 0) {
+      url = 'patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=true';
+    }
+
+    this.commonService.getmethod(url).subscribe((data) => {
+      this.array = data.details;
+      this.array.forEach((o: any,i)=>o.id=i+1);
+
+      this.dataSource = new MatTableDataSource(this.array);
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      if (this.array.length === 0) {
+        alert('No data Found');
+      }
+    }, err => {
+      console.log(err);
+    })
+
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -32,59 +66,30 @@ export class NurseComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  
+  save(element: any) {
+    let map = {
+      "callId": editvalues.drcallid,
+      "scheduledId": editvalues.scheduleid,
+      "callScheduledDate": element.callScheduledDate,
+      "calledDate": element.calledDate,
+      "callStatus": element.status,
+      "remarks": element.address,
+      "emrDone": element.emrDone,
+      "createdBy": this.localvalues.userId,
+      "modifiedBy": this.localvalues.userId,
+      "isUpdate": true
+    }
+
+    this.commonService.postmethod('call', map).subscribe((data) => {
+      alert('Saved successfully')
+    }, err => {
+      console.log(err);
+    })
+
+  }
+
+  click(element: any) {
+    editvalues.patientid = element.patientId
+  }
 }
 
-
-const array = [
-  {
-    no: 1,
-    crmtype: 'HQP',
-    crmno: '1234',
-    name: 'Mohmamed',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    region: 'Al Ain',
-    status: 'Visited'
-  },
-  {
-    no: 2,
-    crmtype: 'HIP',
-    crmno: '4589',
-    name: 'Anitha',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    region: 'Al Ain',
-    status: 'Visited'
-  },
-  {
-    no: 3,
-    crmtype: 'HIP',
-    crmno: '5789',
-    name: 'Kesavan',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    region: 'Al Ain',
-    status: 'Visited'
-  },
-  {
-    no: 4,
-    crmtype: 'HQP',
-    crmno: '8699',
-    name: 'Alina',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    region: 'Al Ain',
-    status: 'Pending'
-  },
-  {
-    no: 5,
-    crmtype: 'CRM',
-    crmno: '2019',
-    name: 'Ramya',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    region: 'Al Ain',
-    status: 'Pending'
-  }
-]

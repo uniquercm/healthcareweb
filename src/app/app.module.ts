@@ -9,11 +9,18 @@ import { DemoMaterialModule } from './sharedmodule/material.module';
 import { LoginComponent } from './prelogin/login/login.component'; 
 import { CommonService } from './service/common.service';
 import { HttpClientModule } from '@angular/common/http';
+import { UserComponent } from './postlogin/user/user.component';
+import { DashboardComponent } from './postlogin/dashboard/dashboard.component';
+import { WelcomeComponent } from './postlogin/welcome/welcome.component';
+import { ChartsModule } from 'ng2-charts';
  
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent, 
+    LoginComponent,
+    UserComponent,
+    DashboardComponent,
+    WelcomeComponent, 
   ],
   imports: [
     BrowserModule,
@@ -22,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     DemoMaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
   providers: [
     CommonService

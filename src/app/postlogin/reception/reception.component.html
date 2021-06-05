@@ -4,41 +4,42 @@
 
 
 <div class="p-3">
-
+  
   <mat-card>
-
+    <form [formGroup]="formGroup">
     <div class="row pt-5 pl-5 pr-5">
       <div class="col-lg-4 col-md-2 col-sm-12">
         <mat-form-field class="full-width" appearance="outline">
-          <mat-label>CRM Type</mat-label>
-          <input matInput value="HQP" required readonly>
+          <mat-label>Request/Case Type</mat-label>
+          <input matInput   required  formControlName="crmType" readonly>
         </mat-form-field>
       </div>
       <div class="col-lg-4 col-md-2 col-sm-12">
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>CRM no</mat-label>
-          <input matInput value="1234" required readonly>
+          <input matInput    formControlName="crmNo" required readonly>
         </mat-form-field>
       </div>
       <div class="col-lg-4 col-md-2 col-sm-12">
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Name</mat-label>
-          <input matInput value="Ahmed" required readonly>
+          <input matInput  formControlName="name" required readonly>
         </mat-form-field>
       </div>
       <div class="col-lg-4 col-md-2 col-sm-12">
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>EID</mat-label>
-          <input matInput value="111-1111-1111111-6" required readonly>
+          <input matInput   formControlName="eid" required readonly>
         </mat-form-field>
       </div>
       <div class="col-lg-4 col-md-2 col-sm-12">
         <mat-form-field class="full-width" appearance="outline">
           <mat-label>Mbile No</mat-label>
-          <input matInput value="+971 55 378 2134" required readonly>
+          <input matInput  formControlName="mobileno" required readonly>
         </mat-form-field>
       </div>
     </div>
+  </form>
 
     <mat-horizontal-stepper labelPosition="bottom" #stepper>
       <mat-step [stepControl]="firstFormGroup">
@@ -64,15 +65,28 @@
               </mat-form-field>
             </div>
             <div class="col-lg-4 col-md-2 col-sm-12">
-              <mat-form-field class="full-width" appearance="outline">
+               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Region</mat-label>
-                <input matInput formControlName="region" required>
-              </mat-form-field>
+                <mat-select formControlName="region">
+                    <mat-option *ngFor="let value of cityarray" [value]="value.cityId">
+                        {{value.cityName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
             </div>
             <div class="col-lg-4 col-md-2 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Google Map Link</mat-label>
                 <input matInput formControlName="map" required>
+              </mat-form-field>
+            </div>
+            <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Address Status</mat-label>
+                <mat-select formControlName="addstatus">
+                  <mat-option value="pending" >Pending</mat-option>
+                  <mat-option value="completed" > Completed</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
           </div>
@@ -107,61 +121,56 @@
       </mat-step>
       <mat-step>
         <ng-template matStepLabel>Service Plan</ng-template>
-
+        <form [formGroup]="thirdFormGroup">
         <div class="row">
           <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Sticker Application</mat-label>
-              <mat-select>
-                <mat-option>Yes</mat-option>
-                <mat-option> No</mat-option>
+              <mat-select formControlName="stickerapp">
+                <mat-option value="yes" >Yes</mat-option>
+                <mat-option value="no" > No</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12"> 
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Tracker Application</mat-label>
-              <mat-select>
-                <mat-option>Yes</mat-option>
-                <mat-option> No</mat-option>
-              </mat-select>
+              <input matInput formControlName="trackerapp" required>
             </mat-form-field>
           </div>
           <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>PCR</mat-label>
-              <mat-select>
-                <mat-option>Yes</mat-option>
-                <mat-option> No</mat-option>
-              </mat-select>
+              <input matInput formControlName="pcr" required>
             </mat-form-field>
           </div>
           <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Sticker Removal</mat-label>
-              <mat-select>
-                <mat-option>Yes</mat-option>
-                <mat-option> No</mat-option>
+              <mat-select formControlName="stickerrem">
+                <mat-option value="yes" >Yes</mat-option>
+                <mat-option value="no" > No</mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> 
           </div>
-          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12"> 
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Tracker Removal</mat-label>
-              <mat-select>
-                <mat-option>Yes</mat-option>
-                <mat-option> No</mat-option>
-              </mat-select>
+              <input matInput formControlName="trackerrem" required>
             </mat-form-field>
           </div>
-
+          <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12"> 
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput rows="2" formControlName="remark"></textarea>
+            </mat-form-field>
+          </div>
         </div>
-
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-          <button mat-button>Save</button>
-        </div>
+      </form>
+      <div class="text-end">
+        <button mat-raised-button class="warning-button" matStepperPrevious>Back</button>
+        <button mat-raised-button class="login-button ml-4"   (click)="save()">Save</button>
+      </div>
       </mat-step>
     </mat-horizontal-stepper>
   </mat-card>

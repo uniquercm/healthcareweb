@@ -1,0 +1,92 @@
+<div class="header">
+</div>
+<div class="row m-5">
+    <div class="col-sm-6 col-lg-3 col-12">
+        <div class="card dash-card">
+            <div class="pa-0">
+                <div class="row no-gutters ml-0">
+                    <div class="py-3 col-5">
+                        <div class="layout justify-center align-center text-center">
+                            <img src="https://img.icons8.com/color/64/000000/user-male-circle--v1.png" />
+                        </div>
+                    </div>
+                    <div class="py-3 col-7 indigo text-center">
+                        <h4 class="white--text font-bold"> Current Patient Number </h4>
+                        <h3 class="white--text mb-0"> {{dashboarddetails.currentPatientNumber}} (Today)</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3 col-12">
+        <div class="card">
+            <div class="pa-0">
+                <div class="row no-gutters ml-0">
+                    <div class="py-3 col-5">
+                        <div class="layout justify-center align-center text-center">
+                            <img src="https://img.icons8.com/color/70/000000/add-user-male--v1.png" />
+                        </div>
+                    </div>
+                    <div class="py-3 col-7 indigo text-center">
+                        <h4 class="white--text font-bold"> Register Count </h4>
+                        <h3 class="white--text mb-0"> {{dashboarddetails.todayPatientRegNumber}} (Today)</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-sm-6 col-lg-3 col-12">
+        <div class="card">
+            <div class="pa-0">
+                <div class="row no-gutters ml-0">
+                    <div class="py-3 col-5">
+                        <div class="layout justify-center align-center text-center">
+                            <img src="https://img.icons8.com/fluent/70/000000/overtime.png" />
+                        </div>
+                    </div>
+                    <div class="py-3 col-7 indigo text-center">
+                        <h4 class="white--text font-bold"> Schedule Count </h4>
+                        <h3 class="white--text mb-0"> {{dashboarddetails.todayScheduledPatientNumber}} (Today)</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3 col-12">
+        <div class="card">
+            <div class="pa-0">
+                <div class="row no-gutters ml-0">
+                    <div class="py-3 col-5">
+                        <div class="layout justify-center align-center text-center">
+                            <img src="https://img.icons8.com/fluent/70/000000/partially-shipped.png" />
+                        </div>
+                    </div>
+                    <div class="py-3 col-7 indigo text-center">
+                        <h4 class="white--text font-bold"> Discharge Count </h4>
+                        <h3 class="white--text mb-0"> {{dashboarddetails.dischargePatientNumber}} (Today)</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="row" style="padding-left: 35vh; padding-right: 35vh; padding-top: 7vh;">
+        <div style="height: 400px;">
+            <mat-card>
+                <div style="display: block; height: 400px;">
+                    <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                        style="height: 400px;" [legend]="barChartLegend" [chartType]="barChartType">
+                    </canvas>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+
+</div>

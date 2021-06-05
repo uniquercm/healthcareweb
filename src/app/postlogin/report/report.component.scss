@@ -16,8 +16,6 @@ th,
 td {
     vertical-align: middle;
     border-right: 1px solid rgba(0, 0, 0, 0.12);
-    padding-left: 24px !important;
-    padding-right: 24px !important;
 }
 
 td {
@@ -54,4 +52,9 @@ th.mat-header-cell {
 
 th {
     border-right: 1px solid #fff;
+}
+
+th.mat-header-cell   {
+    padding-left: 24px;
+    padding-right: 24px;
 }

@@ -1,9 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatStepper } from '@angular/material/stepper';
+import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import Swal from 'sweetalert2'
+import { editvalues } from '../commonvaribale/commonvalues';
 
 
 @Component({
@@ -16,15 +19,25 @@ export class SheduleComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+  formGroup: FormGroup;
 
   discharge = true;
   isolation = true;
   dischargedate = false;
   check = false;
+  type = '';
+  array: any = '';
+  edit = false;
 
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
-  constructor(private _formBuilder: FormBuilder, private commonService: CommonService) {
+  constructor(private _formBuilder: FormBuilder, private commonService: CommonService, private router: Router,
+    public datepipe: DatePipe) {
+    this.formGroup = this._formBuilder.group({
+      age: ['', Validators.required],
+      name: ['', Validators.required]
+    });
+
     this.firstFormGroup = this._formBuilder.group({
       conducteddate: ['', Validators.required],
       result: ['', Validators.required],
@@ -35,29 +48,125 @@ export class SheduleComponent implements OnInit {
     });
     this.secondFormGroup = this._formBuilder.group({
       startdate: ['', Validators.required],
-      enddate: ['', Validators.required],
-      fourpicker: ['', Validators.required],
-      fourspicker: ['', Validators.required],
-      fourresult: ['', Validators.required],
-      eightpicker: ['', Validators.required],
-      eightspicker: ['', Validators.required],
-      eightresult: ['', Validators.required],
-      dischargepicker: ['', Validators.required] 
+      enddate: ['', Validators.nullValidator],
+      fourpicker: ['', Validators.nullValidator],
+      fourspicker: ['', Validators.nullValidator],
+      fourresult: ['', Validators.nullValidator],
+      eightpicker: ['', Validators.nullValidator],
+      eightspicker: ['', Validators.nullValidator],
+      eightresult: ['', Validators.nullValidator],
+      dischargepicker: ['', Validators.nullValidator]
     });
     this.thirdFormGroup = this._formBuilder.group({
       isostartdate: ['', Validators.required],
-      isoenddate: ['', Validators.required]
+      isoenddate: ['', Validators.nullValidator],
+      drpicker: ['', Validators.nullValidator],
+      drspicker: ['', Validators.nullValidator],
+      eightpicker: ['', Validators.nullValidator],
+      callstatus: ['', Validators.nullValidator],
+      drremark: ['', Validators.nullValidator],
+      fppicker: ['', Validators.nullValidator],
+      fpspicker: ['', Validators.nullValidator],
+      resultpcr: ['', Validators.nullValidator],
+      fivepicker: ['', Validators.nullValidator],
+      fivestatus: ['', Validators.nullValidator],
+      fiveremark: ['', Validators.nullValidator],
+      sixpicker: ['', Validators.nullValidator],
+      sixstatus: ['', Validators.nullValidator],
+      sixremark: ['', Validators.nullValidator],
+      sdpicker: ['', Validators.nullValidator],
+      sevenstatus: ['', Validators.nullValidator],
+      sevenremark: ['', Validators.nullValidator],
+      edppicker: ['', Validators.nullValidator],
+      edcpicker: ['', Validators.nullValidator],
+      eightresultpcr: ['', Validators.nullValidator],
+      nnpicker: ['', Validators.nullValidator],
+      ninestatus: ['', Validators.nullValidator],
+      nineremark: ['', Validators.nullValidator],
+      isodispicker: ['', Validators.nullValidator],
+
     });
   }
 
   ngOnInit() {
+    this.commonService.getmethod('scheduled?patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
+      if (data.details.length === 0) {
+        this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((res) => {
+          this.formGroup.controls['name'].setValue(res.details[0].patientName);
+          this.formGroup.controls['age'].setValue(res.details[0].age);
+          this.edit = false;
+          return;
+        }, err => {
+          console.log(err);
+        })
+
+      }
+
+      this.array = data.details[0];
+      this.edit = true;
+      this.formGroup.controls['name'].setValue(this.array.patientName);
+      this.formGroup.controls['age'].setValue(this.array.patientInformation.age);
+
+      this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
+      this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
+
+      this.firstFormGroup.controls['dischargedate'].setValue(this.array.dischargeDate);
+      this.check = true;
+      if (this.array.treatmentType === 'isolation') {
+        this.isolation = false;
+        this.type = 'isolation';
+        this.firstFormGroup.controls['quarantine'].setValue('isolation');
+      } else {
+        this.discharge = false;
+        this.type = 'quarantine';
+        this.firstFormGroup.controls['quarantine'].setValue('quarantine');
+      }
+
+      if (this.array.treatmentType === 'isolation') {
+        this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
+        this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
+        this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+        this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+        this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
+        this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
+        this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+        this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+        this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
+        this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
+        this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
+        this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+
+        this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+
+        this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
+        this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
+        this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
+        this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+
+        this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+      } else {
+        this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate);
+        this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate);
+        this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate);
+        this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate);
+        this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult);
+        this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate);
+        this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate);
+        this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult);
+        this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate);
+      }   
+
+      this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
+
+    }, err => {
+      console.log(err);
+    })
 
   }
 
 
-
   radioChange(event: any) {
-    if (this.firstFormGroup.controls['result'].value === 'n' && this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
+    if (this.firstFormGroup.controls['result'].value === 'negative' && this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
       this.discharge = true;
       this.isolation = true;
       this.dischargedate = true;
@@ -70,11 +179,13 @@ export class SheduleComponent implements OnInit {
     }
   }
 
-  showOptions(event: any) { 
-    if (event.value === 'q') {
+  showOptions(event: any) {
+    if (event.value === 'quarantine') {
+      this.type = 'quarantine';
       this.discharge = false;
       this.isolation = true;
     } else {
+      this.type = 'isolation';
       this.discharge = true;
       this.isolation = false;
     }
@@ -89,16 +200,78 @@ export class SheduleComponent implements OnInit {
 
   updatedate(date: any, picker: MatDatepicker<Date>) {
     picker.close();
-    let startdate: Date = this.secondFormGroup.controls['startdate'].value;
-    startdate.setDate(startdate.getDate() + 10);
+    this.change(date);
+  }
 
-    this.secondFormGroup.controls['enddate'].setValue(startdate);
+  change(date: any) {
+    let fourpickers: Date = (date.value);
+    fourpickers.setDate(fourpickers.getDate() + 4);
+    this.secondFormGroup.controls['fourpicker'].setValue(fourpickers);
+
+    let eightpickers: Date = date.value;
+    eightpickers.setDate(eightpickers.getDate() + 8 - 4);
+
+    this.secondFormGroup.controls['eightpicker'].setValue(eightpickers);
+
+
+    let startdates: Date = date.value;
+    startdates.setDate(startdates.getDate() + 10 - 8);
+    this.secondFormGroup.controls['enddate'].setValue(startdates);
+    this.secondFormGroup.controls['dischargepicker'].setValue(startdates);
+
   }
 
   isolationdate(date: any, picker: MatDatepicker<Date>) {
     picker.close();
-    let startdate: Date = this.thirdFormGroup.controls['isostartdate'].value;
-    startdate.setDate(startdate.getDate() + 10);
+
+    let drpicker: Date = date.value;
+    drpicker.setDate(drpicker.getDate() + 2);
+
+    this.thirdFormGroup.controls['drpicker'].setValue(drpicker);
+
+    let thpicker: Date = date.value;
+    thpicker.setDate(thpicker.getDate() + 3 - 2);
+
+    this.thirdFormGroup.controls['eightpicker'].setValue(thpicker);
+
+    let fppicker: Date = date.value;
+    fppicker.setDate(fppicker.getDate() + 4 - 3);
+
+    this.thirdFormGroup.controls['fppicker'].setValue(fppicker);
+
+    let fivepicker: Date = date.value;
+    fivepicker.setDate(fivepicker.getDate() + 5 - 4);
+
+    this.thirdFormGroup.controls['fivepicker'].setValue(fivepicker);
+
+    let sixpicker: Date = date.value;
+    sixpicker.setDate(sixpicker.getDate() + 6 - 5);
+
+    this.thirdFormGroup.controls['sixpicker'].setValue(sixpicker);
+
+    let sdpicker: Date = date.value;
+    sdpicker.setDate(sdpicker.getDate() + 7 - 6);
+
+    this.thirdFormGroup.controls['sdpicker'].setValue(sdpicker);
+
+    let edppicker: Date = date.value;
+    edppicker.setDate(edppicker.getDate() + 8 - 7);
+
+    this.thirdFormGroup.controls['edppicker'].setValue(edppicker);
+
+    let nnpicker: Date = date.value;
+    nnpicker.setDate(nnpicker.getDate() + 9 - 8);
+
+    this.thirdFormGroup.controls['nnpicker'].setValue(nnpicker);
+
+    let isodispicker: Date = date.value;
+    isodispicker.setDate(isodispicker.getDate() + 10 - 9);
+
+    this.thirdFormGroup.controls['isodispicker'].setValue(isodispicker);
+
+
+    let startdate: Date = date.value;
+    startdate.setDate(startdate.getDate() + 10 - 9);
 
     this.thirdFormGroup.controls['isoenddate'].setValue(startdate);
   }
@@ -107,34 +280,199 @@ export class SheduleComponent implements OnInit {
     // if (this.firstFormGroup.invalid) {
     //   return;
     // }
-   let map = { 
-      "patientStaffId": 1 ,
-      "pcrTestDate": this.firstFormGroup.value.conducteddate.toLocaleString(),
-      "pcrResult": this.firstFormGroup.value.result,
-      "haveVaccine": this.firstFormGroup.value.vaccinestatus,
-      "dischargeDate":this.firstFormGroup.value.dischargedate.toLocaleString() === '' ? this.secondFormGroup.value.dischargepicker.toLocaleString() :this.firstFormGroup.value.dischargedate.toLocaleString(),
-      "allocatedTeamName": "",
-      "reAllocatedTeamName": "",
-      "treatmentType": "",
-      "treatmentFromDate": this.secondFormGroup.value.startdate.toLocaleString(),
-      "treatmentToDate": this.secondFormGroup.value.enddate.toLocaleString(),
-      "pcR4DayTestDate": this.secondFormGroup.value.fourpicker.toLocaleString(),
-      "pcR4DaySampleDate":  this.secondFormGroup.value.fourspicker.toLocaleString(),
-      "pcR4DayResult":  this.secondFormGroup.value.fourresult,
-      "pcR8DayTestDate": this.secondFormGroup.value.eightpicker.toLocaleString(),
-      "pcR8DaySampleDate":  this.secondFormGroup.value.eightspicker.toLocaleString(),
-      "pcR8DayResult": this.secondFormGroup.value.eightresult,
-      "firstCallScheduledDate":  this.secondFormGroup.value.dischargepicker.toLocaleString(),
-      "createdBy": this.localvalues.userName,
-      "modifiedBy": this.localvalues.userName,
-      "isUpdate": true
+    if (this.edit) {
+      let map = {
+        "scheduledId": editvalues.scheduleid,
+        "patientStaffId": 1,
+        "patientId": editvalues.patientid,
+        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrResult": this.firstFormGroup.value.result,
+        "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+        "dischargeDate":  this.datepipe.transform(this.secondFormGroup.value.dischargepicker.toLocaleString(), 'MM-dd-yyyy'),
+        "allocatedTeamName": "",
+        "reAllocatedTeamName": "",
+        "treatmentType": this.type,
+        "treatmentFromDate": this.datepipe.transform(this.secondFormGroup.value.startdate.toLocaleString(), 'MM-dd-yyyy'),
+        "treatmentToDate": this.datepipe.transform(this.secondFormGroup.value.enddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR4DayTestDate": this.datepipe.transform(this.secondFormGroup.value.fourpicker.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR4DayResult": this.secondFormGroup.value.fourresult,
+        "pcR8DayTestDate": this.datepipe.transform(this.secondFormGroup.value.eightpicker.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR8DayResult": this.secondFormGroup.value.eightresult,
+        "firstCallScheduledDate": this.datepipe.transform(this.secondFormGroup.value.dischargepicker.toLocaleString(), 'MM-dd-yyyy'),
+        "createdBy": this.localvalues.userId,
+        "modifiedBy": this.localvalues.userId,
+        "isUpdate": true
+      }
+      this.commonService.putmethod('scheduled', map).subscribe((data) => {
+        alert('Updated Sucessfully');
+        this.router.navigateByUrl('/apps/list');
+      }, err => {
+        console.log(err);
+      })
+
+    } else {
+      let map = {
+        "scheduledId": editvalues.scheduleid,
+        "patientStaffId": 1,
+        "patientId": editvalues.patientid,
+        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrResult": this.firstFormGroup.value.result,
+        "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+        "dischargeDate": this.firstFormGroup.value.dischargedate === '' ? this.datepipe.transform(this.secondFormGroup.value.dischargepicker.toLocaleString(), 'MM-dd-yyyy') : this.firstFormGroup.value.dischargedate.toLocaleString(),
+        "allocatedTeamName": "",
+        "reAllocatedTeamName": "",
+        "treatmentType": this.type,
+        "treatmentFromDate": this.datepipe.transform(this.secondFormGroup.value.startdate.toLocaleString(), 'MM-dd-yyyy'),
+        "treatmentToDate": this.datepipe.transform(this.secondFormGroup.value.enddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR4DayTestDate": this.datepipe.transform(this.secondFormGroup.value.fourpicker.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR4DayResult": this.secondFormGroup.value.fourresult,
+        "pcR8DayTestDate": this.datepipe.transform(this.secondFormGroup.value.eightpicker.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR8DayResult": this.secondFormGroup.value.eightresult,
+        "firstCallScheduledDate": this.datepipe.transform(this.secondFormGroup.value.dischargepicker.toLocaleString(), 'MM-dd-yyyy'),
+        "createdBy": this.localvalues.userId,
+        "modifiedBy": this.localvalues.userId,
+        "isUpdate": false
+      }
+      this.commonService.postmethod('scheduled', map).subscribe((data) => {
+        alert('Saved Sucessfully');
+        this.router.navigateByUrl('/apps/list');
+      }, err => {
+        console.log(err);
+      })
+
     }
-    this.commonService.postmethod('scheduled', map).subscribe((data) => {
-      Swal.fire('SUCCESS', 'Saved Sucessfully', 'success')
-    }, err => {
-      console.log(err);
-    })
+  }
+
+  fsave() {
+    // if (this.firstFormGroup.invalid) {
+    //   return;
+    // }
+    if (this.edit) {
+      let map = {
+        "scheduledId": editvalues.scheduleid,
+        "patientStaffId": 1,
+        "patientId": editvalues.patientid,
+        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrResult": this.firstFormGroup.value.result,
+        "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+        "dischargeDate": this.datepipe.transform(this.secondFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
+        "allocatedTeamName": "",
+        "reAllocatedTeamName": "",
+        "treatmentType": this.type,
+        "firstCallScheduledDate": this.datepipe.transform(this.secondFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
+        "createdBy": this.localvalues.userId,
+        "modifiedBy": this.localvalues.userId,
+        "isUpdate": true
+      }
+      this.commonService.putmethod('scheduled', map).subscribe((data) => {
+        alert('Saved Sucessfully');
+        this.router.navigateByUrl('/apps/list');
+      }, err => {
+        console.log(err);
+      })
+
+    } else {
+      let map = {
+        "scheduledId": editvalues.scheduleid,
+        "patientStaffId": 1,
+        "patientId": editvalues.patientid,
+        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrResult": this.firstFormGroup.value.result,
+        "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+        "dischargeDate": this.datepipe.transform(this.secondFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
+        "allocatedTeamName": "",
+        "reAllocatedTeamName": "",
+        "treatmentType": this.type,
+        "firstCallScheduledDate": this.datepipe.transform(this.secondFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
+        "createdBy": this.localvalues.userId,
+        "modifiedBy": this.localvalues.userId,
+        "isUpdate": false
+      }
+      this.commonService.postmethod('scheduled', map).subscribe((data) => {
+        alert('Saved Sucessfully');
+        this.router.navigateByUrl('/apps/list');
+      }, err => {
+        console.log(err);
+      })
+
+    }
+  }
+
+
+  issave() {
+    // if (this.firstFormGroup.invalid) {
+    //   return;
+    // }
+    if (this.edit) {
+      let map = {
+        "scheduledId": editvalues.scheduleid,
+        "patientStaffId": 1,
+        "patientId": editvalues.patientid,
+        "pcrTestDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrResult": this.firstFormGroup.value.result,
+        "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+        "dischargeDate": this.firstFormGroup.value.dischargedate === '' ? this.datepipe.transform(this.thirdFormGroup.value.isodispicker.toLocaleString(), 'MM-dd-yyyy') : this.firstFormGroup.value.dischargedate.toLocaleString(),
+        "allocatedTeamName": "",
+        "reAllocatedTeamName": "",
+        "treatmentType": this.type,
+        "treatmentFromDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "treatmentToDate": this.datepipe.transform(this.thirdFormGroup.value.isoenddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR4DayTestDate": this.datepipe.transform(this.thirdFormGroup.value.fppicker.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR4DayResult": '',
+        "pcR8DayTestDate": this.datepipe.transform(this.thirdFormGroup.value.edppicker.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR8DayResult": '',
+        "firstCallScheduledDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "createdBy": this.localvalues.userId,
+        "modifiedBy": this.localvalues.userId,
+        "isUpdate": true
+      }
+      this.commonService.putmethod('scheduled', map).subscribe((data) => {
+        alert('Updates Sucessfully');
+        this.router.navigateByUrl('/apps/list');
+      }, err => {
+        console.log(err);
+      })
+    } else {
+      let map = {
+        "scheduledId": editvalues.scheduleid,
+        "patientStaffId": 1,
+        "patientId": editvalues.patientid,
+        "pcrTestDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrResult": this.firstFormGroup.value.result,
+        "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+        "dischargeDate": this.firstFormGroup.value.dischargedate === '' ? this.datepipe.transform(this.thirdFormGroup.value.isodispicker.toLocaleString(), 'MM-dd-yyyy') : this.firstFormGroup.value.dischargedate.toLocaleString(),
+        "allocatedTeamName": "",
+        "reAllocatedTeamName": "",
+        "treatmentType": this.type,
+        "treatmentFromDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "treatmentToDate": this.datepipe.transform(this.thirdFormGroup.value.isoenddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR4DayTestDate": this.datepipe.transform(this.thirdFormGroup.value.fppicker.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR4DayResult": '',
+        "pcR8DayTestDate": this.datepipe.transform(this.thirdFormGroup.value.edppicker.toLocaleString(), 'MM-dd-yyyy'),
+        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR8DayResult": '',
+        "firstCallScheduledDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "createdBy": this.localvalues.userId,
+        "modifiedBy": this.localvalues.userId,
+        "isUpdate": false
+      }
+      this.commonService.postmethod('scheduled', map).subscribe((data) => {
+        alert('Saved Sucessfully');
+        this.router.navigateByUrl('/apps/list');
+      }, err => {
+        console.log(err);
+      })
+
+    }
 
   }
 
 }
+

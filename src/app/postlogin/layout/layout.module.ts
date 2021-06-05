@@ -1,9 +1,10 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { RouterModule } from '@angular/router'; 
+import { ChartsModule } from 'ng2-charts';
 import { DemoMaterialModule } from 'src/app/sharedmodule/material.module';
 import { DrcellComponent } from '../drcell/drcell.component';
 import { NurseComponent } from '../fieldallocation/nurse/nurse.component';
@@ -18,7 +19,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 
 @NgModule({
-  declarations: [
+  declarations: [ 
     LayoutComponent,
     RegisterComponent,
     ListComponent,
@@ -37,10 +38,11 @@ import { LayoutComponent } from './layout.component';
     LayoutRoutingModule,
     ReactiveFormsModule, 
     MatBadgeModule,
-    DemoMaterialModule
+    DemoMaterialModule,
+    ChartsModule
   ],
   providers: [
-    
+    DatePipe
   ],
   entryComponents: [
     
