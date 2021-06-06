@@ -38,14 +38,14 @@
                         <input matInput formControlName="password" required>
                     </mat-form-field>
                 </div>
-                <div class="col-ls-4  col-xl-4 col-md-6 col-sm-12">
-                    <div class="ng-autocomplete">
+                <div class="col-ls-4  col-xl-4 col-md-5 col-sm-12">
+                    <div class="ng-autocomplete" style="width: 500px;">
                         <ng-autocomplete [data]="data" [searchKeyword]="keyword" placeholder="Enter Area"
                             (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)'
                             (inputFocused)='onFocused($event)' historyIdentifier="data" [itemTemplate]="itemTemplate"
                             [notFoundTemplate]="notFoundTemplate">
                         </ng-autocomplete>
- 
+
                         <ng-template #itemTemplate let-item>
                             <a [innerHTML]="item.value"></a>
                         </ng-template>
