@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { MatStepper } from '@angular/material/stepper';
@@ -14,7 +14,7 @@ import { editvalues } from '../commonvaribale/commonvalues';
   templateUrl: './shedule.component.html',
   styleUrls: ['./shedule.component.scss']
 })
-export class SheduleComponent implements OnInit {
+export class SheduleComponent implements OnInit, OnDestroy {
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -49,13 +49,17 @@ export class SheduleComponent implements OnInit {
     this.secondFormGroup = this._formBuilder.group({
       startdate: ['', Validators.required],
       enddate: ['', Validators.nullValidator],
+      drpicker: ['', Validators.nullValidator],
+      drspicker: ['', Validators.nullValidator],
       fourpicker: ['', Validators.nullValidator],
       fourspicker: ['', Validators.nullValidator],
       fourresult: ['', Validators.nullValidator],
       eightpicker: ['', Validators.nullValidator],
       eightspicker: ['', Validators.nullValidator],
       eightresult: ['', Validators.nullValidator],
-      dischargepicker: ['', Validators.nullValidator]
+      dischargepicker: ['', Validators.nullValidator],
+      dischargespicker: ['', Validators.nullValidator],
+      dischargerpicker: ['', Validators.nullValidator]
     });
     this.thirdFormGroup = this._formBuilder.group({
       isostartdate: ['', Validators.required],
@@ -84,6 +88,8 @@ export class SheduleComponent implements OnInit {
       ninestatus: ['', Validators.nullValidator],
       nineremark: ['', Validators.nullValidator],
       isodispicker: ['', Validators.nullValidator],
+      dischargespicker: ['', Validators.nullValidator],
+      dischargerpicker: ['', Validators.nullValidator]
 
     });
   }
@@ -144,6 +150,10 @@ export class SheduleComponent implements OnInit {
         this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
 
         this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+
+        this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+
+        this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
       } else {
         this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate);
         this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate);
@@ -154,7 +164,12 @@ export class SheduleComponent implements OnInit {
         this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate);
         this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult);
         this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate);
-      }   
+        this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+        this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+        this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+        this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+      }
+
 
       this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
 
@@ -204,8 +219,13 @@ export class SheduleComponent implements OnInit {
   }
 
   change(date: any) {
+    let drpicker: Date = date.value;
+    drpicker.setDate(drpicker.getDate() + 1);
+
+    this.secondFormGroup.controls['drpicker'].setValue(drpicker);
+
     let fourpickers: Date = (date.value);
-    fourpickers.setDate(fourpickers.getDate() + 4);
+    fourpickers.setDate(fourpickers.getDate() + 3 - 1);
     this.secondFormGroup.controls['fourpicker'].setValue(fourpickers);
 
     let eightpickers: Date = date.value;
@@ -225,7 +245,7 @@ export class SheduleComponent implements OnInit {
     picker.close();
 
     let drpicker: Date = date.value;
-    drpicker.setDate(drpicker.getDate() + 2);
+    drpicker.setDate(drpicker.getDate() + 1);
 
     this.thirdFormGroup.controls['drpicker'].setValue(drpicker);
 
@@ -268,15 +288,10 @@ export class SheduleComponent implements OnInit {
     isodispicker.setDate(isodispicker.getDate() + 10 - 9);
 
     this.thirdFormGroup.controls['isodispicker'].setValue(isodispicker);
-
-
-    let startdate: Date = date.value;
-    startdate.setDate(startdate.getDate() + 10 - 9);
-
-    this.thirdFormGroup.controls['isoenddate'].setValue(startdate);
+    this.thirdFormGroup.controls['isoenddate'].setValue(isodispicker);
   }
 
-  save() {
+  save(stdate: any, fordate: any, etdate: any, dgdate: any) {
     // if (this.firstFormGroup.invalid) {
     //   return;
     // }
@@ -285,22 +300,24 @@ export class SheduleComponent implements OnInit {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
         "patientId": editvalues.patientid,
-        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM/dd/yyyy'),
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
-        "dischargeDate":  this.datepipe.transform(this.secondFormGroup.value.dischargepicker.toLocaleString(), 'MM-dd-yyyy'),
+        "dischargeDate": dgdate.value,
+        "dischargeStatus": "",
+        "dischargeRemarks": "",
         "allocatedTeamName": "",
         "reAllocatedTeamName": "",
         "treatmentType": this.type,
-        "treatmentFromDate": this.datepipe.transform(this.secondFormGroup.value.startdate.toLocaleString(), 'MM-dd-yyyy'),
-        "treatmentToDate": this.datepipe.transform(this.secondFormGroup.value.enddate.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR4DayTestDate": this.datepipe.transform(this.secondFormGroup.value.fourpicker.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "treatmentFromDate": stdate.value,
+        "treatmentToDate": dgdate.value,
+        "pcR4DayTestDate": fordate.value,
+        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR4DayResult": this.secondFormGroup.value.fourresult,
-        "pcR8DayTestDate": this.datepipe.transform(this.secondFormGroup.value.eightpicker.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR8DayTestDate": etdate.value,
+        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR8DayResult": this.secondFormGroup.value.eightresult,
-        "firstCallScheduledDate": this.datepipe.transform(this.secondFormGroup.value.dischargepicker.toLocaleString(), 'MM-dd-yyyy'),
+        "firstCallScheduledDate": dgdate.value,
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
         "isUpdate": true
@@ -317,26 +334,29 @@ export class SheduleComponent implements OnInit {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
         "patientId": editvalues.patientid,
-        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM/dd/yyyy'),
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
-        "dischargeDate": this.firstFormGroup.value.dischargedate === '' ? this.datepipe.transform(this.secondFormGroup.value.dischargepicker.toLocaleString(), 'MM-dd-yyyy') : this.firstFormGroup.value.dischargedate.toLocaleString(),
+        "dischargeDate": dgdate.value,
+        "dischargeStatus": "",
+        "dischargeRemarks": "",
         "allocatedTeamName": "",
         "reAllocatedTeamName": "",
         "treatmentType": this.type,
-        "treatmentFromDate": this.datepipe.transform(this.secondFormGroup.value.startdate.toLocaleString(), 'MM-dd-yyyy'),
-        "treatmentToDate": this.datepipe.transform(this.secondFormGroup.value.enddate.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR4DayTestDate": this.datepipe.transform(this.secondFormGroup.value.fourpicker.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "treatmentFromDate": stdate.value,
+        "treatmentToDate": dgdate.value,
+        "pcR4DayTestDate": fordate.value,
+        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR4DayResult": this.secondFormGroup.value.fourresult,
-        "pcR8DayTestDate": this.datepipe.transform(this.secondFormGroup.value.eightpicker.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR8DayTestDate": etdate.value,
+        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR8DayResult": this.secondFormGroup.value.eightresult,
-        "firstCallScheduledDate": this.datepipe.transform(this.secondFormGroup.value.dischargepicker.toLocaleString(), 'MM-dd-yyyy'),
+        "firstCallScheduledDate": dgdate.value,
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
         "isUpdate": false
       }
+
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
         this.router.navigateByUrl('/apps/list');
@@ -403,31 +423,35 @@ export class SheduleComponent implements OnInit {
   }
 
 
-  issave() {
+  issave(sdate: any, fourndate: any, ninendate: any, dischargedate: any) {
     // if (this.firstFormGroup.invalid) {
     //   return;
     // }
+
+
     if (this.edit) {
       let map = {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
         "patientId": editvalues.patientid,
-        "pcrTestDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrTestDate": sdate.value,
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
-        "dischargeDate": this.firstFormGroup.value.dischargedate === '' ? this.datepipe.transform(this.thirdFormGroup.value.isodispicker.toLocaleString(), 'MM-dd-yyyy') : this.firstFormGroup.value.dischargedate.toLocaleString(),
+        "dischargeDate": dischargedate.value,
+        "dischargeStatus": "",
+        "dischargeRemarks": "",
         "allocatedTeamName": "",
         "reAllocatedTeamName": "",
         "treatmentType": this.type,
-        "treatmentFromDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
-        "treatmentToDate": this.datepipe.transform(this.thirdFormGroup.value.isoenddate.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR4DayTestDate": this.datepipe.transform(this.thirdFormGroup.value.fppicker.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "treatmentFromDate": sdate.value,
+        "treatmentToDate": dischargedate.value,
+        "pcR4DayTestDate": fourndate.value,
+        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR4DayResult": '',
-        "pcR8DayTestDate": this.datepipe.transform(this.thirdFormGroup.value.edppicker.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR8DayTestDate": ninendate.value,
+        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR8DayResult": '',
-        "firstCallScheduledDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "firstCallScheduledDate": sdate.value,
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
         "isUpdate": true
@@ -443,26 +467,29 @@ export class SheduleComponent implements OnInit {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
         "patientId": editvalues.patientid,
-        "pcrTestDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrTestDate": sdate.value,
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
-        "dischargeDate": this.firstFormGroup.value.dischargedate === '' ? this.datepipe.transform(this.thirdFormGroup.value.isodispicker.toLocaleString(), 'MM-dd-yyyy') : this.firstFormGroup.value.dischargedate.toLocaleString(),
+        "dischargeDate": dischargedate.value,
+        "dischargeStatus": "",
+        "dischargeRemarks": "",
         "allocatedTeamName": "",
         "reAllocatedTeamName": "",
         "treatmentType": this.type,
-        "treatmentFromDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
-        "treatmentToDate": this.datepipe.transform(this.thirdFormGroup.value.isoenddate.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR4DayTestDate": this.datepipe.transform(this.thirdFormGroup.value.fppicker.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "treatmentFromDate": sdate.value,
+        "treatmentToDate": dischargedate.value,
+        "pcR4DayTestDate": fourndate.value,
+        "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR4DayResult": '',
-        "pcR8DayTestDate": this.datepipe.transform(this.thirdFormGroup.value.edppicker.toLocaleString(), 'MM-dd-yyyy'),
-        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+        "pcR8DayTestDate": ninendate.value,
+        "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR8DayResult": '',
-        "firstCallScheduledDate": this.datepipe.transform(this.thirdFormGroup.value.isostartdate.toLocaleString(), 'MM-dd-yyyy'),
+        "firstCallScheduledDate": sdate.value,
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
         "isUpdate": false
       }
+
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
         this.router.navigateByUrl('/apps/list');
@@ -472,6 +499,12 @@ export class SheduleComponent implements OnInit {
 
     }
 
+  }
+
+  ngOnDestroy() {
+    editvalues.drcallid = 0
+    editvalues.patientid = 0
+    editvalues.scheduleid = 0
   }
 
 }

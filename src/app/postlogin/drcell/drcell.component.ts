@@ -15,7 +15,8 @@ import { DatePipe } from '@angular/common';
 })
 export class DrcellComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['no', 'crmno', 'sdate', 'name', 'eid', 'mobile', 'date', 'status', 'remarks', 'emr', 'save'];
+  displayedColumns: string[] = ['id', 'requestCrmName', 'crmNo', 'patientName', 'callScheduledDate', 'eidNo', 'mobileNo', 'calledDate', 'callStatus', 'remarks', 'emrDone', 'save'];
+
   dataSource: any = new MatTableDataSource([]);
 
   title = 'DR Call';
@@ -29,14 +30,17 @@ export class DrcellComponent implements OnInit, OnDestroy {
   fromdate: any = new Date();
   todate: any = new Date();
 
+  requestarray: any[] = [];
+
   constructor(private router: Router, private commonService: CommonService,
     public datepipe: DatePipe) {
     if (router.url === '/apps/drcell') {
       this.title = 'DR Call';
     } else {
-      this.title = 'Nurse Call';
+      this.title = 'Nurse Call'; ``
     }
     this.getvalue();
+    this.getreq();
   }
 
   ngOnInit(): void {
@@ -67,7 +71,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
         }
         if (elam.calledDate === '0001-01-01T00:00:00') {
           elam.calledDate = ''
-        } 
+        }
       });
       this.dataSource = new MatTableDataSource(this.array);
 
@@ -80,6 +84,27 @@ export class DrcellComponent implements OnInit, OnDestroy {
       console.log(err);
     })
 
+  }
+
+  
+  getreq() {
+    this.commonService.getmethod('requestCRM').subscribe((data) => {
+      this.requestarray = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crm.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+
+    this.getPatent('');
   }
 
   getPatent(value: any) {
@@ -125,6 +150,20 @@ export class DrcellComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
   }
 
+  select(event: any) {
+    let farray: any = [];
+    this.array.forEach((element: any) => {
+      if (element.requestId === Number(event.value)) {
+        farray.push(element);
+      }
+    });
+
+    this.dataSource = new MatTableDataSource(farray);
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -134,7 +173,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
     let map = {
       "callId": element.callId,
       "scheduledId": element.scheduledId,
-      "callScheduledDate": this.datepipe.transform(element.callScheduledDate, 'MM-dd-yyyy') ,
+      "callScheduledDate": this.datepipe.transform(element.callScheduledDate, 'MM-dd-yyyy'),
       "calledDate": this.datepipe.transform(element.calledDate, 'MM-dd-yyyy'),
       "callStatus": element.callStatus,
       "remarks": element.remarks,
@@ -147,7 +186,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
     this.commonService.putmethod('call', map).subscribe((data) => {
       Swal.fire('SUCCESS', 'Saved Sucessfully', 'success')
     }, err => {
-      console.log(err); 
+      console.log(err);
     })
 
   }

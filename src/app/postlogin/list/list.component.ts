@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,7 +14,7 @@ import { editvalues } from '../commonvaribale/commonvalues';
 export class ListComponent implements OnInit {
 
   array = [];
-  displayedColumns: string[] = ['no', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'reception', 'schedule', 'drcall', 'nursecall'];
+  displayedColumns: string[] = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'edit', 'reception', 'schedule', 'drcall', 'nursecall'];
   dataSource: any = new MatTableDataSource(array);
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
@@ -24,12 +25,15 @@ export class ListComponent implements OnInit {
   fromdate: any;
   todate: any;
 
-  constructor(private commonService: CommonService) {
+  requestarray: any[] = [];
+
+  constructor(private commonService: CommonService, public datepipe: DatePipe) {
     if (this.localvalues.userType === 6) {
-      this.displayedColumns = ['no', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'reception', 'print'];
+      this.displayedColumns = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'edit', 'reception', 'print'];
     } else if (this.localvalues.userType === 1) {
     }
 
+    this.getreq();
     this.getPatent('');
   }
 
@@ -41,9 +45,32 @@ export class ListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getreq() {
+    this.commonService.getmethod('requestCRM').subscribe((data) => {
+      this.requestarray = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  select(event: any) {
+    let farray: any = [];
+    this.array.forEach((element: any) => {
+      if (element.requestId === Number(event.value)) {
+        farray.push(element);
+      }
+    });
+
+    this.dataSource = new MatTableDataSource(farray);
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   change(element: any) {
@@ -52,17 +79,31 @@ export class ListComponent implements OnInit {
     editvalues.patientid = element.patientId
   }
 
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crm.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+
+    this.getPatent('');
+  }
+
   getPatent(value: any) {
     let url = '';
     if (value === '') {
       url = 'patient'
     } else {
-      url = 'patient?fromDate='+ this.fromdate.toLocaleString() + '&toDate=' + this.todate.toLocaleString()
-      + '&isDoctorCall=false&isNurseCall=false'
+      url = 'patient?fromDate=' +
+        this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
+        this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
+        + '&isDoctorCall=false&isNurseCall=false'
     }
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
-      this.array.forEach((o: any,i)=>o.id=i+1);
+      this.array.forEach((o: any, i) => o.id = i + 1);
 
       this.dataSource = new MatTableDataSource(this.array);
 

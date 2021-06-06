@@ -24,7 +24,7 @@ export class SupervisorComponent implements OnInit {
     'nc3day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
 
   array = [];
-  displayedColumns: string[] = ['item','select', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'schedule','drcall', 'print'];
+  displayedColumns: string[] = ['item', 'select', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'schedule', 'drcall', 'print'];
   dataSource: any = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
@@ -39,29 +39,67 @@ export class SupervisorComponent implements OnInit {
   allocatedteam: any;
   reallocatedteam: any;
 
+  requestarray: any[] = [];
+
   constructor(private commonService: CommonService) {
     this.getPatent('');
     this.getUser();
+    this.getreq();
   }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
-    
+
+  }
+
+  select(event: any) {
+    let farray: any = [];
+    this.array.forEach((element: any) => {
+      // debugger
+      if (element.patientInformation.requestId === Number(event.value)) {
+        farray.push(element);
+      }
+    });
+
+    this.dataSource = new MatTableDataSource(farray);
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   getUser() {
     this.commonService.getmethod('user').subscribe((data) => {
       let array = data.details;
-       array.forEach((element: any) => {
+      array.forEach((element: any) => {
         if (element.userType === 7) {
           this.user.push(element)
         }
       });
     }, err => {
       console.log(err);
-    }) 
+    })
+  }
+
+  getreq() {
+    this.commonService.getmethod('requestCRM').subscribe((data) => {
+      this.requestarray = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crm.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+
+    this.getPatent('');
   }
 
   applyFilter(event: Event) {
@@ -74,11 +112,11 @@ export class SupervisorComponent implements OnInit {
     if (value === '') {
       url = 'scheduled?isFieldAllocation=true'
     } else {
-      url = 'scheduled?patientId='+ editvalues.patientid + '&isFieldAllocation=true'
+      url = 'scheduled?patientId=' + editvalues.patientid + '&isFieldAllocation=true'
     }
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
-      this.array.forEach((o: any,i)=>o.id=i+1);
+      this.array.forEach((o: any, i) => o.id = i + 1);
 
       this.dataSource = new MatTableDataSource(this.array);
 
@@ -90,19 +128,36 @@ export class SupervisorComponent implements OnInit {
 
   }
 
+  selectf(event: any) {
+    let url = '';
+    url = 'scheduled?isFieldAllocation=true&searchFieldAllowName=' + event.value;
+
+    this.commonService.getmethod(url).subscribe((data) => {
+      this.array = data.details;
+      this.array.forEach((o: any, i) => o.id = i + 1);
+
+      this.dataSource = new MatTableDataSource(this.array);
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, err => {
+      console.log(err);
+    })
+
+  }
 
   change(checked: any, element: any) {
-    
-  
+
+
   }
 
-  allchange(event: any) { 
-    this.allocatedteam = event.value;  
+  allchange(event: any) {
+    this.allocatedteam = event.value;
   }
 
-  allchangein(event: any, element: any) {   
+  allchangein(event: any, element: any) {
     let map = {
-      "scheduledId": element.scheduledId ,
+      "scheduledId": element.scheduledId,
       "patientId": element.patientId,
       "patientStaffId": "",
       "allocatedTeamName": element.allocatedTeamName,
@@ -113,14 +168,14 @@ export class SupervisorComponent implements OnInit {
     this.finalarray.push(map);
   }
 
-  rechangein(event: any, element: any) {  
+  rechangein(event: any, element: any) {
     // if (!element.click) {
     //   alert('Please click the select box');
     //   element.reAllocatedTeamName = '';
     //   return;
     // }
     let map = {
-      "scheduledId": element.scheduledId ,
+      "scheduledId": element.scheduledId,
       "patientId": element.patientId,
       "patientStaffId": "",
       "allocatedTeamName": element.allocatedTeamName,
@@ -131,28 +186,28 @@ export class SupervisorComponent implements OnInit {
     this.finalarray.push(map);
   }
 
-  rechange(event: any) { 
-    this.reallocatedteam = event.value; 
+  rechange(event: any) {
+    this.reallocatedteam = event.value;
   }
 
   save() {
     this.array.forEach((element: any) => {
       if (element.click) {
         let map = {
-          "scheduledId": element.scheduledId ,
+          "scheduledId": element.scheduledId,
           "patientId": element.patientId,
           "patientStaffId": "",
           "allocatedTeamName": this.allocatedteam,
           "reAllocatedTeamName": this.reallocatedteam,
           "modifiedBy": this.localvalues.userId
         }
-    
+
         this.finalarray.push(map);
       }
     });
 
     if (this.finalarray.length === 0) {
-      alert('Please select the team'); 
+      alert('Please select the team');
       return;
     }
 
@@ -171,9 +226,9 @@ export class SupervisorComponent implements OnInit {
 
   }
 
-  saveind() { 
+  saveind() {
     if (this.finalarray.length === 0) {
-      alert('Please select the team'); 
+      alert('Please select the team');
       return;
     }
 

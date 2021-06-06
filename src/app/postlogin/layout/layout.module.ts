@@ -17,6 +17,9 @@ import { ReportComponent } from '../report/report.component';
 import { SheduleComponent } from '../shedule/shedule.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+ 
+
 
 @NgModule({
   declarations: [ 
@@ -39,7 +42,8 @@ import { LayoutComponent } from './layout.component';
     ReactiveFormsModule, 
     MatBadgeModule,
     DemoMaterialModule,
-    ChartsModule
+    ChartsModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     DatePipe

@@ -20,7 +20,7 @@ export class ReceptionComponent implements OnInit {
   cityarray: any[] = [];
 
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService,
-    public datepipe: DatePipe  ) {
+    public datepipe: DatePipe) {
     this.formGroup = this._formBuilder.group({
       crmType: ['', Validators.required],
       crmNo: ['', Validators.required],
@@ -29,7 +29,7 @@ export class ReceptionComponent implements OnInit {
       mobileno: ['', Validators.required]
     });
     this.getcity();
-    
+
     this.firstFormGroup = this._formBuilder.group({
       address: ['', Validators.required],
       landmark: ['', Validators.required],
@@ -38,7 +38,7 @@ export class ReceptionComponent implements OnInit {
       map: ['', Validators.required],
       addstatus: ['', Validators.required]
     });
-   
+
     this.secondFormGroup = this._formBuilder.group({
       adults: ['', Validators.required],
       childern: ['', Validators.required]
@@ -58,7 +58,7 @@ export class ReceptionComponent implements OnInit {
     this.getdata();
   }
 
-  
+
   getcity() {
     this.commonService.getmethod('city').subscribe((data) => {
       this.cityarray = data.details;
@@ -69,9 +69,9 @@ export class ReceptionComponent implements OnInit {
   }
 
   getdata() {
-    this.commonService.getmethod('patient?patientId='+ editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
+    this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
       this.data = data.details[0];
-      this.formGroup.controls['crmType'].setValue(this.data.requestId);
+      this.formGroup.controls['crmType'].setValue(this.data.requestCrmName);
       this.formGroup.controls['crmNo'].setValue(this.data.crmNo);
       this.formGroup.controls['name'].setValue(this.data.patientName);
       this.formGroup.controls['eid'].setValue(this.data.eidNo);
@@ -91,14 +91,14 @@ export class ReceptionComponent implements OnInit {
       this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
       this.thirdFormGroup.controls['stickerrem'].setValue(this.data.stickerRemoval);
       this.thirdFormGroup.controls['trackerrem'].setValue(this.data.trackerRemoval);
-      
+
     }, err => {
       console.log(err);
     })
   }
 
   save() {
-    let map = { 
+    let map = {
       'patientId': this.data.patientId,
       "patientName": this.data.patientName,
       "companyId": this.data.companyId,
@@ -124,12 +124,12 @@ export class ReceptionComponent implements OnInit {
       "modifiedBy": this.localvalues.userId,
       "isUpdate": true,
       "isReception": true,
-      "adultsCount": this.secondFormGroup.value.adults ,
+      "adultsCount": this.secondFormGroup.value.adults,
       "childrensCount": this.secondFormGroup.value.childern
-    } 
-     
+    }
+
     this.commonService.putmethod('patient', map).subscribe((data) => {
-      alert('Updated Successfully');   
+      alert('Updated Successfully');
     }, err => {
       console.log(err);
     })
