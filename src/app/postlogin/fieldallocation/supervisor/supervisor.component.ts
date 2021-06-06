@@ -40,11 +40,13 @@ export class SupervisorComponent implements OnInit {
   reallocatedteam: any;
 
   requestarray: any[] = [];
+  area: any[] = [];
 
   constructor(private commonService: CommonService) {
     this.getPatent('');
     this.getUser();
     this.getreq();
+    this.getarea();
   }
 
   ngOnInit(): void {
@@ -54,14 +56,21 @@ export class SupervisorComponent implements OnInit {
 
   }
 
-  select(event: any) {
+  select(name: string, event: any) {
     let farray: any = [];
-    this.array.forEach((element: any) => {
-      // debugger
-      if (element.patientInformation.requestId === Number(event.value)) {
-        farray.push(element);
-      }
-    });
+    if (name === 'case') {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.requestId === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    } else {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.areaId === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    }
 
     this.dataSource = new MatTableDataSource(farray);
 
@@ -105,6 +114,14 @@ export class SupervisorComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getarea() {
+    this.commonService.getmethod('area').subscribe((data) => {
+      this.area = data.details;
+    }, err => {
+      console.log(err);
+    })
   }
 
   getPatent(value: any) {

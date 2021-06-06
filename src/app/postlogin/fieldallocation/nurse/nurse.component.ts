@@ -58,21 +58,8 @@ export class NurseComponent implements OnInit {
   }
 
   getvalue() {
-    let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
-    if (this.router.url === '/apps/drcell') {
-      url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
-      if (editvalues.drcallid !== 0) {
-        // url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=true&isNurseCall=false';
-        url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
-      }
-    } else {
-      url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false';
-      if (editvalues.patientid !== 0) {
-        // url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=false&isNurseCall=true';
-        url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false';
-      }
-    }
-
+    let url = 'doctor-nurse-team-call?callName=team&callStatus=all&teamUserName=' + this.localvalues.userName;
+    
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
@@ -101,24 +88,25 @@ export class NurseComponent implements OnInit {
 
 
   getPatent(value: any) {
-    let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+     
+    let url = 'doctor-nurse-team-call?callName=team&callStatus=all&teamUserName=' + this.localvalues.userName + '&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
-    if (this.router.url === '/apps/drcell') {
-      url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      if (editvalues.drcallid !== 0) {
-        url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      }
-    } else {
-      url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      if (editvalues.patientid !== 0) {
-        url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      }
-    }
+    // if (this.router.url === '/apps/drcell') {
+    //   url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+    //     + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+    //   if (editvalues.drcallid !== 0) {
+    //     url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+    //       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+    //   }
+    // } else {
+    //   url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
+    //     + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+    //   if (editvalues.patientid !== 0) {
+    //     url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
+    //       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+    //   }
+    // }
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;

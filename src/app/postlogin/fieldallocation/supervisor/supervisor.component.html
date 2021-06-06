@@ -6,46 +6,49 @@
 <div class="p-4">
     <mat-card>
         <div class="row">
-            <mat-form-field class="col-4" style="width: auto;">
+            <mat-form-field class="col-4" style="width: 15%;">
                 <mat-label>Name</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: auto;">
+            <mat-form-field class="col-4" style="width: 15%;">
                 <mat-label>Mobile Number</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #mobile>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: auto;">
+            <mat-form-field class="col-4" style="width: 15%;">
                 <mat-label>EID</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #eid>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: auto;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Request/Case Type </mat-label>
-                <mat-select (selectionChange)="select($event)" #crm>
+                <mat-select (selectionChange)="select('case', $event)" #crm>
                     <mat-option *ngFor="let value of requestarray" [value]="value.requestCRMId">
                         {{value.requestCRMName}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: auto;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>CRM No</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #crmno>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: auto;">
-                <mat-label>Area</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #area>
+            <mat-form-field class="col-4" style="width: 10%;">
+                <mat-label> Area </mat-label>
+                <mat-select (selectionChange)="select('area', $event)" #crm>
+                    <mat-option *ngFor="let value of area" [value]="value.areaId">
+                        {{value.areaName}}</mat-option>
+                </mat-select>
             </mat-form-field>
 
 
-            <mat-form-field class="col-4" style="width: auto;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Region</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #region>
             </mat-form-field>
 
-            <div class="col-3" style="width: auto;">
+            <div class="col-3" style="width: 10%;">
                 <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;"
                     (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
             </div>
@@ -74,7 +77,7 @@
             </div>
 
             <div class="col-2">
-                <mat-form-field style="width: auto;" appearance="outline">
+                <mat-form-field style="width: 30;" appearance="outline">
                     <mat-label>Field Allocation Status</mat-label>
                     <mat-select (selectionChange)="selectf($event)">
                         <mat-option value="all">All</mat-option>
@@ -85,7 +88,7 @@
             </div>
 
             <div class="col-5 row">
-                <mat-form-field class="col-4" style="width: auto;" appearance="outline">
+                <mat-form-field class="col-4" style="width: 35%;" appearance="outline">
                     <mat-label>Team</mat-label>
                     <mat-select #allocate (selectionChange)="allchange($event)">
                         <mat-option [value]="usr.userName" *ngFor="let usr of user">
@@ -94,7 +97,7 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="col-4" style="width: auto;" appearance="outline">
+                <mat-form-field class="col-4" style="width: 35%;" appearance="outline">
                     <mat-label>Reallocated Team</mat-label>
                     <mat-select #reAllocate (selectionChange)="rechange($event)">
                         <mat-option [value]="usr.userName" *ngFor="let usr of user">
@@ -104,7 +107,7 @@
                 </mat-form-field>
 
                 <div class="col-3 pt-1">
-                    <button mat-raised-button class="mt-2" style="background: #167f72; color: white;"
+                    <button mat-raised-button class="mt-2" style="width: 10%; background: #167f72; color: white;"
                         (click)="save()">Save</button>
                 </div>
             </div>

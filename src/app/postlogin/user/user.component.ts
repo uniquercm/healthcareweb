@@ -12,19 +12,12 @@ export class UserComponent implements OnInit {
 
   form: FormGroup;
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
-  data = [
-    {
-      id: 1,
-      name: 'Usa'
-    },
-    {
-      id: 2,
-      name: 'England'
-    }
-  ];
-  keyword = 'name';
+  data: any[] = [];
+  keyword = 'value';
+  area: any;
 
   constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService) {
+    this.getarea();
     this.form = this._formBuilder.group({
       userType: ['', Validators.required],
       name: ['', Validators.required],
@@ -34,19 +27,19 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data);
   }
 
-
   selectEvent(item: any) {
-    console.log(item)
+    this.area = item.id
   }
 
   onChangeSearch(val: string) {
-    console.log(val)
+    this.area = val;
   }
 
   onFocused(e: any) {
-    console.log(e)
+    
   }
 
   submit() {
@@ -73,5 +66,25 @@ export class UserComponent implements OnInit {
 
   }
 
-  add() { }
+  add() {
+    let map = {
+      areaId: this.data.length + 1,
+      areaName: this.area
+    }
+    this.commonService.postmethod('area', map).subscribe((data) => {
+      this.getarea();
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  getarea() {
+    this.commonService.getmethod('area').subscribe((data) => {
+      this.data = data.details;
+      this.data.splice(0, 1);
+      console.log(this.data)
+    }, err => {
+      console.log(err);
+    })
+  }
 }

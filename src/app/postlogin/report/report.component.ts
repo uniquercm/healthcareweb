@@ -119,7 +119,7 @@ export class ReportComponent implements OnInit {
           element.dischargeDate = ''
         }
         if (undefined == (element.isSendClaim)) {
-          element.isSendClaim = 'yes'
+          element.isSendClaim = ''
         }
       });
 
