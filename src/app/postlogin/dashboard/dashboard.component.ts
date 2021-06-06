@@ -31,6 +31,7 @@ export class DashboardComponent implements OnInit {
   public barChartData: ChartDataSets[] = [
     { data: [], label: 'Count' }
   ];
+  teamStatusDetailsList: any[] = [];
   
   constructor(private commonService: CommonService) { 
     this.getreq();
@@ -43,6 +44,7 @@ export class DashboardComponent implements OnInit {
   getreq() {
     this.commonService.getmethod('dash-board?companyId=' + this.localvalues.companyId).subscribe((data) => {
       this.dashboarddetails = data.details; 
+      this.teamStatusDetailsList = data.details.teamStatusDetailsList;
       let array = [];
       array.push(this.dashboarddetails.totalAdminUserNumber);
       array.push(this.dashboarddetails.totalManagerUserNumber);
@@ -54,9 +56,7 @@ export class DashboardComponent implements OnInit {
     }, err => {
       console.log(err);
     })
-  }
-
-  
+  } 
 
 }
  
