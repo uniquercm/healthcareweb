@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
   }
 
   onFocused(e: any) {
-    
+
   }
 
   submit() {
@@ -81,10 +81,11 @@ export class UserComponent implements OnInit {
   getarea() {
     this.commonService.getmethod('area').subscribe((data) => {
       this.data = data.details;
-      this.data.splice(0, 1);
-      console.log(this.data)
+      if (this.data[0].value === null)
+        this.data.splice(0, 1);
     }, err => {
       console.log(err);
     })
   }
+
 }

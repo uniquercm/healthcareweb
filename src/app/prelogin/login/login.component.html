@@ -1,18 +1,18 @@
-<div class="content">
+<div>
     <form [formGroup]="form">
-        <div class="container">
+        <div class="container" style="height: 100vh; display: flex;">
             <div class="row">
-                <div class="col-md-6">
-                    <img src="assets/images/pic.jpg" alt="Image" class="img-fluid">
+                <div class="col-md-6 margin-auto">
+                    <img src="assets/images/pic.png" alt="Image" class="img-fluid">
                 </div>
                 <div class="col-md-6 contents margin-auto">
                     <div class="row justify-content-center">
                         <div class="col-md-9">
                             <mat-card class="p-6">
                                 <!-- <img src="assets/images/login.png" style="width: 100%; height: 20vh;"> -->
-                                <div class="mb-4 mt-3 text-center">
+                                <div class="mb-4 mt-1 text-center">
                                     <h1>Sign In</h1>
-                                 </div>
+                                </div>
 
                                 <div class="mt-5">
                                     <mat-form-field appearance="outline" class="full-width">
@@ -31,8 +31,7 @@
                                 </div>
 
                                 <div class="text-center mt-4">
-                                    <button mat-raised-button  class="login-button"
-                                        (click)="login()">Login</button>
+                                    <button mat-raised-button class="login-button" (click)="login()">Login</button>
                                 </div>
 
                             </mat-card>
@@ -44,4 +43,11 @@
             </div>
         </div>
     </form>
+</div>
+<div class="footer text-center">
+    <h4>
+        Jetz by UniqueRCM Solutions <a href="https://uniquercm.com" style="color: #167f72;"> (https://uniquercm.com)
+        </a> , Version (1.0). © 2021 |
+        All Rights Reserved.
+    </h4>
 </div>

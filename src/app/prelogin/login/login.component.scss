@@ -161,14 +161,16 @@ h2 {
     border-radius: 50%;
 }
 
-
-.p-6  {
-  padding: 4rem;
+.p-6 {
+    padding: 4rem;
 }
 
 .login-button {
-  height: 40px;
-  }
+    height: 40px;
+}
 
-
-  
+.footer {
+    clear: both;
+    position: relative;
+    margin-top: -40px;
+}
