@@ -47,16 +47,18 @@ export class DrcellComponent implements OnInit, OnDestroy {
   }
 
   getvalue() {
-    let url = 'patient?isDoctorCall=true&isNurseCall=false';
+    let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
     if (this.router.url === '/apps/drcell') {
-      url = 'patient?isDoctorCall=true&isNurseCall=false';
+      url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
       if (editvalues.drcallid !== 0) {
-        url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=true&isNurseCall=false';
+        // url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=true&isNurseCall=false';
+        url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
       }
     } else {
-      url = 'patient?isDoctorCall=false&isNurseCall=true';
+      url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false';
       if (editvalues.patientid !== 0) {
-        url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=false&isNurseCall=true';
+        // url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=false&isNurseCall=true';
+        url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false';
       }
     }
 
@@ -64,10 +66,10 @@ export class DrcellComponent implements OnInit, OnDestroy {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
       this.array.forEach((elam: any) => {
-        if (elam.emrDone === 'No') {
-          elam.emrDone = false
-        } else {
+        if (elam.emrDone === 'yes') {
           elam.emrDone = true
+        } else {
+          elam.emrDone = false
         }
         if (elam.calledDate === '0001-01-01T00:00:00') {
           elam.calledDate = ''
@@ -86,7 +88,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
 
   }
 
-  
+
   getreq() {
     this.commonService.getmethod('requestCRM').subscribe((data) => {
       this.requestarray = data.details;
@@ -108,17 +110,22 @@ export class DrcellComponent implements OnInit, OnDestroy {
   }
 
   getPatent(value: any) {
+    let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+      + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
-    let url = 'patient?fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isDoctorCall=true&isNurseCall=false';
     if (this.router.url === '/apps/drcell') {
-      url = 'patient?fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isDoctorCall=true&isNurseCall=false';
+      url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       if (editvalues.drcallid !== 0) {
-        url = 'patient?patientId= ' + editvalues.patientid + '&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isDoctorCall=true&isNurseCall=false';
+        url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       }
     } else {
-      url = 'patient?fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isDoctorCall=false&isNurseCall=true';
+      url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       if (editvalues.patientid !== 0) {
-        url = 'patient?patientId= ' + editvalues.patientid + '&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isDoctorCall=false&isNurseCall=true';
+        url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       }
     }
 
@@ -126,10 +133,48 @@ export class DrcellComponent implements OnInit, OnDestroy {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
       this.array.forEach((elam: any) => {
-        if (elam.emrDone === 'No') {
-          elam.emrDone = false
-        } else {
+        if (elam.emrDone === 'yes') {
           elam.emrDone = true
+        } else {
+          elam.emrDone = false
+        }
+      });
+      this.dataSource = new MatTableDataSource(this.array);
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      if (this.array.length === 0) {
+        alert('No data Found');
+      }
+    }, err => {
+      console.log(err);
+    })
+
+  }
+
+  statuschange(event: any) {
+    let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false'
+
+    if (this.router.url === '/apps/drcell') {
+      url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=' + event.value + '&isFieldAllow=false'
+      if (editvalues.drcallid !== 0) {
+        url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=' + event.value + '&isFieldAllow=false'
+      }
+    } else {
+      url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=' + event.value + '&isFieldAllow=false'
+      if (editvalues.patientid !== 0) {
+        url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=' + event.value + '&isFieldAllow=false'
+      }
+    }
+
+    this.commonService.getmethod(url).subscribe((data) => {
+      this.array = data.details;
+      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((elam: any) => {
+        if (elam.emrDone === 'yes') {
+          elam.emrDone = true
+        } else {
+          elam.emrDone = false
         }
       });
       this.dataSource = new MatTableDataSource(this.array);
@@ -183,8 +228,8 @@ export class DrcellComponent implements OnInit, OnDestroy {
       "isUpdate": true
     }
 
-    this.commonService.putmethod('call', map).subscribe((data) => {
-      Swal.fire('SUCCESS', 'Saved Sucessfully', 'success')
+    this.commonService.putmethod('doctor-nurse-team-call', map).subscribe((data) => {
+      alert('Saved Sucessfully');
     }, err => {
       console.log(err);
     })
@@ -197,66 +242,3 @@ export class DrcellComponent implements OnInit, OnDestroy {
     editvalues.patientid = 0;
   }
 }
-
-const array = [
-  {
-    no: 1,
-    crmtype: 'HQP',
-    crmno: '1234',
-    name: 'Mohmamed',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    address: '',
-    staus: '',
-    done: '',
-    date: ''
-  },
-  {
-    no: 2,
-    crmtype: 'HIP',
-    crmno: '4589',
-    name: 'Anitha',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    address: '',
-    staus: '',
-    done: '',
-    date: ''
-  },
-  {
-    no: 3,
-    crmtype: 'HIP',
-    crmno: '5789',
-    name: 'Kesavan',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    address: '',
-    staus: '',
-    done: '',
-    date: ''
-  },
-  {
-    no: 4,
-    crmtype: 'HQP',
-    crmno: '8699',
-    name: 'Alina',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    address: '',
-    staus: '',
-    done: '',
-    date: ''
-  },
-  {
-    no: 5,
-    crmtype: 'CRM',
-    crmno: '2019',
-    name: 'Ramya',
-    eid: '111-1111-1111111-6',
-    mobile: '+971 55 378 9865',
-    address: '',
-    staus: '',
-    done: '',
-    date: ''
-  }
-]

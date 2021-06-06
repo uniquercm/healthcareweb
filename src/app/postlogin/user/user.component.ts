@@ -12,21 +12,45 @@ export class UserComponent implements OnInit {
 
   form: FormGroup;
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  data = [
+    {
+      id: 1,
+      name: 'Usa'
+    },
+    {
+      id: 2,
+      name: 'England'
+    }
+  ];
+  keyword = 'name';
 
   constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService) {
     this.form = this._formBuilder.group({
       userType: ['', Validators.required],
       name: ['', Validators.required],
       userName: ['', Validators.required],
-      password: ['', Validators.required], 
+      password: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
   }
 
+
+  selectEvent(item: any) {
+    console.log(item)
+  }
+
+  onChangeSearch(val: string) {
+    console.log(val)
+  }
+
+  onFocused(e: any) {
+    console.log(e)
+  }
+
   submit() {
-    let map = { 
+    let map = {
       "userName": this.form.value.userName,
       "fullName": this.form.value.name,
       "password": this.form.value.password,
@@ -38,9 +62,9 @@ export class UserComponent implements OnInit {
     }
 
     this.commonService.postmethod('user', map).subscribe((data) => {
-      alert('Saved Successfully');  
-      this.form.reset(); 
-      this.form.setErrors(null); 
+      alert('Saved Successfully');
+      this.form.reset();
+      this.form.setErrors(null);
       this.form.updateValueAndValidity();
       this.form.markAsUntouched();
     }, err => {
@@ -48,4 +72,6 @@ export class UserComponent implements OnInit {
     })
 
   }
+
+  add() { }
 }

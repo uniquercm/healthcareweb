@@ -71,6 +71,13 @@
                     (click)="getPatent('submit')">Submit</button>
             </div>
 
+            <mat-form-field class="col-3" appearance="outline">
+                <mat-label>Call Status</mat-label>
+                <mat-select (selectionChange)="statuschange($event)">
+                  <mat-option>Visited</mat-option>
+                  <mat-option> Pending</mat-option>
+                </mat-select>
+              </mat-form-field>
         </div>
 
         <form #a="ngForm">
@@ -118,7 +125,7 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Called Date </th>
                     <td mat-cell *matCellDef="let element" class="text-center">
                         <mat-form-field class="full-width">
-                            <mat-label>Assigned Date</mat-label>
+                            <mat-label>Called Date</mat-label>
                             <input matInput [matDatepicker]="picker" #dates [(ngModel)]="element.calledDate"
                                 name="dates" [ngModelOptions]="{standalone: true}" [value]="element.calledDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

@@ -13,6 +13,7 @@ import { UserComponent } from './postlogin/user/user.component';
 import { DashboardComponent } from './postlogin/dashboard/dashboard.component';
 import { WelcomeComponent } from './postlogin/welcome/welcome.component';
 import { ChartsModule } from 'ng2-charts';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
  
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ChartsModule } from 'ng2-charts';
     DemoMaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    ChartsModule
+    ChartsModule,
+    AutocompleteLibModule
   ],
   providers: [
     CommonService

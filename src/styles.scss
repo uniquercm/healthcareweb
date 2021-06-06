@@ -4,7 +4,7 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
-   background: #f2f2f2;
+    background: #f2f2f2;
 }
 
 .text-center {
@@ -41,10 +41,10 @@ body {
     color: #fff;
 }
 
-.ml-5, .ml-4 {
+.ml-5,
+.ml-4 {
     margin-left: 2rem !important;
 }
-
 
 .mr-5 {
     margin-right: 2rem !important;
@@ -88,15 +88,40 @@ body {
     scroll-behavior: smooth;
     background-color: rgba(80, 78, 78, 0.5);
     -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.151);
-} 
+}
 
-.cursor { 
+.cursor {
     cursor: pointer;
-
-} 
+}
 
 .example-container {
     height: 530px;
     overflow: auto;
     width: 100%;
+}
+
+.autocomplete-container .input-container input {
+    font-size: 14px;
+    box-sizing: border-box;
+    border: none;
+    box-shadow: none;
+    outline: 0;
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.87);
+    width: 100%;
+    padding: 0 15px;
+    line-height: 40px;
+    height: 51px !important;
+}
+.ng-autocomplete {
+    width: 520px !important;
+    height: 65px !important;
+}
+.autocomplete-container {
+    box-shadow: none !important;
+    position: relative;
+    overflow: visible;
+    height: 53px !important;
+    border: 1px solid #ddd;
+    border-radius: 2px;
 }

@@ -5,10 +5,73 @@
 
 <div class="p-4">
     <mat-card>
-        <mat-form-field class="full-width">
-            <mat-label>Filter</mat-label>
-            <input matInput   (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-        </mat-form-field>
+        <div class="row">
+            <mat-form-field class="col-4" style="width: auto;">
+                <mat-label>Name</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #input>
+            </mat-form-field>
+
+            <mat-form-field class="col-4" style="width: auto;">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #mobile>
+            </mat-form-field>
+
+            <mat-form-field class="col-4" style="width: auto;">
+                <mat-label>EID</mat-label>
+                <input matInput (keyup)="applyFilter($event)" #eid>
+            </mat-form-field>
+ 
+            <mat-form-field class="col-4" style="width: auto;">
+                <mat-label> Request/Case Type </mat-label>
+                <mat-select (selectionChange)="select($event)" #crm>
+                    <mat-option *ngFor="let value of requestarray" [value]="value.requestCRMId">
+                        {{value.requestCRMName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-4" style="width: auto;">
+                <mat-label>CRM No</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #crmno>
+            </mat-form-field>
+
+            <mat-form-field class="col-4" style="width: auto;">
+                <mat-label>Area</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #area>
+            </mat-form-field>
+
+
+            <mat-form-field class="col-4" style="width: auto;">
+                <mat-label>Region</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #region>
+            </mat-form-field>
+
+            <div class="col-3" style="width: auto;">
+                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;"
+                    (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <mat-form-field class="col-3" style="width: auto;" appearance="outline">
+                <mat-label>Schedule From Date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="fromdate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="col-3" style="width: auto;" appearance="outline">
+                <mat-label>Schedule To Date</mat-label>
+                <input matInput [matDatepicker]="tpicker" [(ngModel)]="todate">
+                <mat-datepicker-toggle matSuffix [for]="tpicker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #tpicker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="col-3">
+                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;"
+                    (click)="getPatent('submit')">Submit</button>
+            </div>
+ 
+        </div>
 
         <form #a="ngForm" >
         <table mat-table [dataSource]="dataSource" class="mb-3">

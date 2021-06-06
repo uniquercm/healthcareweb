@@ -73,6 +73,17 @@
                 </div>
             </div>
 
+            <div class="col-2">
+                <mat-form-field style="width: auto;" appearance="outline">
+                    <mat-label>Field Allocation Status</mat-label>
+                    <mat-select (selectionChange)="selectf($event)">
+                        <mat-option value="all">All</mat-option>
+                        <mat-option value="allowed"> Allocated</mat-option>
+                        <mat-option value="nonallowed"> Not Allocated</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
             <div class="col-5 row">
                 <mat-form-field class="col-4" style="width: auto;" appearance="outline">
                     <mat-label>Team</mat-label>
@@ -94,20 +105,10 @@
 
                 <div class="col-3 pt-1">
                     <button mat-raised-button class="mt-2" style="background: #167f72; color: white;"
-                        (click)="save()">Search</button>
+                        (click)="save()">Save</button>
                 </div>
             </div>
 
-            <div class="col-2">
-                <mat-form-field style="width: auto;" appearance="outline">
-                    <mat-label>Field Allocation Status</mat-label>
-                    <mat-select (selectionChange)="selectf($event)">
-                        <mat-option value="all">All</mat-option>
-                        <mat-option value="allowed"> Allocated</mat-option>
-                        <mat-option value="nonallowed"> Not Allocated</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
 
         </div>
 

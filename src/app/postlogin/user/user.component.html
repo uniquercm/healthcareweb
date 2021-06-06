@@ -25,7 +25,7 @@
                         <mat-label>Full Name</mat-label>
                         <input matInput placeholder="Enter Your Full Name" formControlName="name" required>
                     </mat-form-field>
-                </div>    
+                </div>
                 <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-label>User Name</mat-label>
@@ -38,12 +38,33 @@
                         <input matInput formControlName="password" required>
                     </mat-form-field>
                 </div>
-            
+                <div class="col-ls-4  col-xl-4 col-md-6 col-sm-12">
+                    <div class="ng-autocomplete">
+                        <ng-autocomplete [data]="data" [searchKeyword]="keyword" (selected)='selectEvent($event)'
+                            placeholder="Enter Area" (inputChanged)='onChangeSearch($event)'
+                            (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate"
+                            [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="Click Add"></div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-ls-4  col-xl-4 col-md-6 col-sm-12">
+                    <button mat-raised-button style="background: #f9a610;" class="login-button"
+                        (click)="add()">Add</button>
+                </div>
             </div>
             <div class="text-center">
-                <button mat-raised-button  style="background: #167f72;" class="login-button" (click)="submit()">Submit</button>
+                <button mat-raised-button style="background: #167f72;" class="login-button"
+                    (click)="submit()">Submit</button>
             </div>
- 
+
         </mat-card>
     </form>
 </div>

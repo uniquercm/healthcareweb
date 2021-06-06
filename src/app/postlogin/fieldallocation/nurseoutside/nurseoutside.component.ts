@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { editvalues } from '../../commonvaribale/commonvalues';
 
@@ -12,7 +13,7 @@ import { editvalues } from '../../commonvaribale/commonvalues';
 })
 export class NurseoutsideComponent implements OnInit, OnDestroy {
 
- 
+
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -21,7 +22,11 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService,
-    public datepipe: DatePipe ) {
+    private router: Router,
+    public datepipe: DatePipe) {
+
+    console.log(editvalues)
+
     this.formGroup = this._formBuilder.group({
       crmType: ['', Validators.required],
       crmNo: ['', Validators.required],
@@ -29,7 +34,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       eid: ['', Validators.required],
       mobileno: ['', Validators.required]
     });
-    
+
     this.firstFormGroup = this._formBuilder.group({
       address: ['', Validators.required],
       landmark: ['', Validators.required],
@@ -37,7 +42,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       region: ['', Validators.required],
       map: ['', Validators.required]
     });
-   
+
     this.secondFormGroup = this._formBuilder.group({
       adults: ['', Validators.required],
       childern: ['', Validators.required]
@@ -57,7 +62,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   }
 
   getdata() {
-    this.commonService.getmethod('patient?patientId='+ editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
+    this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
       this.data = data.details[0];
       this.formGroup.controls['crmType'].setValue(this.data.requestCrmName);
       this.formGroup.controls['crmNo'].setValue(this.data.crmNo);
@@ -84,40 +89,31 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
     })
   }
 
-  save() {
-    let map = { 
-      'patientId': this.data.patientId,
-      "patientName": this.data.patientName,
-      "companyId": this.data.companyId,
-      "companyName": this.data.companyName,
-      "requestId": this.data.requestId,
-      "crmNo": this.data.crmNo,
-      "eidNo": this.data.eidNo,
-      "dateOfBirth": this.datepipe.transform(this.data.dateOfBirth, 'MM-dd-yyyy'),
-      "age": this.data.age,
-      "sex": this.data.sex,
-      "address": this.firstFormGroup.value.address,
-      "landMark": this.firstFormGroup.value.landmark,
-      "area": this.firstFormGroup.value.area,
-      "cityId": this.data.cityId,
-      "nationalityId": this.data.nationalityId,
-      "mobileNo": this.data.mobileNo,
-      "googleMapLink": this.firstFormGroup.value.google,
-      "stickerApplication": this.thirdFormGroup.value.stickerapp,
-      "stickerRemoval": this.thirdFormGroup.value.stickerrem,
-      "createdBy": this.data.createdBy,
+  save(visit: any, remark: any, vdate: any) {
+    let value: any = editvalues.nurse;
+    let map = {
+      "callId": value.callId,
+      "scheduledId": value.scheduledId,
+      "callScheduledDate": value.callScheduledDate,
+      "calledDate": vdate.value,
+      "callStatus": visit.value,
+      "remarks": remark.value,
+      "emrDone": value.emrDone,
+      "createdBy": this.localvalues.userId,
       "modifiedBy": this.localvalues.userId,
       "isUpdate": true
     }
 
-    this.commonService.putmethod('patient', map).subscribe((data) => {
-      alert('Updated Successfully');   
+    this.commonService.putmethod('call', map).subscribe((data) => {
+      alert('Saved successfully');
+      this.router.navigateByUrl('/apps/fieldallocation/nurse');
     }, err => {
       console.log(err);
     })
+
   }
 
-  ngOnDestroy()  {
+  ngOnDestroy() {
     editvalues.drcallid = 0;
     editvalues.scheduleid = 0;
     editvalues.patientid = 0;

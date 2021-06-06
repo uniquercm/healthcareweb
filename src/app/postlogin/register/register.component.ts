@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit {
       sex: ['', Validators.required],
       dob: ['', Validators.required],
       nationality: ['', Validators.required],
-      assignedDate: ['', Validators.required] 
+      assignedDate: ['', Validators.required]
     });
   }
 
@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit {
 
   calculateAge(): void {
     var timeDiff = Math.abs(Date.now() - this.form.value.dob);
-    
+
     let age = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
     this.form.controls['age'].setValue(age);
   }
@@ -164,18 +164,19 @@ export class RegisterComponent implements OnInit {
         "childrensCount": 0,
         "stickerApplication": "",
         "trackerApplication": 0,
-        "stickerRemoval": "",   
+        "stickerRemoval": "",
         "trackerRemoval": 0,
         "createdBy": this.localvalues.userId,
         "isUpdate": false,
         "isReception": false
-      } 
- 
+      }
+
 
       this.commonService.postmethod('patient', map).subscribe((data) => {
         alert('Saved Successfully');
         this.form.reset();
-        this.router.navigateByUrl('/apps/list');
+        editvalues.patientid = data.id;
+        this.router.navigateByUrl('/apps/reception');
       }, err => {
         console.log(err);
       })
