@@ -176,7 +176,7 @@ export class RegisterComponent implements OnInit {
         alert('Saved Successfully');
         this.form.reset();
         editvalues.patientid = data.id;
-        this.router.navigateByUrl('/apps/reception');
+        this.router.navigateByUrl('/apps/schedule');
       }, err => {
         console.log(err);
       })
