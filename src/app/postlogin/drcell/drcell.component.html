@@ -74,8 +74,9 @@
             <mat-form-field class="col-3" appearance="outline">
                 <mat-label>Call Status</mat-label>
                 <mat-select (selectionChange)="statuschange($event)">
-                    <mat-option>Visited</mat-option>
-                    <mat-option> Pending</mat-option>
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="called">Called</mat-option>
+                    <mat-option value="pending"> Pending</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

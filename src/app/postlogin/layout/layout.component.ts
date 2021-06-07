@@ -125,11 +125,7 @@ export class LayoutComponent implements OnInit {
         {
           name: 'Nurse Call',
           url: '/apps/nursecell'
-        },
-        {
-          name: 'Field Allocation',
-          url: '/apps/fieldallocation/nurse'
-        }
+        } 
       ]
     } else  if(this.localvalues.userType === 6) {
       this.array = [

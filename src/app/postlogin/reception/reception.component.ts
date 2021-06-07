@@ -51,6 +51,7 @@ export class ReceptionComponent implements OnInit {
       stickerrem: ['', Validators.required],
       trackerrem: ['', Validators.required],
       remark: ['', Validators.required],
+      remarkstatus: ['', Validators.required]
     });
   }
 
@@ -91,7 +92,9 @@ export class ReceptionComponent implements OnInit {
       this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
       this.thirdFormGroup.controls['stickerrem'].setValue(this.data.stickerRemoval);
       this.thirdFormGroup.controls['trackerrem'].setValue(this.data.trackerRemoval);
-
+      this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
+      this.thirdFormGroup.controls['remarkstatus'].setValue(this.data.recptionCallStatus);
+      this.thirdFormGroup.controls['remark'].setValue(this.data.recptionCallRemarks);
     }, err => {
       console.log(err);
     })
@@ -123,6 +126,9 @@ export class ReceptionComponent implements OnInit {
       "createdBy": this.data.createdBy,
       "modifiedBy": this.localvalues.userId,
       "isUpdate": true,
+      "recptionCallDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+      "recptionCallStatus": this.thirdFormGroup.value.remarkstatus,
+      "recptionCallRemarks": this.thirdFormGroup.value.remark,
       "isReception": true,
       "adultsCount": this.secondFormGroup.value.adults,
       "childrensCount": this.secondFormGroup.value.childern

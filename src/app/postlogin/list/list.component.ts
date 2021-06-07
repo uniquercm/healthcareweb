@@ -74,6 +74,12 @@ export class ListComponent implements OnInit {
           farray.push(element);
         }
       });
+    } else if (name === 'status') {
+      this.array.forEach((element: any) => {
+        if (element.recptionCallStatus === Number(event.value)) {
+          farray.push(element);
+        }
+      });
     } else {
       this.array.forEach((element: any) => {
         if (event.value === 'yes') {

@@ -46,8 +46,8 @@
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Area </mat-label>
                 <mat-select (selectionChange)="select('area', $event)" #crm>
-                    <mat-option *ngFor="let value of area" [value]="value.areaId">
-                        {{value.areaName}}</mat-option>
+                    <mat-option *ngFor="let value of area" [value]="value.key">
+                        {{value.value}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
@@ -82,6 +82,13 @@
                     (click)="getPatent('submit')">Submit</button>
             </div>
 
+            <mat-form-field class="col-4" style="width: 10%;">
+                <mat-label> Status </mat-label>
+                <mat-select (selectionChange)="select('status' , $event)" #crm>
+                    <mat-option value="pending">Completed</mat-option>
+                    <mat-option value="completed">Pending</mat-option> 
+                </mat-select>
+            </mat-form-field>
         </div>
 
 
