@@ -11,6 +11,7 @@ import { CommonService } from 'src/app/service/common.service';
 export class UserComponent implements OnInit {
 
   form: FormGroup;
+
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
   data: any[] = [];
   keyword = 'value';
@@ -18,16 +19,17 @@ export class UserComponent implements OnInit {
 
   constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService) {
     this.getarea();
+    
     this.form = this._formBuilder.group({
       userType: ['', Validators.required],
       name: ['', Validators.required],
       userName: ['', Validators.required],
       password: ['', Validators.required],
+      areaList: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
   selectEvent(item: any) {
@@ -44,14 +46,15 @@ export class UserComponent implements OnInit {
 
   submit() {
     let map = {
-      "userName": this.form.value.userName,
-      "fullName": this.form.value.name,
-      "password": this.form.value.password,
-      "userType": this.form.value.userType,
-      "companyId": this.localvalues.companyId,
-      "createdBy": this.localvalues.userId,
-      "modifiedBy": this.localvalues.userId,
-      "isUpdate": false
+      userName: this.form.value.userName,
+      fullName: this.form.value.name,
+      password: this.form.value.password,
+      userType: this.form.value.userType,
+      areaList: this.form.value.areaList,
+      companyId: this.localvalues.companyId,
+      createdBy: this.localvalues.userId,
+      modifiedBy: this.localvalues.userId,
+      isUpdate: false
     }
 
     this.commonService.postmethod('user', map).subscribe((data) => {

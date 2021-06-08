@@ -61,10 +61,7 @@
                                 <mat-datepicker touchUi #picker disabled="true"></mat-datepicker>
                             </mat-form-field>
                         </div>
-                        <!-- <section class="example-section" *ngIf="check"> 
-                            <mat-checkbox class="example-margin" formControlName="quarantine"  (change)="showOptions($event)" >Quarantine Duration</mat-checkbox>
-                            <mat-checkbox class="example-margin" formControlName="isolation"  (change)="showisolation($event)" >Isolation Duration</mat-checkbox>
-                        </section> -->
+                        
                         <section class="example-section" *ngIf="check">
                             <mat-radio-group formControlName="quarantine" (change)="showOptions($event)">
                                 <mat-radio-button class="example-margin" value="quarantine">Quarantine Duration
@@ -114,14 +111,15 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="drpicker" readonly formControlName="drpicker">
+                                        <input matInput [matDatepicker]="drpicker" [disabled]="disablevalue"
+                                            formControlName="drpicker">
                                         <mat-datepicker-toggle matSuffix [for]="drpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #drpicker disabled="true"></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Called Date</mat-label>
-                                        <input matInput [matDatepicker]="drspicker" readonly
+                                        <input matInput [matDatepicker]="drspicker" [disabled]="disablevalue"
                                             formControlName="drspicker">
                                         <mat-datepicker-toggle matSuffix [for]="drspicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #drspicker disabled="true"></mat-datepicker>
@@ -138,7 +136,7 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="fourpicker" readonly
+                                        <input matInput [matDatepicker]="fourpicker" [disabled]="disablevalue"
                                             formControlName="fourpicker" #fordate>
                                         <mat-datepicker-toggle matSuffix [for]="fourpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fourpicker disabled="true"></mat-datepicker>
@@ -146,7 +144,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Sampled Date</mat-label>
-                                        <input matInput [matDatepicker]="fourspicker" readonly
+                                        <input matInput [matDatepicker]="fourspicker" [disabled]="disablevalue"
                                             formControlName="fourspicker">
                                         <mat-datepicker-toggle matSuffix [for]="fourspicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fourspicker disabled="true"></mat-datepicker>
@@ -154,7 +152,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Result</mat-label>
-                                        <mat-select formControlName="fourresult" readonly>
+                                        <mat-select formControlName="fourresult" [disabled]="disablevalue">
                                             <mat-option value='positive'>Positive </mat-option>
                                             <mat-option value='negative'> Negative</mat-option>
                                         </mat-select>
@@ -172,7 +170,7 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="eightpicker" readonly #etdate
+                                        <input matInput [matDatepicker]="eightpicker" [disabled]="disablevalue" #etdate
                                             formControlName="eightpicker">
                                         <mat-datepicker-toggle matSuffix [for]="eightpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #eightpicker disabled="true"></mat-datepicker>
@@ -180,7 +178,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Sampled Date</mat-label>
-                                        <input matInput [matDatepicker]="eightspicker" readonly
+                                        <input matInput [matDatepicker]="eightspicker" [disabled]="disablevalue"
                                             formControlName="eightspicker">
                                         <mat-datepicker-toggle matSuffix [for]="eightspicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #eightspicker disabled="true"></mat-datepicker>
@@ -188,7 +186,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Result</mat-label>
-                                        <mat-select formControlName="eightresult" readonly>
+                                        <mat-select formControlName="eightresult" [disabled]="disablevalue">
                                             <mat-option value='positive'>Positive </mat-option>
                                             <mat-option value='negative'> Negative</mat-option>
                                         </mat-select>
@@ -206,7 +204,7 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Discharge Date</mat-label>
-                                        <input matInput [matDatepicker]="dispicker" readonly #dgdate
+                                        <input matInput [matDatepicker]="dispicker" [disabled]="disablevalue" #dgdate
                                             formControlName="dischargepicker">
                                         <mat-datepicker-toggle matSuffix [for]="dispicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #dispicker disabled="true"></mat-datepicker>
@@ -215,7 +213,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Status</mat-label>
-                                        <mat-select formControlName="dischargespicker" readonly>
+                                        <mat-select formControlName="dischargespicker" [disabled]="disablevalue">
                                             <mat-option value='pending'>Pending </mat-option>
                                             <mat-option value='discharged'> Discharged </mat-option>
                                             <mat-option value='other'> Other </mat-option>
@@ -256,7 +254,8 @@
                         <div class="col-lg-4 col-md-2 col-sm-12">
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>End Date</mat-label>
-                                <input matInput [matDatepicker]="isoendpicker" readonly formControlName="isoenddate">
+                                <input matInput [matDatepicker]="isoendpicker" [disabled]="disablevalue"
+                                    formControlName="isoenddate">
                                 <mat-datepicker-toggle matSuffix [for]="isoendpicker"></mat-datepicker-toggle>
                                 <mat-datepicker touchUi #isoendpicker disabled="true"></mat-datepicker>
                             </mat-form-field>
@@ -272,14 +271,15 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="drpicker" readonly formControlName="drpicker">
+                                        <input matInput [matDatepicker]="drpicker" [disabled]="disablevalue"
+                                            formControlName="drpicker">
                                         <mat-datepicker-toggle matSuffix [for]="drpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #drpicker disabled="true"></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Called Date</mat-label>
-                                        <input matInput [matDatepicker]="drspicker" readonly
+                                        <input matInput [matDatepicker]="drspicker" [disabled]="disablevalue"
                                             formControlName="drspicker">
                                         <mat-datepicker-toggle matSuffix [for]="drspicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #drspicker disabled="true"></mat-datepicker>
@@ -296,7 +296,7 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="tdpicker" readonly
+                                        <input matInput [matDatepicker]="tdpicker" [disabled]="disablevalue"
                                             formControlName="eightpicker">
                                         <mat-datepicker-toggle matSuffix [for]="tdpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #tdpicker disabled="true"></mat-datepicker>
@@ -304,7 +304,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Call Status</mat-label>
-                                        <mat-select formControlName="callstatus" readonly>
+                                        <mat-select formControlName="callstatus" [disabled]="disablevalue">
                                             <mat-option value='called'>Called </mat-option>
                                             <mat-option value='pending'> Pending</mat-option>
                                         </mat-select>
@@ -327,7 +327,7 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="fppicker" #fourndate readonly
+                                        <input matInput [matDatepicker]="fppicker" #fourndate [disabled]="disablevalue"
                                             formControlName="fppicker">
                                         <mat-datepicker-toggle matSuffix [for]="fppicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fppicker disabled="true"></mat-datepicker>
@@ -335,7 +335,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Sampled Date</mat-label>
-                                        <input matInput [matDatepicker]="fpspicker" readonly
+                                        <input matInput [matDatepicker]="fpspicker" [disabled]="disablevalue"
                                             formControlName="fpspicker">
                                         <mat-datepicker-toggle matSuffix [for]="fpspicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fpspicker disabled="true"></mat-datepicker>
@@ -344,7 +344,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Result 4 PCR</mat-label>
-                                        <mat-select formControlName="resultpcr" readonly>
+                                        <mat-select formControlName="resultpcr" [disabled]="disablevalue">
                                             <mat-option value='positive'>Positive </mat-option>
                                             <mat-option value='negative'> Negative</mat-option>
                                         </mat-select>
@@ -361,7 +361,7 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="fivepicker" readonly
+                                        <input matInput [matDatepicker]="fivepicker" [disabled]="disablevalue"
                                             formControlName="fivepicker">
                                         <mat-datepicker-toggle matSuffix [for]="fivepicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fivepicker disabled="true"></mat-datepicker>
@@ -369,7 +369,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Call Status</mat-label>
-                                        <mat-select formControlName="fivestatus" readonly>
+                                        <mat-select formControlName="fivestatus" [disabled]="disablevalue">
                                             <mat-option value='called'>Called </mat-option>
                                             <mat-option value='pending'> Pending</mat-option>
                                         </mat-select>
@@ -391,7 +391,7 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="sixpicker" readonly
+                                        <input matInput [matDatepicker]="sixpicker" [disabled]="disablevalue"
                                             formControlName="sixpicker">
                                         <mat-datepicker-toggle matSuffix [for]="sixpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #sixpicker disabled="true"></mat-datepicker>
@@ -399,7 +399,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Call Status</mat-label>
-                                        <mat-select formControlName="sixstatus" readonly>
+                                        <mat-select formControlName="sixstatus" [disabled]="disablevalue">
                                             <mat-option value='called'>Called </mat-option>
                                             <mat-option value='pending'> Pending</mat-option>
                                         </mat-select>
@@ -421,14 +421,15 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="sdpicker" readonly formControlName="sdpicker">
+                                        <input matInput [matDatepicker]="sdpicker" [disabled]="disablevalue"
+                                            formControlName="sdpicker">
                                         <mat-datepicker-toggle matSuffix [for]="sdpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #sdpicker disabled="true"></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Call Status</mat-label>
-                                        <mat-select formControlName="sevenstatus" readonly>
+                                        <mat-select formControlName="sevenstatus" [disabled]="disablevalue">
                                             <mat-option value='called'>Called </mat-option>
                                             <mat-option value='pending'> Pending</mat-option>
                                         </mat-select>
@@ -450,7 +451,7 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="edppicker" #ninendate readonly
+                                        <input matInput [matDatepicker]="edppicker" #ninendate [disabled]="disablevalue"
                                             formControlName="edppicker">
                                         <mat-datepicker-toggle matSuffix [for]="edppicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #edppicker disabled="true"></mat-datepicker>
@@ -458,7 +459,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Sampled Date</mat-label>
-                                        <input matInput [matDatepicker]="edcpicker" readonly
+                                        <input matInput [matDatepicker]="edcpicker" [disabled]="disablevalue"
                                             formControlName="edcpicker">
                                         <mat-datepicker-toggle matSuffix [for]="edcpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #edcpicker disabled="true"></mat-datepicker>
@@ -466,7 +467,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Result 8 PCR</mat-label>
-                                        <mat-select readonly formControlName="eightresultpcr">
+                                        <mat-select [disabled]="disablevalue" formControlName="eightresultpcr">
                                             <mat-option value='positive'>Positive </mat-option>
                                             <mat-option value='negative'> Negative</mat-option>
                                         </mat-select>
@@ -484,14 +485,15 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="nnpicker" readonly formControlName="nnpicker">
+                                        <input matInput [matDatepicker]="nnpicker" [disabled]="disablevalue"
+                                            formControlName="nnpicker">
                                         <mat-datepicker-toggle matSuffix [for]="nnpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi disabled="true" #nnpicker></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Call Status</mat-label>
-                                        <mat-select formControlName="ninestatus" readonly>
+                                        <mat-select formControlName="ninestatus" [disabled]="disablevalue">
                                             <mat-option value='called'>Called </mat-option>
                                             <mat-option value='pending'> Pending</mat-option>
                                         </mat-select>
@@ -514,17 +516,16 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Discharge Date</mat-label>
-                                        <input matInput [matDatepicker]="isodispicker" #dischargedate readonly
-                                            formControlName="isodispicker">
+                                        <input matInput [matDatepicker]="isodispicker" #dischargedate
+                                            [disabled]="disablevalue" formControlName="isodispicker">
                                         <mat-datepicker-toggle matSuffix [for]="isodispicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #isodispicker disabled="true"></mat-datepicker>
                                     </mat-form-field>
 
-                                    
-
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Status</mat-label>
-                                        <mat-select formControlName="dischargespicker" readonly>
+                                        <mat-select formControlName="dischargespicker" [disabled]="disablevalue"
+                                            readonly>
                                             <mat-option value='pending'>Pending </mat-option>
                                             <mat-option value='discharged'> Discharged </mat-option>
                                             <mat-option value='other'> Other </mat-option>
@@ -533,8 +534,7 @@
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Remarks</mat-label>
-                                        <textarea matInput readonly formControlName="dischargerpicker"
-                                            readonly></textarea>
+                                        <textarea matInput readonly formControlName="dischargerpicker"></textarea>
                                     </mat-form-field>
                                 </div>
                             </mat-card>

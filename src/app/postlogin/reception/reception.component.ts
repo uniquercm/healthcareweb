@@ -21,6 +21,7 @@ export class ReceptionComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService,
     public datepipe: DatePipe) {
+
     this.formGroup = this._formBuilder.group({
       crmType: ['', Validators.required],
       crmNo: ['', Validators.required],
@@ -28,6 +29,7 @@ export class ReceptionComponent implements OnInit {
       eid: ['', Validators.required],
       mobileno: ['', Validators.required]
     });
+
     this.getcity();
 
     this.firstFormGroup = this._formBuilder.group({
@@ -53,6 +55,7 @@ export class ReceptionComponent implements OnInit {
       remark: ['', Validators.required],
       remarkstatus: ['', Validators.required]
     });
+
   }
 
   ngOnInit() {

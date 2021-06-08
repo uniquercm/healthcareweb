@@ -62,6 +62,10 @@ export class LayoutComponent implements OnInit {
     } else  if(this.localvalues.userType === 2) {
       this.array = [
         {
+          name: 'Area',
+          url: '/apps/area'
+        },
+        {
           name: 'Dashboard',
           url: '/apps/dashboard'
         },

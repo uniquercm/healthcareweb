@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AreaComponent } from '../area/area.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { DrcellComponent } from '../drcell/drcell.component';
 import { NurseComponent } from '../fieldallocation/nurse/nurse.component';
@@ -75,6 +76,10 @@ const routes: Routes = [
 			{
 				path: 'user',
 				component: UserComponent
+			},
+			{
+				path: 'area',
+				component: AreaComponent
 			},
 		]
 	}

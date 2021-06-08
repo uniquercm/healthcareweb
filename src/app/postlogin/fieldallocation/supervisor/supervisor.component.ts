@@ -131,6 +131,7 @@ export class SupervisorComponent implements OnInit {
     } else {
       url = 'scheduled?patientId=' + editvalues.patientid + '&isFieldAllocation=true'
     }
+
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
@@ -142,7 +143,6 @@ export class SupervisorComponent implements OnInit {
     }, err => {
       console.log(err);
     })
-
   }
 
   selectf(event: any) {

@@ -29,6 +29,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
   array: any = '';
   edit = false;
 
+  disablevalue = true;
+
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService, private router: Router,
@@ -111,7 +113,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       this.array = data.details[0];
       this.edit = true;
       this.formGroup.controls['name'].setValue(this.array.patientName);
-      this.formGroup.controls['age'].setValue(this.array.patientInformation.age);
+      this.formGroup.controls['age'].setValue(this.array.age);
 
       this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
       this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
@@ -122,10 +124,13 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.isolation = false;
         this.type = 'isolation';
         this.firstFormGroup.controls['quarantine'].setValue('isolation');
-      } else {
+      } else if (this.array.treatmentType === 'quarantine') {
         this.discharge = false;
         this.type = 'quarantine';
         this.firstFormGroup.controls['quarantine'].setValue('quarantine');
+      } else {
+        this.check = false;
+        this.dischargedate = true;
       }
 
       if (this.array.treatmentType === 'isolation') {
@@ -170,7 +175,6 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
       }
 
-
       this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
 
     }, err => {
@@ -181,6 +185,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
 
   radioChange(event: any) {
+    this.firstFormGroup.controls['dischargedate'].setValue(this.firstFormGroup.value.conducteddate)
     if (this.firstFormGroup.controls['result'].value === 'negative' && this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
       this.discharge = true;
       this.isolation = true;
@@ -368,9 +373,6 @@ export class SheduleComponent implements OnInit, OnDestroy {
   }
 
   fsave() {
-    // if (this.firstFormGroup.invalid) {
-    //   return;
-    // }
     if (this.edit) {
       let map = {
         "scheduledId": editvalues.scheduleid,
@@ -379,11 +381,11 @@ export class SheduleComponent implements OnInit, OnDestroy {
         "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
-        "dischargeDate": this.datepipe.transform(this.secondFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
+        "dischargeDate": this.datepipe.transform(this.firstFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
         "allocatedTeamName": "",
         "reAllocatedTeamName": "",
-        "treatmentType": this.type,
-        "firstCallScheduledDate": this.datepipe.transform(this.secondFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
+        "treatmentType": '',
+        "firstCallScheduledDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
         "isUpdate": true
@@ -403,11 +405,11 @@ export class SheduleComponent implements OnInit, OnDestroy {
         "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
-        "dischargeDate": this.datepipe.transform(this.secondFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
+        "dischargeDate": this.datepipe.transform(this.firstFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
         "allocatedTeamName": "",
         "reAllocatedTeamName": "",
-        "treatmentType": this.type,
-        "firstCallScheduledDate": this.datepipe.transform(this.secondFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
+        "treatmentType": '',
+        "firstCallScheduledDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
         "isUpdate": false

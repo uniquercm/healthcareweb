@@ -14,7 +14,7 @@ img {
 }
 
 .full-width {
-    width: 70%;
+    width: 95%;
 }
 
 th,
@@ -35,7 +35,7 @@ tr.mat-footer-row {
 th.mat-header-cell {
     font-size: 13px;
     font-weight: 500;
-    letter-spacing: 1px; 
+    letter-spacing: 1px;
     text-align: center;
 }
 
@@ -55,7 +55,13 @@ td.mat-cell {
 th.mat-header-cell {
     border-bottom-color: #fff;
 }
-  
-.fs-12 { 
+
+.fs-12 {
     font-size: 12px !important;
+}
+
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+    padding-left: 20px;
 }

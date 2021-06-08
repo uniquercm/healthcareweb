@@ -75,23 +75,29 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-12 row">
-            <div class="col-3 mb-3" *ngFor="let value of teamStatusDetailsList">
-                <mat-card class="hover">
-                    <h2 class="text-center">{{value.teamName}}</h2>
+        <div class="col-3 mb-3 mr-2" *ngFor="let value of teamStatusDetailsList">
+            <mat-card class="hover">
+                <h2 class="text-center">{{value.teamName}}</h2>
 
-                    <h4 class="text-center">
-                        Call Status Called Count: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {{value.callStatusCalledCount}}
-                    </h4>
-                    <h4 class="text-center">
-                        Call Status Pending Count: &nbsp; &nbsp; &nbsp; &nbsp; {{value.callStatusPendingCount}}
-                    </h4>
-                </mat-card>
-            </div>
+                <table style="width: 100%;">
+                    <tr>
+                        <th class="text-center">Allocated Count</th>
+                        <th class="text-center">Called </th>
+                        <th class="text-center">Visited</th>
+                        <th class="text-center">Pending</th>
+                    </tr>
+                    <tr>
+                        <td class="text-center p-3">{{value.allocatedCount}}</td>
+                        <td class="text-center p-3">{{value.callStatusCalledCount}}</td>
+                        <td class="text-center p-3">{{value.callStatusVisitedCount}}</td>
+                        <td class="text-center p-3">{{value.callStatusPendingCount}}</td>
+                    </tr>
+                </table>
+            </mat-card>
         </div>
     </div>
 
-    <div class="row" style="padding-left: 35vh; padding-right: 35vh; padding-top: 7vh;">
+    <div class="row mb-4" style="padding-left: 35vh; padding-right: 35vh; padding-top: 7vh;">
         <div style="height: 500px;">
             <mat-card>
                 <div style="display: block; height: 500px;">
@@ -103,6 +109,6 @@
         </div>
     </div>
 
- 
+
 
 </div>
