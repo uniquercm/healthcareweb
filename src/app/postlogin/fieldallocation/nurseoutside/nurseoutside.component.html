@@ -113,7 +113,7 @@
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Sticker Application</mat-label>
-                <mat-select formControlName="stickerapp" readonly>
+                <mat-select formControlName="stickerapp">
                   <mat-option value="yes">Yes</mat-option>
                   <mat-option value="no"> No</mat-option>
                 </mat-select>
@@ -122,40 +122,39 @@
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Tracker Application</mat-label>
-                <mat-select formControlName="trackerapp" readonly>
-                  <mat-option value="yes">Yes</mat-option>
-                  <mat-option value="no"> No</mat-option>
-                </mat-select>
+                <input matInput formControlName="trackerapp" required>
               </mat-form-field>
             </div>
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>PCR</mat-label>
-                <mat-select formControlName="pcr" readonly>
-                  <mat-option value="yes">Yes</mat-option>
-                  <mat-option value="no"> No</mat-option>
-                </mat-select>
+                <input matInput formControlName="pcr" required>
               </mat-form-field>
             </div>
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Sticker Removal</mat-label>
-                <mat-select formControlName="stickerrem" readonly>
-                  <mat-option value=1>1</mat-option>
-                  <mat-option value=2> 2</mat-option>
+                <mat-select formControlName="stickerrem">
+                  <mat-option value="yes">Yes</mat-option>
+                  <mat-option value="no"> No</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Tracker Removal</mat-label>
-                <mat-select formControlName="trackerrem" readonly>
-                  <mat-option value=1>1</mat-option>
-                  <mat-option value=2> 2</mat-option>
+                <input matInput formControlName="trackerrem" required>
+              </mat-form-field>
+            </div>
+            <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Discharge Status</mat-label>
+                <mat-select formControlName="dischargestatus">
+                  <mat-option value="discharged">Discharged</mat-option>
+                  <mat-option value="active"> Active</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-
           </div>
         </form>
         <div class="text-end">

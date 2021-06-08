@@ -70,6 +70,19 @@
                     <mat-datepicker touchUi #tpicker></mat-datepicker>
                 </mat-form-field>
 
+                <div class="col-3">
+                    <mat-form-field style="width: 30;" appearance="outline">
+                        <mat-label>Service</mat-label>
+                        <mat-select (selectionChange)="selectf($event)">
+                            <mat-option value="tracker">Tracker Application</mat-option>
+                            <mat-option value="sticker"> Sticker Application</mat-option>
+                            <mat-option value="four"> 4 day PCR</mat-option>
+                            <mat-option value="eight"> 8 day PCR</mat-option>
+                            <mat-option value="dischaege"> Discharge</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
                 <div class="col-3 pt-1">
                     <button mat-raised-button class="mt-2" style="background: #167f72; color: white;"
                         (click)="getPatent('submit')">Submit</button>

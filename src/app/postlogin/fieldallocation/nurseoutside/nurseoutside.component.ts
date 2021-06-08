@@ -36,24 +36,25 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
     });
 
     this.firstFormGroup = this._formBuilder.group({
-      address: ['', Validators.required],
-      landmark: ['', Validators.required],
-      area: ['', Validators.required],
-      region: ['', Validators.required],
-      map: ['', Validators.required]
+      address: ['', Validators.nullValidator],
+      landmark: ['', Validators.nullValidator],
+      area: ['', Validators.nullValidator],
+      region: ['', Validators.nullValidator],
+      map: ['', Validators.nullValidator]
     });
 
     this.secondFormGroup = this._formBuilder.group({
-      adults: ['', Validators.required],
-      childern: ['', Validators.required]
+      adults: ['', Validators.nullValidator],
+      childern: ['', Validators.nullValidator]
     });
 
     this.thirdFormGroup = this._formBuilder.group({
-      stickerapp: ['', Validators.required],
-      trackerapp: ['', Validators.required],
-      pcr: ['', Validators.required],
-      stickerrem: ['', Validators.required],
-      trackerrem: ['', Validators.required]
+      stickerapp: ['', Validators.nullValidator],
+      trackerapp: ['', Validators.nullValidator],
+      pcr: ['', Validators.nullValidator],
+      stickerrem: ['', Validators.nullValidator],
+      trackerrem: ['', Validators.nullValidator],
+      dischargestatus: ['', Validators.nullValidator]
     });
   }
 
@@ -84,6 +85,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
       this.thirdFormGroup.controls['stickerrem'].setValue(this.data.stickerRemoval);
       this.thirdFormGroup.controls['trackerrem'].setValue(this.data.trackerRemoval);
+      this.thirdFormGroup.controls['dischargestatus'].setValue(this.data.dischargeStatus);
     }, err => {
       console.log(err);
     })
