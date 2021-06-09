@@ -185,12 +185,18 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
 
   radioChange(event: any) {
-    this.firstFormGroup.controls['dischargedate'].setValue(this.firstFormGroup.value.conducteddate)
     if (this.firstFormGroup.controls['result'].value === 'negative' && this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
       this.discharge = true;
       this.isolation = true;
       this.dischargedate = true;
       this.check = false;
+
+
+      let drpicker: Date = this.firstFormGroup.value.conducteddate;
+      drpicker.setDate(drpicker.getDate() + 3);
+
+      this.firstFormGroup.controls['dischargedate'].setValue(drpicker);
+
     } else {
       this.discharge = true;
       this.isolation = true;
@@ -204,6 +210,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       this.type = 'quarantine';
       this.discharge = false;
       this.isolation = true;
+
     } else {
       this.type = 'isolation';
       this.discharge = true;
@@ -231,7 +238,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
     let fourpickers: Date = (date.value);
     fourpickers.setDate(fourpickers.getDate() + 3 - 1);
-    this.secondFormGroup.controls['fourpicker'].setValue(fourpickers);
+    this.secondFormGroup.controls['fourpicker'].setValue(drpicker);
 
     let eightpickers: Date = date.value;
     eightpickers.setDate(eightpickers.getDate() + 8 - 4);
@@ -372,24 +379,25 @@ export class SheduleComponent implements OnInit, OnDestroy {
     }
   }
 
-  fsave() {
+  fsave(conducteddate: any) {
     if (this.edit) {
       let map = {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
         "patientId": editvalues.patientid,
-        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrTestDate": conducteddate.value,
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
         "dischargeDate": this.datepipe.transform(this.firstFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
         "allocatedTeamName": "",
         "reAllocatedTeamName": "",
         "treatmentType": '',
-        "firstCallScheduledDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "firstCallScheduledDate": conducteddate.value,
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
         "isUpdate": true
       }
+
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
         this.router.navigateByUrl('/apps/list');
@@ -402,18 +410,19 @@ export class SheduleComponent implements OnInit, OnDestroy {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
         "patientId": editvalues.patientid,
-        "pcrTestDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "pcrTestDate": conducteddate.value,
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
         "dischargeDate": this.datepipe.transform(this.firstFormGroup.value.dischargedate.toLocaleString(), 'MM-dd-yyyy'),
         "allocatedTeamName": "",
         "reAllocatedTeamName": "",
         "treatmentType": '',
-        "firstCallScheduledDate": this.datepipe.transform(this.firstFormGroup.value.conducteddate.toLocaleString(), 'MM-dd-yyyy'),
+        "firstCallScheduledDate": conducteddate.value,
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
-        "isUpdate": false
+        "isUpdate": true
       }
+
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
         this.router.navigateByUrl('/apps/list');

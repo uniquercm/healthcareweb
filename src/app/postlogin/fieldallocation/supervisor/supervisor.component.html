@@ -6,12 +6,12 @@
 <div class="p-4">
     <mat-card>
         <div class="row">
-            <mat-form-field class="col-4" style="width: 15%;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Name</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 15%;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Mobile Number</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #mobile>
             </mat-form-field>
@@ -47,6 +47,17 @@
                 <mat-label>Region</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #region>
             </mat-form-field>
+
+            <div class="col-2" style="width: 10%;">
+                <mat-form-field>
+                    <mat-label>Field Allocation Status</mat-label>
+                    <mat-select (selectionChange)="selectf($event)">
+                        <mat-option value="all">All</mat-option>
+                        <mat-option value="allowed"> Allocated</mat-option>
+                        <mat-option value="nonallowed"> Not Allocated</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
             <div class="col-3" style="width: 10%;">
                 <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;"
@@ -89,16 +100,7 @@
                 </div>
             </div>
 
-            <div class="col-2">
-                <mat-form-field style="width: 30;" appearance="outline">
-                    <mat-label>Field Allocation Status</mat-label>
-                    <mat-select (selectionChange)="selectf($event)">
-                        <mat-option value="all">All</mat-option>
-                        <mat-option value="allowed"> Allocated</mat-option>
-                        <mat-option value="nonallowed"> Not Allocated</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+
 
             <div class="col-5 row">
                 <mat-form-field class="col-4" style="width: 35%;" appearance="outline">

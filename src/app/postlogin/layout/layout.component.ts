@@ -19,6 +19,10 @@ export class LayoutComponent implements OnInit {
     if(this.localvalues.userType === 1) {
       this.array = [
         {
+          name: 'Area',
+          url: '/apps/area'
+        },
+        {
           name: 'Dashboard',
           url: '/apps/dashboard'
         },
@@ -61,10 +65,6 @@ export class LayoutComponent implements OnInit {
       ]
     } else  if(this.localvalues.userType === 2) {
       this.array = [
-        {
-          name: 'Area',
-          url: '/apps/area'
-        },
         {
           name: 'Dashboard',
           url: '/apps/dashboard'
