@@ -176,13 +176,19 @@ export class RegisterComponent implements OnInit {
         alert('Saved Successfully');
         this.form.reset();
         editvalues.patientid = data.id;
-        this.router.navigateByUrl('/apps/schedule');
+        if (this.localvalues.userType === 6) {
+          this.router.navigateByUrl('/apps/reception');
+        } else {
+          this.router.navigateByUrl('/apps/schedule');
+        }
       }, err => {
         console.log(err);
       })
-
-
     }
+  }
+
+  downloadform() { 
+    window.open('assets/RegistrationForm.xls', '_blank');
   }
 
   getnationality() {

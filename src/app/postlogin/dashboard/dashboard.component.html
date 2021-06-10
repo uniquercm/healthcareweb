@@ -12,7 +12,8 @@
                     </div>
                     <div class="py-3 col-7 indigo text-center">
                         <h4 class="white--text font-bold"> Current Patient Number </h4>
-                        <h3 class="white--text mb-0"> {{dashboarddetails.currentPatientNumber}} (Today)</h3>
+                        <h3 class="white--text mb-0">
+                            {{dashboarddetails.todayPatientStatusDetails.todayScheduledPatientNumber}} (Today)</h3>
                     </div>
                 </div>
             </div>
@@ -30,7 +31,8 @@
                     </div>
                     <div class="py-3 col-7 indigo text-center">
                         <h4 class="white--text font-bold"> Register Count </h4>
-                        <h3 class="white--text mb-0"> {{dashboarddetails.todayPatientRegNumber}} (Today)</h3>
+                        <h3 class="white--text mb-0">
+                            {{dashboarddetails.todayPatientStatusDetails.todayPatientRegNumber}} (Today)</h3>
                     </div>
                 </div>
             </div>
@@ -48,8 +50,9 @@
                         </div>
                     </div>
                     <div class="py-3 col-7 indigo text-center">
-                        <h4 class="white--text font-bold"> Schedule Count </h4>
-                        <h3 class="white--text mb-0"> {{dashboarddetails.todayScheduledPatientNumber}} (Today)</h3>
+                        <h4 class="white--text font-bold"> Active Count </h4>
+                        <h3 class="white--text mb-0"> {{dashboarddetails.patientStatusDetails.activePatientNumber}}
+                            (Today)</h3>
                     </div>
                 </div>
             </div>
@@ -67,7 +70,8 @@
                     </div>
                     <div class="py-3 col-7 indigo text-center">
                         <h4 class="white--text font-bold"> Discharge Count </h4>
-                        <h3 class="white--text mb-0"> {{dashboarddetails.dischargePatientNumber}} (Today)</h3>
+                        <h3 class="white--text mb-0"> {{dashboarddetails.patientStatusDetails.dischargePatientNumber}}
+                            (Today)</h3>
                     </div>
                 </div>
             </div>

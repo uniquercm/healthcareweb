@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
 
   constructor(private commonService: CommonService, public datepipe: DatePipe) {
     if (this.localvalues.userType === 6) {
-      this.displayedColumns = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'edit', 'reception', 'print'];
+      this.displayedColumns = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'edit', 'reception'];
     } else if (this.localvalues.userType === 1) {
     }
     this.getarea();
@@ -106,7 +106,7 @@ export class ListComponent implements OnInit {
     editvalues.patientid = element.patientId
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, statuss: any, ststatus: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -114,8 +114,26 @@ export class ListComponent implements OnInit {
     crmno.value = '';
     area.value = '';
     region.value = '';
+    statuss.value = '';
+    ststatus.value = '';
 
     this.getPatent('');
+  }
+
+  getstatus(statuss: any) {
+    let url = 'patient?gMapLinkSatus=' + statuss.value
+
+    this.commonService.getmethod(url).subscribe((data) => {
+      this.array = data.details;
+      this.array.forEach((o: any, i) => o.id = i + 1);
+
+      this.dataSource = new MatTableDataSource(this.array);
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, err => {
+      console.log(err);
+    })
   }
 
   getPatent(value: any) {

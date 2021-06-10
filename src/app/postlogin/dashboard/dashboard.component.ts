@@ -46,12 +46,12 @@ export class DashboardComponent implements OnInit {
       this.dashboarddetails = data.details; 
       this.teamStatusDetailsList = data.details.teamStatusDetailsList;
       let array = [];
-      array.push(this.dashboarddetails.totalAdminUserNumber);
-      array.push(this.dashboarddetails.totalManagerUserNumber);
-      array.push(this.dashboarddetails.totalDoctorUserNumber);
-      array.push(this.dashboarddetails.totalNurseUserNumber);
-      array.push(this.dashboarddetails.totalReceptionistUserNumber);
-      array.push(this.dashboarddetails.totalTeamUserNumber);
+      array.push(this.dashboarddetails.allUserTypeDetails.totalAdminUserNumber);
+      array.push(this.dashboarddetails.allUserTypeDetails.totalManagerUserNumber);
+      array.push(this.dashboarddetails.allUserTypeDetails.totalDoctorUserNumber);
+      array.push(this.dashboarddetails.allUserTypeDetails.totalNurseUserNumber);
+      array.push(this.dashboarddetails.allUserTypeDetails.totalReceptionistUserNumber);
+      array.push(this.dashboarddetails.allUserTypeDetails.totalTeamUserNumber);
       this.barChartData[0].data = array;
     }, err => {
       console.log(err);

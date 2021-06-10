@@ -12,58 +12,58 @@ export class LayoutComponent implements OnInit {
 
   title = '';
 
-  constructor(private router: Router) { 
+  constructor(private router: Router) {
 
     this.title = this.localvalues.companyName;
 
-    if(this.localvalues.userType === 1) {
+    if (this.localvalues.userType === 1) {
       this.array = [
+        {
+          name: 'Dashboard',
+          url: '/apps/dashboard'
+        },
+        {
+          name: 'Registration',
+          url: '/apps/home'
+        },
+        {
+          name: 'List',
+          url: '/apps/list'
+        },
+        {
+          name: 'Reception',
+          url: '/apps/reception'
+        },
+        {
+          name: 'Schedule',
+          url: '/apps/schedule'
+        },
+        {
+          name: 'Dr Call',
+          url: '/apps/drcell'
+        },
+        {
+          name: 'Nurse Call',
+          url: '/apps/nursecell'
+        },
+        {
+          name: 'Field Allocation',
+          url: '/apps/fieldallocation/supervisor'
+        },
+        {
+          name: 'Report',
+          url: '/apps/report'
+        },
+        {
+          name: 'User',
+          url: '/apps/user'
+        },
         {
           name: 'Area',
           url: '/apps/area'
-        },
-        {
-          name: 'Dashboard',
-          url: '/apps/dashboard'
-        },
-        {
-          name: 'Registration',
-          url: '/apps/home'
-        },
-        {
-          name: 'List',
-          url: '/apps/list'
-        },
-        {
-          name: 'Reception',
-          url: '/apps/reception'
-        },
-        {
-          name: 'Schedule',
-          url: '/apps/schedule'
-        },
-        {
-          name: 'Dr Call',
-          url: '/apps/drcell'
-        },
-        {
-          name: 'Nurse Call',
-          url: '/apps/nursecell'
-        },
-        {
-          name: 'Field Allocation',
-          url: '/apps/fieldallocation/supervisor'
-        },
-        {
-          name: 'Report',
-          url: '/apps/report'
-        },
-        {
-          name: 'User',
-          url: '/apps/user'
         }
       ]
-    } else  if(this.localvalues.userType === 2) {
+    } else if (this.localvalues.userType === 2) {
       this.array = [
         {
           name: 'Dashboard',
@@ -106,32 +106,32 @@ export class LayoutComponent implements OnInit {
           url: '/apps/report'
         },
       ]
-    } else  if(this.localvalues.userType === 3) {
-      this.array = [ 
+    } else if (this.localvalues.userType === 3) {
+      this.array = [
         {
           name: 'Dr Call',
           url: '/apps/drcell'
         }
       ]
-    } else  if(this.localvalues.userType === 4) {
-      this.array = [ 
+    } else if (this.localvalues.userType === 4) {
+      this.array = [
         {
           name: 'Schedule',
           url: '/apps/schedule'
-        }, 
+        },
         {
           name: 'Field Allocation',
           url: '/apps/fieldallocation/supervisor'
-        }, 
+        },
       ]
-    } else  if(this.localvalues.userType === 5) {
-      this.array = [ 
+    } else if (this.localvalues.userType === 5) {
+      this.array = [
         {
           name: 'Nurse Call',
           url: '/apps/nursecell'
-        } 
+        }
       ]
-    } else  if(this.localvalues.userType === 6) {
+    } else if (this.localvalues.userType === 6) {
       this.array = [
         {
           name: 'Registration',
@@ -144,16 +144,16 @@ export class LayoutComponent implements OnInit {
         {
           name: 'Reception',
           url: '/apps/reception'
-        } 
+        }
       ]
-    } else  if(this.localvalues.userType === 7) {
+    } else if (this.localvalues.userType === 7) {
       this.array = [
         {
           name: 'Field Allocation',
           url: '/apps/fieldallocation/nurse'
-        } 
+        }
       ]
-    }  
+    }
   }
 
   ngOnInit(): void {

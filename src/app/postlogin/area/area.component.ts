@@ -9,7 +9,7 @@ import { CommonService } from 'src/app/service/common.service';
 export class AreaComponent implements OnInit {
 
   data: any[] = [];
-  keyword = 'value';
+  keyword = 'areaName';
   area: any;
   finalList: any[] = [];
   receptionarray: any[] = [];
@@ -25,11 +25,14 @@ export class AreaComponent implements OnInit {
   add(crm: any) {
     let map = {
       areaId: this.finalList.length + 1,
-      regionId: crm.value,
+      regionName: crm.value.cityName,
+      regionId: crm.value.cityId,
       areaName: this.area
     }
     this.commonService.postmethod('area', map).subscribe((data) => {
       alert('Added successfully');
+      crm = '';
+      this.area = '';
       this.getarea();
     }, err => {
       console.log(err);
@@ -37,7 +40,7 @@ export class AreaComponent implements OnInit {
   }
 
   selectEvent(item: any) {
-    this.area = item.id
+    this.area = item.areaId
   }
 
   onChangeSearch(val: string) {
@@ -53,23 +56,19 @@ export class AreaComponent implements OnInit {
       let array;
       array = data.details;
       this.finalList = data.details;
-      console.log(array);
       array.forEach((element: any) => {
-        if (element.value === null) {
+        if (element.areaName === null) {
 
-        } else if (element.value === undefined) {
+        } else if (element.areaName === undefined) {
 
         }
-        else if (element.value === '') {
+        else if (element.areaName === '') {
 
         } else {
           this.data.push(element)
         }
 
       });
-      // array.splice(0, 1);
-      // this.data = array;
-      console.log(this.data);
     }, err => {
       console.log(err);
     })

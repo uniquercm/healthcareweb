@@ -11,31 +11,31 @@
         <div class="col-lg-4 col-md-2 col-sm-12">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Request/Case Type</mat-label>
-            <input matInput required formControlName="crmType" readonly>
+            <input matInput formControlName="crmType" readonly>
           </mat-form-field>
         </div>
         <div class="col-lg-4 col-md-2 col-sm-12">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>CRM no</mat-label>
-            <input matInput formControlName="crmNo" required readonly>
+            <input matInput formControlName="crmNo" readonly>
           </mat-form-field>
         </div>
         <div class="col-lg-4 col-md-2 col-sm-12">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Name</mat-label>
-            <input matInput formControlName="name" required readonly>
+            <input matInput formControlName="name" readonly>
           </mat-form-field>
         </div>
         <div class="col-lg-4 col-md-2 col-sm-12">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>EID</mat-label>
-            <input matInput formControlName="eid" required readonly>
+            <input matInput formControlName="eid" readonly>
           </mat-form-field>
         </div>
         <div class="col-lg-4 col-md-2 col-sm-12">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Mbile No</mat-label>
-            <input matInput formControlName="mobileno" required readonly>
+            <input matInput formControlName="mobileno" readonly>
           </mat-form-field>
         </div>
       </div>
@@ -49,19 +49,19 @@
             <div class="col-lg-4 col-md-2 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Address</mat-label>
-                <textarea matInput formControlName="address" required></textarea>
+                <textarea matInput formControlName="address"></textarea>
               </mat-form-field>
             </div>
             <div class="col-lg-4 col-md-2 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Land Mark</mat-label>
-                <input matInput formControlName="landmark" required>
+                <input matInput formControlName="landmark">
               </mat-form-field>
             </div>
             <div class="col-lg-4 col-md-2 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Area</mat-label>
-                <input matInput formControlName="area" required>
+                <input matInput formControlName="area">
               </mat-form-field>
             </div>
             <div class="col-lg-4 col-md-2 col-sm-12">
@@ -77,7 +77,7 @@
             <div class="col-lg-4 col-md-2 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Google Map Link</mat-label>
-                <input matInput formControlName="map" required>
+                <input matInput formControlName="map">
               </mat-form-field>
             </div>
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
@@ -102,13 +102,13 @@
             <div class="col-lg-4 col-md-2 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>No Of Adults</mat-label>
-                <input matInput formControlName="adults" required>
+                <input matInput formControlName="adults">
               </mat-form-field>
             </div>
             <div class="col-lg-4 col-md-2 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>No Of Children</mat-label>
-                <input matInput formControlName="childern" required>
+                <input matInput formControlName="childern">
               </mat-form-field>
             </div>
           </div>
@@ -126,7 +126,7 @@
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Sticker Application</mat-label>
-                <mat-select formControlName="stickerapp">
+                <mat-select formControlName="stickerapp" [disabled]="sappl">
                   <mat-option value="yes">Yes</mat-option>
                   <mat-option value="no"> No</mat-option>
                 </mat-select>
@@ -135,19 +135,19 @@
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Tracker Application</mat-label>
-                <input matInput formControlName="trackerapp" required>
+                <input matInput formControlName="trackerapp">
               </mat-form-field>
             </div>
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>PCR</mat-label>
-                <input matInput formControlName="pcr" required>
+                <input matInput formControlName="pcr" readonly>
               </mat-form-field>
             </div>
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Sticker Removal</mat-label>
-                <mat-select formControlName="stickerrem">
+                <mat-select formControlName="stickerrem" [disabled]="srem">
                   <mat-option value="yes">Yes</mat-option>
                   <mat-option value="no"> No</mat-option>
                 </mat-select>
@@ -156,7 +156,7 @@
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Tracker Removal</mat-label>
-                <input matInput formControlName="trackerrem" required>
+                <input matInput formControlName="trackerrem">
               </mat-form-field>
             </div>
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
@@ -167,11 +167,42 @@
             </div>
             <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
               <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Status</mat-label>
-                <mat-select formControlName="remarkstatus">
-                  <mat-option value="pending">Pending</mat-option>
-                  <mat-option value="completed"> Completed</mat-option>
+                <mat-label>Sticker/Tracker Status</mat-label>
+                <mat-select formControlName="stickerstatus" (selectionChange)="statuschange($event)">
+                  <mat-option value="applied">Applied</mat-option>
+                  <mat-option value="removed">Removed </mat-option>
+                  <mat-option value="replace">Replace</mat-option>
                 </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12"
+              *ngIf="(stausvalue==='applied') || (stausvalue==='removed')">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Sticker Applied/Removed No</mat-label>
+                <input matInput formControlName="stickerano">
+              </mat-form-field>
+            </div>
+            <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12"
+              *ngIf="(stausvalue==='applied') || (stausvalue==='removed')">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Sticker Applied/Removed Applied Date</mat-label>
+                <input matInput [matDatepicker]="fpspicker" formControlName="spicker">
+                <mat-datepicker-toggle matSuffix [for]="fpspicker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #fpspicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12" *ngIf="stausvalue==='replace'">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Sticker Replace No</mat-label>
+                <input matInput formControlName="stickerrno">
+              </mat-form-field>
+            </div>
+            <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12" *ngIf="stausvalue==='replace'">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Sticker Replace Date</mat-label>
+                <input matInput [matDatepicker]="fpspickers" formControlName="fpspicker">
+                <mat-datepicker-toggle matSuffix [for]="fpspickers"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #fpspickers></mat-datepicker>
               </mat-form-field>
             </div>
           </div>

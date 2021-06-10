@@ -41,8 +41,8 @@
                 <div class="col-ls-4 col-xl-4 col-md-5 col-sm-12">
                     <mat-form-field class="full-width" appearance="outline">
                         <mat-select placeholder="Area" formControlName="areaList" multiple>
-                            <mat-option *ngFor="let topping of data" [value]="topping.key">
-                                {{topping.value}}
+                            <mat-option *ngFor="let topping of data" [value]="topping.areaId">
+                                {{topping.areaName}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>

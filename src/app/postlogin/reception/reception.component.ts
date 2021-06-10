@@ -23,37 +23,42 @@ export class ReceptionComponent implements OnInit {
     public datepipe: DatePipe) {
 
     this.formGroup = this._formBuilder.group({
-      crmType: ['', Validators.required],
-      crmNo: ['', Validators.required],
-      name: ['', Validators.required],
-      eid: ['', Validators.required],
-      mobileno: ['', Validators.required]
+      crmType: ['', Validators.nullValidator],
+      crmNo: ['', Validators.nullValidator],
+      name: ['', Validators.nullValidator],
+      eid: ['', Validators.nullValidator],
+      mobileno: ['', Validators.nullValidator]
     });
 
     this.getcity();
 
     this.firstFormGroup = this._formBuilder.group({
-      address: ['', Validators.required],
-      landmark: ['', Validators.required],
-      area: ['', Validators.required],
-      region: ['', Validators.required],
-      map: ['', Validators.required],
-      addstatus: ['', Validators.required]
+      address: ['', Validators.nullValidator],
+      landmark: ['', Validators.nullValidator],
+      area: ['', Validators.nullValidator],
+      region: ['', Validators.nullValidator],
+      map: ['', Validators.nullValidator],
+      addstatus: ['', Validators.nullValidator]
     });
 
     this.secondFormGroup = this._formBuilder.group({
-      adults: ['', Validators.required],
-      childern: ['', Validators.required]
+      adults: ['', Validators.nullValidator],
+      childern: ['', Validators.nullValidator]
     });
 
     this.thirdFormGroup = this._formBuilder.group({
-      stickerapp: ['no', Validators.required],
-      trackerapp: ['no', Validators.required],
-      pcr: ['', Validators.required],
-      stickerrem: ['', Validators.required],
-      trackerrem: ['', Validators.required],
-      remark: ['', Validators.required],
-      remarkstatus: ['', Validators.required]
+      stickerapp: ['no', Validators.nullValidator],
+      trackerapp: ['no', Validators.nullValidator],
+      pcr: ['', Validators.nullValidator],
+      stickerrem: ['', Validators.nullValidator],
+      trackerrem: ['', Validators.nullValidator],
+      remark: ['', Validators.nullValidator],
+      remarkstatus: ['', Validators.nullValidator],
+      stickerstatus: ['', Validators.nullValidator],
+      stickerano: ['', Validators.nullValidator],
+      stickerrno: ['', Validators.nullValidator],
+      fpspicker: ['', Validators.nullValidator],
+      spicker: ['', Validators.nullValidator]
     });
 
   }
@@ -71,6 +76,9 @@ export class ReceptionComponent implements OnInit {
     })
 
   }
+
+  sappl: any;
+  srem: any;
 
   getdata() {
     this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
@@ -91,9 +99,19 @@ export class ReceptionComponent implements OnInit {
       this.secondFormGroup.controls['childern'].setValue(this.data.childrensCount);
 
       this.thirdFormGroup.controls['stickerapp'].setValue(this.data.stickerApplication);
+      if (this.thirdFormGroup.value.stickerapp === '') {
+        this.sappl = false;
+      } else {
+        this.sappl = true;
+      }
       this.thirdFormGroup.controls['trackerapp'].setValue(this.data.trackerApplication);
       this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
       this.thirdFormGroup.controls['stickerrem'].setValue(this.data.stickerRemoval);
+      if (this.thirdFormGroup.value.stickerrem === '') {
+        this.srem = false;
+      } else {
+        this.srem = true;
+      }
       this.thirdFormGroup.controls['trackerrem'].setValue(this.data.trackerRemoval);
       this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
       this.thirdFormGroup.controls['remarkstatus'].setValue(this.data.recptionCallStatus);
@@ -101,6 +119,15 @@ export class ReceptionComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+  }
+
+  stausvalue: any = '';
+  statuschange(event: any) {
+    if (event.value === 'applied' || event.value === 'removed') {
+      this.stausvalue = 'applied';
+    } else if (event.value === 'replace') {
+      this.stausvalue = 'replace';
+    }
   }
 
   save() {
@@ -121,7 +148,7 @@ export class ReceptionComponent implements OnInit {
       "cityId": this.data.cityId,
       "nationalityId": Number(this.data.nationalityId),
       "mobileNo": Number(this.data.mobileNo),
-      "googleMapLink": this.firstFormGroup.value.google,
+      "googleMapLink": this.firstFormGroup.value.map,
       "stickerApplication": this.thirdFormGroup.value.stickerapp,
       "stickerRemoval": this.thirdFormGroup.value.stickerrem,
       "trackerApplication": this.thirdFormGroup.value.trackerapp,

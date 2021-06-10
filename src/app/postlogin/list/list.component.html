@@ -6,12 +6,12 @@
 
     <mat-card>
         <div class="row">
-            <mat-form-field class="col-4" style="width: 15%;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Name</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 15%;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Mobile Number</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #mobile>
             </mat-form-field>
@@ -29,7 +29,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 7%;">
                 <mat-label> Gmap Status </mat-label>
                 <mat-select (selectionChange)="select('map' , $event)" #crm>
                     <mat-option value="all">All</mat-option>
@@ -38,7 +38,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 7%;">
                 <mat-label>CRM No</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #crmno>
             </mat-form-field>
@@ -46,8 +46,8 @@
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Area </mat-label>
                 <mat-select (selectionChange)="select('area', $event)" #crm>
-                    <mat-option *ngFor="let value of area" [value]="value.key">
-                        {{value.value}}</mat-option>
+                    <mat-option *ngFor="let value of area" [value]="value.areaId">
+                        {{value.areaName}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
@@ -57,9 +57,33 @@
             </mat-form-field>
 
             <div class="col-3" style="width: 10%;">
-                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;"
-                    (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
+                <mat-form-field>
+                    <mat-label> Status </mat-label>
+                    <mat-select (selectionChange)="select('status', $event)" #statuss>
+                        <mat-option value="all">All</mat-option>
+                        <mat-option value="pending">Completed</mat-option>
+                        <mat-option value="completed">Pending</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
+
+            <div class="col-3" style="width: 10%;">
+                <mat-form-field>
+                    <mat-label> Sticker/Tracker Status </mat-label>
+                    <mat-select #ststatus>
+                        <mat-option value="all">All</mat-option>
+                        <mat-option value="applied">Applied</mat-option>
+                        <mat-option value="removed">Removed</mat-option>
+                        <mat-option value="replace">Replace</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-3" style="width: 5%;">
+                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;"
+                    (click)="clear(input, mobile,eid,crm,crmno,area, region, statuss, ststatus)">Clear</button>
+            </div>
+
         </div>
 
         <div class="row">
@@ -81,14 +105,6 @@
                 <button mat-raised-button class="mt-2" style="background: #167f72; color: white;"
                     (click)="getPatent('submit')">Search</button>
             </div>
-
-            <mat-form-field class="col-4" style="width: 10%;">
-                <mat-label> Status </mat-label>
-                <mat-select (selectionChange)="select('status' , $event)" #crm>
-                    <mat-option value="pending">Completed</mat-option>
-                    <mat-option value="completed">Pending</mat-option> 
-                </mat-select>
-            </mat-form-field>
         </div>
 
 
