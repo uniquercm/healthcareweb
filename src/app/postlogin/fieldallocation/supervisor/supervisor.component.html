@@ -16,7 +16,7 @@
                 <input matInput (keyup)="applyFilter($event)" #mobile>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 15%;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>EID</mat-label>
                 <input matInput (keyup)="applyFilter($event)" mask="000-0000-0000000-0" #eid>
             </mat-form-field>
@@ -35,31 +35,40 @@
             </mat-form-field>
 
             <mat-form-field class="col-4" style="width: 10%;">
+                <mat-label>Region</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #region>
+            </mat-form-field>
+
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Area </mat-label>
                 <mat-select (selectionChange)="select('area', $event)" #crm>
                     <mat-option *ngFor="let value of area" [value]="value.key">
                         {{value.value}}</mat-option>
                 </mat-select>
             </mat-form-field>
-
-
+ 
             <mat-form-field class="col-4" style="width: 10%;">
-                <mat-label>Region</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #region>
+                <mat-label>Field Allocation Status</mat-label>
+                <mat-select (selectionChange)="selectf($event)">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="allowed"> Allocated</mat-option>
+                    <mat-option value="nonallowed"> Not Allocated</mat-option>
+                </mat-select>
             </mat-form-field>
 
-            <div class="col-2" style="width: 10%;">
-                <mat-form-field>
-                    <mat-label>Field Allocation Status</mat-label>
-                    <mat-select (selectionChange)="selectf($event)">
-                        <mat-option value="all">All</mat-option>
-                        <mat-option value="allowed"> Allocated</mat-option>
-                        <mat-option value="nonallowed"> Not Allocated</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            <mat-form-field class="col-4" style="width: 10%;">
+                <mat-label>Service Service</mat-label>
+                <mat-select #service (selectionChange)="selectstaus($event)">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="sticker">Sticker</mat-option>
+                    <mat-option value="tracker">Tracker</mat-option>
+                    <mat-option value="four"> 4 day PCR</mat-option>
+                    <mat-option value="eight"> 8 day PCR</mat-option>
+                    <mat-option value="dischaege"> Discharge</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-            <div class="col-3" style="width: 10%;">
+            <div class="col-3" style="width: 5%;">
                 <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;"
                     (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
             </div>
@@ -81,25 +90,11 @@
                     <mat-datepicker touchUi #tpicker></mat-datepicker>
                 </mat-form-field>
 
-                <!-- <div class="col-3">
-                    <mat-form-field style="width: 30;" appearance="outline">
-                        <mat-label>Service</mat-label>
-                        <mat-select #service>
-                            <mat-option value="all">All</mat-option> 
-                            <mat-option value="sticker"> Sticker Application</mat-option>
-                            <mat-option value="four"> 4 day PCR</mat-option>
-                            <mat-option value="eight"> 8 day PCR</mat-option>
-                            <mat-option value="dischaege"> Discharge</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div> -->
-
                 <div class="col-3 pt-1">
                     <button mat-raised-button class="mt-2" style="background: #167f72; color: white;"
                         (click)="getPatent('submit')">Search</button>
                 </div>
             </div>
-
 
 
             <div class="col-5 row">
@@ -141,7 +136,10 @@
 
                         <!-- Position Column -->
                         <ng-container matColumnDef="select">
-                            <th mat-header-cell *matHeaderCellDef> Click </th>
+                            <th mat-header-cell *matHeaderCellDef>
+                                <mat-checkbox class="example-margin" (change)="clickevent($event)" name="clicki">
+                                </mat-checkbox>
+                            </th>
                             <td mat-cell *matCellDef="let element">
                                 <mat-checkbox class="example-margin" [(ngModel)]="element.click" ngDefaultControl
                                     name="clicki" [value]="element.click" [ngModelOptions]="{standalone: true}">

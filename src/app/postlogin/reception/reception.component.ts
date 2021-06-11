@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { editvalues } from '../commonvaribale/commonvalues';
 
@@ -20,7 +21,7 @@ export class ReceptionComponent implements OnInit {
   cityarray: any[] = [];
 
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService,
-    public datepipe: DatePipe) {
+    public datepipe: DatePipe, private router: Router) {
 
     this.formGroup = this._formBuilder.group({
       crmType: ['', Validators.nullValidator],
@@ -88,6 +89,8 @@ export class ReceptionComponent implements OnInit {
       this.formGroup.controls['name'].setValue(this.data.patientName);
       this.formGroup.controls['eid'].setValue(this.data.eidNo);
       this.formGroup.controls['mobileno'].setValue(this.data.mobileNo);
+      this.formGroup.controls['addstatus'].setValue(this.data.dischargeStatus);
+      
 
       this.firstFormGroup.controls['address'].setValue(this.data.address);
       this.firstFormGroup.controls['landmark'].setValue(this.data.landMark);
@@ -154,6 +157,7 @@ export class ReceptionComponent implements OnInit {
       "trackerApplication": this.thirdFormGroup.value.trackerapp,
       "trackerRemoval": this.thirdFormGroup.value.trackerrem,
       "createdBy": this.data.createdBy,
+      stickerTrackerAppliedNumber: this.thirdFormGroup.value.stickerano,
       "modifiedBy": this.localvalues.userId,
       "isUpdate": true,
       "recptionCallDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
@@ -166,6 +170,7 @@ export class ReceptionComponent implements OnInit {
 
     this.commonService.putmethod('patient', map).subscribe((data) => {
       alert('Updated Successfully');
+      this.router.navigateByUrl('/apps/list')
     }, err => {
       console.log(err);
     })

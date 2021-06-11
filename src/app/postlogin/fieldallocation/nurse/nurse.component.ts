@@ -45,6 +45,56 @@ export class NurseComponent implements OnInit {
     })
   }
 
+  selectarea(name: string, event: any) {
+    let farray: any = [];
+    if (name === 'case') {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.requestId === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    } else if (name === 'area') {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.areaId === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    } else if (name === 'status') {
+      this.array.forEach((element: any) => {
+        if (element.recptionCallStatus === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    } else {
+      this.array.forEach((element: any) => {
+        if (event.value === 'yes') {
+          if (element.googleMapLink !== '')
+            farray.push(element);
+        } else if (event.value === 'no') {
+          if (element.googleMapLink === '')
+            farray.push(element);
+        } else {
+          farray.push(element);
+        }
+      });
+    }
+
+    this.dataSource = new MatTableDataSource(farray);
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  area: any = [];
+  getarea() {
+    this.commonService.getmethod('area').subscribe((data) => {
+      this.area = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+
   clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
     input.value = '';
     mobile.value = '';
@@ -86,6 +136,40 @@ export class NurseComponent implements OnInit {
 
   }
 
+  statuschange(name: string, value: any) {
+    let url = '';
+
+    if (name === 'call')
+      url = 'doctor-nurse-team-call?callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName;
+    else
+      url = 'doctor-nurse-team-call?callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName
+        + '&serviceName=' + value.value;
+
+
+    this.commonService.getmethod(url).subscribe((data) => {
+      this.array = data.details;
+      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((elam: any) => {
+        if (elam.emrDone === 'yes') {
+          elam.emrDone = true
+        } else {
+          elam.emrDone = false
+        }
+        if (elam.calledDate === '0001-01-01T00:00:00') {
+          elam.calledDate = ''
+        }
+      });
+      this.dataSource = new MatTableDataSource(this.array);
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      if (this.array.length === 0) {
+        alert('No data Found');
+      }
+    }, err => {
+      console.log(err);
+    })
+  }
 
   getPatent(value: any) {
 

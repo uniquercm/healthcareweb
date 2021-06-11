@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/service/common.service';
 import { editvalues } from '../commonvaribale/commonvalues';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-list',
@@ -157,6 +158,31 @@ export class ListComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+  }
+
+  export() {
+    for (let index = 0; index < this.array.length; index++) {
+      let element: any = this.array[index];
+
+      delete element['patientId'];
+      delete element['companyId'];
+      delete element['requestId'];
+      delete element['cityId'];
+      delete element['nationalityId'];
+      delete element['drCallId'];
+      delete element['scheduledId'];
+      delete element['createdBy'];
+      delete element['modifiedBy'];
+      
+    }
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.array);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, 'patient.xlsx');
+
   }
 
   getarea() {

@@ -46,6 +46,46 @@ export class DrcellComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
+  selectarea(name: string, event: any) {
+    let farray: any = [];
+    if (name === 'case') {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.requestId === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    } else if (name === 'area') {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.areaId === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    } else if (name === 'status') {
+      this.array.forEach((element: any) => {
+        if (element.recptionCallStatus === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    } else {
+      this.array.forEach((element: any) => {
+        if (event.value === 'yes') {
+          if (element.googleMapLink !== '')
+            farray.push(element);
+        } else if (event.value === 'no') {
+          if (element.googleMapLink === '')
+            farray.push(element);
+        } else {
+          farray.push(element);
+        }
+      });
+    }
+
+    this.dataSource = new MatTableDataSource(farray);
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   getvalue() {
     let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
     if (this.router.url === '/apps/drcell') {
@@ -109,6 +149,16 @@ export class DrcellComponent implements OnInit, OnDestroy {
     this.getPatent('');
   }
 
+  area: any[] = [];
+  getarea() {
+    this.commonService.getmethod('area').subscribe((data) => {
+      this.area = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+
   getPatent(value: any) {
     let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
@@ -137,6 +187,9 @@ export class DrcellComponent implements OnInit, OnDestroy {
           elam.emrDone = true
         } else {
           elam.emrDone = false
+        }
+        if (elam.calledDate === '0001-01-01T00:00:00') {
+          elam.calledDate = ''
         }
       });
       this.dataSource = new MatTableDataSource(this.array);
@@ -188,6 +241,9 @@ export class DrcellComponent implements OnInit, OnDestroy {
           elam.emrDone = true
         } else {
           elam.emrDone = false
+        }
+        if (elam.calledDate === '0001-01-01T00:00:00') {
+          elam.calledDate = ''
         }
       });
       this.dataSource = new MatTableDataSource(this.array);
@@ -246,7 +302,6 @@ export class DrcellComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     })
-
   }
 
   ngOnDestroy() {

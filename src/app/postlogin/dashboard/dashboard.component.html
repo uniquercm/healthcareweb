@@ -1,106 +1,331 @@
 <div class="header">
 </div>
 <div class="row m-5">
-    <div class="col-sm-6 col-lg-3 col-12">
-        <div class="card dash-card">
-            <div class="pa-0">
-                <div class="row no-gutters ml-0">
-                    <div class="py-3 col-5">
-                        <div class="layout justify-center align-center text-center">
-                            <img src="https://img.icons8.com/color/64/000000/user-male-circle--v1.png" />
+
+
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
+        <mat-tab label="Patient Details">
+            <div class="row m-4">
+                <div class="col-sm-6 col-lg-3 col-12 mb-3">
+                    <div class="card dash-card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/color/64/000000/user-male-circle--v1.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Total Enrolled Patients </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.patientStatusDetails.totalEnrolledPatientNumber}}</h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="py-3 col-7 indigo text-center">
-                        <h4 class="white--text font-bold"> Current Patient Number </h4>
-                        <h3 class="white--text mb-0">
-                            {{dashboarddetails.todayPatientStatusDetails.todayScheduledPatientNumber}} (Today)</h3>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 col-12 mb-3">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/color/70/000000/add-user-male--v1.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Register Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.todayPatientStatusDetails.todayPatientRegNumber}} (Today)
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6 col-lg-3 col-12 mb-3">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/fluent/70/000000/overtime.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Active Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.patientStatusDetails.activePatientNumber}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 col-12 mb-3">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/fluent/70/000000/partially-shipped.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Discharge Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.patientStatusDetails.dischargePatientNumber}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-lg-3 col-12 mb-3">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/fluent/70/000000/partially-shipped.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Total Patient Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.patientStatusDetails.totalPatientNumber}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="col-sm-6 col-lg-3 col-12">
-        <div class="card">
-            <div class="pa-0">
-                <div class="row no-gutters ml-0">
-                    <div class="py-3 col-5">
-                        <div class="layout justify-center align-center text-center">
-                            <img src="https://img.icons8.com/color/70/000000/add-user-male--v1.png" />
+        </mat-tab>
+        <mat-tab label="Doctor Details">
+            <div class="row m-4">
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card dash-card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/color/64/000000/user-male-circle--v1.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Total Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.doctorStatusDetails.doctorCallTotalCount}}
+                                    </h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="py-3 col-7 indigo text-center">
-                        <h4 class="white--text font-bold"> Register Count </h4>
-                        <h3 class="white--text mb-0">
-                            {{dashboarddetails.todayPatientStatusDetails.todayPatientRegNumber}} (Today)</h3>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-
-    <div class="col-sm-6 col-lg-3 col-12">
-        <div class="card">
-            <div class="pa-0">
-                <div class="row no-gutters ml-0">
-                    <div class="py-3 col-5">
-                        <div class="layout justify-center align-center text-center">
-                            <img src="https://img.icons8.com/fluent/70/000000/overtime.png" />
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/color/70/000000/add-user-male--v1.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Called Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.doctorStatusDetails.doctorCalledCount}}
+                                    </h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="py-3 col-7 indigo text-center">
-                        <h4 class="white--text font-bold"> Active Count </h4>
-                        <h3 class="white--text mb-0"> {{dashboarddetails.patientStatusDetails.activePatientNumber}}
-                            (Today)</h3>
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-sm-6 col-lg-3 col-12">
-        <div class="card">
-            <div class="pa-0">
-                <div class="row no-gutters ml-0">
-                    <div class="py-3 col-5">
-                        <div class="layout justify-center align-center text-center">
-                            <img src="https://img.icons8.com/fluent/70/000000/partially-shipped.png" />
+
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/fluent/70/000000/overtime.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Pending Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.doctorStatusDetails.doctorPendingCount}}
+                                    </h3>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="py-3 col-7 indigo text-center">
-                        <h4 class="white--text font-bold"> Discharge Count </h4>
-                        <h3 class="white--text mb-0"> {{dashboarddetails.patientStatusDetails.dischargePatientNumber}}
-                            (Today)</h3>
+                </div>
+
+            </div>
+        </mat-tab>
+        <mat-tab label="Nurse Details">
+            <div class="row m-4">
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card dash-card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/color/64/000000/user-male-circle--v1.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Total Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.nurseStatusDetails.nurseCallTotalCount}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/color/70/000000/add-user-male--v1.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Called Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.nurseStatusDetails.nurseCalledCount}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/fluent/70/000000/overtime.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Pending Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.nurseStatusDetails.nursePendingCount}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </div>
+        </mat-tab>
+        <mat-tab label="Reception Details">
+            <div class="row m-4">
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card dash-card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/color/64/000000/user-male-circle--v1.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Total Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.receptionStatusDetails.receptionTotalCount}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="row mt-4">
-        <div class="col-3 mb-3 mr-2" *ngFor="let value of teamStatusDetailsList">
-            <mat-card class="hover">
-                <h2 class="text-center">{{value.teamName}}</h2>
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/color/70/000000/add-user-male--v1.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Completed Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.receptionStatusDetails.receptionCompletedCount}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <table style="width: 100%;">
-                    <tr>
-                        <th class="text-center">Allocated Count</th>
-                        <th class="text-center">Called </th>
-                        <th class="text-center">Visited</th>
-                        <th class="text-center">Pending</th>
-                    </tr>
-                    <tr>
-                        <td class="text-center p-3">{{value.allocatedCount}}</td>
-                        <td class="text-center p-3">{{value.callStatusCalledCount}}</td>
-                        <td class="text-center p-3">{{value.callStatusVisitedCount}}</td>
-                        <td class="text-center p-3">{{value.callStatusPendingCount}}</td>
-                    </tr>
-                </table>
-            </mat-card>
-        </div>
-    </div>
 
+                <div class="col-sm-6 col-lg-3 col-12">
+                    <div class="card">
+                        <div class="pa-0">
+                            <div class="row no-gutters ml-0">
+                                <div class="py-3 col-5">
+                                    <div class="layout justify-center align-center text-center">
+                                        <img src="https://img.icons8.com/fluent/70/000000/overtime.png" />
+                                    </div>
+                                </div>
+                                <div class="py-3 col-7 indigo text-center">
+                                    <h4 class="white--text font-bold"> Pending Count </h4>
+                                    <h3 class="white--text mb-0">
+                                        {{dashboarddetails.receptionStatusDetails.receptionPendingCount}}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </mat-tab>
+        <mat-tab label="Team Details">
+            <div class="row m-4">
+                <div class="col-3 mb-3 mr-2" *ngFor="let value of teamStatusDetailsList">
+                    <mat-card class="hover">
+                        <h2 class="text-center">{{value.teamName}}</h2>
+
+                        <table style="width: 100%;">
+                            <tr>
+                                <th class="text-center">Allocated Count</th>
+                                <th class="text-center">Visited</th>
+                                <th class="text-center">Pending</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center p-3">{{value.allocatedCount}}</td>
+                                <td class="text-center p-3">{{value.callStatusVisitedCount}}</td>
+                                <td class="text-center p-3">{{value.callStatusPendingCount}}</td>
+                            </tr>
+                        </table>
+                    </mat-card>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+ 
     <div class="row mb-4" style="padding-left: 35vh; padding-right: 35vh; padding-top: 7vh;">
         <div style="height: 500px;">
             <mat-card>
@@ -112,7 +337,5 @@
             </mat-card>
         </div>
     </div>
-
-
 
 </div>

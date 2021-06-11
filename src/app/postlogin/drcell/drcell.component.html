@@ -11,12 +11,12 @@
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 15%;">
                 <mat-label>Mobile Number</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #mobile>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 15%;">
                 <mat-label>EID</mat-label>
                 <input matInput (keyup)="applyFilter($event)" mask="000-0000-0000000-0" #eid>
             </mat-form-field>
@@ -33,16 +33,19 @@
                 <mat-label>CRM No</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #crmno>
             </mat-form-field>
-
-            <mat-form-field class="col-4" style="width: 10%;">
-                <mat-label>Area</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #area>
-            </mat-form-field>
-
+ 
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Region</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #region>
+            </mat-form-field>
+
+            <mat-form-field class="col-4" style="width: 10%;">
+                <mat-label> Area </mat-label>
+                <mat-select (selectionChange)="selectarea('area', $event)" #crm>
+                    <mat-option *ngFor="let value of area" [value]="value.areaId">
+                        {{value.areaName}}</mat-option>
+                </mat-select>
             </mat-form-field>
 
             <div class="col-3" style="width: 10%;">
@@ -52,25 +55,12 @@
                         <mat-option value="all">All</mat-option>
                         <mat-option value="called">Called</mat-option>
                         <mat-option value="pending">Pending</mat-option>
-                        <mat-option value="visited">Visited</mat-option>
+                        <!-- <mat-option value="visited">Visited</mat-option> -->
                     </mat-select>
                 </mat-form-field>
             </div>
- 
-            <div class="col-3" style="width: 10%;">
-                <mat-form-field>
-                    <mat-label>Service Status</mat-label>
-                    <mat-select (selectionChange)="statuschange('service', $event)">
-                        <mat-option value="all">All</mat-option>
-                        <mat-option value="sticker">Sticker/Tracker</mat-option>
-                        <mat-option value="fpcr">4 PCR</mat-option>
-                        <mat-option value="epcr">8 PCR</mat-option>
-                        <mat-option value="discharge">Discharge</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-3" style="width: 10%;">
+  
+            <div class="col-3" style="width: 5%;">
                 <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;"
                     (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
             </div>

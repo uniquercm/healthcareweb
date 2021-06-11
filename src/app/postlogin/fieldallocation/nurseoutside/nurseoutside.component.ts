@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import { editvalues } from '../../commonvaribale/commonvalues';
@@ -17,6 +17,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
+  fourthFormGroup: FormGroup;
   formGroup: FormGroup;
   data: any;
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
@@ -45,16 +46,32 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
 
     this.secondFormGroup = this._formBuilder.group({
       adults: ['', Validators.nullValidator],
-      childern: ['', Validators.nullValidator]
+      childern: ['', Validators.nullValidator],
+      phones: this._formBuilder.array([
+        this._formBuilder.control(null)
+      ])
     });
 
     this.thirdFormGroup = this._formBuilder.group({
-      stickerapp: ['', Validators.nullValidator],
-      trackerapp: ['', Validators.nullValidator],
+      stickerapp: ['no', Validators.nullValidator],
+      trackerapp: ['no', Validators.nullValidator],
       pcr: ['', Validators.nullValidator],
       stickerrem: ['', Validators.nullValidator],
       trackerrem: ['', Validators.nullValidator],
+      remark: ['', Validators.nullValidator],
+      remarkstatus: ['', Validators.nullValidator],
+      stickerstatus: ['', Validators.nullValidator],
+      stickerano: ['', Validators.nullValidator],
+      stickerrno: ['', Validators.nullValidator],
+      fpspicker: ['', Validators.nullValidator],
+      spicker: ['', Validators.nullValidator],
       dischargestatus: ['', Validators.nullValidator]
+    });
+
+    this.fourthFormGroup = this._formBuilder.group({
+      vstatus: ['', Validators.nullValidator],
+      vremark: ['', Validators.nullValidator],
+      vdate: ['', Validators.nullValidator]
     });
   }
 
@@ -81,11 +98,100 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       this.secondFormGroup.controls['childern'].setValue(this.data.childrensCount);
 
       this.thirdFormGroup.controls['stickerapp'].setValue(this.data.stickerApplication);
+      this.thirdFormGroup.controls['dischargestatus'].setValue(this.data.dischargeStatus);
       this.thirdFormGroup.controls['trackerapp'].setValue(this.data.trackerApplication);
       this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
       this.thirdFormGroup.controls['stickerrem'].setValue(this.data.stickerRemoval);
+      if (this.thirdFormGroup.value.stickerrem === '') {
+        this.srem = false;
+      } else {
+        this.srem = true;
+      }
+
+      if (this.thirdFormGroup.value.stickerapp === '') {
+        this.sappl = false;
+      } else {
+        this.sappl = true;
+      }
+
       this.thirdFormGroup.controls['trackerrem'].setValue(this.data.trackerRemoval);
-      this.thirdFormGroup.controls['dischargestatus'].setValue(this.data.dischargeStatus);
+      this.thirdFormGroup.controls['remarkstatus'].setValue(this.data.recptionCallStatus);
+      this.thirdFormGroup.controls['remark'].setValue(this.data.recptionCallRemarks);
+
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  stausvalue: any = '';
+  statuschange(event: any) {
+    if (event.value === 'applied' || event.value === 'removed') {
+      this.stausvalue = 'applied';
+    } else if (event.value === 'replace') {
+      this.stausvalue = 'replace';
+    }
+  }
+  sappl: any;
+  srem: any;
+
+  addPhone(): void {
+
+    let value: number = Number(this.secondFormGroup.value.adults) + Number(this.secondFormGroup.value.childern);
+    if (this.secondFormGroup.value.phones.length === value) {
+      alert('Maxmium MMID reached');
+      return;
+    }
+    (this.secondFormGroup.get('phones') as FormArray).push(
+      this._formBuilder.control(null)
+    );
+  }
+
+  removePhone(index: number) {
+    (this.secondFormGroup.get('phones') as FormArray).removeAt(index);
+  }
+
+  getPhonesFormControls(): AbstractControl[] {
+    return (<FormArray>this.secondFormGroup.get('phones')).controls
+  }
+
+  saverec() {
+    let map = {
+      'patientId': this.data.patientId,
+      "patientName": this.data.patientName,
+      "companyId": this.data.companyId,
+      "companyName": this.data.companyName,
+      "requestId": this.data.requestId,
+      "crmNo": this.data.crmNo,
+      "eidNo": this.data.eidNo,
+      "dateOfBirth": this.datepipe.transform(this.data.dateOfBirth, 'MM-dd-yyyy'),
+      "age": this.data.age,
+      "sex": this.data.sex,
+      "address": this.firstFormGroup.value.address,
+      "landMark": this.firstFormGroup.value.landmark,
+      "area": this.firstFormGroup.value.area,
+      "cityId": this.data.cityId,
+      "nationalityId": Number(this.data.nationalityId),
+      "mobileNo": Number(this.data.mobileNo),
+      "googleMapLink": this.firstFormGroup.value.map,
+      "stickerApplication": this.thirdFormGroup.value.stickerapp,
+      "stickerRemoval": this.thirdFormGroup.value.stickerrem,
+      "trackerApplication": this.thirdFormGroup.value.trackerapp,
+      "trackerRemoval": this.thirdFormGroup.value.trackerrem,
+      stickerTrackerAppliedNumber: this.thirdFormGroup.value.stickerano,
+      "createdBy": this.data.createdBy,
+      "modifiedBy": this.localvalues.userId,
+      "isUpdate": true,
+      "recptionCallDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
+      "recptionCallStatus": this.thirdFormGroup.value.remarkstatus,
+      "recptionCallRemarks": this.thirdFormGroup.value.remark,
+      "isReception": true,
+      "adultsCount": this.secondFormGroup.value.adults,
+      "childrensCount": this.secondFormGroup.value.childern
+    }
+
+    this.commonService.putmethod('patient', map).subscribe((data) => {
+      alert('Updated Successfully');
+      this.router.navigateByUrl('/apps/fieldallocation/nurse');
     }, err => {
       console.log(err);
     })
@@ -101,12 +207,13 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       "callStatus": visit.value,
       "remarks": remark.value,
       "emrDone": value.emrDone,
+      isPCRCall: true,
       "createdBy": this.localvalues.userId,
       "modifiedBy": this.localvalues.userId,
       "isUpdate": true
     }
 
-    this.commonService.putmethod('call', map).subscribe((data) => {
+    this.commonService.putmethod('doctor-nurse-team-call', map).subscribe((data) => {
       alert('Saved successfully');
       this.router.navigateByUrl('/apps/fieldallocation/nurse');
     }, err => {

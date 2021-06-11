@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -39,10 +40,12 @@ export class SupervisorComponent implements OnInit {
   allocatedteam: any;
   reallocatedteam: any;
 
+  selectall = false;
+
   requestarray: any[] = [];
   area: any[] = [];
 
-  constructor(private commonService: CommonService) {
+  constructor(private commonService: CommonService, private datepipe: DatePipe) {
     this.getPatent('');
     this.getUser();
     this.getreq();
@@ -125,12 +128,47 @@ export class SupervisorComponent implements OnInit {
   }
 
   getPatent(value: any) {
-    let url = '';
-    if (value === '') {
-      url = 'scheduled?isFieldAllocation=true'
+    if (value === 'submit') {
+      let url = '';
+      url = 'scheduled?isFieldAllocation=true&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' +
+        this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+
+      this.commonService.getmethod(url).subscribe((data) => {
+        this.array = data.details;
+        this.array.forEach((o: any, i) => o.id = i + 1);
+
+        this.dataSource = new MatTableDataSource(this.array);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }, err => {
+        console.log(err);
+      })
     } else {
-      url = 'scheduled?patientId=' + editvalues.patientid + '&isFieldAllocation=true'
+      let url = '';
+      if (value === '') {
+        url = 'scheduled?isFieldAllocation=true'
+      } else {
+        url = 'scheduled?patientId=' + editvalues.patientid + '&isFieldAllocation=true'
+      }
+
+      this.commonService.getmethod(url).subscribe((data) => {
+        this.array = data.details;
+        this.array.forEach((o: any, i) => o.id = i + 1);
+
+        this.dataSource = new MatTableDataSource(this.array);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      }, err => {
+        console.log(err);
+      })
     }
+  }
+
+  selectf(event: any) {
+    let url = '';
+    url = 'scheduled?isFieldAllocation=true&searchFieldAllowName=' + event.value;
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
@@ -143,11 +181,28 @@ export class SupervisorComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+
   }
 
-  selectf(event: any) {
+  clickevent(event: any) {
+    let value = event.checked;
+
+    if (value) {
+      this.selectall = true;
+      this.array.forEach((element: any) => {
+        element.click = true;
+      });
+    } else {
+      this.selectall = false;
+      this.array.forEach((element: any) => {
+        element.click = false;
+      });
+    }
+  }
+
+  selectstaus(event: any) {
     let url = '';
-    url = 'scheduled?isFieldAllocation=true&searchFieldAllowName=' + event.value;
+    url = 'scheduled?isFieldAllocation=true&serviceName=' + event.value;
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
@@ -208,8 +263,8 @@ export class SupervisorComponent implements OnInit {
   }
 
   save() {
-    this.array.forEach((element: any) => {
-      if (element.click) {
+    if (this.selectall) {
+      this.array.forEach((element: any) => {
         let map = {
           "scheduledId": element.scheduledId,
           "patientId": element.patientId,
@@ -220,8 +275,23 @@ export class SupervisorComponent implements OnInit {
         }
 
         this.finalarray.push(map);
-      }
-    });
+      });
+    } else {
+      this.array.forEach((element: any) => {
+        if (element.click) {
+          let map = {
+            "scheduledId": element.scheduledId,
+            "patientId": element.patientId,
+            "patientStaffId": "",
+            "allocatedTeamName": this.allocatedteam,
+            "reAllocatedTeamName": this.reallocatedteam,
+            "modifiedBy": this.localvalues.userId
+          }
+
+          this.finalarray.push(map);
+        }
+      });
+    }
 
     if (this.finalarray.length === 0) {
       alert('Please select the team');
