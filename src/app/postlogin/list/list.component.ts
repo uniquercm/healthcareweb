@@ -172,8 +172,10 @@ export class ListComponent implements OnInit {
       delete element['drCallId'];
       delete element['scheduledId'];
       delete element['createdBy'];
-      delete element['modifiedBy'];
-      
+      if (element.modifiedBy === undefined) { } else {
+        delete element['modifiedBy'];
+      }
+
     }
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.array);

@@ -80,28 +80,29 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   }
 
   getdata() {
-    this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
+    this.commonService.getmethod('scheduled?patientId=' + editvalues.patientid + '&?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all').subscribe((data) => {
       this.data = data.details[0];
-      this.formGroup.controls['crmType'].setValue(this.data.requestCrmName);
-      this.formGroup.controls['crmNo'].setValue(this.data.crmNo);
+      console.log(this.data)
+      this.formGroup.controls['crmType'].setValue(this.data.patientInformation.requestCrmName);
+      this.formGroup.controls['crmNo'].setValue(this.data.patientInformation.crmNo);
       this.formGroup.controls['name'].setValue(this.data.patientName);
-      this.formGroup.controls['eid'].setValue(this.data.eidNo);
-      this.formGroup.controls['mobileno'].setValue(this.data.mobileNo);
+      this.formGroup.controls['eid'].setValue(this.data.patientInformation.eidNo);
+      this.formGroup.controls['mobileno'].setValue(this.data.patientInformation.mobileNo);
 
-      this.firstFormGroup.controls['address'].setValue(this.data.address);
-      this.firstFormGroup.controls['landmark'].setValue(this.data.landMark);
-      this.firstFormGroup.controls['area'].setValue(this.data.area);
-      this.firstFormGroup.controls['region'].setValue(this.data.region);
-      this.firstFormGroup.controls['map'].setValue(this.data.googleMapLink);
+      this.firstFormGroup.controls['address'].setValue(this.data.patientInformation.address);
+      this.firstFormGroup.controls['landmark'].setValue(this.data.patientInformation.landMark);
+      this.firstFormGroup.controls['area'].setValue(this.data.patientInformation.area);
+      this.firstFormGroup.controls['region'].setValue(this.data.patientInformation.region);
+      this.firstFormGroup.controls['map'].setValue(this.data.patientInformation.googleMapLink);
 
-      this.secondFormGroup.controls['adults'].setValue(this.data.adultsCount);
-      this.secondFormGroup.controls['childern'].setValue(this.data.childrensCount);
+      this.secondFormGroup.controls['adults'].setValue(this.data.patientInformation.adultsCount);
+      this.secondFormGroup.controls['childern'].setValue(this.data.patientInformation.childrensCount);
 
-      this.thirdFormGroup.controls['stickerapp'].setValue(this.data.stickerApplication);
-      this.thirdFormGroup.controls['dischargestatus'].setValue(this.data.dischargeStatus);
-      this.thirdFormGroup.controls['trackerapp'].setValue(this.data.trackerApplication);
-      this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
-      this.thirdFormGroup.controls['stickerrem'].setValue(this.data.stickerRemoval);
+      this.thirdFormGroup.controls['stickerapp'].setValue(this.data.patientInformation.stickerApplication);
+      this.thirdFormGroup.controls['dischargestatus'].setValue(this.data.patientInformation.dischargeStatus);
+      this.thirdFormGroup.controls['trackerapp'].setValue(this.data.patientInformation.trackerApplication);
+      this.thirdFormGroup.controls['pcr'].setValue(this.data.patientInformation.pcr);
+      this.thirdFormGroup.controls['stickerrem'].setValue(this.data.patientInformation.stickerRemoval);
       if (this.thirdFormGroup.value.stickerrem === '') {
         this.srem = false;
       } else {
@@ -114,9 +115,24 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
         this.sappl = true;
       }
 
-      this.thirdFormGroup.controls['trackerrem'].setValue(this.data.trackerRemoval);
-      this.thirdFormGroup.controls['remarkstatus'].setValue(this.data.recptionCallStatus);
-      this.thirdFormGroup.controls['remark'].setValue(this.data.recptionCallRemarks);
+      this.thirdFormGroup.controls['trackerrem'].setValue(this.data.patientInformation.trackerRemoval);
+      // this.thirdFormGroup.controls['remarkstatus'].setValue(this.data.patientInformation.recptionCallStatus);
+      // this.thirdFormGroup.controls['remark'].setValue(this.data.recptionCallRemarks);
+
+      if (this.data.stickerRemovedDate !== '0001-01-01T00:00:00') {
+        this.thirdFormGroup.controls['stickerstatus'].setValue('removed');
+        this.thirdFormGroup.controls['fpspicker'].setValue(this.data.stickerRemovedDate);
+
+        this.thirdFormGroup.controls['fpspicker'].setValue(this.data.stickerano);
+
+      }
+
+      if (this.data.trackerAppliedDate !== '0001-01-01T00:00:00') {
+        this.thirdFormGroup.controls['stickerstatus'].setValue('applied');
+        this.thirdFormGroup.controls['spicker'].setValue(this.data.trackerAppliedDate);
+        this.thirdFormGroup.controls['fpspicker'].setValue(this.data.stickerrno);
+      }
+
 
     }, err => {
       console.log(err);
@@ -155,41 +171,30 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   }
 
   saverec() {
+    let value: any = editvalues.nurse;
+
     let map = {
       'patientId': this.data.patientId,
-      "patientName": this.data.patientName,
       "companyId": this.data.companyId,
-      "companyName": this.data.companyName,
-      "requestId": this.data.requestId,
-      "crmNo": this.data.crmNo,
-      "eidNo": this.data.eidNo,
-      "dateOfBirth": this.datepipe.transform(this.data.dateOfBirth, 'MM-dd-yyyy'),
-      "age": this.data.age,
-      "sex": this.data.sex,
-      "address": this.firstFormGroup.value.address,
-      "landMark": this.firstFormGroup.value.landmark,
-      "area": this.firstFormGroup.value.area,
-      "cityId": this.data.cityId,
-      "nationalityId": Number(this.data.nationalityId),
-      "mobileNo": Number(this.data.mobileNo),
-      "googleMapLink": this.firstFormGroup.value.map,
+      "scheduledId": value.scheduledId,
+      "trackerScheduleDate": this.data.trackerScheduleDate,
+      "trackerAppliedDate": this.thirdFormGroup.value.stickerstatus === 'applied' ? this.datepipe.transform(this.thirdFormGroup.value.spicker, 'MM-dd-yyyy') : '0001-01-01T00:00:00',
+      "stickerScheduleDate": this.data.stickerScheduleDate,
+      "stickerRemovedDate": this.thirdFormGroup.value.stickerstatus === 'removed' ? this.datepipe.transform(this.thirdFormGroup.value.spicker, 'MM-dd-yyyy') : '0001-01-01T00:00:00',
+      "stickerTrackerNumber": this.thirdFormGroup.value.stickerano,
+      "trackerReplacedDate": this.thirdFormGroup.value.fpspicker === '' ? '0001-01-01T00:00:00' : this.datepipe.transform(this.thirdFormGroup.value.fpspicker, 'MM-dd-yyyy'),
+      "trackerReplaceNumber": this.thirdFormGroup.value.stickerrno,
+      "stickerTrackerResult": this.thirdFormGroup.value.stickerstatus,
+      "enrolledCount": this.secondFormGroup.value.phones.length,
+      "enrolledDetails": JSON.stringify(this.secondFormGroup.value.phones),
+      "modifiedBy": this.localvalues.userId,
       "stickerApplication": this.thirdFormGroup.value.stickerapp,
       "stickerRemoval": this.thirdFormGroup.value.stickerrem,
       "trackerApplication": this.thirdFormGroup.value.trackerapp,
-      "trackerRemoval": this.thirdFormGroup.value.trackerrem,
-      stickerTrackerAppliedNumber: this.thirdFormGroup.value.stickerano,
-      "createdBy": this.data.createdBy,
-      "modifiedBy": this.localvalues.userId,
-      "isUpdate": true,
-      "recptionCallDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
-      "recptionCallStatus": this.thirdFormGroup.value.remarkstatus,
-      "recptionCallRemarks": this.thirdFormGroup.value.remark,
-      "isReception": true,
-      "adultsCount": this.secondFormGroup.value.adults,
-      "childrensCount": this.secondFormGroup.value.childern
+      "trackerRemoval": this.thirdFormGroup.value.trackerrem
     }
 
-    this.commonService.putmethod('patient', map).subscribe((data) => {
+    this.commonService.putmethod('serviceplan', map).subscribe((data) => {
       alert('Updated Successfully');
       this.router.navigateByUrl('/apps/fieldallocation/nurse');
     }, err => {

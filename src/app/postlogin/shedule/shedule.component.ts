@@ -2,10 +2,8 @@ import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { MatStepper } from '@angular/material/stepper';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
-import Swal from 'sweetalert2'
 import { editvalues } from '../commonvaribale/commonvalues';
 
 
