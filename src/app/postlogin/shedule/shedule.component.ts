@@ -95,9 +95,9 @@ export class SheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.commonService.getmethod('scheduled?patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
+    this.commonService.getmethod('scheduled?companyId' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
       if (data.details.length === 0) {
-        this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((res) => {
+        this.commonService.getmethod('patient?companyId' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((res) => {
           this.formGroup.controls['name'].setValue(res.details[0].patientName);
           this.formGroup.controls['age'].setValue(res.details[0].age);
           this.edit = false;

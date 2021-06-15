@@ -130,7 +130,7 @@ export class SupervisorComponent implements OnInit {
   getPatent(value: any) {
     if (value === 'submit') {
       let url = '';
-      url = 'scheduled?isFieldAllocation=true&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' +
+      url = 'scheduled?companyId' + this.localvalues.companyId + '&isFieldAllocation=true&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' +
         this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
       this.commonService.getmethod(url).subscribe((data) => {
@@ -147,9 +147,9 @@ export class SupervisorComponent implements OnInit {
     } else {
       let url = '';
       if (value === '') {
-        url = 'scheduled?isFieldAllocation=true'
+        url = 'scheduled?companyId' + this.localvalues.companyId + '&isFieldAllocation=true'
       } else {
-        url = 'scheduled?patientId=' + editvalues.patientid + '&isFieldAllocation=true'
+        url = 'scheduled?companyId' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isFieldAllocation=true'
       }
 
       this.commonService.getmethod(url).subscribe((data) => {
@@ -168,7 +168,7 @@ export class SupervisorComponent implements OnInit {
 
   selectf(event: any) {
     let url = '';
-    url = 'scheduled?isFieldAllocation=true&searchFieldAllowName=' + event.value;
+    url = 'scheduled?companyId' + this.localvalues.companyId + '&isFieldAllocation=true&fieldAllocationStatus=' + event.value;
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
@@ -202,7 +202,7 @@ export class SupervisorComponent implements OnInit {
 
   selectstaus(event: any) {
     let url = '';
-    url = 'scheduled?isFieldAllocation=true&serviceName=' + event.value;
+    url = 'scheduled?companyId' + this.localvalues.companyId + '&isFieldAllocation=true&serviceName=' + event.value;
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;

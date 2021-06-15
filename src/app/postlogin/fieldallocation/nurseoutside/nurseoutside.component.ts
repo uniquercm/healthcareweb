@@ -80,9 +80,9 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   }
 
   getdata() {
-    this.commonService.getmethod('scheduled?patientId=' + editvalues.patientid + '&?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all').subscribe((data) => {
+    this.commonService.getmethod('scheduled?companyId' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all').subscribe((data) => {
       this.data = data.details[0];
-      console.log(this.data)
+   
       this.formGroup.controls['crmType'].setValue(this.data.patientInformation.requestCrmName);
       this.formGroup.controls['crmNo'].setValue(this.data.patientInformation.crmNo);
       this.formGroup.controls['name'].setValue(this.data.patientName);

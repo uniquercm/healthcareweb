@@ -108,7 +108,7 @@ export class NurseComponent implements OnInit {
   }
 
   getvalue() {
-    let url = 'doctor-nurse-team-call?callName=team&callStatus=all&teamUserName=' + this.localvalues.userName;
+    let url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName=' + this.localvalues.userName;
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
@@ -140,9 +140,9 @@ export class NurseComponent implements OnInit {
     let url = '';
 
     if (name === 'call')
-      url = 'doctor-nurse-team-call?callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName;
+      url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName;
     else
-      url = 'doctor-nurse-team-call?callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName
+      url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName
         + '&serviceName=' + value.value;
 
 
@@ -173,7 +173,7 @@ export class NurseComponent implements OnInit {
 
   getPatent(value: any) {
 
-    let url = 'doctor-nurse-team-call?callName=team&callStatus=all&teamUserName=' + this.localvalues.userName + '&fromDate='
+    let url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName=' + this.localvalues.userName + '&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       + '&serviceStatus=' + value.value;
 

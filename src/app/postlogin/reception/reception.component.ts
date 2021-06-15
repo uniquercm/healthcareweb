@@ -82,7 +82,7 @@ export class ReceptionComponent implements OnInit {
   srem: any;
 
   getdata() {
-    this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
+    this.commonService.getmethod('patient?companyId' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
       this.data = data.details[0];
       this.formGroup.controls['crmType'].setValue(this.data.requestCrmName);
       this.formGroup.controls['crmNo'].setValue(this.data.crmNo);

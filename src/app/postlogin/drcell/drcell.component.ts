@@ -87,15 +87,15 @@ export class DrcellComponent implements OnInit, OnDestroy {
   }
 
   getvalue() {
-    let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
+    let url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
     if (this.router.url === '/apps/drcell') {
-      url = 'doctor-nurse-team-call?callName=doctor&callStatus=all&isFieldAllow=false';
+      url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false';
       // if (editvalues.drcallid !== 0) {
       //   // url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=true&isNurseCall=false';
       //   url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
       // }
     } else {
-      url = 'doctor-nurse-team-call?callName=nurse&callStatus=all&isFieldAllow=false';
+      url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=nurse&callStatus=all&isFieldAllow=false';
       // if (editvalues.patientid !== 0) {
       //   // url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=false&isNurseCall=true';
       //   url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false';
@@ -160,21 +160,21 @@ export class DrcellComponent implements OnInit, OnDestroy {
 
 
   getPatent(value: any) {
-    let url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+    let url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
     if (this.router.url === '/apps/drcell') {
-      url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+      url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
         + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       if (editvalues.drcallid !== 0) {
-        url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+        url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
           + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       }
     } else {
-      url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
+      url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
         + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       if (editvalues.patientid !== 0) {
-        url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
+        url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
           + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       }
     }
@@ -208,27 +208,27 @@ export class DrcellComponent implements OnInit, OnDestroy {
   statuschange(name: any, event: any) {
     let url: any = '';
     if (name === 'call') {
-      url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false'
+      url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false'
 
       if (this.router.url === '/apps/drcell') {
-        url = 'doctor-nurse-team-call?callName=doctor&callStatus=' + event.value + '&isFieldAllow=false'
+        url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=doctor&callStatus=' + event.value + '&isFieldAllow=false'
         // if (editvalues.drcallid !== 0) {
         //   url = 'doctor-nurse-team-call?callName=doctor&callStatus=' + event.value + '&isFieldAllow=false'
         // }
       } else {
-        url = 'doctor-nurse-team-call?callName=nurse&callStatus=' + event.value + '&isFieldAllow=false'
+        url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=nurse&callStatus=' + event.value + '&isFieldAllow=false'
         // if (editvalues.patientid !== 0) {
         //   url = 'doctor-nurse-team-call?callName=nurse&callStatus=' + event.value + '&isFieldAllow=false'
         // }
       }
     } else {
 
-      url = 'doctor-nurse-team-call?callName=doctor&callStatus=all&serviceStatus=' + event.value
+      url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=doctor&callStatus=all&serviceStatus=' + event.value
 
       if (this.router.url === '/apps/drcell') {
-        url = 'doctor-nurse-team-call?callName=doctor&callStatus=all&serviceStatus=' + event.value
+        url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=doctor&callStatus=all&serviceStatus=' + event.value
       } else {
-        url = 'doctor-nurse-team-call?callName=nurse&callStatus=all&serviceStatus=' + event.value
+        url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&callName=nurse&callStatus=all&serviceStatus=' + event.value
       }
 
     }

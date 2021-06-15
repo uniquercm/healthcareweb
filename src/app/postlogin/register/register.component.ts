@@ -95,7 +95,7 @@ export class RegisterComponent implements OnInit {
   }
 
   getdata() {
-    this.commonService.getmethod('patient?patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
+    this.commonService.getmethod('patient?companyId' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
       this.datas = data.details[0];
       this.form.controls['requestType'].setValue(this.datas.requestId);
       this.form.controls['crm'].setValue(this.datas.crmNo);

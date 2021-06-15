@@ -122,7 +122,7 @@ export class ListComponent implements OnInit {
   }
 
   getstatus(statuss: any) {
-    let url = 'patient?gMapLinkSatus=' + statuss.value
+    let url = 'patient?companyId' + this.localvalues.companyId + '&gMapLinkSatus=' + statuss.value
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
@@ -140,9 +140,9 @@ export class ListComponent implements OnInit {
   getPatent(value: any) {
     let url = '';
     if (value === '') {
-      url = 'patient'
+      url = 'patient?companyId' + this.localvalues.companyId
     } else {
-      url = 'patient?fromDate=' +
+      url = 'patient?companyId' + this.localvalues.companyId + '&fromDate=' +
         this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
         this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
         + '&isDoctorCall=false&isNurseCall=false'
