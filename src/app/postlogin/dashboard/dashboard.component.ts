@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { CommonService } from 'src/app/service/common.service'; 
+import { CommonService } from 'src/app/service/common.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,11 +11,11 @@ import { CommonService } from 'src/app/service/common.service';
 export class DashboardComponent implements OnInit {
 
   dashboarddetails: any;
-
+  companyarray: any[] = [];
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
   public barChartOptions: ChartOptions = {
-    responsive: true, 
+    responsive: true,
     scales: { xAxes: [{}], yAxes: [{}] },
     plugins: {
       datalabels: {
@@ -24,26 +24,28 @@ export class DashboardComponent implements OnInit {
       }
     }
   };
-  public barChartLabels: Label[] = ['Admin','Manager', 'Doctor','Nurse', 'Receptionist', 'Team'];
+  public barChartLabels: Label[] = ['Admin', 'Manager', 'Doctor', 'Nurse', 'Receptionist', 'Team'];
   public barChartType: ChartType = 'bar';
-  public barChartLegend = true; 
+  public barChartLegend = true;
 
   public barChartData: ChartDataSets[] = [
     { data: [], label: 'Count' }
   ];
   teamStatusDetailsList: any[] = [];
-  
-  constructor(private commonService: CommonService) { 
-    this.getreq();
+
+  constructor(private commonService: CommonService) {
+    this.getreq(this.localvalues.companyId);
+    this.getCompany();
   }
 
   ngOnInit(): void {
-   
+
   }
 
-  getreq() {
-    this.commonService.getmethod('dash-board?companyId=' + this.localvalues.companyId).subscribe((data) => {
-      this.dashboarddetails = data.details; 
+  getreq(url: any) {
+    console.log(url);
+    this.commonService.getmethod('dash-board?companyId=' + url).subscribe((data) => {
+      this.dashboarddetails = data.details;
       this.teamStatusDetailsList = data.details.teamStatusDetailsList;
       let array = [];
       array.push(this.dashboarddetails.allUserTypeDetails.totalAdminUserNumber);
@@ -56,8 +58,15 @@ export class DashboardComponent implements OnInit {
     }, err => {
       console.log(err);
     })
-  } 
+  }
+
+  getCompany() {
+    this.commonService.getmethod('company').subscribe((data) => {
+      this.companyarray = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
 
 }
- 
- 
+

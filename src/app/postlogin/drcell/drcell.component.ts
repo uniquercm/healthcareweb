@@ -40,10 +40,46 @@ export class DrcellComponent implements OnInit, OnDestroy {
       this.title = 'Nurse Call'; ``
     }
     this.getvalue();
+    this.getarea();
+    this.getCity();
     this.getreq();
   }
 
   ngOnInit(): void {
+  }
+
+  
+  keyword = 'areaName';
+  getarea() {
+    this.commonService.getmethod('area').subscribe((data) => {
+      let array;
+      array = data.details;
+      array.forEach((element: any) => {
+        if (element.areaName === null) {
+
+        } else if (element.areaName === undefined) {
+
+        }
+        else if (element.areaName === '') {
+
+        } else {
+          this.area.push(element)
+        }
+
+      });
+
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  city: any[] = [];
+  getCity() {
+    this.commonService.getmethod('city').subscribe((data) => {
+      this.city = data.details;
+    }, err => {
+      console.log(err);
+    })
   }
 
   selectarea(name: string, event: any) {
@@ -54,13 +90,19 @@ export class DrcellComponent implements OnInit, OnDestroy {
           farray.push(element);
         }
       });
-    } else if (name === 'area') {
+    }  else if (name === 'area') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.areaId === Number(event.value)) {
+        if (element.patientInformation.area === (event.value)) {
           farray.push(element);
         }
       });
-    } else if (name === 'status') {
+    } else if (name === 'city') {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.cityId === (event.value)) {
+          farray.push(element);
+        }
+      });
+    }  else if (name === 'status') {
       this.array.forEach((element: any) => {
         if (element.recptionCallStatus === Number(event.value)) {
           farray.push(element);
@@ -150,15 +192,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
   }
 
   area: any[] = [];
-  getarea() {
-    this.commonService.getmethod('area').subscribe((data) => {
-      this.area = data.details;
-    }, err => {
-      console.log(err);
-    })
-  }
-
-
+  
   getPatent(value: any) {
     let url = 'doctor-nurse-team-call?companyId' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')

@@ -36,6 +36,7 @@ export class ListComponent implements OnInit {
     }
     this.getarea();
     this.getreq();
+    this.getCity();
     this.getPatent('');
   }
 
@@ -61,23 +62,33 @@ export class ListComponent implements OnInit {
     })
   }
 
-  select(name: string, event: any) {
+  select(name: string, event: any) { 
+    console.log(event);
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.requestId === Number(event.value)) {
+        if (element.requestId === Number(event.value)) {
           farray.push(element);
         }
       });
     } else if (name === 'area') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.areaId === Number(event.value)) {
+        if (element.area === (event.value)) {
+          farray.push(element);
+        }
+      });
+    } else if (name === 'city') {
+      this.array.forEach((element: any) => {
+        if (element.cityId === (event.value)) {
           farray.push(element);
         }
       });
     } else if (name === 'status') {
+      if (event.value === 'all') {
+        return;
+      }
       this.array.forEach((element: any) => {
-        if (element.recptionCallStatus === Number(event.value)) {
+        if (element.recptionCallStatus === (event.value)) {
           farray.push(element);
         }
       });
@@ -94,7 +105,7 @@ export class ListComponent implements OnInit {
         }
       });
     }
-
+     
     this.dataSource = new MatTableDataSource(farray);
 
     this.dataSource.paginator = this.paginator;
@@ -140,9 +151,9 @@ export class ListComponent implements OnInit {
   getPatent(value: any) {
     let url = '';
     if (value === '') {
-      url = 'patient?companyId' + this.localvalues.companyId
+      url = 'patient?companyId=' + this.localvalues.companyId
     } else {
-      url = 'patient?companyId' + this.localvalues.companyId + '&fromDate=' +
+      url = 'patient?companyId=' + this.localvalues.companyId + '&fromDate=' +
         this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
         this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
         + '&isDoctorCall=false&isNurseCall=false'
@@ -187,13 +198,37 @@ export class ListComponent implements OnInit {
 
   }
 
+  
+  keyword = 'areaName';
   getarea() {
     this.commonService.getmethod('area').subscribe((data) => {
-      this.area = data.details;
+       let array;
+      array = data.details; 
+      array.forEach((element: any) => {
+        if (element.areaName === null) {
+
+        } else if (element.areaName === undefined) {
+
+        }
+        else if (element.areaName === '') {
+
+        } else {
+          this.area.push(element)
+        }
+
+      });
+
     }, err => {
       console.log(err);
     })
   }
 
-
+  city: any[] = [];
+  getCity() {
+    this.commonService.getmethod('city').subscribe((data) => {
+      this.city = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
 }

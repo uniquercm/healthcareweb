@@ -31,6 +31,7 @@ export class ReceptionComponent implements OnInit {
       mobileno: ['', Validators.nullValidator]
     });
 
+    this.getarea();
     this.getcity();
 
     this.firstFormGroup = this._formBuilder.group({
@@ -78,6 +79,15 @@ export class ReceptionComponent implements OnInit {
 
   }
 
+
+  keyword = 'areaName';
+  areas = '';
+  select(event: any) {
+    console.log(event);
+    // this.firstFormGroup.controls['area'].setValue(event.areaName);
+    this.areas = event.areaName;
+  }
+
   sappl: any;
   srem: any;
 
@@ -89,8 +99,8 @@ export class ReceptionComponent implements OnInit {
       this.formGroup.controls['name'].setValue(this.data.patientName);
       this.formGroup.controls['eid'].setValue(this.data.eidNo);
       this.formGroup.controls['mobileno'].setValue(this.data.mobileNo);
-      this.formGroup.controls['addstatus'].setValue(this.data.dischargeStatus);
-      
+      this.firstFormGroup.controls['addstatus'].setValue(this.data.dischargeStatus);
+
 
       this.firstFormGroup.controls['address'].setValue(this.data.address);
       this.firstFormGroup.controls['landmark'].setValue(this.data.landMark);
@@ -134,6 +144,7 @@ export class ReceptionComponent implements OnInit {
   }
 
   save() {
+
     let map = {
       'patientId': this.data.patientId,
       "patientName": this.data.patientName,
@@ -147,8 +158,8 @@ export class ReceptionComponent implements OnInit {
       "sex": this.data.sex,
       "address": this.firstFormGroup.value.address,
       "landMark": this.firstFormGroup.value.landmark,
-      "area": this.firstFormGroup.value.area,
-      "cityId": this.data.cityId,
+      "area": this.firstFormGroup.value.area.areaName,
+      "cityId": this.firstFormGroup.value.region,
       "nationalityId": Number(this.data.nationalityId),
       "mobileNo": Number(this.data.mobileNo),
       "googleMapLink": this.firstFormGroup.value.map,
@@ -157,7 +168,7 @@ export class ReceptionComponent implements OnInit {
       "trackerApplication": this.thirdFormGroup.value.trackerapp,
       "trackerRemoval": this.thirdFormGroup.value.trackerrem,
       "createdBy": this.data.createdBy,
-      stickerTrackerAppliedNumber: this.thirdFormGroup.value.stickerano,
+      "stickerTrackerAppliedNumber": this.thirdFormGroup.value.stickerano,
       "modifiedBy": this.localvalues.userId,
       "isUpdate": true,
       "recptionCallDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
@@ -171,6 +182,31 @@ export class ReceptionComponent implements OnInit {
     this.commonService.putmethod('patient', map).subscribe((data) => {
       alert('Updated Successfully');
       this.router.navigateByUrl('/apps/list')
+    }, err => {
+      console.log(err);
+    })
+  }
+
+
+  area: any[] = [];
+  getarea() {
+    this.commonService.getmethod('area').subscribe((data) => {
+      let array;
+      array = data.details;
+      array.forEach((element: any) => {
+        if (element.areaName === null) {
+
+        } else if (element.areaName === undefined) {
+
+        }
+        else if (element.areaName === '') {
+
+        } else {
+          this.area.push(element)
+        }
+
+      });
+
     }, err => {
       console.log(err);
     })

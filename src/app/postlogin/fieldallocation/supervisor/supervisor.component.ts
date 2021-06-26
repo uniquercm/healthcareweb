@@ -50,6 +50,7 @@ export class SupervisorComponent implements OnInit {
     this.getUser();
     this.getreq();
     this.getarea();
+    this.getCity();
   }
 
   ngOnInit(): void {
@@ -59,7 +60,7 @@ export class SupervisorComponent implements OnInit {
 
   }
 
-  select(name: string, event: any) {
+  select(name: string, event: any) { 
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
@@ -67,13 +68,19 @@ export class SupervisorComponent implements OnInit {
           farray.push(element);
         }
       });
-    } else {
+    } else if (name === 'area') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.areaId === Number(event.value)) {
+        if (element.patientInformation.area === (event.value)) {
           farray.push(element);
         }
       });
-    }
+    } else if (name === 'city') {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.cityId === (event.value)) {
+          farray.push(element);
+        }
+      });
+    }  
 
     this.dataSource = new MatTableDataSource(farray);
 
@@ -119,13 +126,6 @@ export class SupervisorComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  getarea() {
-    this.commonService.getmethod('area').subscribe((data) => {
-      this.area = data.details;
-    }, err => {
-      console.log(err);
-    })
-  }
 
   getPatent(value: any) {
     if (value === 'submit') {
@@ -260,6 +260,41 @@ export class SupervisorComponent implements OnInit {
 
   rechange(event: any) {
     this.reallocatedteam = event.value;
+  }
+
+
+
+  keyword = 'areaName';
+  getarea() {
+    this.commonService.getmethod('area').subscribe((data) => {
+      let array;
+      array = data.details;
+      array.forEach((element: any) => {
+        if (element.areaName === null) {
+
+        } else if (element.areaName === undefined) {
+
+        }
+        else if (element.areaName === '') {
+
+        } else {
+          this.area.push(element)
+        }
+
+      });
+
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  city: any[] = [];
+  getCity() {
+    this.commonService.getmethod('city').subscribe((data) => {
+      this.city = data.details;
+    }, err => {
+      console.log(err);
+    })
   }
 
   save() {

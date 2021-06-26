@@ -31,6 +31,8 @@ export class NurseComponent implements OnInit {
   constructor(private router: Router, private commonService: CommonService, public datepipe: DatePipe) {
     this.getvalue();
     this.getreq();
+    this.getarea();
+    this.getCity();
   }
 
   ngOnInit(): void {
@@ -53,13 +55,19 @@ export class NurseComponent implements OnInit {
           farray.push(element);
         }
       });
-    } else if (name === 'area') {
+    }  else if (name === 'area') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.areaId === Number(event.value)) {
+        if (element.patientInformation.area === (event.value)) {
           farray.push(element);
         }
       });
-    } else if (name === 'status') {
+    } else if (name === 'city') {
+      this.array.forEach((element: any) => {
+        if (element.patientInformation.cityId === (event.value)) {
+          farray.push(element);
+        }
+      });
+    }  else if (name === 'status') {
       this.array.forEach((element: any) => {
         if (element.recptionCallStatus === Number(event.value)) {
           farray.push(element);
@@ -86,14 +94,39 @@ export class NurseComponent implements OnInit {
   }
 
   area: any = [];
+ 
+  keyword = 'areaName';
   getarea() {
     this.commonService.getmethod('area').subscribe((data) => {
-      this.area = data.details;
+      let array;
+      array = data.details;
+      array.forEach((element: any) => {
+        if (element.areaName === null) {
+
+        } else if (element.areaName === undefined) {
+
+        }
+        else if (element.areaName === '') {
+
+        } else {
+          this.area.push(element)
+        }
+
+      });
+
     }, err => {
       console.log(err);
     })
   }
 
+  city: any[] = [];
+  getCity() {
+    this.commonService.getmethod('city').subscribe((data) => {
+      this.city = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
 
   clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
     input.value = '';

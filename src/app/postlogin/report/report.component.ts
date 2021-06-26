@@ -33,7 +33,10 @@ export class ReportComponent implements OnInit {
 
   requestarray: any[] = [];
 
-  constructor(private commonService: CommonService, public datepipe: DatePipe) { }
+  constructor(private commonService: CommonService, public datepipe: DatePipe) { 
+    this.getarea();
+    this.getCity();
+  }
 
   ngOnInit(): void {
     this.getreq('', '', '');
@@ -52,13 +55,41 @@ export class ReportComponent implements OnInit {
     })
   }
 
-  select(event: any) {
+  // select(event: any) {
+  //   let farray: any = [];
+  //   this.reportarray.forEach((element: any) => {
+  //     if (element.requestId === Number(event.value)) {
+  //       farray.push(element);
+  //     }
+  //   });
+
+  //   this.dataSource = new MatTableDataSource(farray);
+
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
+
+  select(name: string, event: any) { 
     let farray: any = [];
-    this.reportarray.forEach((element: any) => {
-      if (element.requestId === Number(event.value)) {
-        farray.push(element);
-      }
-    });
+    if (name === 'case') {
+      this.reportarray.forEach((element: any) => {
+        if (element.requestId === Number(event.value)) {
+          farray.push(element);
+        }
+      });
+    } else if (name === 'area') {
+      this.reportarray.forEach((element: any) => {
+        if (element.area === (event.value)) {
+          farray.push(element);
+        }
+      });
+    } else if (name === 'city') {
+      this.reportarray.forEach((element: any) => {
+        if (element.cityId === (event.value)) {
+          farray.push(element);
+        }
+      });
+    }  
 
     this.dataSource = new MatTableDataSource(farray);
 
@@ -189,5 +220,41 @@ export class ReportComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  
+
+  keyword = 'areaName';
+  getarea() {
+    this.commonService.getmethod('area').subscribe((data) => {
+      let array;
+      array = data.details;
+      array.forEach((element: any) => {
+        if (element.areaName === null) {
+
+        } else if (element.areaName === undefined) {
+
+        }
+        else if (element.areaName === '') {
+
+        } else {
+          this.area.push(element)
+        }
+
+      });
+
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  area: any[] = [];
+  city: any[] = [];
+  getCity() {
+    this.commonService.getmethod('city').subscribe((data) => {
+      this.city = data.details;
+    }, err => {
+      console.log(err);
+    })
   }
 }
