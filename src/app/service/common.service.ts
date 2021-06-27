@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'; 
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
+import { loader } from '../postlogin/commonvaribale/commonvalues';
 
 @Injectable({
   providedIn: 'root'
@@ -43,17 +44,21 @@ export class CommonService {
   }
 
   getmethod(url: string): Observable<any> {
+    loader.loading = true;
     return this.httpClient.get<any>(environment.url + url).pipe(
       map(response => {
+       loader.loading = false;
         return this.onSuccess(response);
       }),
       catchError(err => {
+       loader.loading = false;
         return this.onError(err);
       })
     );
   }
 
   login(url: string, obj: any): Observable<any> {
+    loader.loading = true;
     let httpOptio = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -63,27 +68,33 @@ export class CommonService {
 
     return this.httpClient.post<any>(environment.url + url, obj, httpOptio).pipe(
       map(response => {
+       loader.loading = false;
         return this.onSuccess(response);
       }),
       catchError(err => {
+       loader.loading = false;
         return this.onError(err);
       })
     );
   }
 
   postmethod(url: string, obj: any): Observable<any> {
+    loader.loading = true;
     this.getAccessToken();
     return this.httpClient.post(environment.url + url, obj, this.httpOptions).pipe(
       map(response => {
+       loader.loading = false;
         return this.onSuccess(response);
       }),
       catchError(err => {
+       loader.loading = false;
         return this.onError(err);
       })
     );
   }
 
   postmethodformultiparu(url: string, obj: any): Observable<any> {
+    loader.loading = true;
     if (localStorage.getItem('currentUser') !== null)
       this.value = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
@@ -96,27 +107,33 @@ export class CommonService {
 
     return this.httpClient.post(environment.url + url, obj, this.httpOptions).pipe(
       map(response => {
+       loader.loading = false;
         return this.onSuccess(response);
       }),
       catchError(err => {
+       loader.loading = false;
         return this.onError(err);
       })
     );
   }
 
   putmethod(url: string, obj: any): Observable<any> {
+    loader.loading = true;
     this.getAccessToken();
     return this.httpClient.put(environment.url + url, obj, this.httpOptions).pipe(
       map(response => {
+       loader.loading = false;
         return this.onSuccess(response);
       }),
       catchError(err => {
+       loader.loading = false;
         return this.onError(err);
       })
     );
   }
 
   deletemethod(url: string, obj: any): Observable<any> {
+    loader.loading = true;
     let httpOption = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -125,9 +142,11 @@ export class CommonService {
     };
     return this.httpClient.delete(environment.url + url, httpOption).pipe(
       map(response => {
+       loader.loading = false;
         return this.onSuccess(response);
       }),
       catchError(err => {
+       loader.loading = false;
         return this.onError(err);
       })
     );

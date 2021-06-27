@@ -18,7 +18,6 @@
                 </mat-form-field>
             </div>
 
-
             <mat-form-field class="col-4 ml-5" style="width: auto;">
                 <mat-label>Name</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
@@ -60,7 +59,7 @@
                 </ng-template>
             </div>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 10%;" appearance="outline">
                 <mat-label> Region </mat-label>
                 <mat-select (selectionChange)="select('city', $event.value)" #region>
                     <mat-option *ngFor="let value of city" [value]="value.cityId">
@@ -68,6 +67,23 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field class="col-4" style="width: 20%;" appearance="outline">
+                <mat-label>Extract Data</mat-label>
+                <mat-select #extract (selectionChange)="getreq('extract', $event, sent.value)">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="yes">Yes</mat-option>
+                    <mat-option value="no"> No</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-4" style="width: 20%;" appearance="outline">
+                <mat-label>Sent Claim</mat-label>
+                <mat-select #sent (selectionChange)="getreq('sent', extract.value, $event)">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="yes">Yes</mat-option>
+                    <mat-option value="no"> No</mat-option>
+                </mat-select>
+            </mat-form-field>
 
             <div class="col-3" style="width: auto;">
                 <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
@@ -96,7 +112,7 @@
 
             </div>
 
-            <div class="col-6 row">
+            <!-- <div class="col-6 row">
                 <mat-form-field class="col-6" appearance="outline">
                     <mat-label>Extract Data</mat-label>
                     <mat-select #extract (selectionChange)="getreq('extract', $event, sent.value)">
@@ -114,7 +130,7 @@
                         <mat-option value="no"> No</mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> -->
         </div>
 
         <div class="ml-2 mr-2 mb-4">

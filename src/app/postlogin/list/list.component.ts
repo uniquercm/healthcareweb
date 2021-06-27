@@ -48,7 +48,7 @@ export class ListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
- 
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -63,19 +63,22 @@ export class ListComponent implements OnInit {
   }
 
   delete(element: any) {
-    let map = {
-      "id": element.patientId,
-      "deletedBy": this.localvalues.userName
-    }
+    if (confirm("Are you sure to Delete")) {
+      let map = {
+        "id": element.patientId,
+        "deletedBy": this.localvalues.userName
+      }
 
-    this.commonService.deletemethod('patient', map).subscribe((data) => {
-      alert('Deleted Successfully');
-    }, err => {
-      console.log(err);
-    })
+      this.commonService.deletemethod('patient', map).subscribe((data) => {
+        alert('Deleted Successfully');
+        this.getPatent('');
+      }, err => {
+        console.log(err);
+      })
+    }
   }
 
-  select(name: string, event: any) { 
+  select(name: string, event: any) {
     console.log(event);
     let farray: any = [];
     if (name === 'case') {
@@ -118,7 +121,7 @@ export class ListComponent implements OnInit {
         }
       });
     }
-     
+
     this.dataSource = new MatTableDataSource(farray);
 
     this.dataSource.paginator = this.paginator;
@@ -172,7 +175,7 @@ export class ListComponent implements OnInit {
   }
 
   getchange(event: any) {
-    this.companyid =event;
+    this.companyid = event;
     this.getPatent('');
   }
 
@@ -226,12 +229,12 @@ export class ListComponent implements OnInit {
 
   }
 
-  
+
   keyword = 'areaName';
   getarea() {
     this.commonService.getmethod('area').subscribe((data) => {
-       let array;
-      array = data.details; 
+      let array;
+      array = data.details;
       array.forEach((element: any) => {
         if (element.areaName === null) {
 

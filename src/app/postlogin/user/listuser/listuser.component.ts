@@ -13,7 +13,7 @@ import { edituser } from '../../commonvaribale/commonvalues';
 })
 export class ListuserComponent implements OnInit {
   array = [];
-  displayedColumns: string[] = ['uname', 'password', 'usertype', 'cname', 'edit'];
+  displayedColumns: string[] = ['uname', 'password', 'usertype', 'edit'];
   dataSource: any = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
@@ -30,6 +30,7 @@ export class ListuserComponent implements OnInit {
 
   constructor(private router: Router, private commonService: CommonService) { 
     this.getuser();
+    this.getCompany();
   }
 
   ngOnInit(): void {
@@ -42,12 +43,27 @@ export class ListuserComponent implements OnInit {
   }
 
   getuser() {
-    this.commonService.getmethod('user').subscribe((data) => {
+    this.commonService.getmethod('user?companyId=' + this.companyid).subscribe((data) => {
       this.array = data.details;
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  getchange(event: any) {
+    this.companyid = event;
+    this.getuser();
+  }
+
+  companyid: any = this.localvalues.companyId;
+  companyarray: any[] = [];
+  getCompany() {
+    this.commonService.getmethod('company').subscribe((data) => {
+      this.companyarray = data.details;
     }, err => {
       console.log(err);
     })
@@ -59,15 +75,19 @@ export class ListuserComponent implements OnInit {
   }
 
   delete(element: any) {
-    let map = {
-      "id": element.userId,
-      "deletedBy": this.localvalues.userName
+    if (confirm("Are you sure to Delete")) {
+      let map = {
+        "id": element.userId,
+        "deletedBy": this.localvalues.userName
+      }
+  
+      this.commonService.deletemethod('user', map).subscribe((data) => {
+        alert('Deleted Successfully');
+        this.getuser();
+      }, err => {
+        console.log(err);
+      })
     }
-
-    this.commonService.deletemethod('user', map).subscribe((data) => {
-      alert('Deleted Successfully');
-    }, err => {
-      console.log(err);
-    })
+    
   }
 }

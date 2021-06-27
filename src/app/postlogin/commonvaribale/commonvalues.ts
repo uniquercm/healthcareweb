@@ -8,3 +8,9 @@ export const editvalues = {
 export const edituser = { 
     edit: {}
 }
+
+export const loader = { 
+    loading: {}
+}
+
+

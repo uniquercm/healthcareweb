@@ -1,20 +1,21 @@
-import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { ChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DemoMaterialModule } from './sharedmodule/material.module';
-import { LoginComponent } from './prelogin/login/login.component'; 
-import { CommonService } from './service/common.service';
-import { HttpClientModule } from '@angular/common/http';
-import { UserComponent } from './postlogin/user/user.component';
+import { AreaComponent } from './postlogin/area/area.component';
 import { DashboardComponent } from './postlogin/dashboard/dashboard.component';
+import { UserComponent } from './postlogin/user/user.component';
 import { WelcomeComponent } from './postlogin/welcome/welcome.component';
-import { ChartsModule } from 'ng2-charts';
-import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-import { AreaComponent } from './postlogin/area/area.component'; 
+import { LoginComponent } from './prelogin/login/login.component';
+import { CommonService } from './service/common.service';
+import { LoadingComponent } from './sharedmodule/loading/loading.component';
+import { DemoMaterialModule } from './sharedmodule/material.module';
+
  
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AreaComponent } from './postlogin/area/area.component';
     UserComponent,
     DashboardComponent,
     WelcomeComponent,
-    AreaComponent 
+    AreaComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -34,11 +36,12 @@ import { AreaComponent } from './postlogin/area/area.component';
     ReactiveFormsModule,
     FormsModule,
     ChartsModule,
-    AutocompleteLibModule
+    AutocompleteLibModule 
   ],
   providers: [
     CommonService
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -160,7 +160,9 @@ export class LayoutComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigateByUrl('/login');
+    if (confirm("Are you sure to Logout")) {
+      this.router.navigateByUrl('/login');
+    }
   }
 
 }

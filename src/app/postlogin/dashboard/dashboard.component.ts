@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { CommonService } from 'src/app/service/common.service';
+import { loader } from '../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,6 +35,7 @@ export class DashboardComponent implements OnInit {
   teamStatusDetailsList: any[] = [];
 
   constructor(private commonService: CommonService) {
+    loader.loading = true;
     this.getreq(this.localvalues.companyId);
     this.getCompany();
   }
@@ -42,8 +44,8 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  getreq(url: any) {
-    console.log(url);
+  getreq(url: any) { 
+    loader.loading = true;
     this.commonService.getmethod('dash-board?companyId=' + url).subscribe((data) => {
       this.dashboarddetails = data.details;
       this.teamStatusDetailsList = data.details.teamStatusDetailsList;
@@ -55,6 +57,7 @@ export class DashboardComponent implements OnInit {
       array.push(this.dashboarddetails.allUserTypeDetails.totalReceptionistUserNumber);
       array.push(this.dashboarddetails.allUserTypeDetails.totalTeamUserNumber);
       this.barChartData[0].data = array;
+      loader.loading = false;
     }, err => {
       console.log(err);
     })
