@@ -139,7 +139,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
         this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
         this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
-        // this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+        this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
         // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
         this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
         this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
@@ -264,13 +264,13 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
     this.thirdFormGroup.controls['eightpicker'].setValue(thpicker);
 
-    // let fppicker: Date = date.value;
-    // fppicker.setDate(fppicker.getDate() + 4 - 3);
+    let fppicker: Date = date.value;
+    fppicker.setDate(fppicker.getDate() + 4 - 3);
 
-    // this.thirdFormGroup.controls['fppicker'].setValue(fppicker);
+    this.thirdFormGroup.controls['fppicker'].setValue(fppicker);
 
     let fivepicker: Date = date.value;
-    fivepicker.setDate(fivepicker.getDate() + 5 - 3);
+    fivepicker.setDate(fivepicker.getDate() + 5 - 4);
 
     this.thirdFormGroup.controls['fivepicker'].setValue(fivepicker);
 
@@ -466,7 +466,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         "isUpdate": true
       }
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
-        alert('Updates Sucessfully');
+        alert('Updated Sucessfully');
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);

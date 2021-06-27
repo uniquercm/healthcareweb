@@ -302,39 +302,35 @@
                         </div>
 
 
-                        <!-- <div class="col-lg-3 col-md-2 col-sm-12">
+                        <div class="col-lg-3 col-md-2 col-sm-12">
                             <mat-card class="quar">
                                 <mat-card-header>
-                                    4 day PCR
+                                    4 day Nurse Call
                                 </mat-card-header>
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="fppicker" #fourndate [disabled]="disablevalue"
-                                            formControlName="fppicker">
+                                        <input matInput [matDatepicker]="fppicker" #fourndate [disabled]="disablevalue" formControlName="fppicker">
                                         <mat-datepicker-toggle matSuffix [for]="fppicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fppicker disabled="true"></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
-                                        <mat-label>Sampled Date</mat-label>
-                                        <input matInput [matDatepicker]="fpspicker" [disabled]="disablevalue"
-                                            formControlName="fpspicker">
-                                        <mat-datepicker-toggle matSuffix [for]="fpspicker"></mat-datepicker-toggle>
-                                        <mat-datepicker touchUi #fpspicker disabled="true"></mat-datepicker>
-                                    </mat-form-field>
-
-
-                                    <mat-form-field class="full-width" appearance="outline">
-                                        <mat-label>Result 4 PCR</mat-label>
+                                        <mat-label>Call Status</mat-label>
                                         <mat-select formControlName="resultpcr" [disabled]="disablevalue">
-                                            <mat-option value='positive'>Positive </mat-option>
-                                            <mat-option value='negative'> Negative</mat-option>
+                                            <mat-option value='called'>Called </mat-option>
+                                            <mat-option value='pending'> Pending</mat-option>
                                         </mat-select>
                                     </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Remarks</mat-label>
+                                        <textarea matInput readonly formControlName="fpspicker"></textarea>
+                                    </mat-form-field>
+
                                 </div>
                             </mat-card>
-                        </div> -->
+                        </div>
 
                         <div class="col-lg-3 col-md-2 col-sm-12">
                             <mat-card class="quar">
