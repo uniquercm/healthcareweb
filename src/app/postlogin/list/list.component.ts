@@ -37,6 +37,7 @@ export class ListComponent implements OnInit {
     this.getarea();
     this.getreq();
     this.getCity();
+    this.getCompany();
     this.getPatent('');
   }
 
@@ -133,7 +134,7 @@ export class ListComponent implements OnInit {
   }
 
   getstatus(statuss: any) {
-    let url = 'patient?companyId' + this.localvalues.companyId + '&gMapLinkSatus=' + statuss.value
+    let url = 'patient?companyId' + this.companyid + '&gMapLinkSatus=' + statuss.value
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
@@ -148,12 +149,27 @@ export class ListComponent implements OnInit {
     })
   }
 
+  companyid: any = this.localvalues.companyId;
+  companyarray: any[] = [];
+  getCompany() {
+    this.commonService.getmethod('company').subscribe((data) => {
+      this.companyarray = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  getchange(event: any) {
+    this.companyid =event;
+    this.getPatent('');
+  }
+
   getPatent(value: any) {
     let url = '';
     if (value === '') {
-      url = 'patient?companyId=' + this.localvalues.companyId
+      url = 'patient?companyId=' + this.companyid
     } else {
-      url = 'patient?companyId=' + this.localvalues.companyId + '&fromDate=' +
+      url = 'patient?companyId=' + this.companyid + '&fromDate=' +
         this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
         this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
         + '&isDoctorCall=false&isNurseCall=false'

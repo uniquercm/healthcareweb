@@ -10,15 +10,14 @@
 
         <div class="example-spacer"> </div>
 
-        <button mat-button class="example-icon" *ngFor="let value of array"
-            aria-label="Example icon-button with menu icon" [routerLink]="value.url">
+        <button mat-button class="example-icon" *ngFor="let value of array" aria-label="Example icon-button with menu icon" [routerLink]="value.url">
             {{value.name}}
         </button>
 
         <span class="example-spacer"></span>
 
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
-            (click)="logout()">
+        <button mat-icon-button class="example-icon mr-5" aria-label="Example icon-button with share icon" (click)="logout()">
+            {{localvalues.userName}}
             <mat-icon>power_settings_new</mat-icon>
         </button>
 
