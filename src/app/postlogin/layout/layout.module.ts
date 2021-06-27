@@ -19,6 +19,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { ListuserComponent } from '../user/listuser/listuser.component';
 
 
 
@@ -27,6 +28,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     LayoutComponent,
     RegisterComponent,
     ListComponent,
+    ListuserComponent,
     ReceptionComponent,
     DrcellComponent,
     ReportComponent,

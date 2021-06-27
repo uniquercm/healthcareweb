@@ -48,8 +48,7 @@ export class ListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
-
+ 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -58,6 +57,19 @@ export class ListComponent implements OnInit {
   getreq() {
     this.commonService.getmethod('requestCRM').subscribe((data) => {
       this.requestarray = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  delete(element: any) {
+    let map = {
+      "id": element.patientId,
+      "deletedBy": this.localvalues.userName
+    }
+
+    this.commonService.deletemethod('patient', map).subscribe((data) => {
+      alert('Deleted Successfully');
     }, err => {
       console.log(err);
     })

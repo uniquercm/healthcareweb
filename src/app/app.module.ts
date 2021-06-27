@@ -14,7 +14,7 @@ import { DashboardComponent } from './postlogin/dashboard/dashboard.component';
 import { WelcomeComponent } from './postlogin/welcome/welcome.component';
 import { ChartsModule } from 'ng2-charts';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-import { AreaComponent } from './postlogin/area/area.component';
+import { AreaComponent } from './postlogin/area/area.component'; 
  
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { AreaComponent } from './postlogin/area/area.component';
     UserComponent,
     DashboardComponent,
     WelcomeComponent,
-    AreaComponent, 
+    AreaComponent 
   ],
   imports: [
     BrowserModule,

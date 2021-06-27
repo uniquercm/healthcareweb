@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core'; 
+import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
@@ -27,33 +27,33 @@ export class CommonService {
 
   constructor(private httpClient: HttpClient) {
     this.value = '';
-   }
-
-  getAccessToken() {
-    if (localStorage.getItem('currentUser') !== null)  
-      this.value = JSON.parse(localStorage.getItem('currentUser') || '{}');
-
-      this.httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          // 'Authorization': 'Bearer ' + this.value.jwToken
-        }),
-        body: {}
-      }; 
   }
 
-  getmethod(url: string): Observable<any> { 
+  getAccessToken() {
+    if (localStorage.getItem('currentUser') !== null)
+      this.value = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // 'Authorization': 'Bearer ' + this.value.jwToken
+      }),
+      body: {}
+    };
+  }
+
+  getmethod(url: string): Observable<any> {
     return this.httpClient.get<any>(environment.url + url).pipe(
-      map(response => { 
+      map(response => {
         return this.onSuccess(response);
       }),
-      catchError(err => { 
+      catchError(err => {
         return this.onError(err);
-        })
+      })
     );
   }
 
-  login(url: string, obj: any): Observable<any> { 
+  login(url: string, obj: any): Observable<any> {
     let httpOptio = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -62,74 +62,91 @@ export class CommonService {
     };
 
     return this.httpClient.post<any>(environment.url + url, obj, httpOptio).pipe(
-      map(response => { 
+      map(response => {
         return this.onSuccess(response);
       }),
-      catchError(err => { 
+      catchError(err => {
         return this.onError(err);
-        })
+      })
     );
   }
 
-  postmethod(url: string, obj: any): Observable<any> { 
+  postmethod(url: string, obj: any): Observable<any> {
     this.getAccessToken();
     return this.httpClient.post(environment.url + url, obj, this.httpOptions).pipe(
-      map(response => { 
+      map(response => {
         return this.onSuccess(response);
       }),
-      catchError(err => { 
+      catchError(err => {
         return this.onError(err);
-        })
-    ); 
+      })
+    );
   }
 
-  postmethodformultiparu(url: string, obj: any): Observable<any> { 
-    if (localStorage.getItem('currentUser') !== null)  
-    this.value = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  postmethodformultiparu(url: string, obj: any): Observable<any> {
+    if (localStorage.getItem('currentUser') !== null)
+      this.value = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
     this.httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
         // 'Authorization': 'Bearer ' + this.value.jwToken/
       })
-    }; 
+    };
 
     return this.httpClient.post(environment.url + url, obj, this.httpOptions).pipe(
-      map(response => { 
+      map(response => {
         return this.onSuccess(response);
       }),
-      catchError(err => { 
+      catchError(err => {
         return this.onError(err);
-        })
-    ); 
-  }
-  
-  putmethod(url: string, obj: any): Observable<any> { 
-    this.getAccessToken();
-    return this.httpClient.put(environment.url + url, obj, this.httpOptions).pipe(
-      map(response => { 
-        return this.onSuccess(response);
-      }),
-      catchError(err => { 
-        return this.onError(err);
-        })
-    ); 
+      })
+    );
   }
 
-  deleteMethod(url: string) { 
-    if (localStorage.getItem('currentUser') !== null)  
-    this.value = JSON.parse(localStorage.getItem('currentUser') || '{}');
+  putmethod(url: string, obj: any): Observable<any> {
+    this.getAccessToken();
+    return this.httpClient.put(environment.url + url, obj, this.httpOptions).pipe(
+      map(response => {
+        return this.onSuccess(response);
+      }),
+      catchError(err => {
+        return this.onError(err);
+      })
+    );
+  }
+
+  deletemethod(url: string, obj: any): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: obj
+    };
+    return this.httpClient.delete(environment.url + url, httpOption).pipe(
+      map(response => {
+        return this.onSuccess(response);
+      }),
+      catchError(err => {
+        return this.onError(err);
+      })
+    );
+  }
+
+  deleteMethod(url: string, map: any) {
+    if (localStorage.getItem('currentUser') !== null)
+      this.value = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer ' + this.value.jwToken
       }),
-      body: {}
-    }; 
+      body: map
+    };
 
-    return this.httpClient.delete<any>(environment.url + url, this.httpOptions).pipe(
-      map(response => { 
+    return this.httpClient.delete(environment.url + url, this.httpOptions).pipe(
+      map((response: any) => {
         return this.onSuccess(response);
       }),
       catchError(error => {
@@ -143,7 +160,7 @@ export class CommonService {
     * onSuccess
     * @param response
     */
-   private onSuccess(response: any): any {
+  private onSuccess(response: any): any {
     return response;
   }
 

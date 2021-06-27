@@ -11,6 +11,7 @@ import { ReceptionComponent } from '../reception/reception.component';
 import { RegisterComponent } from '../register/register.component';
 import { ReportComponent } from '../report/report.component';
 import { SheduleComponent } from '../shedule/shedule.component';
+import { ListuserComponent } from '../user/listuser/listuser.component';
 import { UserComponent } from '../user/user.component';
 import { WelcomeComponent } from '../welcome/welcome.component';
 import { LayoutComponent } from './layout.component';
@@ -76,6 +77,14 @@ const routes: Routes = [
 			{
 				path: 'user',
 				component: UserComponent
+			},
+			{
+				path: 'edit-user',
+				component: UserComponent
+			},
+			{
+				path: 'userlist',
+				component: ListuserComponent
 			},
 			{
 				path: 'area',

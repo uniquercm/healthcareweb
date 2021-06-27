@@ -7,8 +7,8 @@
     <mat-card>
         <div class="row">
 
-            <div *ngIf="localvalues.userType==1">
-                <mat-form-field style="width: 10%;">
+            <div *ngIf="localvalues.userType==1" style="width: 10%;">
+                <mat-form-field>
                     <mat-label>Select Company</mat-label>
                     <mat-select (selectionChange)="getchange($event.value)">
                         <mat-option [value]="value.companyId" *ngFor="let value of companyarray">
@@ -215,7 +215,7 @@
                         <th mat-header-cell *matHeaderCellDef> Edit </th>
                         <td mat-cell *matCellDef="let element">
                             <img src="https://img.icons8.com/color/48/000000/edit-property.png" (click)="change(element)" [routerLink]="['/apps/home']" style="width: 25px;" />
-                            <!-- <img src="https://img.icons8.com/color/48/000000/delete-property.png" style="width: 25px;" /> -->
+                            <img src="https://img.icons8.com/color/48/000000/delete-property.png" (click)="delete(element)" style="width: 25px;" />
                         </td>
                     </ng-container>
 

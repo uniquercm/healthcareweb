@@ -36,6 +36,7 @@ export class ReportComponent implements OnInit {
   constructor(private commonService: CommonService, public datepipe: DatePipe) { 
     this.getarea();
     this.getCity();
+    this.getCompany();
   }
 
   ngOnInit(): void {
@@ -68,6 +69,22 @@ export class ReportComponent implements OnInit {
   //   this.dataSource.paginator = this.paginator;
   //   this.dataSource.sort = this.sort;
   // }
+
+  
+  companyid: any = this.localvalues.companyId;
+  companyarray: any[] = [];
+  getCompany() {
+    this.commonService.getmethod('company').subscribe((data) => {
+      this.companyarray = data.details;
+    }, err => {
+      console.log(err);
+    })
+  }
+
+  getchange(event: any) {
+    this.companyid =event;
+    this.getreq('', '', '');
+  }
 
   select(name: string, event: any) { 
     let farray: any = [];
@@ -119,16 +136,16 @@ export class ReportComponent implements OnInit {
   getreq(value: any, date: any, status: any) {
     let url = '';
     if (value === '') {
-      url = 'report?companyId=' + this.localvalues.companyId;
+      url = 'report?companyId=' + this.companyid;
     } else if (value === 'extract') {
       let claim = status === undefined ? 'all' : status;
-      url = 'report?companyId=' + this.localvalues.companyId + '&extractData=' + date.value + '&sendClaim=' + claim;
+      url = 'report?companyId=' + this.companyid + '&extractData=' + date.value + '&sendClaim=' + claim;
     } else if (value === 'sent') {
       let claim = date === undefined ? 'all' : date;
-      url = 'report?companyId=' + this.localvalues.companyId + '&extractData=' + claim + '&sendClaim=' + status.value;
+      url = 'report?companyId=' + this.companyid + '&extractData=' + claim + '&sendClaim=' + status.value;
     }
     else {
-      url = 'report?companyId=' + this.localvalues.companyId + '&sendOnFromDate=' +
+      url = 'report?companyId=' + this.companyid + '&sendOnFromDate=' +
         this.datepipe.transform(value.toLocaleString(), 'MM-dd-yyyy') + '&sendOnToDate=' +
         this.datepipe.transform(date.toLocaleString(), 'MM-dd-yyyy');
     }

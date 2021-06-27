@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
+import { edituser } from '../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-user',
@@ -19,7 +20,7 @@ export class UserComponent implements OnInit {
 
   constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService) {
     this.getarea();
-    
+
     this.form = this._formBuilder.group({
       userType: ['', Validators.required],
       name: ['', Validators.required],
@@ -27,6 +28,14 @@ export class UserComponent implements OnInit {
       password: ['', Validators.required],
       areaList: ['', Validators.required]
     });
+
+    // if (router.url === '/apps/edit-user') {
+    //   this.form.controls[''].setValue(edituser.edit);
+    //   this.form.controls[''].setValue(edituser.edit);
+    //   this.form.controls[''].setValue(edituser.edit);
+    //   this.form.controls[''].setValue(edituser.edit);
+    //   this.form.controls[''].setValue(edituser.edit);
+    // }
   }
 
   ngOnInit(): void {
@@ -63,6 +72,7 @@ export class UserComponent implements OnInit {
       this.form.setErrors(null);
       this.form.updateValueAndValidity();
       this.form.markAsUntouched();
+      this.router.navigateByUrl('/apps/userlist');
     }, err => {
       console.log(err);
     })

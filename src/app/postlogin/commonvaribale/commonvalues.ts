@@ -4,3 +4,7 @@ export const editvalues = {
     patientid: 0,
     nurse: {}
 }
+
+export const edituser = { 
+    edit: {}
+}

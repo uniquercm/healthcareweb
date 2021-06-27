@@ -56,7 +56,7 @@ export class LayoutComponent implements OnInit {
         },
         {
           name: 'User',
-          url: '/apps/user'
+          url: '/apps/userlist'
         },
         {
           name: 'Area',
@@ -99,7 +99,7 @@ export class LayoutComponent implements OnInit {
         },
         {
           name: 'User',
-          url: '/apps/user'
+          url: '/apps/userlist'
         },
         {
           name: 'Report',

@@ -6,7 +6,20 @@
 <div class="p-4">
     <mat-card>
         <div class="row">
-            <mat-form-field class="col-4" style="width: auto;">
+
+            <div *ngIf="localvalues.userType==1" style="width: 10%;">
+                <mat-form-field>
+                    <mat-label>Select Company</mat-label>
+                    <mat-select (selectionChange)="getchange($event.value)">
+                        <mat-option [value]="value.companyId" *ngFor="let value of companyarray">
+                            {{value.companyName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <mat-form-field class="col-4 ml-5" style="width: auto;">
                 <mat-label>Name</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
