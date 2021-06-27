@@ -2,7 +2,7 @@
 </div>
 <div class="row m-5">
 
-    <div>
+    <div *ngIf="localvalues.userType==1">
         <mat-form-field style="width: 50%;">
             <mat-label>Select Company</mat-label>
             <mat-select (selectionChange)="getreq($event.value)">
