@@ -12,6 +12,7 @@ export class AppComponent {
   isLoading = loader;
 
   constructor() {
+    loader.loading = false;
   }
 
   ngOnInit() {

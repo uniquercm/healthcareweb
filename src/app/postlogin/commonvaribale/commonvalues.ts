@@ -10,7 +10,7 @@ export const edituser = {
 }
 
 export const loader = { 
-    loading: {}
+    loading: false
 }
 
 
