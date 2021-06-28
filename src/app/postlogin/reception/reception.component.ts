@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
@@ -10,7 +10,7 @@ import { editvalues } from '../commonvaribale/commonvalues';
   templateUrl: './reception.component.html',
   styleUrls: ['./reception.component.scss']
 })
-export class ReceptionComponent implements OnInit {
+export class ReceptionComponent implements OnInit, OnDestroy {
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -49,8 +49,8 @@ export class ReceptionComponent implements OnInit {
     });
 
     this.thirdFormGroup = this._formBuilder.group({
-      stickerapp: ['no', Validators.nullValidator],
-      trackerapp: ['no', Validators.nullValidator],
+      stickerapp: ['', Validators.nullValidator],
+      trackerapp: ['', Validators.nullValidator],
       pcr: ['', Validators.nullValidator],
       stickerrem: ['', Validators.nullValidator],
       trackerrem: ['', Validators.nullValidator],
@@ -210,6 +210,11 @@ export class ReceptionComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+  }
+
+  ngOnDestroy() {
+    editvalues.patientid = 0;
+    editvalues.drcallid = 0;
   }
 
 }
