@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/service/common.service';
 import { editvalues, loader } from '../../commonvaribale/commonvalues';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-supervisor',
@@ -145,6 +146,66 @@ export class SupervisorComponent implements OnInit {
       (book: any) => book.patientInformation.eidNo === filterValue);
   }
 
+  export() {
+    for (let index = 0; index < this.array.length; index++) {
+      let element: any = this.array[index];
+
+      delete element['patientId'];
+      delete element['companyId'];
+      delete element['requestId'];
+      delete element['cityName'];
+      delete element['nationalityId'];
+      delete element['drCallId'];
+      delete element['scheduledId'];
+      delete element['createdBy'];
+      delete element['id'];
+      delete element['day9CallDetails'];
+      delete element['day9CallId'];
+      delete element['day7CallDetails'];
+      delete element['day7CallId'];
+      delete element['day6CallDetails'];
+      delete element['day6CallId'];
+      delete element['day5CallDetails'];
+      delete element['day5CallId'];
+      delete element['day4CallDetails'];
+      delete element['day4CallId'];
+      delete element['day3CallDetails'];
+      delete element['day3CallId'];
+      delete element['day2CallDetails'];
+      delete element['day2CallId'];
+      delete element['stickerTrackerNumber'];
+      delete element['stickerRemovedDate'];
+      delete element['stickerScheduleDate'];
+      delete element['trackerAppliedDate'];
+      delete element['trackerScheduleDate'];
+      delete element['pcR8DayResult'];
+      delete element['pcR8DaySampleDate'];
+      delete element['pcR8DayTestDate'];
+      delete element['pcR4DayResult'];
+      delete element['pcR4DaySampleDate'];
+      delete element['pcR4DayTestDate'];
+      delete element['patientStaffId'];
+      delete element['patientInformation'];
+      delete element['cityId'];
+      delete element['stickerApplication'];	
+      delete element['stickerRemoval'];
+      delete element['trackerApplication'];	
+      delete element['trackerRemoval'];
+
+      if (element.modifiedBy === undefined) { } else {
+        delete element['modifiedBy'];
+      }
+
+    }
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.array);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, 'patient.xlsx');
+
+  }
 
   getPatent(value: any) {
     if (value === 'submit') {

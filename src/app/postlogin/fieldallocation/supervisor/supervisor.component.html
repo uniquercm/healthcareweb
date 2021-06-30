@@ -34,7 +34,7 @@
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #crmno>
             </mat-form-field>
 
-            <div class="ng-autocomplete" style="width: 20%;">
+            <div class="ng-autocomplete" style="width: 15%;">
                 <ng-autocomplete [data]="area" [searchKeyword]="keyword" placeholder="Enter Area" (selected)="select('area', $event.areaName)" historyIdentifier="area" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
                 </ng-autocomplete>
 
@@ -82,7 +82,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: 10px">
             <div class="col-5 row">
                 <mat-form-field class="col-3" style="width: 35%;" appearance="outline">
                     <mat-label>Schedule From Date</mat-label>
@@ -103,8 +103,7 @@
                 </div>
             </div>
 
-
-            <div class="col-5 row">
+            <div class="col-6 d-flex">
                 <mat-form-field class="col-4" style="width: 35%;" appearance="outline">
                     <mat-label>Team</mat-label>
                     <mat-select #allocate (selectionChange)="allchange($event)">
@@ -114,7 +113,7 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="col-4" style="width: 35%;" appearance="outline">
+                <mat-form-field class="col-4" style="width: 35%; margin-left: 10px;" appearance="outline">
                     <mat-label>Reallocated Team</mat-label>
                     <mat-select #reAllocate (selectionChange)="rechange($event)">
                         <mat-option [value]="usr.userName" *ngFor="let usr of user">
@@ -123,11 +122,15 @@
                     </mat-select>
                 </mat-form-field>
 
-                <div class="col-3 pt-1">
-                    <button mat-raised-button class="mt-2" style="width: 10%; background: #167f72; color: white;" (click)="save()">Save</button>
-                </div>
-            </div>
+                <div class="col-4 pt-1">
+                    <button mat-raised-button class="mt-2" style="width: 10%; margin-left: 10px; background: #167f72; color: white;" (click)="save()">Save</button>
 
+                    <button mat-raised-button class="ml-2 mt-2" style="margin-left: 10px; background: #167f72; color: white;" (click)="export()">Export</button>
+                </div>
+
+
+
+            </div>
 
         </div>
 
