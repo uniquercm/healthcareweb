@@ -236,24 +236,24 @@ export class NurseComponent implements OnInit {
         }
       });
 
-      this.array.forEach((element: any) => {
-        element.age = element.patientInformation.age
-        element.area = element.patientInformation.area
-        element.cityId = element.patientInformation.cityId
-        element.cityName = element.patientInformation.cityName
-        element.crmNo = element.patientInformation.crmNo
-        element.requestCrmName = element.patientInformation.requestCrmName
-        element.eidNo = element.patientInformation.eidNo
-        element.mobileNo = element.patientInformation.mobileNo
-        element.patientName = element.patientInformation.patientName
-        element.requestId = element.patientInformation.requestId
-        element.stickerApplication = element.patientInformation.stickerApplication
-        element.stickerRemoval = element.patientInformation.stickerRemoval
-        element.trackerApplication = element.patientInformation.trackerApplication
-        element.trackerRemoval = element.patientInformation.trackerRemoval
-      });
+      // this.array.forEach((element: any) => {
+      //   element.age = element.patientInformation.age
+      //   element.area = element.patientInformation.area
+      //   element.cityId = element.patientInformation.cityId
+      //   element.cityName = element.patientInformation.cityName
+      //   element.crmNo = element.patientInformation.crmNo
+      //   element.requestCrmName = element.patientInformation.requestCrmName
+      //   element.eidNo = element.patientInformation.eidNo
+      //   element.mobileNo = element.patientInformation.mobileNo
+      //   element.patientName = element.patientInformation.patientName
+      //   element.requestId = element.patientInformation.requestId
+      //   element.stickerApplication = element.patientInformation.stickerApplication
+      //   element.stickerRemoval = element.patientInformation.stickerRemoval
+      //   element.trackerApplication = element.patientInformation.trackerApplication
+      //   element.trackerRemoval = element.patientInformation.trackerRemoval
+      // });
 
-      console.log(this.array)
+      // console.log(this.array)
 
       this.dataSource = new MatTableDataSource(this.array);
 
