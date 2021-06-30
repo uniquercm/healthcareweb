@@ -102,7 +102,7 @@ export class ReportComponent implements OnInit {
       });
     } else if (name === 'city') {
       this.reportarray.forEach((element: any) => {
-        if (element.cityId === (event.value)) {
+        if (element.cityId === Number(event)) {
           farray.push(element);
         }
       });

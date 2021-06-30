@@ -78,8 +78,7 @@ export class ListComponent implements OnInit {
     }
   }
 
-  select(name: string, event: any) {
-    console.log(event);
+  select(name: string, event: any) { 
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
@@ -94,8 +93,8 @@ export class ListComponent implements OnInit {
         }
       });
     } else if (name === 'city') {
-      this.array.forEach((element: any) => {
-        if (element.cityId === (event.value)) {
+      this.array.forEach((element: any) => { 
+        if (element.cityId === Number(event)) {
           farray.push(element);
         }
       });
@@ -209,7 +208,7 @@ export class ListComponent implements OnInit {
       delete element['patientId'];
       delete element['companyId'];
       delete element['requestId'];
-      delete element['cityId'];
+      delete element['cityName'];
       delete element['nationalityId'];
       delete element['drCallId'];
       delete element['scheduledId'];
