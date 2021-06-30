@@ -63,7 +63,7 @@
                 </mat-select>
             </mat-form-field> -->
 
-            <div class="ng-autocomplete" style="width: 20%;">
+            <div class="ng-autocomplete" style="width: 15%;">
                 <ng-autocomplete [data]="area" [searchKeyword]="keyword" placeholder="Enter Area" (selected)="select('area', $event.areaName)" historyIdentifier="area" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
                 </ng-autocomplete>
 
@@ -95,7 +95,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-3" style="width: 10%;">
+            <!-- <div class="col-3" style="width: 10%;">
                 <mat-form-field>
                     <mat-label> Sticker/Tracker Status </mat-label>
                     <mat-select #ststatus>
@@ -105,7 +105,7 @@
                         <mat-option value="replace">Replace</mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> -->
 
             <div class="col-3" style="width: 5%;">
                 <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, statuss, ststatus)">Clear</button>
