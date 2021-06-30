@@ -51,7 +51,7 @@ export class NurseComponent implements OnInit {
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.requestId === Number(event.value)) {
+        if (element.requestId === Number(event.value)) {
           farray.push(element);
         }
       });
@@ -67,29 +67,29 @@ export class NurseComponent implements OnInit {
         return;
       }
       this.array.forEach((element: any) => {
-        if (element.patientInformation.area === (event.value)) {
+        if (element.area === (event)) {
           farray.push(element);
         }
       });
     } else if (name === 'city') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.cityId === (event.value)) {
+        if (element.cityId === (event.value)) {
           farray.push(element);
         }
       });
     } else if (name === 'status') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.recptionCallStatus === Number(event.value)) {
+        if (element.recptionCallStatus === Number(event.value)) {
           farray.push(element);
         }
       });
     } else {
       this.array.forEach((element: any) => {
         if (event.value === 'yes') {
-          if (element.patientInformation.googleMapLink !== '')
+          if (element.googleMapLink !== '')
             farray.push(element);
         } else if (event.value === 'no') {
-          if (element.patientInformation.googleMapLink === '')
+          if (element.googleMapLink === '')
             farray.push(element);
         } else {
           farray.push(element);
