@@ -36,9 +36,9 @@ export class RegisterComponent implements OnInit {
       name: ['', Validators.required],
       eid: ['', Validators.required],
       mobileno: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
-      age: ['', Validators.required],
+      age: ['', Validators.nullValidator],
       sex: ['', Validators.required],
-      dob: ['', Validators.required],
+      dob: ['', Validators.nullValidator],
       nationality: ['', Validators.required],
       assignedDate: ['', Validators.required]
     });

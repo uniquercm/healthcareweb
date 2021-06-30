@@ -11,7 +11,7 @@ import { editvalues } from '../commonvaribale/commonvalues';
   styleUrls: ['./reception.component.scss']
 })
 export class ReceptionComponent implements OnInit, OnDestroy {
-
+  
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
