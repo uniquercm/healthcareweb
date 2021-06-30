@@ -107,7 +107,7 @@ export class RegisterComponent implements OnInit {
       this.form.controls['sex'].setValue(this.datas.sex);
       this.form.controls['dob'].setValue(this.datas.dateOfBirth);
       this.form.controls['nationality'].setValue(this.datas.nationalityId);
-      this.form.controls['assignedDate'].setValue(this.datas.googleMapLink);
+      this.form.controls['assignedDate'].setValue(this.datas.assignedDate);
 
 
     }, err => {
@@ -132,7 +132,8 @@ export class RegisterComponent implements OnInit {
         "nationalityId": Number(this.form.value.nationality),
         "mobileNo": this.form.value.mobileno,
         "modifiedBy": this.localvalues.userId,
-        "isUpdate": true
+        "isUpdate": true,
+        assignedDate: this.form.value.assignedDate
       }
 
       this.commonService.putmethod('patient', map).subscribe((data) => {
@@ -169,7 +170,8 @@ export class RegisterComponent implements OnInit {
         "trackerRemoval": 0,
         "createdBy": this.localvalues.userId,
         "isUpdate": false,
-        "isReception": false
+        "isReception": false,
+        assignedDate: this.form.value.assignedDate
       }
 
 
@@ -188,7 +190,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  downloadform() { 
+  downloadform() {
     window.open('assets/RegistrationForm.xls', '_blank');
   }
 

@@ -37,7 +37,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
     if (router.url === '/apps/drcell') {
       this.title = 'DR Call';
     } else {
-      this.title = 'Nurse Call'; ``
+      this.title = 'Nurse Call'; 
     }
     this.getvalue();
     this.getarea();
@@ -313,7 +313,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
+    const filterValue = (event.target as HTMLInputElement).value; 
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
