@@ -13,7 +13,6 @@ import { editvalues } from '../../commonvaribale/commonvalues';
 })
 export class SupervisorComponent implements OnInit {
 
-
   // displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks', 'pcr4date', 'pcr4result',
   //   'pcr8date', 'pcr8result',
   //   'nc3day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus', 'extracteddata', 'sentclaim', 'senton'];
@@ -60,27 +59,27 @@ export class SupervisorComponent implements OnInit {
 
   }
 
-  select(name: string, event: any) { 
+  select(name: string, event: any) {
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
-        if (element.requestId === Number(event.value)) {
+        if (element.patientInformation.requestId === Number(event.value)) {
           farray.push(element);
         }
       });
     } else if (name === 'area') {
       this.array.forEach((element: any) => {
-        if (element.area === (event.value)) {
+        if (element.patientInformation.area === (event)) {
           farray.push(element);
         }
       });
     } else if (name === 'city') {
       this.array.forEach((element: any) => {
-        if (element.cityId === (event.value)) {
+        if (element.patientInformation.cityId === (event.value)) {
           farray.push(element);
         }
       });
-    } 
+    }
 
     this.dataSource = new MatTableDataSource(farray);
 
@@ -123,7 +122,16 @@ export class SupervisorComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    console.log(this.dataSource);
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+
+  apply(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+
+    let value = this.dataSource.filteredData.filter(
+      (book: any) => book.patientInformation.eidNo === filterValue);
   }
 
 
@@ -137,6 +145,23 @@ export class SupervisorComponent implements OnInit {
         this.array = data.details;
         this.array.forEach((o: any, i) => o.id = i + 1);
 
+        this.array.forEach((element: any) => {
+          age: element.patientInformation.age
+          area: element.patientInformation.area
+          cityId: element.patientInformation.cityId
+          cityName: element.patientInformation.cityName
+          crmNo: element.patientInformation.crmNo
+          eidNo: element.patientInformation.eidNo
+          mobileNo: element.patientInformation.mobileNo
+          patientName: element.patientInformation.patientName
+          requestId: element.patientInformation.requestId
+          stickerApplication: element.patientInformation.stickerApplication
+          stickerRemoval: element.patientInformation.stickerRemoval
+          trackerApplication: element.patientInformation.trackerApplication
+          trackerRemoval: element.patientInformation.trackerRemoval
+        });
+
+        console.log(this.array);
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
@@ -156,6 +181,24 @@ export class SupervisorComponent implements OnInit {
         this.array = data.details;
         this.array.forEach((o: any, i) => o.id = i + 1);
 
+        this.array.forEach((element: any) => {
+          element.age = element.patientInformation.age
+          element.area = element.patientInformation.area
+          element.cityId = element.patientInformation.cityId
+          element.cityName = element.patientInformation.cityName
+          element.crmNo = element.patientInformation.crmNo
+          element.eidNo = element.patientInformation.eidNo
+          element.mobileNo = element.patientInformation.mobileNo
+          element.requestCrmName = element.patientInformation.requestCrmName
+          element.patientName = element.patientInformation.patientName
+          element.requestId = element.patientInformation.requestId
+          element.stickerApplication = element.patientInformation.stickerApplication
+          element.stickerRemoval = element.patientInformation.stickerRemoval
+          element.trackerApplication = element.patientInformation.trackerApplication
+          element.trackerRemoval = element.patientInformation.trackerRemoval
+        });
+
+        console.log(this.array);
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
@@ -220,7 +263,6 @@ export class SupervisorComponent implements OnInit {
 
   change(checked: any, element: any) {
 
-
   }
 
   allchange(event: any) {
@@ -261,8 +303,6 @@ export class SupervisorComponent implements OnInit {
   rechange(event: any) {
     this.reallocatedteam = event.value;
   }
-
-
 
   keyword = 'areaName';
   getarea() {

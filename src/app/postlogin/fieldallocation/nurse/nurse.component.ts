@@ -51,35 +51,35 @@ export class NurseComponent implements OnInit {
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
-        if (element.requestId === Number(event.value)) {
+        if (element.patientInformation.requestId === Number(event.value)) {
           farray.push(element);
         }
       });
-    }  else if (name === 'area') {
+    } else if (name === 'area') {
       this.array.forEach((element: any) => {
-        if (element.area === (event.value)) {
+        if (element.patientInformation.area === (event.value)) {
           farray.push(element);
         }
       });
     } else if (name === 'city') {
       this.array.forEach((element: any) => {
-        if (element.cityId === (event.value)) {
+        if (element.patientInformation.cityId === (event.value)) {
           farray.push(element);
         }
       });
-    }  else if (name === 'status') {
+    } else if (name === 'status') {
       this.array.forEach((element: any) => {
-        if (element.recptionCallStatus === Number(event.value)) {
+        if (element.patientInformation.recptionCallStatus === Number(event.value)) {
           farray.push(element);
         }
       });
     } else {
       this.array.forEach((element: any) => {
         if (event.value === 'yes') {
-          if (element.googleMapLink !== '')
+          if (element.patientInformation.googleMapLink !== '')
             farray.push(element);
         } else if (event.value === 'no') {
-          if (element.googleMapLink === '')
+          if (element.patientInformation.googleMapLink === '')
             farray.push(element);
         } else {
           farray.push(element);
@@ -94,7 +94,7 @@ export class NurseComponent implements OnInit {
   }
 
   area: any = [];
- 
+
   keyword = 'areaName';
   getarea() {
     this.commonService.getmethod('area').subscribe((data) => {
@@ -210,22 +210,6 @@ export class NurseComponent implements OnInit {
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       + '&serviceStatus=' + value.value;
 
-    // if (this.router.url === '/apps/drcell') {
-    //   url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
-    //     + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-    //   if (editvalues.drcallid !== 0) {
-    //     url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
-    //       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-    //   }
-    // } else {
-    //   url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
-    //     + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-    //   if (editvalues.patientid !== 0) {
-    //     url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
-    //       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-    //   }
-    // }
-
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
@@ -236,6 +220,26 @@ export class NurseComponent implements OnInit {
           elam.emrDone = false
         }
       });
+
+      this.array.forEach((element: any) => {
+        element.age = element.patientInformation.age
+        element.area = element.patientInformation.area
+        element.cityId = element.patientInformation.cityId
+        element.cityName = element.patientInformation.cityName
+        element.crmNo = element.patientInformation.crmNo
+        element.requestCrmName = element.patientInformation.requestCrmName
+        element.eidNo = element.patientInformation.eidNo
+        element.mobileNo = element.patientInformation.mobileNo
+        element.patientName = element.patientInformation.patientName
+        element.requestId = element.patientInformation.requestId
+        element.stickerApplication = element.patientInformation.stickerApplication
+        element.stickerRemoval = element.patientInformation.stickerRemoval
+        element.trackerApplication = element.patientInformation.trackerApplication
+        element.trackerRemoval = element.patientInformation.trackerRemoval
+      });
+
+      console.log(this.array)
+
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
@@ -289,7 +293,7 @@ export class NurseComponent implements OnInit {
   select(event: any) {
     let farray: any = [];
     this.array.forEach((element: any) => {
-      if (element.requestId === Number(event.value)) {
+      if (element.patientInformation.requestId === Number(event.value)) {
         farray.push(element);
       }
     });
