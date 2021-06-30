@@ -125,6 +125,7 @@ export class ListComponent implements OnInit {
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
   }
 
   change(element: any) {
