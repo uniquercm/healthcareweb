@@ -4,7 +4,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/service/common.service';
-import { editvalues } from '../../commonvaribale/commonvalues';
+import { editvalues, loader } from '../../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-supervisor',
@@ -24,7 +24,7 @@ export class SupervisorComponent implements OnInit {
     'nc3day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
 
   array = [];
-  displayedColumns: string[] = ['item', 'select', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'schedule', 'drcall', 'print'];
+  displayedColumns: string[] = ['item', 'select', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'area', 'schedule', 'drcall', 'print'];
   dataSource: any = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
@@ -45,6 +45,7 @@ export class SupervisorComponent implements OnInit {
   area: any[] = [];
 
   constructor(private commonService: CommonService, private datepipe: DatePipe) {
+    loader.loading = true;
     this.getPatent('');
     this.getUser();
     this.getreq();
@@ -188,6 +189,7 @@ export class SupervisorComponent implements OnInit {
       }
 
       this.commonService.getmethod(url).subscribe((data) => {
+        loader.loading = true;
         this.array = data.details;
         this.array.forEach((o: any, i) => o.id = i + 1);
 
@@ -208,12 +210,14 @@ export class SupervisorComponent implements OnInit {
           element.trackerRemoval = element.patientInformation.trackerRemoval
         });
 
-        console.log(this.array);
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+
+        loader.loading = false;
       }, err => {
+        loader.loading = false;
         console.log(err);
       })
     }
