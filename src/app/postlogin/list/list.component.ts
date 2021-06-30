@@ -78,7 +78,8 @@ export class ListComponent implements OnInit {
     }
   }
 
-  select(name: string, event: any) { 
+  select(name: string, event: any) {
+    console.log(event);
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
@@ -87,13 +88,23 @@ export class ListComponent implements OnInit {
         }
       });
     } else if (name === 'area') {
+      if (event === 'All') {
+        farray = this.array;
+
+        this.dataSource = new MatTableDataSource(farray);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        return;
+      }
       this.array.forEach((element: any) => {
-        if (element.area === (event.value)) {
+        if (element.area === (event)) {
           farray.push(element);
         }
       });
     } else if (name === 'city') {
-      this.array.forEach((element: any) => { 
+      this.array.forEach((element: any) => {
         if (element.cityId === Number(event)) {
           farray.push(element);
         }
@@ -125,7 +136,7 @@ export class ListComponent implements OnInit {
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    
+
   }
 
   change(element: any) {
@@ -142,7 +153,7 @@ export class ListComponent implements OnInit {
     crmno.value = '';
     area.value = '';
     region.value = '';
-    statuss.value = ''; 
+    statuss.value = '';
 
     this.getPatent('');
   }
@@ -234,6 +245,13 @@ export class ListComponent implements OnInit {
     this.commonService.getmethod('area').subscribe((data) => {
       let array;
       array = data.details;
+
+      let map = {
+        areaName: 'All',
+        areaId: 'all'
+      }
+      this.area.push(map)
+
       array.forEach((element: any) => {
         if (element.areaName === null) {
 

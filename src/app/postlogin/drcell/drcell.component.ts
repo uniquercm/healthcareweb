@@ -54,6 +54,11 @@ export class DrcellComponent implements OnInit, OnDestroy {
     this.commonService.getmethod('area').subscribe((data) => {
       let array;
       array = data.details;
+      let map = {
+        areaName: 'All',
+        areaId: 'all'
+      }
+      this.area.push(map)
       array.forEach((element: any) => {
         if (element.areaName === null) {
 
@@ -91,6 +96,16 @@ export class DrcellComponent implements OnInit, OnDestroy {
         }
       });
     }  else if (name === 'area') {
+      if (event === 'All') {
+        farray = this.array;
+
+        this.dataSource = new MatTableDataSource(farray);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        return;
+      }
       this.array.forEach((element: any) => {
         if (element.area === (event.value)) {
           farray.push(element);
