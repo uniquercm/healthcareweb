@@ -75,7 +75,7 @@ export class SupervisorComponent implements OnInit {
       });
     } else if (name === 'city') {
       this.array.forEach((element: any) => {
-        if (element.patientInformation.cityId === (event.value)) {
+        if (element.patientInformation.cityId === Number(event)) {
           farray.push(element);
         }
       });

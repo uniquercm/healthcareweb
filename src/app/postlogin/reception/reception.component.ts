@@ -172,7 +172,7 @@ export class ReceptionComponent implements OnInit, OnDestroy {
       "modifiedBy": this.localvalues.userId,
       "isUpdate": true,
       "recptionCallDate": this.datepipe.transform(new Date(), 'MM-dd-yyyy'),
-      "recptionCallStatus": this.thirdFormGroup.value.addstatus,
+      "recptionCallStatus": this.firstFormGroup.value.addstatus,
       "recptionCallRemarks": this.thirdFormGroup.value.remark,
       "isReception": true,
       "adultsCount": this.secondFormGroup.value.adults,
