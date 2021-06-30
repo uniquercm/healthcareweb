@@ -133,7 +133,7 @@ export class ListComponent implements OnInit {
     editvalues.patientid = element.patientId
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, statuss: any, ststatus: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, statuss: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -141,8 +141,7 @@ export class ListComponent implements OnInit {
     crmno.value = '';
     area.value = '';
     region.value = '';
-    statuss.value = '';
-    ststatus.value = '';
+    statuss.value = ''; 
 
     this.getPatent('');
   }
