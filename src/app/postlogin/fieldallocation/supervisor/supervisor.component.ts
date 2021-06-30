@@ -99,7 +99,7 @@ export class SupervisorComponent implements OnInit {
   }
 
   getUser() {
-    this.commonService.getmethod('user').subscribe((data) => {
+    this.commonService.getmethod('user?companyId=' + this.localvalues.companyId).subscribe((data) => {
       let array = data.details;
       array.forEach((element: any) => {
         if (element.userType === 7) {
