@@ -32,15 +32,15 @@ export class RegisterComponent implements OnInit {
     public datepipe: DatePipe) {
     this.form = this._formBuilder.group({
       requestType: ['', Validators.required],
-      crm: ['', Validators.required],
-      name: ['', Validators.required],
+      crm: ['', Validators.nullValidator],
+      name: ['', Validators.nullValidator],
       eid: ['', Validators.required],
-      mobileno: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+      mobileno: ['', [Validators.nullValidator, Validators.maxLength(10), Validators.minLength(10)]],
       age: ['', Validators.nullValidator],
-      sex: ['', Validators.required],
+      sex: ['', Validators.nullValidator],
       dob: ['', Validators.nullValidator],
       nationality: ['', Validators.required],
-      assignedDate: ['', Validators.required]
+      assignedDate: ['', Validators.nullValidator]
     });
   }
 
@@ -120,6 +120,7 @@ export class RegisterComponent implements OnInit {
     if (editvalues.patientid !== 0) {
 
       let map = {
+        patientid: editvalues.patientid,
         "patientName": this.form.value.name,
         "companyId": this.localvalues.companyId,
         "requestId": this.form.value.requestType,
@@ -135,7 +136,7 @@ export class RegisterComponent implements OnInit {
       }
 
       this.commonService.putmethod('patient', map).subscribe((data) => {
-        alert('Saved Successfully');
+        alert('Updated Successfully');
         this.form.reset();
         this.router.navigateByUrl('/apps/list');
       }, err => {
