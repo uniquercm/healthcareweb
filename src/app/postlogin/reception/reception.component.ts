@@ -107,7 +107,7 @@ export class ReceptionComponent implements OnInit, OnDestroy {
       this.formGroup.controls['name'].setValue(this.data.patientName);
       this.formGroup.controls['eid'].setValue(this.data.eidNo);
       this.formGroup.controls['mobileno'].setValue(this.data.mobileNo);
-      console.log(this.data.recptionCallStatus);
+      console.log(this.data);
       if (this.data.recptionCallStatus === undefined ) {
         this.firstFormGroup.controls['addstatus'].setValue('pending');
       } else {
@@ -169,7 +169,7 @@ export class ReceptionComponent implements OnInit, OnDestroy {
       "sex": this.data.sex,
       "address": this.firstFormGroup.value.address,
       "landMark": this.firstFormGroup.value.landmark,
-      "area": this.firstFormGroup.value.area === undefined ? '' : this.firstFormGroup.value.area.areaName,
+      "area": this.firstFormGroup.value.area.areaName === undefined ? this.firstFormGroup.value.area : this.firstFormGroup.value.area.areaName,
       "cityId": this.firstFormGroup.value.region,
       "nationalityId": Number(this.data.nationalityId),
       "mobileNo": Number(this.data.mobileNo),
@@ -189,6 +189,8 @@ export class ReceptionComponent implements OnInit, OnDestroy {
       "adultsCount": this.secondFormGroup.value.adults,
       "childrensCount": this.secondFormGroup.value.childern
     }
+
+    console.log(map);
 
     this.commonService.putmethod('patient', map).subscribe((data) => {
       alert('Updated Successfully');
