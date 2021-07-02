@@ -4,7 +4,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/service/common.service';
-import { editvalues } from '../commonvaribale/commonvalues';
+import { editvalues, loader } from '../commonvaribale/commonvalues';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -30,6 +30,7 @@ export class ListComponent implements OnInit {
   area: any[] = [];
 
   constructor(private commonService: CommonService, public datepipe: DatePipe) {
+    loader.loading = true;
     if (this.localvalues.userType === 6) {
       this.displayedColumns = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'edit', 'reception'];
     } else if (this.localvalues.userType === 1) {
@@ -55,7 +56,7 @@ export class ListComponent implements OnInit {
   }
 
   getreq() {
-    this.commonService.getmethod('requestCRM').subscribe((data) => {
+    this.commonService.getmethodws('requestCRM').subscribe((data) => {
       this.requestarray = data.details;
     }, err => {
       console.log(err);
@@ -177,7 +178,7 @@ export class ListComponent implements OnInit {
   companyid: any = this.localvalues.companyId;
   companyarray: any[] = [];
   getCompany() {
-    this.commonService.getmethod('company').subscribe((data) => {
+    this.commonService.getmethodws('company').subscribe((data) => {
       this.companyarray = data.details;
     }, err => {
       console.log(err);
@@ -199,7 +200,7 @@ export class ListComponent implements OnInit {
         this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
         + '&isDoctorCall=false&isNurseCall=false'
     }
-    this.commonService.getmethod(url).subscribe((data) => {
+    this.commonService.getmethodws(url).subscribe((data) => {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
 
@@ -207,8 +208,10 @@ export class ListComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      loader.loading = false;
     }, err => {
       console.log(err);
+      loader.loading = false;
     })
   }
 
@@ -242,7 +245,7 @@ export class ListComponent implements OnInit {
 
   keyword = 'areaName';
   getarea() {
-    this.commonService.getmethod('area').subscribe((data) => {
+    this.commonService.getmethodws('area').subscribe((data) => {
       let array;
       array = data.details;
 
@@ -273,7 +276,7 @@ export class ListComponent implements OnInit {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethod('city').subscribe((data) => {
+    this.commonService.getmethodws('city').subscribe((data) => {
       this.city = data.details;
     }, err => {
       console.log(err);

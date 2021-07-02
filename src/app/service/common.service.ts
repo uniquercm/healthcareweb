@@ -57,6 +57,17 @@ export class CommonService {
     );
   }
 
+  getmethodws(url: string): Observable<any> { 
+    return this.httpClient.get<any>(environment.url + url).pipe(
+      map(response => { 
+        return this.onSuccess(response);
+      }),
+      catchError(err => { 
+        return this.onError(err);
+      })
+    );
+  }
+
   login(url: string, obj: any): Observable<any> {
     loader.loading = true;
     let httpOptio = {

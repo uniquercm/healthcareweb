@@ -115,6 +115,25 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  getcrm() { 
+    if (editvalues.patientid !== 0) {
+      this.commonService.getmethodws('patient-crmno-available?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid).subscribe((data) => {
+        if (!data.isAvailable) {
+          alert('Alert Exists');
+        }
+      }, err => {
+        console.log(err);
+      })
+    } else {
+      this.commonService.getmethodws('patient-crmno-available?companyId=' + this.localvalues.companyId).subscribe((data) => {
+        if (!data.isAvailable) {
+          alert('Alert Exists');
+        }
+      }, err => {
+        console.log(err);
+      })
+    }
+  }
 
   submit() {
     if (editvalues.patientid !== 0) {

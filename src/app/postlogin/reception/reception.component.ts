@@ -11,7 +11,7 @@ import { editvalues } from '../commonvaribale/commonvalues';
   styleUrls: ['./reception.component.scss']
 })
 export class ReceptionComponent implements OnInit, OnDestroy {
-  
+
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
@@ -37,10 +37,10 @@ export class ReceptionComponent implements OnInit, OnDestroy {
     this.firstFormGroup = this._formBuilder.group({
       address: ['', Validators.nullValidator],
       landmark: ['', Validators.nullValidator],
-      area: ['', Validators.nullValidator],
-      region: ['', Validators.nullValidator],
+      area: ['', Validators.required],
+      region: ['', Validators.required],
       map: ['', Validators.nullValidator],
-      addstatus: ['', Validators.nullValidator]
+      addstatus: ['pending', Validators.nullValidator]
     });
 
     this.secondFormGroup = this._formBuilder.group({
@@ -79,6 +79,14 @@ export class ReceptionComponent implements OnInit, OnDestroy {
 
   }
 
+  next(stepper: any) {
+    if (this.firstFormGroup.value.area === '' ||
+      this.firstFormGroup.value.region === '') {
+        alert('Please fill Area and Region');
+        return;
+    }
+    stepper.next();
+  }
 
   keyword = 'areaName';
   areas = '';
@@ -99,9 +107,13 @@ export class ReceptionComponent implements OnInit, OnDestroy {
       this.formGroup.controls['name'].setValue(this.data.patientName);
       this.formGroup.controls['eid'].setValue(this.data.eidNo);
       this.formGroup.controls['mobileno'].setValue(this.data.mobileNo);
-      this.firstFormGroup.controls['addstatus'].setValue(this.data.dischargeStatus);
-
-
+      console.log(this.data.recptionCallStatus);
+      if (this.data.recptionCallStatus === undefined ) {
+        this.firstFormGroup.controls['addstatus'].setValue('pending');
+      } else {
+        this.firstFormGroup.controls['addstatus'].setValue(this.data.recptionCallStatus);
+      }
+       
       this.firstFormGroup.controls['address'].setValue(this.data.address);
       this.firstFormGroup.controls['landmark'].setValue(this.data.landMark);
       this.firstFormGroup.controls['area'].setValue(this.data.area);
@@ -126,8 +138,7 @@ export class ReceptionComponent implements OnInit, OnDestroy {
         this.srem = true;
       }
       this.thirdFormGroup.controls['trackerrem'].setValue(this.data.trackerRemoval);
-      this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr);
-      this.thirdFormGroup.controls['addstatus'].setValue(this.data.recptionCallStatus);
+      this.thirdFormGroup.controls['pcr'].setValue(this.data.pcr); 
       this.thirdFormGroup.controls['remark'].setValue(this.data.recptionCallRemarks);
     }, err => {
       console.log(err);

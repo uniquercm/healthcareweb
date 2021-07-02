@@ -47,11 +47,11 @@ export class SupervisorComponent implements OnInit {
 
   constructor(private commonService: CommonService, private datepipe: DatePipe) {
     loader.loading = true;
-    this.getPatent('');
     this.getUser();
     this.getreq();
     this.getarea();
     this.getCity();
+    this.getPatent('');
   }
 
   ngOnInit(): void {
@@ -100,7 +100,7 @@ export class SupervisorComponent implements OnInit {
   }
 
   getUser() {
-    this.commonService.getmethod('user?companyId=' + this.localvalues.companyId).subscribe((data) => {
+    this.commonService.getmethodws('user?companyId=' + this.localvalues.companyId).subscribe((data) => {
       let array = data.details;
       array.forEach((element: any) => {
         if (element.userType === 7) {
@@ -113,7 +113,7 @@ export class SupervisorComponent implements OnInit {
   }
 
   getreq() {
-    this.commonService.getmethod('requestCRM').subscribe((data) => {
+    this.commonService.getmethodws('requestCRM').subscribe((data) => {
       this.requestarray = data.details;
     }, err => {
       console.log(err);
@@ -213,7 +213,7 @@ export class SupervisorComponent implements OnInit {
       url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' +
         this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
-      this.commonService.getmethod(url).subscribe((data) => {
+      this.commonService.getmethodws(url).subscribe((data) => {
         this.array = data.details;
         this.array.forEach((o: any, i) => o.id = i + 1);
 
@@ -232,14 +232,15 @@ export class SupervisorComponent implements OnInit {
           trackerApplication: element.patientInformation.trackerApplication
           trackerRemoval: element.patientInformation.trackerRemoval
         });
-
-        console.log(this.array);
+ 
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        loader.loading = false;
       }, err => {
         console.log(err);
+        loader.loading = false;
       })
     } else {
       let url = '';
@@ -249,8 +250,7 @@ export class SupervisorComponent implements OnInit {
         url = 'scheduled?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isFieldAllocation=true'
       }
 
-      this.commonService.getmethod(url).subscribe((data) => {
-        loader.loading = true;
+      this.commonService.getmethodws(url).subscribe((data) => { 
         this.array = data.details;
         this.array.forEach((o: any, i) => o.id = i + 1);
 
@@ -381,7 +381,7 @@ export class SupervisorComponent implements OnInit {
 
   keyword = 'areaName';
   getarea() {
-    this.commonService.getmethod('area').subscribe((data) => {
+    this.commonService.getmethodws('area').subscribe((data) => {
       let array;
       array = data.details;
       let map = {
@@ -410,7 +410,7 @@ export class SupervisorComponent implements OnInit {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethod('city').subscribe((data) => {
+    this.commonService.getmethodws('city').subscribe((data) => {
       this.city = data.details;
     }, err => {
       console.log(err);
