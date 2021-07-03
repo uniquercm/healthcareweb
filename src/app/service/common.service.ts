@@ -43,6 +43,21 @@ export class CommonService {
     };
   }
 
+  getmethode(url: string): Observable<any> {
+    loader.loading = true;
+    return this.httpClient.get<any>( url).pipe(
+      map(response => {
+       loader.loading = false;
+        return this.onSuccess(response);
+      }),
+      catchError(err => {
+       loader.loading = false;
+        return this.onError(err);
+      })
+    );
+  }
+
+
   getmethod(url: string): Observable<any> {
     loader.loading = true;
     return this.httpClient.get<any>(environment.url + url).pipe(
