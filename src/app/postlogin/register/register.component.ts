@@ -119,7 +119,7 @@ export class RegisterComponent implements OnInit {
   getcrm() { 
     if (editvalues.patientid !== 0) {
       this.commonService.getmethodws('patient-crmno-available?crmNumber='+ this.form.value.crm + '&companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid).subscribe((data) => {
-        if (!data.isAvailable) {
+        if (data.isAvailable) {
           alert('Alert Exists');
           this.form.controls['crm'].setErrors({'incorrect': true}); 
           return;
@@ -129,7 +129,7 @@ export class RegisterComponent implements OnInit {
       })
     } else {
       this.commonService.getmethodws('patient-crmno-available?crmNumber='+ this.form.value.crm + '&companyId=' + this.localvalues.companyId).subscribe((data) => {
-        if (!data.isAvailable) {
+        if (data.isAvailable) {
           alert('Alert Exists');
           this.form.controls['crm'].setErrors({'incorrect': true}); 
           return;
