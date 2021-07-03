@@ -37,10 +37,10 @@ export class ReceptionComponent implements OnInit, OnDestroy {
     this.firstFormGroup = this._formBuilder.group({
       address: ['', Validators.nullValidator],
       landmark: ['', Validators.nullValidator],
-      area: ['', Validators.required],
-      region: ['', Validators.required],
+      area: ['', Validators.nullValidator],
+      region: ['', Validators.nullValidator],
       map: ['', Validators.nullValidator],
-      addstatus: ['pending', Validators.nullValidator]
+      addstatus: ['', Validators.nullValidator]
     });
 
     this.secondFormGroup = this._formBuilder.group({
@@ -83,14 +83,14 @@ export class ReceptionComponent implements OnInit, OnDestroy {
 
   }
 
-  next(stepper: any) {
-    if (this.firstFormGroup.value.area === '' ||
-      this.firstFormGroup.value.region === '') {
-      alert('Please fill Area and Region');
-      return;
-    }
-    stepper.next();
-  }
+  // next(stepper: any) {
+  //   if (this.firstFormGroup.value.area === '' ||
+  //     this.firstFormGroup.value.region === '') {
+  //     alert('Please fill Area and Region');
+  //     return;
+  //   }
+  //   stepper.next();
+  // }
 
   keyword = 'areaName';
   areas = '';

@@ -27,12 +27,13 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
   datas: any;
+  
 
   constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService,
     public datepipe: DatePipe) {
     this.form = this._formBuilder.group({
       requestType: ['', Validators.required],
-      crm: ['', Validators.nullValidator],
+      crm: ['', Validators.required],
       name: ['', Validators.nullValidator],
       eid: ['', Validators.required],
       mobileno: ['', [Validators.nullValidator, Validators.maxLength(10), Validators.minLength(10)]],
