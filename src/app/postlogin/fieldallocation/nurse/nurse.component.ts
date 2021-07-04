@@ -23,6 +23,8 @@ export class NurseComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
+  searchtype = 'schedule';
+
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
   fromdate: any = new Date();
@@ -155,6 +157,18 @@ export class NurseComponent implements OnInit {
     this.getvalue();
   }
 
+  clearf(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, callstatus: any, service: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crm.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+    callstatus.value = '';
+    service.value = '';
+  }
+
   getvalue() {
     let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName=' + this.localvalues.userName;
 
@@ -190,12 +204,14 @@ export class NurseComponent implements OnInit {
     if (name === 'call') {
       url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value +
         '&teamUserName=' + this.localvalues.userName + '&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        + '&dateSearchType=' + this.searchtype;
     }
     else {
       url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName
         + '&serviceName=' + value.value + '&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        + '&dateSearchType=' + this.searchtype;
     }
 
 
@@ -224,11 +240,10 @@ export class NurseComponent implements OnInit {
     })
   }
 
-  getPatent(value: any) {
-
+  getPatent() {
     let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName=' + this.localvalues.userName + '&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      + '&serviceStatus=' + value.value;
+      + '&serviceStatus=all' + '&dateSearchType=' + this.searchtype;
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;

@@ -59,7 +59,7 @@
             <div class="col-3" style="width: 10%;">
                 <mat-form-field>
                     <mat-label>Call Status</mat-label>
-                    <mat-select (selectionChange)="statuschange('call', $event)">
+                    <mat-select (selectionChange)="statuschange('call', $event)" #callstatus>
                         <mat-option value="all">All</mat-option>
                         <mat-option value="called">Called</mat-option>
                         <mat-option value="pending">Pending</mat-option>
@@ -80,36 +80,42 @@
                         <mat-option value="sticker">Sticker</mat-option>
                         <mat-option value="tracker">Tracker</mat-option>
                         <!-- <mat-option value="four"> 4 day PCR</mat-option> -->
-                        <mat-option value="eight"> 8 day PCR</mat-option>
-                        <mat-option value="dischaege"> Discharge</mat-option>
+                        <mat-option value="8pcr"> 8 day PCR</mat-option>
+                        <mat-option value="discharge"> Discharge</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
-            <div class="col-3" style="width: 5%;">
-                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
+            <div class="col-3 ml-5" style="width: 5%;">
+                <button mat-raised-button class="mt-2 ml-5" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
             </div>
         </div>
 
         <div class="row">
+            <div class="col-2 pt-3">
+                <mat-radio-group aria-label="Select an option" [(ngModel)]="searchtype">
+                    <mat-radio-button value="schedule">Schedule</mat-radio-button>
+                    <mat-radio-button value="allocated" class="ml-4">Allocated</mat-radio-button>
+                </mat-radio-group>
+            </div>
+
             <mat-form-field class="col-3" style="width: auto;" appearance="outline">
-                <mat-label>Schedule From Date</mat-label>
+                <mat-label>From Date</mat-label>
                 <input matInput [matDatepicker]="picker" [(ngModel)]="fromdate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field class="col-3" style="width: auto;" appearance="outline">
-                <mat-label>Schedule To Date</mat-label>
+                <mat-label>To Date</mat-label>
                 <input matInput [matDatepicker]="tpicker" [(ngModel)]="todate">
                 <mat-datepicker-toggle matSuffix [for]="tpicker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #tpicker></mat-datepicker>
             </mat-form-field>
 
             <div class="col-3">
-                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent(service)">Search</button>
+                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent();clearf(input, mobile,eid,crm,crmno,area, region,callstatus, service)">Search</button>
             </div>
-
         </div>
 
         <form #a="ngForm">
