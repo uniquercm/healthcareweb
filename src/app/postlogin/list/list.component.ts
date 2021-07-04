@@ -17,7 +17,7 @@ export class ListComponent implements OnInit {
   array = [];
   displayedColumns: string[] = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'adultsCount', 'childrensCount', 'edit', 'reception', 'schedule', 'drcall', 'nursecall'];
   dataSource: any = new MatTableDataSource([]);
- 
+
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
@@ -80,7 +80,6 @@ export class ListComponent implements OnInit {
   }
 
   select(name: string, event: any) {
-    console.log(event);
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
@@ -111,11 +110,17 @@ export class ListComponent implements OnInit {
         }
       });
     } else if (name === 'status') {
-      if (event.value === 'all') {
+      // console.log(event.value);
+      if (event === 'all') {
+        farray = this.array;
+        this.dataSource = new MatTableDataSource(farray);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
         return;
       }
       this.array.forEach((element: any) => {
-        if (element.recptionCallStatus === (event.value)) {
+        if (element.recptionCallStatus === (event)) {
           farray.push(element);
         }
       });
