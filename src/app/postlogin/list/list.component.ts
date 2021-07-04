@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
   constructor(private commonService: CommonService, public datepipe: DatePipe) {
     loader.loading = true;
     if (this.localvalues.userType === 6) {
-      this.displayedColumns = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'edit', 'reception'];
+      this.displayedColumns = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'adultsCount', 'childrensCount', 'edit', 'reception'];
     } else if (this.localvalues.userType === 1) {
     }
     this.getarea();

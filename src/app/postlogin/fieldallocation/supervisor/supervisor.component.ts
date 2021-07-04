@@ -25,7 +25,7 @@ export class SupervisorComponent implements OnInit {
     'nc3day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
 
   array = [];
-  displayedColumns: string[] = ['item', 'select', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'area', 'schedule', 'drcall', 'print'];
+  displayedColumns: string[] = ['item', 'select', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'area', 'adultsCount', 'childrensCount', 'schedule', 'drcall', 'print'];
   dataSource: any = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
