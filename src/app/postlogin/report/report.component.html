@@ -187,7 +187,8 @@
                             <th mat-header-cell *matHeaderCellDef style="background-color: #ffcf00; color: black;">
                                 Date
                             </th>
-                            <td mat-cell *matCellDef="let data" class="text-center">{{data.recptionCallDate | date: 'MM-dd-yyyy'}}</td>
+                            <td mat-cell *matCellDef="let data" class="text-center">{{data.recptionCallDate | date: 'MM-dd-yyyy'}}
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="receptionstauts">
@@ -235,11 +236,11 @@
                             </td>
                         </ng-container>
 
-                        <ng-container matColumnDef="pcr4result">
-                            <th mat-header-cell *matHeaderCellDef style="background-color: rgb(139, 247, 139); color: black;">
-                                Result
+                        <ng-container matColumnDef="nc4day">
+                            <th mat-header-cell *matHeaderCellDef style="background-color:   rgb(255 192 150); color: black;">
+                                4 Day
                             </th>
-                            <td mat-cell *matCellDef="let data" class="text-center">{{data.pcR4DayResult}}</td>
+                            <td mat-cell *matCellDef="let data" class="text-center">{{data.nc4day}}</td>
                         </ng-container>
 
 
@@ -261,11 +262,11 @@
                         </ng-container>
 
                         <ng-container matColumnDef="nursecall">
-                            <th mat-header-cell *matHeaderCellDef [attr.colspan]="5" class="text-center" style="background-color: rgb(255 192 150); color: black;">Nurse Call</th>
+                            <th mat-header-cell *matHeaderCellDef [attr.colspan]="6" class="text-center" style="background-color: rgb(255 192 150); color: black;">Nurse Call</th>
                         </ng-container>
 
                         <ng-container matColumnDef="nc3day">
-                            <th mat-header-cell *matHeaderCellDef style="background-color:  rgb(255 192 150); color: black;">
+                            <th mat-header-cell *matHeaderCellDef style="background-color: rgb(255 192 150); color: black;">
                                 3 Day </th>
                             <td mat-cell *matCellDef="let data" class="text-center">{{data.day3CallStatus}}</td>
                         </ng-container>
@@ -318,7 +319,7 @@
                                 Extracted Data
                             </th>
                             <td mat-cell *matCellDef="let element" class="text-center">
-                                <mat-form-field class="full-width" appearance="outline">
+                                <mat-form-field class="full-width">
                                     <mat-label>Extracted Data</mat-label>
                                     <mat-select [(ngModel)]="element.isExtractTreatementDate" name="edates" [ngModelOptions]="{standalone: true}" [value]="element.isExtractTreatementDate">
                                         <mat-option value="yes"> Yes </mat-option>
@@ -333,7 +334,7 @@
                                 Sent Claim
                             </th>
                             <td mat-cell *matCellDef="let element" class="text-center">
-                                <mat-form-field class="full-width" appearance="outline">
+                                <mat-form-field class="full-width">
                                     <mat-label>Sent Claim</mat-label>
                                     <mat-select [(ngModel)]="element.isSendClaim" name="dates" [ngModelOptions]="{standalone: true}" [value]="element.isSendClaim">
                                         <mat-option value="yes">Yes</mat-option>

@@ -14,16 +14,16 @@ import { editvalues } from '../commonvaribale/commonvalues';
 })
 export class ReportComponent implements OnInit {
 
-  displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks', 'pcr4date', 'pcr4result',
+  displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
     'pcr8date', 'pcr8result',
-    'nc3day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus', 'extracteddata', 'sentclaim', 'senton', 'save'];
+    'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus', 'extracteddata', 'sentclaim', 'senton', 'save'];
   dataSource: any;
 
-  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'reception', 'drcell', 'pcr4day', 'pcr8day', 'nursecall',
+  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'reception', 'drcell', 'pcr8day', 'nursecall',
     'discharge', 'extracteddata', 'sentclaim', 'senton', 'save']
-  secondcolumn = ['receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks', 'pcr4date', 'pcr4result',
+  secondcolumn = ['receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
     'pcr8date', 'pcr8result',
-    'nc3day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
+    'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
@@ -33,7 +33,7 @@ export class ReportComponent implements OnInit {
 
   requestarray: any[] = [];
 
-  constructor(private commonService: CommonService, public datepipe: DatePipe) { 
+  constructor(private commonService: CommonService, public datepipe: DatePipe) {
     this.getarea();
     this.getCity();
     this.getCompany();
@@ -70,7 +70,7 @@ export class ReportComponent implements OnInit {
   //   this.dataSource.sort = this.sort;
   // }
 
-  
+
   companyid: any = this.localvalues.companyId;
   companyarray: any[] = [];
   getCompany() {
@@ -82,11 +82,11 @@ export class ReportComponent implements OnInit {
   }
 
   getchange(event: any) {
-    this.companyid =event;
+    this.companyid = event;
     this.getreq('', '', '');
   }
 
-  select(name: string, event: any) { 
+  select(name: string, event: any) {
     let farray: any = [];
     if (name === 'case') {
       this.reportarray.forEach((element: any) => {
@@ -116,7 +116,7 @@ export class ReportComponent implements OnInit {
           farray.push(element);
         }
       });
-    }  
+    }
 
     this.dataSource = new MatTableDataSource(farray);
 
@@ -249,7 +249,7 @@ export class ReportComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  
+
 
   keyword = 'areaName';
   getarea() {
@@ -261,7 +261,7 @@ export class ReportComponent implements OnInit {
         areaId: 'all'
       }
       this.area.push(map)
-      
+
       array.forEach((element: any) => {
         if (element.areaName === null) {
 
