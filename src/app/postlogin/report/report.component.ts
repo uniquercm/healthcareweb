@@ -208,6 +208,17 @@ export class ReportComponent implements OnInit {
       delete element['createdBy'];
       delete element['cityId'];
       delete element['id'];
+      delete element['pcR4DayTestDate'];
+      delete element['pcR4DaySampleDate'];
+      delete element['pcR4DayResult'];
+      delete element['day2CallId'];
+      delete element['day3CallId'];
+      delete element['day4CallId'];
+      delete element['day5CallId'];
+      delete element['day6CallId'];
+      delete element['day7CallId'];
+      delete element['day9CallId'];
+      		 
       if (element.modifiedBy === undefined) { } else {
         delete element['modifiedBy'];
       }
