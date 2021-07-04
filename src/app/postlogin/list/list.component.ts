@@ -216,8 +216,8 @@ export class ListComponent implements OnInit {
   }
 
   export() {
-    for (let index = 0; index < this.array.length; index++) {
-      let element: any = this.array[index];
+    for (let index = 0; index < this.dataSource.filteredData.length; index++) {
+      let element: any = this.dataSource.filteredData[index];
 
       delete element['patientId'];
       delete element['companyId'];
@@ -227,13 +227,15 @@ export class ListComponent implements OnInit {
       delete element['drCallId'];
       delete element['scheduledId'];
       delete element['createdBy'];
+      delete element['cityId'];
+      delete element['id'];
       if (element.modifiedBy === undefined) { } else {
         delete element['modifiedBy'];
       }
 
     }
 
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.array);
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
