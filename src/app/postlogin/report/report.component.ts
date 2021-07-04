@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/service/common.service';
 import { editvalues } from '../commonvaribale/commonvalues';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-report',
@@ -190,6 +191,37 @@ export class ReportComponent implements OnInit {
       console.log(err);
     });
   }
+
+
+  
+  export() {
+    for (let index = 0; index < this.dataSource.filteredData.length; index++) {
+      let element: any = this.dataSource.filteredData[index];
+
+      delete element['patientId'];
+      delete element['companyId'];
+      delete element['requestId'];
+      delete element['cityName'];
+      delete element['nationalityId'];
+      delete element['drCallId'];
+      delete element['scheduledId'];
+      delete element['createdBy'];
+      delete element['cityId'];
+      delete element['id'];
+      if (element.modifiedBy === undefined) { } else {
+        delete element['modifiedBy'];
+      }
+    }
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, 'patient.xlsx');
+
+  }
+
 
   save(element: any) {
     let map = {

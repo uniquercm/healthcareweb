@@ -204,7 +204,6 @@ export class SupervisorComponent implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, 'patient.xlsx');
-
   }
 
   getPatent(value: any) {

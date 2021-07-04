@@ -91,26 +91,29 @@
         </div>
 
         <div class="row">
-            <div class="col-6 row">
-                <mat-form-field class="col-4" style="width: auto;" appearance="outline">
-                    <mat-label>SendOn From Date</mat-label>
-                    <input matInput [matDatepicker]="picker" #fromdate>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #picker></mat-datepicker>
-                </mat-form-field>
+            <!-- <div class="col-12 row"> -->
+            <mat-form-field class="col-3" style="width: auto;" appearance="outline">
+                <mat-label>SendOn From Date</mat-label>
+                <input matInput [matDatepicker]="picker" #fromdate>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field>
 
-                <mat-form-field class="col-4" style="width: auto;" appearance="outline">
-                    <mat-label>SendOn To Date</mat-label>
-                    <input matInput [matDatepicker]="tpicker" #todate>
-                    <mat-datepicker-toggle matSuffix [for]="tpicker"></mat-datepicker-toggle>
-                    <mat-datepicker touchUi #tpicker></mat-datepicker>
-                </mat-form-field>
+            <mat-form-field class="col-3" style="width: auto;" appearance="outline">
+                <mat-label>SendOn To Date</mat-label>
+                <input matInput [matDatepicker]="tpicker" #todate>
+                <mat-datepicker-toggle matSuffix [for]="tpicker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #tpicker></mat-datepicker>
+            </mat-form-field>
 
-                <div class="col-3">
-                    <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getreq('date' ,fromdate.value, todate.value)">Search</button>
-                </div>
-
+            <div class="col-3">
+                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getreq('date' ,fromdate.value, todate.value)">Search</button>
             </div>
+
+            <div class="col-3">
+                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="export()">Export</button>
+            </div>
+            <!-- </div> -->
 
             <!-- <div class="col-6 row">
                 <mat-form-field class="col-6" appearance="outline">
@@ -251,7 +254,7 @@
                         <ng-container matColumnDef="pcr8date">
                             <th mat-header-cell *matHeaderCellDef style="background-color: #ddb9fa; color: black;">
                                 Date </th>
-                            <td mat-cell *matCellDef="let data" class="text-center">{{data.pcR8DaySampleDate| date: 'MM-dd-yyyy'}}
+                            <td mat-cell *matCellDef="let data" class="text-center">{{data.pcR8DayTestDate| date: 'MM-dd-yyyy'}}
                             </td>
                         </ng-container>
 
