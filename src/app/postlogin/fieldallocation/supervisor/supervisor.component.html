@@ -58,7 +58,7 @@
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Field Allocation Status</mat-label>
-                <mat-select (selectionChange)="selectf($event)">
+                <mat-select #fallocation (selectionChange)="selectf($event)">
                     <mat-option value="all">All</mat-option>
                     <mat-option value="allowed"> Allocated</mat-option>
                     <mat-option value="notallowed"> Not Allocated</mat-option>
@@ -66,7 +66,7 @@
             </mat-form-field>
 
             <mat-form-field class="col-4" style="width: 10%;">
-                <mat-label>Service Service</mat-label>
+                <mat-label>Service Name</mat-label>
                 <mat-select #service (selectionChange)="selectstaus($event)">
                     <mat-option value="all">All</mat-option>
                     <mat-option value="sticker">Sticker</mat-option>
@@ -78,7 +78,7 @@
             </mat-form-field>
 
             <div class="col-3" style="width: 5%;">
-                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
+                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, fallocation, service)">Clear</button>
             </div>
         </div>
 
@@ -99,7 +99,7 @@
                 </mat-form-field>
 
                 <div class="col-3 pt-1">
-                    <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent('submit');clear(input, mobile,eid,crm,crmno,area, region)">Search</button>
+                    <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent('submit');clear(input, mobile,eid,crm,crmno,area, region, fallocation, service)">Search</button>
                 </div>
             </div>
 

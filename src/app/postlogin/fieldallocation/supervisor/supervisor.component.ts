@@ -120,7 +120,7 @@ export class SupervisorComponent implements OnInit {
     })
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, fallocation: any, service: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -128,6 +128,8 @@ export class SupervisorComponent implements OnInit {
     crmno.value = '';
     area.value = '';
     region.value = '';
+    fallocation.value = '';
+    service.value = '';
 
     this.getPatent('');
   }
@@ -187,9 +189,9 @@ export class SupervisorComponent implements OnInit {
       delete element['patientStaffId'];
       delete element['patientInformation'];
       delete element['cityId'];
-      delete element['stickerApplication'];	
+      delete element['stickerApplication'];
       delete element['stickerRemoval'];
-      delete element['trackerApplication'];	
+      delete element['trackerApplication'];
       delete element['trackerRemoval'];
 
       if (element.modifiedBy === undefined) { } else {
@@ -231,7 +233,7 @@ export class SupervisorComponent implements OnInit {
           trackerApplication: element.patientInformation.trackerApplication
           trackerRemoval: element.patientInformation.trackerRemoval
         });
- 
+
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
@@ -249,7 +251,7 @@ export class SupervisorComponent implements OnInit {
         url = 'scheduled?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isFieldAllocation=true'
       }
 
-      this.commonService.getmethodws(url).subscribe((data) => { 
+      this.commonService.getmethodws(url).subscribe((data) => {
         this.array = data.details;
         this.array.forEach((o: any, i) => o.id = i + 1);
 
