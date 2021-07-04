@@ -187,11 +187,16 @@ export class NurseComponent implements OnInit {
   statuschange(name: string, value: any) {
     let url = '';
 
-    if (name === 'call')
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName;
-    else
+    if (name === 'call') {
+      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value +
+        '&teamUserName=' + this.localvalues.userName + '&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+    }
+    else {
       url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName
-        + '&serviceName=' + value.value;
+        + '&serviceName=' + value.value + '&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+    }
 
 
     this.commonService.getmethod(url).subscribe((data) => {

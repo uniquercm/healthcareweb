@@ -287,7 +287,9 @@ export class SupervisorComponent implements OnInit {
 
   selectf(event: any) {
     let url = '';
-    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&fieldAllocationStatus=' + event.value;
+    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&fieldAllocationStatus=' + event.value
+    + '&fromDate='
+      + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
@@ -321,7 +323,9 @@ export class SupervisorComponent implements OnInit {
 
   selectstaus(event: any) {
     let url = '';
-    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&serviceName=' + event.value;
+    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&serviceName=' + event.value
+    + '&fromDate='
+      + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
