@@ -34,8 +34,8 @@ export class SupervisorComponent implements OnInit {
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
   user: any = [];
   finalarray: any = [];
-  fromdate: any;
-  todate: any;
+  fromdate: any = new Date();
+  todate: any = new Date();
 
   allocatedteam: any;
   reallocatedteam: any;
