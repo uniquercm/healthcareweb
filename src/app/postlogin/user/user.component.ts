@@ -59,7 +59,7 @@ export class UserComponent implements OnInit {
       fullName: this.form.value.name,
       password: this.form.value.password,
       userType: this.form.value.userType,
-      areaList: this.form.value.areaList,
+      areaList: JSON.stringify(this.form.value.areaList),
       companyId: this.localvalues.companyId,
       createdBy: this.localvalues.userId,
       modifiedBy: this.localvalues.userId,
