@@ -202,18 +202,16 @@ export class NurseComponent implements OnInit {
     let url = '';
 
     if (name === 'call') {
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value +
+      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + value.value +
         '&teamUserName=' + this.localvalues.userName + '&fromDate='
         + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
         + '&dateSearchType=' + this.searchtype;
-    }
-    else {
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value + '&teamUserName=' + this.localvalues.userName
+    } else {
+      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + value.value + '&teamUserName=' + this.localvalues.userName
         + '&serviceName=' + value.value + '&fromDate='
         + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
         + '&dateSearchType=' + this.searchtype;
     }
-
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
@@ -238,6 +236,7 @@ export class NurseComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+  
   }
 
   getPatent() {

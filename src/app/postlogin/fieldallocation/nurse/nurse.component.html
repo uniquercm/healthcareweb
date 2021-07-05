@@ -58,12 +58,14 @@
 
             <div class="col-3" style="width: 10%;">
                 <mat-form-field>
-                    <mat-label>Call Status</mat-label>
+                    <mat-label>Service Status</mat-label>
                     <mat-select (selectionChange)="statuschange('call', $event)" #callstatus>
                         <mat-option value="all">All</mat-option>
-                        <mat-option value="called">Called</mat-option>
+                        <mat-option value="applied">Applied</mat-option>
+                        <mat-option value="removed">Removed</mat-option>
                         <mat-option value="pending">Pending</mat-option>
-                        <mat-option value="visited">Visited</mat-option>
+                        <mat-option value="replaced">Replaced</mat-option>
+                        <mat-option value="discharged">Discharged</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>

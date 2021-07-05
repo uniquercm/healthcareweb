@@ -45,7 +45,8 @@ export class CommonService {
 
   getmethode(url: string): Observable<any> {
     loader.loading = true;
-    return this.httpClient.get<any>( url).pipe(
+  
+    return this.httpClient.get<any>(url).pipe(
       map(response => {
        loader.loading = false;
         return this.onSuccess(response);
