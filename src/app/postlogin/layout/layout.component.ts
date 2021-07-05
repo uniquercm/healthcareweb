@@ -116,13 +116,41 @@ export class LayoutComponent implements OnInit {
     } else if (this.localvalues.userType === 4) {
       this.array = [
         {
+          name: 'Dashboard',
+          url: '/apps/dashboard'
+        },
+        {
+          name: 'Registration',
+          url: '/apps/home'
+        },
+        {
+          name: 'List',
+          url: '/apps/list'
+        },
+        {
+          name: 'Reception',
+          url: '/apps/reception'
+        },
+        {
           name: 'Schedule',
           url: '/apps/schedule'
         },
         {
+          name: 'Dr Call',
+          url: '/apps/drcell'
+        },
+        {
+          name: 'Nurse Call',
+          url: '/apps/nursecell'
+        },
+        {
           name: 'Field Allocation',
           url: '/apps/fieldallocation/supervisor'
-        },
+        }, 
+        {
+          name: 'Report',
+          url: '/apps/report'
+        }
       ]
     } else if (this.localvalues.userType === 5) {
       this.array = [
@@ -140,6 +168,10 @@ export class LayoutComponent implements OnInit {
         {
           name: 'List',
           url: '/apps/list'
+        },
+            {
+          name: 'Schedule',
+          url: '/apps/schedule'
         },
         {
           name: 'Reception',
