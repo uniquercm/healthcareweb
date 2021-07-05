@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/service/common.service';
 import { editvalues, loader } from '../commonvaribale/commonvalues';
 import * as XLSX from 'xlsx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -23,13 +24,14 @@ export class ListComponent implements OnInit {
 
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
-  fromdate: any;
-  todate: any;
+  fromdate: any = new Date();
+  todate: any = new Date();
 
   requestarray: any[] = [];
   area: any[] = [];
 
-  constructor(private commonService: CommonService, public datepipe: DatePipe) {
+  constructor(private commonService: CommonService, public datepipe: DatePipe,
+    private router: Router) {
     loader.loading = true;
     if (this.localvalues.userType === 6) {
       this.displayedColumns = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'adultsCount', 'childrensCount', 'edit', 'reception'];
@@ -289,4 +291,12 @@ export class ListComponent implements OnInit {
       console.log(err);
     })
   }
+
+  // reception() {
+  //   const url = this.router.serializeUrl(
+  //     this.router.createUrlTree(['apps/reception'])
+  //   );
+  
+  //   window.open(url, '_blank');
+  // }
 }
