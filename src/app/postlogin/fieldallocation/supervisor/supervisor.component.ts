@@ -134,6 +134,18 @@ export class SupervisorComponent implements OnInit {
     this.getPatent('');
   }
 
+  clearf(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, fallocation: any, service: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crm.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+    fallocation.value = '';
+    service.value = ''; 
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     console.log(this.dataSource);

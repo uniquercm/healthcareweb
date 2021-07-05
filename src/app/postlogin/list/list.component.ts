@@ -166,6 +166,17 @@ export class ListComponent implements OnInit {
     this.getPatent('');
   }
 
+  clearf(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, statuss: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crm.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+    statuss.value = ''; 
+  }
+
   getstatus(statuss: any) {
     let url = 'patient?companyId' + this.companyid + '&gMapLinkSatus=' + statuss.value
 
