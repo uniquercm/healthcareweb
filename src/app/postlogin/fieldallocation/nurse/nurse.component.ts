@@ -198,19 +198,38 @@ export class NurseComponent implements OnInit {
 
   }
 
+  call: any = '';
+  services: any = '';
+
   statuschange(name: string, value: any) {
     let url = '';
 
     if (name === 'call') {
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + value.value +
-        '&teamUserName=' + this.localvalues.userName + '&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-        + '&dateSearchType=' + this.searchtype;
+      this.call = value.value;
+      if (this.services === '') {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call +
+          '&teamUserName=' + this.localvalues.userName + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+          + '&dateSearchType=' + this.searchtype;
+      } else {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call +
+          '&serviceName=' + this.services + '&teamUserName=' + this.localvalues.userName + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+          + '&dateSearchType=' + this.searchtype;
+      }
     } else {
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + value.value + '&teamUserName=' + this.localvalues.userName
-        + '&serviceName=' + value.value + '&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-        + '&dateSearchType=' + this.searchtype;
+      this.services = value.value;
+      if (this.call === '') {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&teamUserName=' + this.localvalues.userName
+          + '&serviceName=' + this.services + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+          + '&dateSearchType=' + this.searchtype;
+      } else {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call + '&teamUserName=' + this.localvalues.userName
+          + '&serviceName=' + this.services + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+          + '&dateSearchType=' + this.searchtype;
+      }
     }
 
     this.commonService.getmethod(url).subscribe((data) => {
@@ -236,7 +255,7 @@ export class NurseComponent implements OnInit {
     }, err => {
       console.log(err);
     })
-  
+
   }
 
   getPatent() {

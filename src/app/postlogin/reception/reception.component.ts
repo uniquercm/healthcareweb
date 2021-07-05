@@ -67,11 +67,11 @@ export class ReceptionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getdata();
-    this.commonService.getmethode('http://service.logisticsmate.in/v1/tracker?trackerId=track1').subscribe((data) => {
-      console.log(data);
-    }, err => {
-      console.log(err);
-    })
+    // this.commonService.getmethode('http://service-dev.logisticsmate.in/v1/tracker?trackerId=track1').subscribe((data) => {
+    //   console.log(data);
+    // }, err => {
+    //   console.log(err);
+    // })
   }
 
   getcity() {
