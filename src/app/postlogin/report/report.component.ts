@@ -177,6 +177,9 @@ export class ReportComponent implements OnInit {
         if (element.dischargeDate === '0001-01-01T00:00:00') {
           element.dischargeDate = ''
         }
+        if (element.recptionCallDate === '0001-01-01T00:00:00') {
+          element.recptionCallDate = ''
+        }
         if (undefined == (element.isSendClaim)) {
           element.isSendClaim = ''
         }
