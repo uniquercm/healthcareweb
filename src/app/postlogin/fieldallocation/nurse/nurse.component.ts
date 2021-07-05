@@ -173,6 +173,7 @@ export class NurseComponent implements OnInit {
     let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName=' + this.localvalues.userName;
 
     this.commonService.getmethod(url).subscribe((data) => {
+      this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
       this.array.forEach((elam: any) => {
@@ -233,6 +234,7 @@ export class NurseComponent implements OnInit {
     }
 
     this.commonService.getmethod(url).subscribe((data) => {
+      this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
       this.array.forEach((elam: any) => {
@@ -264,6 +266,7 @@ export class NurseComponent implements OnInit {
       + '&serviceStatus=all' + '&dateSearchType=' + this.searchtype;
 
     this.commonService.getmethod(url).subscribe((data) => {
+      this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
       this.array.forEach((elam: any) => {

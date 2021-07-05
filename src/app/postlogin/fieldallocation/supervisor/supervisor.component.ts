@@ -227,6 +227,7 @@ export class SupervisorComponent implements OnInit {
         this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
       this.commonService.getmethodws(url).subscribe((data) => {
+        this.array = [];
         this.array = data.details;
         this.array.forEach((o: any, i) => o.id = i + 1);
 
@@ -304,6 +305,7 @@ export class SupervisorComponent implements OnInit {
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
 
     this.commonService.getmethod(url).subscribe((data) => {
+      this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
 
@@ -340,6 +342,7 @@ export class SupervisorComponent implements OnInit {
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
 
     this.commonService.getmethod(url).subscribe((data) => {
+      this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
 
