@@ -92,10 +92,10 @@
                 <mat-form-field class="w-30">
                     <input [hidden]="true" (change)="onFileSelect($event)" type="file" accept=".xlsx , .xls" #fileSelect>
                     <input readonly matInput [ngModelOptions]="{standalone: true}" [(ngModel)]="filename" placeholder="Select file..." />
-                    <button *ngIf="this.base64File" (click)="this.base64File = ''; this.filename = ''" matSuffix matTooltip="Remove selected file" [matTooltipPosition]="'above'" type="button" color="warn" mat-icon-button>
+                    <button *ngIf="this.base64File" type="button" (click)="this.base64File = ''; this.filename = ''" matSuffix matTooltip="Remove selected file" [matTooltipPosition]="'above'" type="button" color="warn" mat-icon-button>
                         <mat-icon>close</mat-icon>
                     </button>
-                    <button matSuffix mat-icon-button (click)="fileSelect.click();" matTooltip="Select a file" [matTooltipPosition]="'above'">
+                    <button matSuffix mat-icon-button type="button" (click)="fileSelect.click();" matTooltip="Select a file" [matTooltipPosition]="'above'">
                         <mat-icon>file_upload</mat-icon>
                     </button>
                 </mat-form-field>

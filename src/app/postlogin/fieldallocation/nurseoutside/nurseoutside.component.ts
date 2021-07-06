@@ -153,10 +153,10 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   addPhone(): void {
 
     let value: number = Number(this.secondFormGroup.value.adults) + Number(this.secondFormGroup.value.childern);
-    if (this.secondFormGroup.value.phones.length === value) {
-      alert('Maxmium MMID reached');
-      return;
-    }
+    // if (this.secondFormGroup.value.phones.length === value) {
+    //   alert('Maxmium MMID reached');
+    //   return;
+    // }
     (this.secondFormGroup.get('phones') as FormArray).push(
       this._formBuilder.control(null)
     );

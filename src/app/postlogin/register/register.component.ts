@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
   form: FormGroup;
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
   datas: any;
-  
+
 
   constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService,
     public datepipe: DatePipe) {
@@ -53,8 +53,9 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  finalarray: any[] = [];
   onFileSelect(e: any): void {
-    try {
+    try { 
       const target: DataTransfer = <DataTransfer>(e.target);
       if (target.files.length !== 1) throw new Error('Cannot use multiple files');
       const reader: FileReader = new FileReader();
@@ -66,21 +67,58 @@ export class RegisterComponent implements OnInit {
         const wsname: string = wb.SheetNames[0];
         this.sheet = wb.SheetNames;
 
-        if (this.sheet.length === 1) {
-          const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-          this.data = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
-        }
+        // if (this.sheet.length === 1) {
+        const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+        this.data = (XLSX.utils.sheet_to_json(ws, { header: 1 }));
+        // }
       };
       reader.readAsBinaryString(target.files[0]);
 
       reader.onloadend = (e) => {
-        this.data = this.data.filter((item): any => item.length !== 0);
-        this.header.push(this.data[0]);
-        this.header.push(this.data[1]);
-        this.data.splice(0, 2);
-        this.data.splice(- 1, 1);
-      }
+        // this.data = this.data.filter((item): any => item.length !== 0);
 
+        // this.header.push(this.data[0]);
+        // this.header.push(this.data[1]);
+        this.data.splice(0, 1);
+        console.log(this.data)
+        this.data.forEach(element => { 
+          let map = {
+            "patientName": element[2],
+            "companyId": this.localvalues.companyId,
+            "requestCrmName": element[0],
+            "crmNo": element[1],
+            "eidNo": element[3],
+            "dateOfBirth": element[5] === undefined ? '' : element[5],
+            "age": Number(element[7] === undefined ? '' : element[7]),
+            "sex": element[6] === undefined ? '' : element[6],
+            "address": "",
+            "landMark": "",
+            "area": "",
+            "cityId": 0,
+            "nationalityName": Number(element[8]),
+            "mobileNo":  element[4],
+            "googleMapLink": "",
+            "adultsCount": 0,
+            "childrensCount": 0,
+            "stickerApplication": "",
+            "trackerApplication": 0,
+            "stickerRemoval": "",
+            "trackerRemoval": 0,
+            "createdBy": this.localvalues.userId,
+            "isUpdate": false,
+            "isReception": false,
+            "assignedDate": element[9] === undefined ? '' : element[9]
+          };
+          this.finalarray.push(map);
+        }); 
+        console.log(this.finalarray);
+        this.commonService.postmethod('patient-file', this.finalarray).subscribe((data) => {
+          alert('Saved Successfully'); 
+          this.router.navigateByUrl('/apps/list');
+        }, err => {
+          console.log(err);
+        })
+      }
     } catch (error) {
       this.filename = '';
       this.base64File = '';
@@ -116,22 +154,22 @@ export class RegisterComponent implements OnInit {
     })
   }
 
-  getcrm() { 
+  getcrm() {
     if (editvalues.patientid !== 0) {
-      this.commonService.getmethodws('patient-crmno-available?crmNumber='+ this.form.value.crm + '&companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid).subscribe((data) => {
+      this.commonService.getmethodws('patient-crmno-available?crmNumber=' + this.form.value.crm + '&companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid).subscribe((data) => {
         if (data.isAvailable) {
           alert('Alert Exists');
-          this.form.controls['crm'].setErrors({'incorrect': true}); 
+          this.form.controls['crm'].setErrors({ 'incorrect': true });
           return;
         }
       }, err => {
         console.log(err);
       })
     } else {
-      this.commonService.getmethodws('patient-crmno-available?crmNumber='+ this.form.value.crm + '&companyId=' + this.localvalues.companyId).subscribe((data) => {
+      this.commonService.getmethodws('patient-crmno-available?crmNumber=' + this.form.value.crm + '&companyId=' + this.localvalues.companyId).subscribe((data) => {
         if (data.isAvailable) {
           alert('Alert Exists');
-          this.form.controls['crm'].setErrors({'incorrect': true}); 
+          this.form.controls['crm'].setErrors({ 'incorrect': true });
           return;
         }
       }, err => {

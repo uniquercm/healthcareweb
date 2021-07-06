@@ -15,12 +15,12 @@ import * as XLSX from 'xlsx';
 })
 export class ReportComponent implements OnInit {
 
-  displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
+  displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
     'pcr8date', 'pcr8result',
     'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus', 'extracteddata', 'sentclaim', 'senton', 'save'];
   dataSource: any;
 
-  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'reception', 'drcell', 'pcr8day', 'nursecall',
+  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'reception', 'drcell', 'pcr8day', 'nursecall',
     'discharge', 'extracteddata', 'sentclaim', 'senton', 'save']
   secondcolumn = ['receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
     'pcr8date', 'pcr8result',
@@ -183,6 +183,11 @@ export class ReportComponent implements OnInit {
         if (undefined == (element.isSendClaim)) {
           element.isSendClaim = ''
         }
+        if (undefined == (element.enrolledDetails)) {
+          element.enrolledDetails = '';
+        } else {
+          // element.enrolledDetails = element.enrolledDetails;
+        }
       });
 
       this.dataSource = new MatTableDataSource(this.reportarray);
@@ -196,7 +201,7 @@ export class ReportComponent implements OnInit {
   }
 
 
-  
+
   export() {
     for (let index = 0; index < this.dataSource.filteredData.length; index++) {
       let element: any = this.dataSource.filteredData[index];
@@ -221,7 +226,7 @@ export class ReportComponent implements OnInit {
       delete element['day6CallId'];
       delete element['day7CallId'];
       delete element['day9CallId'];
-      		 
+
       if (element.modifiedBy === undefined) { } else {
         delete element['modifiedBy'];
       }
