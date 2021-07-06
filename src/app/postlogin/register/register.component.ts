@@ -60,8 +60,11 @@ export class RegisterComponent implements OnInit {
       const target: DataTransfer = <DataTransfer>(e.target);
       if (target.files.length !== 1) throw new Error('Cannot use multiple files');
       const reader: FileReader = new FileReader();
+      console.log(target.files);
+      this.filename = target.files[0].name;
       reader.onload = (e: any) => {
         const bstr: string = e.target.result;
+        // console.log(e)
         const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary', cellDates: true });
         this.worksheet = wb;
 
@@ -106,23 +109,28 @@ export class RegisterComponent implements OnInit {
           };
           this.finalarray.push(map);
         });  
-        let maps = {
-          patientRequestList: this.finalarray
-        }
-        this.commonService.postmethod('patient-file', maps).subscribe((data) => {
-          loader.loading = false;
-          alert('Saved Successfully'); 
-          this.router.navigateByUrl('/apps/list');
-        }, err => {
-          loader.loading = false;
-          console.log(err);
-        })
+        loader.loading = false;
       }
     } catch (error) {
       this.filename = '';
       this.base64File = '';
       console.log('no file was selected...');
     }
+  }
+
+  upload() {
+    let maps = {
+      patientRequestList: this.finalarray
+    }
+    this.commonService.postmethod('patient-file', maps).subscribe((data) => {
+      loader.loading = false;
+      alert('Saved Successfully'); 
+      this.router.navigateByUrl('/apps/list');
+    }, err => {
+      loader.loading = false;
+      alert(err); 
+      console.log(err);
+    })
   }
 
   calculateAge(): void {
