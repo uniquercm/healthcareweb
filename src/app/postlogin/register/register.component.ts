@@ -75,20 +75,14 @@ export class RegisterComponent implements OnInit {
       reader.readAsBinaryString(target.files[0]);
 
       reader.onloadend = (e) => {
-        // this.data = this.data.filter((item): any => item.length !== 0);
-
-        // this.header.push(this.data[0]);
-        // this.header.push(this.data[1]);
-        this.data.splice(0, 1);
-        console.log(this.data)
+        this.data.splice(0, 1); 
         this.data.forEach(element => { 
           let map = {
             "patientName": element[2],
             "companyId": this.localvalues.companyId,
             "requestCrmName": element[0],
             "crmNo": element[1],
-            "eidNo": element[3],
-            "dateOfBirth": element[5] === undefined ? '' : element[5],
+            "eidNo": element[3], 
             "age": Number(element[7] === undefined ? '' : element[7]),
             "sex": element[6] === undefined ? '' : element[6],
             "address": "",
@@ -110,9 +104,11 @@ export class RegisterComponent implements OnInit {
             "assignedDate": element[9] === undefined ? '' : element[9]
           };
           this.finalarray.push(map);
-        }); 
-        console.log(this.finalarray);
-        this.commonService.postmethod('patient-file', this.finalarray).subscribe((data) => {
+        });  
+        let maps = {
+          patientRequestList: this.finalarray
+        }
+        this.commonService.postmethod('patient-file', maps).subscribe((data) => {
           alert('Saved Successfully'); 
           this.router.navigateByUrl('/apps/list');
         }, err => {
