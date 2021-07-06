@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
 import * as XLSX from 'xlsx';
-import { editvalues } from '../commonvaribale/commonvalues';
+import { editvalues, loader } from '../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-register',
@@ -56,6 +56,7 @@ export class RegisterComponent implements OnInit {
   finalarray: any[] = [];
   onFileSelect(e: any): void {
     try { 
+      loader.loading = true;
       const target: DataTransfer = <DataTransfer>(e.target);
       if (target.files.length !== 1) throw new Error('Cannot use multiple files');
       const reader: FileReader = new FileReader();
@@ -109,9 +110,11 @@ export class RegisterComponent implements OnInit {
           patientRequestList: this.finalarray
         }
         this.commonService.postmethod('patient-file', maps).subscribe((data) => {
+          loader.loading = false;
           alert('Saved Successfully'); 
           this.router.navigateByUrl('/apps/list');
         }, err => {
+          loader.loading = false;
           console.log(err);
         })
       }
