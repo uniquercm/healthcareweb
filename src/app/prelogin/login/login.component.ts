@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('currentUser', JSON.stringify(data.loginUserDetails));
       this.router.navigateByUrl('/apps');
     }, err => {
+      alert('Invalid Request');
       console.log(err);
     })
 

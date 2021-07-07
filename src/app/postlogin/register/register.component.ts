@@ -128,10 +128,10 @@ export class RegisterComponent implements OnInit {
       this.router.navigateByUrl('/apps/list');
     }, err => {
       loader.loading = false;
-      alert(err); 
+      alert('Error Occured'); 
       console.log(err);
     })
-  }
+  } 
 
   calculateAge(): void {
     var timeDiff = Math.abs(Date.now() - this.form.value.dob);
