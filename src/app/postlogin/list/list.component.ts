@@ -24,8 +24,8 @@ export class ListComponent implements OnInit {
 
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
-  fromdate: any = new Date();
-  todate: any = new Date();
+  fromdate: any = '';
+  todate: any = '';
 
   requestarray: any[] = [];
   area: any[] = [];
@@ -112,20 +112,29 @@ export class ListComponent implements OnInit {
         }
       });
     } else if (name === 'status') {
-      // console.log(event.value);
-      if (event === 'all') {
-        farray = this.array;
-        this.dataSource = new MatTableDataSource(farray);
+      let url = '';
+      if (this.fromdate === '') {
+        url = 'patient?companyId=' + this.companyid 
+          + '&isDoctorCall=false&isNurseCall=false&searchStatus=' + event
+      } else {
+        url = 'patient?companyId=' + this.companyid + '&fromDate=' +
+          this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
+          this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
+          + '&isDoctorCall=false&isNurseCall=false&searchStatus=' + event
+      }
+      this.commonService.getmethodws(url).subscribe((data) => {
+        this.array = data.details;
+        this.array.forEach((o: any, i) => o.id = i + 1);
+  
+        this.dataSource = new MatTableDataSource(this.array);
+  
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-
-        return;
-      }
-      this.array.forEach((element: any) => {
-        if (element.recptionCallStatus === (event)) {
-          farray.push(element);
-        }
-      });
+        loader.loading = false;
+      }, err => {
+        console.log(err);
+        loader.loading = false;
+      })
     } else {
       this.array.forEach((element: any) => {
         if (event.value === 'yes') {
@@ -213,10 +222,14 @@ export class ListComponent implements OnInit {
     if (value === '') {
       url = 'patient?companyId=' + this.companyid
     } else {
+      if (this.fromdate === '') {
+        url = 'patient?companyId=' + this.companyid 
+        + '&isDoctorCall=false&isNurseCall=false'
+      } else {
       url = 'patient?companyId=' + this.companyid + '&fromDate=' +
         this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
         this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
-        + '&isDoctorCall=false&isNurseCall=false'
+        + '&isDoctorCall=false&isNurseCall=false'}
     }
     this.commonService.getmethodws(url).subscribe((data) => {
       this.array = data.details;
