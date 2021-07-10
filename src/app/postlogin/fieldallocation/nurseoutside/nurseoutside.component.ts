@@ -1,4 +1,5 @@
 import { DatePipe } from '@angular/common';
+import { noUndefined } from '@angular/compiler/src/util';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -22,10 +23,13 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   data: any;
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
+  nursevalue: any = editvalues.nurse;
+  showeight: boolean = false;
+
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService,
     private router: Router,
     public datepipe: DatePipe) {
-  
+
     this.formGroup = this._formBuilder.group({
       crmType: ['', Validators.required],
       crmNo: ['', Validators.required],
@@ -63,7 +67,9 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       stickerrno: ['', Validators.nullValidator],
       fpspicker: ['', Validators.nullValidator],
       spicker: ['', Validators.nullValidator],
-      dischargestatus: ['', Validators.nullValidator]
+      dischargestatus: ['', Validators.nullValidator],
+      eightpicker: ['', Validators.nullValidator],
+      eightresult: ['', Validators.nullValidator],
     });
 
     this.fourthFormGroup = this._formBuilder.group({
@@ -78,9 +84,9 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   }
 
   getdata() {
-    this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all').subscribe((data) => {
+    this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all&isTeam=true').subscribe((data) => {
       this.data = data.details[0];
-   
+
       this.formGroup.controls['crmType'].setValue(this.data.patientInformation.requestCrmName);
       this.formGroup.controls['crmNo'].setValue(this.data.patientInformation.crmNo);
       this.formGroup.controls['name'].setValue(this.data.patientName);
@@ -96,27 +102,42 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       this.secondFormGroup.controls['adults'].setValue(this.data.patientInformation.adultsCount);
       this.secondFormGroup.controls['childern'].setValue(this.data.patientInformation.childrensCount);
 
-      for (let index = 1; index < JSON.parse(this.data.patientInformation.enrolledDetails).length; index++) {
-        this.addPhone();
-      } 
+      if (undefined !== (this.data.patientInformation.enrolledDetails)) {
+        for (let index = 1; index < JSON.parse(this.data.patientInformation.enrolledDetails).length; index++) {
+          this.addPhone();
+        }
 
-      this.secondFormGroup.controls['phones'].setValue(JSON.parse(this.data.patientInformation.enrolledDetails));
-      
+        this.secondFormGroup.controls['phones'].setValue(JSON.parse(this.data.patientInformation.enrolledDetails));
+      }
       this.thirdFormGroup.controls['stickerapp'].setValue(this.data.patientInformation.stickerApplication);
       this.thirdFormGroup.controls['dischargestatus'].setValue(this.data.patientInformation.dischargeStatus);
       this.thirdFormGroup.controls['trackerapp'].setValue(this.data.patientInformation.trackerApplication);
       this.thirdFormGroup.controls['pcr'].setValue(this.data.patientInformation.pcr);
       this.thirdFormGroup.controls['stickerrem'].setValue(this.data.patientInformation.stickerRemoval);
-      if (this.thirdFormGroup.value.stickerrem === '') {
-        this.srem = false;
-      } else {
+
+
+      // if (this.thirdFormGroup.value.stickerrem === '') {
+      //   this.srem = false;
+      // } else {
+      //   this.srem = true;
+      // }
+
+      // if (this.thirdFormGroup.value.stickerapp === '') {
+      //   this.sappl = false;
+      // } else {
+      //   this.sappl = true;
+      // }
+
+      if (this.nursevalue.callId === 'sticker') {
         this.srem = true;
+      } else {
+        this.srem = false;
       }
 
-      if (this.thirdFormGroup.value.stickerapp === '') {
-        this.sappl = false;
+      if (this.nursevalue.callId === '8thday') {
+        this.showeight = true;
       } else {
-        this.sappl = true;
+        this.showeight = false;
       }
 
       this.thirdFormGroup.controls['trackerrem'].setValue(this.data.patientInformation.trackerRemoval);
@@ -137,7 +158,8 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
         this.thirdFormGroup.controls['fpspicker'].setValue(this.data.stickerrno);
       }
 
-
+      this.thirdFormGroup.controls['eightresult'].setValue(this.data.pcR8DayResult);
+      this.thirdFormGroup.controls['eightpicker'].setValue(this.data.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.data.pcR8DaySampleDate);
     }, err => {
       console.log(err);
     })
@@ -151,8 +173,8 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       this.stausvalue = 'replace';
     }
   }
-  sappl: any;
-  srem: any;
+  sappl: boolean = false;
+  srem: boolean = false;
 
   addPhone(): void {
     let value: number = Number(this.secondFormGroup.value.adults) + Number(this.secondFormGroup.value.childern);

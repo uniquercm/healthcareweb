@@ -50,6 +50,7 @@
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Address</mat-label>
                                 <textarea matInput readonly formControlName="address"></textarea>
+                                <!-- [disabled]="form.value." -->
                             </mat-form-field>
                         </div>
                         <div class="col-lg-4 col-md-2 col-sm-12">
@@ -103,15 +104,13 @@
 
                             <div class="col-lg-4 col-md-2 col-sm-12 row" *ngFor="let phone of getPhonesFormControls(); let i = index">
                                 <mat-form-field style="width: 90%;" appearance="outline">
-                                    <mat-label>MMID</mat-label>
-                                    <input matInput [formControl]="phone">
+                                    <mat-label>Extra MRN</mat-label>
+                                    <input matInput [formControl]="phone" [disabled]="(this.nursevalue.callId === 'tracker')">
                                 </mat-form-field>
-                                <mat-icon (click)="removePhone(i)" style="cursor: pointer;" class="pt-3"> delete_outline</mat-icon>
+                                <mat-icon (click)="removePhone(i)" style="cursor: pointer;" [disabled]="(this.nursevalue.callId === 'tracker')" class="pt-3"> delete_outline
+                                </mat-icon>
                             </div>
-
-
-                            <mat-icon (click)="addPhone()" style="cursor: pointer;" class="pt-3"> add_circle</mat-icon>
-
+                            <mat-icon (click)="addPhone()" style="cursor: pointer;" [disabled]="(this.nursevalue.callId === 'tracker')" class="pt-3"> add_circle</mat-icon>
 
                         </div>
 
@@ -130,7 +129,7 @@
                         <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Sticker Application</mat-label>
-                                <mat-select formControlName="stickerapp" [disabled]="sappl">
+                                <mat-select formControlName="stickerapp" [disabled]="(this.nursevalue.callId === 'sticker') ? false : true">
                                     <mat-option value="yes">Yes</mat-option>
                                     <mat-option value="no"> No</mat-option>
                                 </mat-select>
@@ -139,7 +138,7 @@
                         <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Tracker Application</mat-label>
-                                <input matInput formControlName="trackerapp">
+                                <input matInput formControlName="trackerapp" [readonly]="(this.nursevalue.callId === 'tracker') ? false : true">
                             </mat-form-field>
                         </div>
                         <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
@@ -151,7 +150,7 @@
                         <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Sticker Removal</mat-label>
-                                <mat-select formControlName="stickerrem" [disabled]="srem">
+                                <mat-select formControlName="stickerrem" [disabled]="(this.nursevalue.callId === 'sticker') ? false : true">
                                     <mat-option value="yes">Yes</mat-option>
                                     <mat-option value="no"> No</mat-option>
                                 </mat-select>
@@ -160,7 +159,7 @@
                         <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Tracker Removal</mat-label>
-                                <input matInput formControlName="trackerrem">
+                                <input matInput formControlName="trackerrem" [readonly]="(this.nursevalue.callId === 'tracker') ? false : true">
                             </mat-form-field>
                         </div>
                         <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
@@ -172,7 +171,7 @@
                         <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Discharge Status</mat-label>
-                                <mat-select formControlName="dischargestatus">
+                                <mat-select formControlName="dischargestatus" [disabled]="(this.nursevalue.callId === 'sticker') ? false : true">
                                     <mat-option value="discharge">Discharge</mat-option>
                                     <mat-option value="pending">Pending </mat-option>
                                     <mat-option value="other">Other</mat-option>
@@ -217,6 +216,25 @@
                                 <mat-datepicker touchUi #fpspickers></mat-datepicker>
                             </mat-form-field>
                         </div>
+
+                        <div *ngIf="(this.nursevalue.callId === '8thday') ? true : false" class="row">
+                            <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>8th day sample date</mat-label>
+                                    <input matInput [matDatepicker]="fpspickers" formControlName="eightpicker">
+                                    <mat-datepicker-toggle matSuffix [for]="fpspickers"></mat-datepicker-toggle>
+                                    <mat-datepicker touchUi #fpspickers></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-ls-4 col-xl-4 col-md-6 col-sm-12">
+                                <mat-form-field class="full-width" appearance="outline">
+                                    <mat-label>8th day Result</mat-label>
+                                    <input matInput formControlName="eightresult">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
                 <div class="text-end">
@@ -238,7 +256,6 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-
 
                 <div class="col-lg-4 col-md-2 col-sm-12">
                     <mat-form-field class="full-width" appearance="outline">

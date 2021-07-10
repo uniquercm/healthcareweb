@@ -90,12 +90,11 @@ export class SheduleComponent implements OnInit, OnDestroy {
       isodispicker: ['', Validators.nullValidator],
       dischargespicker: ['', Validators.nullValidator],
       dischargerpicker: ['', Validators.nullValidator]
-
     });
   }
 
   ngOnInit() {
-    this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
+    this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
       if (data.details.length === 0) {
         this.commonService.getmethod('patient?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((res) => {
           this.formGroup.controls['name'].setValue(res.details[0].patientName);
@@ -105,7 +104,6 @@ export class SheduleComponent implements OnInit, OnDestroy {
         }, err => {
           console.log(err);
         })
-
       }
 
       this.array = data.details[0];
@@ -174,13 +172,10 @@ export class SheduleComponent implements OnInit, OnDestroy {
       }
 
       this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
-
     }, err => {
       console.log(err);
-    })
-
+    });
   }
-
 
   radioChange(event: any) {
     if (this.firstFormGroup.controls['result'].value === 'negative' && this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {

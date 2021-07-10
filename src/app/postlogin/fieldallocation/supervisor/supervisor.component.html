@@ -139,7 +139,7 @@
                     <table mat-table [dataSource]="dataSource" class="mb-3 my-table">
                         <ng-container matColumnDef="item">
                             <th mat-header-cell *matHeaderCellDef> No. </th>
-                            <td mat-cell *matCellDef="let element; let i = index;"> {{element.id}} </td>
+                            <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}} </td>
                         </ng-container>
 
                         <!-- Position Column -->
@@ -163,7 +163,7 @@
                         <!-- Weight Column -->
                         <ng-container matColumnDef="crmno">
                             <th mat-header-cell *matHeaderCellDef> CRM Number </th>
-                            <td mat-cell *matCellDef="let element"> {{element.patientInformation.crmNo}} </td>
+                            <td mat-cell *matCellDef="let element"> {{element.crmNo}} </td>
                         </ng-container>
 
                         <!-- Symbol Column -->

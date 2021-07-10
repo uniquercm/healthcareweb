@@ -24,7 +24,7 @@ export class SupervisorComponent implements OnInit {
     'pcr8date', 'pcr8result',
     'nc3day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
 
-  array = [];
+  array: any = [];
   displayedColumns: string[] = ['item', 'select', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'area', 'adultsCount', 'childrensCount', 'schedule', 'drcall', 'print'];
   dataSource: any = new MatTableDataSource([]);
 
@@ -143,7 +143,7 @@ export class SupervisorComponent implements OnInit {
     area.value = '';
     region.value = '';
     fallocation.value = '';
-    service.value = ''; 
+    service.value = '';
   }
 
   applyFilter(event: Event) {
@@ -204,48 +204,49 @@ export class SupervisorComponent implements OnInit {
       delete element['stickerApplication'];
       delete element['stickerRemoval'];
       delete element['trackerApplication'];
+      delete element['status'];
       delete element['trackerRemoval'];
 
       if (element.modifiedBy === undefined) { } else {
         delete element['modifiedBy'];
       }
-
     }
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    /* save to file */
     XLSX.writeFile(wb, 'patient.xlsx');
   }
 
   getPatent(value: any) {
     if (value === 'submit') {
       let url = '';
-      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' +
+      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&isTeam=false&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' +
         this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = [];
         this.array = data.details;
-        this.array.forEach((o: any, i) => o.id = i + 1);
+        this.array.forEach((o: any, i: number) => o.id = i + 1);
 
-        this.array.forEach((element: any) => {
-          age: element.patientInformation.age
-          area: element.patientInformation.area
-          cityId: element.patientInformation.cityId
-          cityName: element.patientInformation.cityName
-          crmNo: element.patientInformation.crmNo
-          eidNo: element.patientInformation.eidNo
-          mobileNo: element.patientInformation.mobileNo
-          patientName: element.patientInformation.patientName
-          requestId: element.patientInformation.requestId
-          stickerApplication: element.patientInformation.stickerApplication
-          stickerRemoval: element.patientInformation.stickerRemoval
-          trackerApplication: element.patientInformation.trackerApplication
-          trackerRemoval: element.patientInformation.trackerRemoval
-        });
+        for (let index = 0; index < this.array.length; index++) {
+          const element = this.array[index];
+
+          element.age = element.patientInformation.age
+          element.area = element.patientInformation.area
+          element.cityId = element.patientInformation.cityId
+          element.cityName = element.patientInformation.cityName
+          element.crmNo = element.patientInformation.crmNo
+          element.eidNo = element.patientInformation.eidNo
+          element.mobileNo = element.patientInformation.mobileNo
+          element.patientName = element.patientInformation.patientName
+          element.requestId = element.patientInformation.requestId
+          element.stickerApplication = element.patientInformation.stickerApplication
+          element.stickerRemoval = element.patientInformation.stickerRemoval
+          element.trackerApplication = element.patientInformation.trackerApplication
+          element.trackerRemoval = element.patientInformation.trackerRemoval
+        }
 
         this.dataSource = new MatTableDataSource(this.array);
 
@@ -259,14 +260,14 @@ export class SupervisorComponent implements OnInit {
     } else {
       let url = '';
       if (value === '') {
-        url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true'
+        url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&isTeam=false';
       } else {
-        url = 'scheduled?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isFieldAllocation=true'
+        url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=true'
       }
 
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = data.details;
-        this.array.forEach((o: any, i) => o.id = i + 1);
+        this.array.forEach((o: any, i: number) => o.id = i + 1);
 
         this.array.forEach((element: any) => {
           element.age = element.patientInformation.age
@@ -300,14 +301,14 @@ export class SupervisorComponent implements OnInit {
 
   selectf(event: any) {
     let url = '';
-    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&fieldAllocationStatus=' + event.value
-    + '&fromDate='
+    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&fieldAllocationStatus=' + event.value
+      + '&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = [];
       this.array = data.details;
-      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((o: any, i: number) => o.id = i + 1);
 
       this.dataSource = new MatTableDataSource(this.array);
 
@@ -337,14 +338,14 @@ export class SupervisorComponent implements OnInit {
 
   selectstaus(event: any) {
     let url = '';
-    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&serviceName=' + event.value
-    + '&fromDate='
+    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&serviceName=' + event.value
+      + '&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = [];
       this.array = data.details;
-      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((o: any, i: number) => o.id = i + 1);
 
       this.dataSource = new MatTableDataSource(this.array);
 
