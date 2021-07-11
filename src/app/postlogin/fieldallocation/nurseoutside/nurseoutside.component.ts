@@ -196,15 +196,21 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   }
 
   saverec() {
-    let value: any = editvalues.nurse;
+    let value: any = editvalues.nurse; 
 
     let map = {
       'patientId': this.data.patientId,
       "companyId": this.data.companyId,
       "scheduledId": value.scheduledId,
-      "trackerScheduleDate": this.data.trackerScheduleDate,
+      "serviceName": this.nursevalue.callId,
+      "pcrSampleDate" : this.datepipe.transform(this.thirdFormGroup.value.eightpicker, 'MM-dd-yyyy') ,
+      "pcrResult": this.thirdFormGroup.value.eightresult,
+      "dischargeDate": this.datepipe.transform(this.data.dischargeDate, 'MM-dd-yyyy') ,
+      "dischargeRemarks": this.data.dischargeRemarks === undefined ? '' : this.data.dischargeRemarks,
+      "dischargeStatus": this.data.dischargeStatus === undefined ? '' : this.data.dischargeStatus,
+      "trackerScheduleDate": this.datepipe.transform(this.data.trackerScheduleDate, 'MM-dd-yyyy') ,
       "trackerAppliedDate": this.thirdFormGroup.value.stickerstatus === 'applied' ? this.datepipe.transform(this.thirdFormGroup.value.spicker, 'MM-dd-yyyy') : '0001-01-01T00:00:00',
-      "stickerScheduleDate": this.data.stickerScheduleDate,
+      "stickerScheduleDate": this.datepipe.transform(this.data.stickerScheduleDate, 'MM-dd-yyyy') ,
       "stickerRemovedDate": this.thirdFormGroup.value.stickerstatus === 'removed' ? this.datepipe.transform(this.thirdFormGroup.value.spicker, 'MM-dd-yyyy') : '0001-01-01T00:00:00',
       "stickerTrackerNumber": this.thirdFormGroup.value.stickerano,
       "trackerReplacedDate": this.thirdFormGroup.value.fpspicker === '' ? '0001-01-01T00:00:00' : this.datepipe.transform(this.thirdFormGroup.value.fpspicker, 'MM-dd-yyyy'),
@@ -218,7 +224,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       "trackerApplication": this.thirdFormGroup.value.trackerapp,
       "trackerRemoval": this.thirdFormGroup.value.trackerrem
     }
-
+      
     this.commonService.putmethod('serviceplan', map).subscribe((data) => {
       alert('Updated Successfully');
       this.router.navigateByUrl('/apps/fieldallocation/nurse');
@@ -230,20 +236,18 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   save(visit: any, remark: any, vdate: any) {
     let value: any = editvalues.nurse;
     let map = {
-      "callId": value.callId,
-      "scheduledId": value.scheduledId,
-      "callScheduledDate": value.callScheduledDate,
-      "calledDate": vdate.value,
-      "callStatus": visit.value,
-      "remarks": remark.value,
-      "emrDone": value.emrDone,
-      isPCRCall: true,
-      "createdBy": this.localvalues.userId,
-      "modifiedBy": this.localvalues.userId,
-      "isUpdate": true
+       "scheduledId": value.scheduledId,
+      "patientId": this.nursevalue.patientId,
+      "serviceName": this.nursevalue.callId,
+      "teamUserName": this.localvalues.userName,
+      "teamStatus": visit.value,
+      "teamRemark": remark.value,
+      "teamStatusDate": vdate.value,
+      "showDischage": this.nursevalue.showDischage,
+      "modifiedBy": this.localvalues.userId
     }
 
-    this.commonService.putmethod('doctor-nurse-team-call', map).subscribe((data) => {
+    this.commonService.putmethod('teamservicestatus', map).subscribe((data) => {
       alert('Saved successfully');
       this.router.navigateByUrl('/apps/fieldallocation/nurse');
     }, err => {
