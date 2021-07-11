@@ -71,8 +71,158 @@
                         </section>
                     </div>
                     <div class="text-end">
-                        <button mat-raised-button class="login-button" matStepperNext *ngIf="check"> Next</button>
-                        <button mat-raised-button class="login-button" matStepperNext *ngIf="!check" (click)="fsave(conducteddate)">Save </button>
+                        <button mat-raised-button class="login-button" matStepperNext *ngIf="check || (!isHQP)"> Next</button>
+                        <button mat-raised-button class="login-button" matStepperNext *ngIf="(!check) && (isHQP)" (click)="fsave(conducteddate)">Save </button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="hqpFormGroup" *ngIf="!isHQP">
+                <form [formGroup]="hqpFormGroup">
+                    <ng-template matStepLabel>Home Quarantine Duration</ng-template>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-2 col-sm-12">
+                            <mat-form-field class="full-width" appearance="outline">
+                                <mat-label>Start Date</mat-label>
+                                <input matInput [matDatepicker]="startpicker" formControlName="hqpstartdate" #stdate (dateInput)="updatehqpdate($event, startpicker)">
+                                <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                                <mat-datepicker touchUi #startpicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-4 col-md-2 col-sm-12">
+                            <mat-form-field class="full-width" appearance="outline">
+                                <mat-label>End Date</mat-label>
+                                <input matInput [matDatepicker]="endpicker" readonly formControlName="hqpenddate">
+                                <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                                <mat-datepicker touchUi #endpicker disabled="true"></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 col-md-2 col-sm-12">
+                            <mat-card class="quar">
+                                <mat-card-header>
+                                    Dr Call
+                                </mat-card-header>
+                                <div class="p-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Schedule Date</mat-label>
+                                        <input matInput [matDatepicker]="drpicker" [disabled]="disablevalue" formControlName="hqpdrpicker">
+                                        <mat-datepicker-toggle matSuffix [for]="drpicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #drpicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Called Date</mat-label>
+                                        <input matInput [matDatepicker]="drspicker" [disabled]="disablevalue" formControlName="hqpdrspicker">
+                                        <mat-datepicker-toggle matSuffix [for]="drspicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #drspicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </mat-card>
+                        </div>
+
+                        <div class="col-lg-4 col-md-2 col-sm-12">
+                            <mat-card class="quar">
+                                <mat-card-header>
+                                    Tracker/Sticker Application
+                                </mat-card-header>
+                                <div class="p-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Schedule Date</mat-label>
+                                        <input matInput [matDatepicker]="fourpicker" [disabled]="disablevalue" formControlName="hqpfourpicker" #fordate>
+                                        <mat-datepicker-toggle matSuffix [for]="fourpicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #fourpicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Applied Date</mat-label>
+                                        <input matInput [matDatepicker]="fourspicker" [disabled]="disablevalue" formControlName="hqpfourspicker">
+                                        <mat-datepicker-toggle matSuffix [for]="fourspicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #fourspicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Result</mat-label>
+                                        <mat-select formControlName="hqpfourresult" [disabled]="disablevalue">
+                                            <mat-option value='positive'>Positive </mat-option>
+                                            <mat-option value='negative'> Negative</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                </div>
+                            </mat-card>
+                        </div>
+
+                        <div class="col-lg-4 col-md-2 col-sm-12">
+                            <mat-card class="quar">
+                                <mat-card-header>
+                                    <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='no'">6 day PCR </span>
+                                    <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='yes'">11 day PCR </span>
+                                </mat-card-header>
+
+                                <div class="p-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Schedule Date</mat-label>
+                                        <input matInput [matDatepicker]="eightpicker" [disabled]="disablevalue" #etdate formControlName="hqpeightpicker">
+                                        <mat-datepicker-toggle matSuffix [for]="eightpicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #eightpicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Sampled Date</mat-label>
+                                        <input matInput [matDatepicker]="eightspicker" [disabled]="disablevalue" formControlName="hqpeightspicker">
+                                        <mat-datepicker-toggle matSuffix [for]="eightspicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #eightspicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Result</mat-label>
+                                        <mat-select formControlName="hqpeightresult" [disabled]="disablevalue">
+                                            <mat-option value='positive'>Positive </mat-option>
+                                            <mat-option value='negative'> Negative</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </mat-card>
+                        </div>
+
+                        <div class="col-lg-4 col-md-2 col-sm-12">
+                            <mat-card class="quar">
+                                <mat-card-header>
+                                    Discharge
+                                </mat-card-header>
+                                <div class="p-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Discharge Date</mat-label>
+                                        <input matInput [matDatepicker]="dispicker" [disabled]="disablevalue" #dgdate formControlName="hqpdischargepicker">
+                                        <mat-datepicker-toggle matSuffix [for]="dispicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #dispicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Status</mat-label>
+                                        <mat-select formControlName="hqpdischargespicker" [disabled]="disablevalue">
+                                            <mat-option value='pending'>Pending </mat-option>
+                                            <mat-option value='discharged'> Discharged </mat-option>
+                                            <mat-option value='other'> Other </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Remarks</mat-label>
+                                        <textarea matInput readonly formControlName="hqpdischargerpicker" readonly></textarea>
+                                    </mat-form-field>
+
+                                </div>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                    <div class="text-end">
+                        <button mat-raised-button class="warning-button" matStepperPrevious>Back</button>
+                        <button mat-raised-button class="login-button ml-4" (click)="save(stdate, fordate,etdate,xldate,dgdate)">Save</button>
                     </div>
                 </form>
             </mat-step>

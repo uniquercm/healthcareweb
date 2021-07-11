@@ -18,6 +18,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   formGroup: FormGroup;
+  hqpFormGroup: FormGroup;
 
   discharge = true;
   isolation = true;
@@ -26,7 +27,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   type = '';
   array: any = '';
   edit = false;
-
+  isHQP = true;
   disablevalue = true;
 
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
@@ -46,6 +47,24 @@ export class SheduleComponent implements OnInit, OnDestroy {
       quarantine: ['', Validators.nullValidator],
       isolation: ['', Validators.nullValidator]
     });
+
+    this.hqpFormGroup = this._formBuilder.group({
+      hqpstartdate: ['', Validators.required],
+      hqpenddate: ['', Validators.nullValidator],
+      hqpdrpicker: ['', Validators.nullValidator],
+      hqpdrspicker: ['', Validators.nullValidator],
+      hqpfourpicker: ['', Validators.nullValidator],
+      hqpfourspicker: ['', Validators.nullValidator],
+      hqpfourresult: ['', Validators.nullValidator],
+      hqpeightpicker: ['', Validators.nullValidator],
+      hqpxlpicker: ['', Validators.nullValidator],
+      hqpeightspicker: ['', Validators.nullValidator],
+      hqpeightresult: ['', Validators.nullValidator],
+      hqpdischargepicker: ['', Validators.nullValidator],
+      hqpdischargespicker: ['', Validators.nullValidator],
+      hqpdischargerpicker: ['', Validators.nullValidator]
+    });
+
     this.secondFormGroup = this._formBuilder.group({
       startdate: ['', Validators.required],
       enddate: ['', Validators.nullValidator],
@@ -61,6 +80,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       dischargespicker: ['', Validators.nullValidator],
       dischargerpicker: ['', Validators.nullValidator]
     });
+
     this.thirdFormGroup = this._formBuilder.group({
       isostartdate: ['', Validators.required],
       isoenddate: ['', Validators.nullValidator],
@@ -116,59 +136,86 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.firstFormGroup.controls['dischargedate'].setValue(this.array.dischargeDate);
       this.check = true;
-      if (this.array.treatmentType === 'isolation') {
-        this.isolation = false;
-        this.type = 'isolation';
-        this.firstFormGroup.controls['quarantine'].setValue('isolation');
-      } else if (this.array.treatmentType === 'quarantine') {
-        this.discharge = false;
-        this.type = 'quarantine';
-        this.firstFormGroup.controls['quarantine'].setValue('quarantine');
-      } else {
+
+      if (this.array.requestCrmName === 'HQP') {
+        this.isHQP = false;
         this.check = false;
-        this.dischargedate = true;
-      }
 
-      if (this.array.treatmentType === 'isolation') {
-        this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
-        this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
-        this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
-        this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
-        this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
-        this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
-        this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
-        this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
-        // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
-        this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
-        this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
-        this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+        this.hqpFormGroup.controls['hqpstartdate'].setValue(this.firstFormGroup.value.conducteddate);
 
-        this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+        let drpicker: Date = new Date(this.array.pcrTestDate);
+        drpicker.setDate(drpicker.getDate() + 1);
 
-        this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
-        this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
-        this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
-        this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+        this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
 
-        this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+        let fourpickers: Date = new Date(this.array.pcrTestDate);
+        fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+        this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
 
-        this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+        let eightpickers: Date = new Date(this.array.pcrTestDate);
+        eightpickers.setDate(eightpickers.getDate() + 6);
 
-        this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+        this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
+
+        let startdates: Date = new Date(this.array.pcrTestDate);
+        startdates.setDate(startdates.getDate() + 7);
+        this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
+        this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
       } else {
-        this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate);
-        this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate);
-        this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate);
-        this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate);
-        this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult);
-        this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate);
-        this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate);
-        this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult);
-        this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate);
-        this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
-        this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
-        this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
-        this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+        if (this.array.treatmentType === 'isolation') {
+          this.isolation = false;
+          this.type = 'isolation';
+          this.firstFormGroup.controls['quarantine'].setValue('isolation');
+        } else if (this.array.treatmentType === 'quarantine') {
+          this.discharge = false;
+          this.type = 'quarantine';
+          this.firstFormGroup.controls['quarantine'].setValue('quarantine');
+        } else {
+          this.check = false;
+          this.dischargedate = true;
+        }
+
+        if (this.array.treatmentType === 'isolation') {
+          this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
+          this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
+          this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+          this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+          this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
+          this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
+          this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+          this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+          // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
+          this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
+          this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
+          this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+
+          this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+
+          this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
+          this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
+          this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
+          this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+
+          this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+
+          this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+
+          this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+        } else {
+          this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate);
+          this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate);
+          this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate);
+          this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate);
+          this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult);
+          this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate);
+          this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate);
+          this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult);
+          this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate);
+          this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+          this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+          this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+          this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+        }
       }
 
       this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
@@ -179,22 +226,69 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   radioChange(event: any) {
     if (this.firstFormGroup.controls['result'].value === 'negative' && this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
-      this.discharge = true;
-      this.isolation = true;
-      this.dischargedate = true;
-      this.check = false;
+      if (this.array.requestCrmName === 'HQP') {
+        this.hqpFormGroup.controls['hqpstartdate'].setValue(this.firstFormGroup.value.conducteddate);
 
+        let drpicker: Date = new Date(this.firstFormGroup.value.conducteddate);
+        drpicker.setDate(drpicker.getDate() + 1);
 
-      let drpicker: Date = this.firstFormGroup.value.conducteddate;
-      drpicker.setDate(drpicker.getDate() + 3);
+        this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
 
-      this.firstFormGroup.controls['dischargedate'].setValue(drpicker);
+        let fourpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
+        fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+        this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
 
+        let eightpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
+        eightpickers.setDate(eightpickers.getDate() + 11);
+
+        this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
+
+        let startdates: Date = new Date(this.firstFormGroup.value.conducteddate);
+        startdates.setDate(startdates.getDate() + 12);
+        this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
+        this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
+      } else {
+        this.discharge = true;
+        this.isolation = true;
+        this.dischargedate = true;
+        this.check = false;
+        this.isHQP = true;
+
+        let drpicker: Date = this.firstFormGroup.value.conducteddate;
+        drpicker.setDate(drpicker.getDate() + 3);
+
+        this.firstFormGroup.controls['dischargedate'].setValue(drpicker);
+      }
     } else {
-      this.discharge = true;
-      this.isolation = true;
-      this.check = true;
-      this.dischargedate = false;
+      if (this.array.requestCrmName === 'HQP') {
+
+        this.hqpFormGroup.controls['hqpstartdate'].setValue(this.firstFormGroup.value.conducteddate);
+
+        let drpicker: Date = new Date(this.firstFormGroup.value.conducteddate);
+        drpicker.setDate(drpicker.getDate() + 1);
+
+        this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
+
+        let fourpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
+        fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+        this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
+
+        let eightpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
+        eightpickers.setDate(eightpickers.getDate() + 6);
+
+        this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
+
+        let startdates: Date = new Date(this.firstFormGroup.value.conducteddate);
+        startdates.setDate(startdates.getDate() + 7);
+        this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
+        this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
+      } else {
+        this.discharge = true;
+        this.isolation = true;
+        this.check = true;
+        this.isHQP = true;
+        this.dischargedate = false;
+      }
     }
   }
 
@@ -221,6 +315,32 @@ export class SheduleComponent implements OnInit, OnDestroy {
   updatedate(date: any, picker: MatDatepicker<Date>) {
     picker.close();
     this.change(date);
+  }
+
+  updatehqpdate(date: any, picker: MatDatepicker<Date>) {
+    picker.close();
+    this.changehqp(date);
+  }
+
+  changehqp(date: any) {
+    let drpicker: Date = date.value;
+    drpicker.setDate(drpicker.getDate() + 1);
+
+    this.secondFormGroup.controls['hqpdrpicker'].setValue(drpicker);
+
+    let fourpickers: Date = (date.value);
+    fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+    this.secondFormGroup.controls['hqpfourpicker'].setValue(drpicker);
+
+    let eightpickers: Date = date.value;
+    eightpickers.setDate(eightpickers.getDate() + 6 - 4);
+
+    this.secondFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
+
+    let startdates: Date = date.value;
+    startdates.setDate(startdates.getDate() + 7 - 8);
+    this.secondFormGroup.controls['hqpenddate'].setValue(startdates);
+    this.secondFormGroup.controls['hqpdischargepicker'].setValue(startdates);
   }
 
   change(date: any) {

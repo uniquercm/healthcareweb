@@ -203,7 +203,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       "companyId": this.data.companyId,
       "scheduledId": value.scheduledId,
       "serviceName": this.nursevalue.callId,
-      "pcrSampleDate" : this.datepipe.transform(this.thirdFormGroup.value.eightpicker, 'MM-dd-yyyy') ,
+      "pcrSampleDate" : this.thirdFormGroup.value.eightpicker === '' ? '0001-01-01T00:00:00' : this.datepipe.transform(this.thirdFormGroup.value.eightpicker, 'MM-dd-yyyy') ,
       "pcrResult": this.thirdFormGroup.value.eightresult,
       "dischargeDate": this.datepipe.transform(this.data.dischargeDate, 'MM-dd-yyyy') ,
       "dischargeRemarks": this.data.dischargeRemarks === undefined ? '' : this.data.dischargeRemarks,
