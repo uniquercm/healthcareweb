@@ -158,13 +158,21 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
         this.thirdFormGroup.controls['fpspicker'].setValue(this.data.stickerrno);
       }
 
-      this.thirdFormGroup.controls['eightresult'].setValue(this.data.pcR8DayResult);
-      this.thirdFormGroup.controls['eightpicker'].setValue(this.data.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.data.pcR8DaySampleDate);
-     
+      if (this.nursevalue.callId === '8thday') {
+        this.thirdFormGroup.controls['eightresult'].setValue(this.data.pcR8DayResult);
+        this.thirdFormGroup.controls['eightpicker'].setValue(this.data.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.data.pcR8DaySampleDate);
+      } else if (this.nursevalue.callId === '6thday') {
+        this.thirdFormGroup.controls['eightresult'].setValue(this.data.pcR6DayResult);
+        this.thirdFormGroup.controls['eightpicker'].setValue(this.data.pcR6DaySampleDate === '0001-01-01T00:00:00' ? '' : this.data.pcR6DaySampleDate);
+      } else if (this.nursevalue.callId === '11thday') {
+        this.thirdFormGroup.controls['eightresult'].setValue(this.data.pcR11DayResult);
+        this.thirdFormGroup.controls['eightpicker'].setValue(this.data.pcR11DaySampleDate === '0001-01-01T00:00:00' ? '' : this.data.pcR11DaySampleDate);
+      }
+
       this.fourthFormGroup.controls['vstatus'].setValue(this.nursevalue.teamStatus);
       this.fourthFormGroup.controls['vremark'].setValue(this.nursevalue.teamRemark);
       this.fourthFormGroup.controls['vdate'].setValue(this.nursevalue.teamStatusDate);
-   
+
     }, err => {
       console.log(err);
     })
@@ -201,21 +209,21 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   }
 
   saverec() {
-    let value: any = editvalues.nurse; 
+    let value: any = editvalues.nurse;
 
     let map = {
       'patientId': this.data.patientId,
       "companyId": this.data.companyId,
       "scheduledId": value.scheduledId,
       "serviceName": this.nursevalue.callId,
-      "pcrSampleDate" : this.thirdFormGroup.value.eightpicker === '' ? '0001-01-01T00:00:00' : this.datepipe.transform(this.thirdFormGroup.value.eightpicker, 'MM-dd-yyyy') ,
+      "pcrSampleDate": this.thirdFormGroup.value.eightpicker === '' ? '0001-01-01T00:00:00' : this.datepipe.transform(this.thirdFormGroup.value.eightpicker, 'MM-dd-yyyy'),
       "pcrResult": this.thirdFormGroup.value.eightresult,
-      "dischargeDate": this.datepipe.transform(this.data.dischargeDate, 'MM-dd-yyyy') ,
+      "dischargeDate": this.datepipe.transform(this.data.dischargeDate, 'MM-dd-yyyy'),
       "dischargeRemarks": this.data.dischargeRemarks === undefined ? '' : this.data.dischargeRemarks,
       "dischargeStatus": this.data.dischargeStatus === undefined ? '' : this.data.dischargeStatus,
-      "trackerScheduleDate": this.datepipe.transform(this.data.trackerScheduleDate, 'MM-dd-yyyy') ,
+      "trackerScheduleDate": this.datepipe.transform(this.data.trackerScheduleDate, 'MM-dd-yyyy'),
       "trackerAppliedDate": this.thirdFormGroup.value.stickerstatus === 'applied' ? this.datepipe.transform(this.thirdFormGroup.value.spicker, 'MM-dd-yyyy') : '0001-01-01T00:00:00',
-      "stickerScheduleDate": this.datepipe.transform(this.data.stickerScheduleDate, 'MM-dd-yyyy') ,
+      "stickerScheduleDate": this.datepipe.transform(this.data.stickerScheduleDate, 'MM-dd-yyyy'),
       "stickerRemovedDate": this.thirdFormGroup.value.stickerstatus === 'removed' ? this.datepipe.transform(this.thirdFormGroup.value.spicker, 'MM-dd-yyyy') : '0001-01-01T00:00:00',
       "stickerTrackerNumber": this.thirdFormGroup.value.stickerano,
       "trackerReplacedDate": this.thirdFormGroup.value.fpspicker === '' ? '0001-01-01T00:00:00' : this.datepipe.transform(this.thirdFormGroup.value.fpspicker, 'MM-dd-yyyy'),
@@ -229,7 +237,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
       "trackerApplication": this.thirdFormGroup.value.trackerapp,
       "trackerRemoval": this.thirdFormGroup.value.trackerrem
     }
-      
+
     this.commonService.putmethod('serviceplan', map).subscribe((data) => {
       alert('Updated Successfully');
       this.router.navigateByUrl('/apps/fieldallocation/nurse');
@@ -241,7 +249,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
   save(visit: any, remark: any, vdate: any) {
     let value: any = editvalues.nurse;
     let map = {
-       "scheduledId": value.scheduledId,
+      "scheduledId": value.scheduledId,
       "patientId": this.nursevalue.patientId,
       "serviceName": this.nursevalue.callId,
       "teamUserName": this.localvalues.userName,
