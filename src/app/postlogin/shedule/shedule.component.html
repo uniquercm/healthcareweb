@@ -71,7 +71,7 @@
                         </section>
                     </div>
                     <div class="text-end">
-                        <button mat-raised-button class="login-button" matStepperNext *ngIf="check || (!isHQP)"> Next</button>
+                        <button mat-raised-button class="login-button" id="next-btn" matStepperNext *ngIf="check || (!isHQP)"> Next</button>
                         <button mat-raised-button class="login-button" matStepperNext *ngIf="(!check) && (isHQP)" (click)="fsave(conducteddate)">Save </button>
                     </div>
                 </form>
@@ -157,8 +157,8 @@
                         <div class="col-lg-4 col-md-2 col-sm-12">
                             <mat-card class="quar">
                                 <mat-card-header>
-                                    <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='no'">6 day PCR </span>
-                                    <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='yes'">11 day PCR </span>
+                                    <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='yes'">6 day PCR </span>
+                                    <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='no'">11 day PCR </span>
                                 </mat-card-header>
 
                                 <div class="p-4">

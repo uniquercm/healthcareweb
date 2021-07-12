@@ -174,9 +174,14 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.isHQP = false;
         this.check = false;
 
+        if (this.firstFormGroup.controls['result'].value === 'positive') {
+          alert('Please change the Request/CRM No to HIP');
+          return;
+        }
+
         this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.treatmentFromDate);
 
-         let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+        let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
         drpicker.setDate(drpicker.getDate() + 1);
 
         this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
@@ -257,6 +262,24 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   radioChange(event: any) {
     if (this.array.requestCrmName === 'HQP') {
+      if (this.firstFormGroup.controls['result'].value === 'positive') {
+        alert('Please change the Request/CRM No to HIP');
+        if (document.getElementById('next-btn') !== null) {
+          let myElement: HTMLElement | null = document.getElementById('next-btn');
+
+          if (myElement !== null)
+            myElement.style.display = 'none';
+        }
+        return;
+      }
+
+      if (document.getElementById('next-btn') !== null) {
+        let myElement: HTMLElement | null = document.getElementById('next-btn');
+
+        if (myElement !== null)
+          myElement.style.display = 'inline-flex';
+      }
+
       if (this.edit) {
 
         if (this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
