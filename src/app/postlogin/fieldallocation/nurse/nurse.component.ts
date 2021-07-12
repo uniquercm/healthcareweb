@@ -173,6 +173,10 @@ export class NurseComponent implements OnInit {
     let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName=' + this.localvalues.userName;
 
     this.commonService.getmethod(url).subscribe((data) => {
+      if (data.details.length === 0) {
+        alert('No data Found');
+        return;
+      }
       this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
@@ -190,9 +194,6 @@ export class NurseComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      if (this.array.length === 0) {
-        alert('No data Found');
-      }
     }, err => {
       console.log(err);
     })
@@ -234,6 +235,11 @@ export class NurseComponent implements OnInit {
     }
 
     this.commonService.getmethod(url).subscribe((data) => {
+      if (data.details.length === 0) {
+        alert('No data Found');
+        return;
+      }
+
       this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
@@ -251,9 +257,7 @@ export class NurseComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      if (this.array.length === 0) {
-        alert('No data Found');
-      }
+    
     }, err => {
       console.log(err);
     })
@@ -266,6 +270,10 @@ export class NurseComponent implements OnInit {
       + '&serviceStatus=all' + '&dateSearchType=' + this.searchtype;
 
     this.commonService.getmethod(url).subscribe((data) => {
+      if (data.details.length === 0) {
+        alert('No data Found');
+        return;
+      }
       this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
@@ -276,33 +284,12 @@ export class NurseComponent implements OnInit {
           elam.emrDone = false
         }
       });
-
-      // this.array.forEach((element: any) => {
-      //   element.age = element.patientInformation.age
-      //   element.area = element.patientInformation.area
-      //   element.cityId = element.patientInformation.cityId
-      //   element.cityName = element.patientInformation.cityName
-      //   element.crmNo = element.patientInformation.crmNo
-      //   element.requestCrmName = element.patientInformation.requestCrmName
-      //   element.eidNo = element.patientInformation.eidNo
-      //   element.mobileNo = element.patientInformation.mobileNo
-      //   element.patientName = element.patientInformation.patientName
-      //   element.requestId = element.patientInformation.requestId
-      //   element.stickerApplication = element.patientInformation.stickerApplication
-      //   element.stickerRemoval = element.patientInformation.stickerRemoval
-      //   element.trackerApplication = element.patientInformation.trackerApplication
-      //   element.trackerRemoval = element.patientInformation.trackerRemoval
-      // });
-
-      // console.log(this.array)
-
+  
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      if (this.array.length === 0) {
-        alert('No data Found');
-      }
+    
     }, err => {
       console.log(err);
     })

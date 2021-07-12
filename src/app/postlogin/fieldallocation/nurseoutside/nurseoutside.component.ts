@@ -160,6 +160,11 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
 
       this.thirdFormGroup.controls['eightresult'].setValue(this.data.pcR8DayResult);
       this.thirdFormGroup.controls['eightpicker'].setValue(this.data.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.data.pcR8DaySampleDate);
+     
+      this.fourthFormGroup.controls['vstatus'].setValue(this.nursevalue.teamStatus);
+      this.fourthFormGroup.controls['vremark'].setValue(this.nursevalue.teamRemark);
+      this.fourthFormGroup.controls['vdate'].setValue(this.nursevalue.teamStatusDate);
+   
     }, err => {
       console.log(err);
     })
