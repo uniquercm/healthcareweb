@@ -23,7 +23,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   discharge = true;
   isolation = true;
   dischargedate = false;
-  check = false;
+  check = true;
   type = '';
   array: any = '';
   edit = false;
@@ -120,6 +120,14 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.formGroup.controls['name'].setValue(res.details[0].patientName);
           this.formGroup.controls['age'].setValue(res.details[0].age);
           this.edit = false;
+          this.array = res.details[0];
+          if (this.array.requestCrmName === 'HQP') {
+            this.isHQP = false;
+            this.check = false;
+          } else { 
+            this.check = true;
+          }
+
           return;
         }, err => {
           console.log(err);
@@ -127,7 +135,6 @@ export class SheduleComponent implements OnInit, OnDestroy {
       }
 
       this.array = data.details[0];
-      console.log(this.array);
       this.edit = true;
       this.formGroup.controls['name'].setValue(this.array.patientName);
       this.formGroup.controls['age'].setValue(this.array.age);
@@ -163,6 +170,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
         this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
       } else {
+        this.check = true;
+
         if (this.array.treatmentType === 'isolation') {
           this.isolation = false;
           this.type = 'isolation';
@@ -227,6 +236,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   radioChange(event: any) {
     if (this.firstFormGroup.controls['result'].value === 'negative' && this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
+      console.log(this.array.requestCrmName);
       if (this.array.requestCrmName === 'HQP') {
         if (this.edit) {
           this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
