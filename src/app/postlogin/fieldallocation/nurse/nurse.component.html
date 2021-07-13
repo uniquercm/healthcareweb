@@ -24,6 +24,7 @@
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Request/Case Type </mat-label>
                 <mat-select (selectionChange)="selectarea('case', $event)" #crm>
+                    <mat-option value="all">All</mat-option>
                     <mat-option *ngFor="let value of requestarray" [value]="value.requestCRMId">
                         {{value.requestCRMName}}</mat-option>
                 </mat-select>

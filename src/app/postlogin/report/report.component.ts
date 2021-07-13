@@ -16,14 +16,14 @@ import * as XLSX from 'xlsx';
 export class ReportComponent implements OnInit {
 
   displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
-    'pcr8date', 'pcr8result',
+    'pcr6date', 'pcr6result', 'pcr8date', 'pcr8result', 'pcr11date', 'pcr11result',
     'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus', 'extracteddata', 'sentclaim', 'senton', 'save'];
   dataSource: any;
 
-  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'reception', 'drcell', 'pcr8day', 'nursecall',
+  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'reception', 'drcell', 'pcr6day', 'pcr8day', 'pcr11day', 'nursecall',
     'discharge', 'extracteddata', 'sentclaim', 'senton', 'save']
   secondcolumn = ['receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
-    'pcr8date', 'pcr8result',
+    'pcr6date', 'pcr6result', 'pcr8date', 'pcr8result', 'pcr11date', 'pcr11result',
     'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
@@ -168,11 +168,17 @@ export class ReportComponent implements OnInit {
         if (element.sendingClaimDate === '0001-01-01T00:00:00') {
           element.sendingClaimDate = ''
         }
-        if (element.pcR4DaySampleDate === '0001-01-01T00:00:00') {
-          element.pcR4DaySampleDate = ''
+        if (element.pcR4DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR4DayTestDate = ''
         }
-        if (element.pcR8DaySampleDate === '0001-01-01T00:00:00') {
-          element.pcR8DaySampleDate = ''
+        if (element.pcR6DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR6DayTestDate = ''
+        }
+        if (element.pcR11DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR11DayTestDate = ''
+        }
+        if (element.pcR8DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR8DayTestDate = ''
         }
         if (element.dischargeDate === '0001-01-01T00:00:00') {
           element.dischargeDate = ''
@@ -189,6 +195,8 @@ export class ReportComponent implements OnInit {
           // element.enrolledDetails = element.enrolledDetails;
         }
       });
+
+      console.log(this.reportarray)
 
       this.dataSource = new MatTableDataSource(this.reportarray);
 

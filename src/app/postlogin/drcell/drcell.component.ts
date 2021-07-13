@@ -27,8 +27,8 @@ export class DrcellComponent implements OnInit, OnDestroy {
 
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
-  fromdate: any = new Date();
-  todate: any = new Date();
+  fromdate: any = '';
+  todate: any = '';
 
   requestarray: any[] = [];
 
@@ -37,7 +37,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
     if (router.url === '/apps/drcell') {
       this.title = 'DR Call';
     } else {
-      this.title = 'Nurse Call'; 
+      this.title = 'Nurse Call';
     }
     this.getvalue();
     this.getarea();
@@ -48,7 +48,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
   }
 
-  
+
   keyword = 'areaName';
   getarea() {
     this.commonService.getmethod('area').subscribe((data) => {
@@ -95,7 +95,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
           farray.push(element);
         }
       });
-    }  else if (name === 'area') {
+    } else if (name === 'area') {
       if (event === 'All') {
         farray = this.array;
 
@@ -117,7 +117,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
           farray.push(element);
         }
       });
-    }  else if (name === 'status') {
+    } else if (name === 'status') {
       this.array.forEach((element: any) => {
         if (element.recptionCallStatus === Number(event.value)) {
           farray.push(element);
@@ -147,16 +147,8 @@ export class DrcellComponent implements OnInit, OnDestroy {
     let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
     if (this.router.url === '/apps/drcell') {
       url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false';
-      // if (editvalues.drcallid !== 0) {
-      //   // url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=true&isNurseCall=false';
-      //   url = 'doctor-nurse-team-call?isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
-      // }
     } else {
       url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&isFieldAllow=false';
-      // if (editvalues.patientid !== 0) {
-      //   // url = 'patient?patientId= ' + editvalues.patientid + ' isDoctorCall=false&isNurseCall=true';
-      //   url = 'doctor-nurse-team-call?isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false';
-      // }
     }
 
     this.commonService.getmethod(url).subscribe((data) => {
@@ -177,6 +169,8 @@ export class DrcellComponent implements OnInit, OnDestroy {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       if (this.array.length === 0) {
+
+        this.dataSource = new MatTableDataSource([]);
         alert('No data Found');
       }
     }, err => {
@@ -206,25 +200,62 @@ export class DrcellComponent implements OnInit, OnDestroy {
     this.getPatent('');
   }
 
+  clearf(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crm.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+  }
+
+
+  clearcase(input: any, mobile: any, eid: any, crmno: any, area: any, region: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+  }
+
   area: any[] = [];
-  
+
   getPatent(value: any) {
     let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
     if (this.router.url === '/apps/drcell') {
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      if (editvalues.drcallid !== 0) {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+      if (this.fromdate === '') {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false';
+      } else {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false&fromDate='
           + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       }
+
+      if (editvalues.drcallid !== 0) {
+        if (this.fromdate === '') {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&isFieldAllow=false';
+        } else {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&isFieldAllow=false&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        }
+      }
     } else {
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      if (editvalues.patientid !== 0) {
+      if (this.fromdate === '') {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=tru&callStatus=all&isFieldAllow=false';
+      } else {
         url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
           + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+      }
+      if (editvalues.patientid !== 0) {
+        if (this.fromdate === '') {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=tru&callStatus=all&isFieldAllow=false';
+        } else {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        }
       }
     }
 
@@ -246,7 +277,10 @@ export class DrcellComponent implements OnInit, OnDestroy {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       if (this.array.length === 0) {
+        this.dataSource = new MatTableDataSource([]);
+
         alert('No data Found');
+        return;
       }
     }, err => {
       console.log(err);
@@ -300,6 +334,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       if (this.array.length === 0) {
+        this.dataSource = new MatTableDataSource([]);
         alert('No data Found');
       }
     }, err => {
@@ -314,6 +349,9 @@ export class DrcellComponent implements OnInit, OnDestroy {
   }
 
   select(event: any) {
+    if (event.value === 'all') {
+      this.getPatent('');
+    }
     let farray: any = [];
     this.array.forEach((element: any) => {
       if (element.requestId === Number(event.value)) {
@@ -328,7 +366,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value; 
+    const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 

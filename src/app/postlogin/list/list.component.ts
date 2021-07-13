@@ -84,11 +84,50 @@ export class ListComponent implements OnInit {
   select(name: string, event: any) {
     let farray: any = [];
     if (name === 'case') {
-      this.array.forEach((element: any) => {
-        if (element.requestId === Number(event.value)) {
-          farray.push(element);
+      if (event.value === 'all') {
+        let url = '';
+        if (this.fromdate === '') {
+          url = 'patient?companyId=' + this.companyid
+            + '&isDoctorCall=false&isNurseCall=false&searchStatus=' + event
+        } else {
+          url = 'patient?companyId=' + this.companyid + '&fromDate=' +
+            this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
+            this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
+            + '&isDoctorCall=false&isNurseCall=false&searchStatus=' + event
         }
-      });
+        this.commonService.getmethodws(url).subscribe((data) => {
+          this.array = data.details;
+          this.array.forEach((o: any, i) => o.id = i + 1);
+
+          for (let index = 0; index < this.array.length; index++) {
+            const element: any = this.array[index];
+    
+            if (element.recptionCallStatus === undefined) {
+              element.recptionCallStatus = ''
+            }
+    
+            if (element.recptionCallRemarks === undefined) {
+              element.recptionCallRemarks = ''
+            }
+    
+          }
+
+          this.dataSource = new MatTableDataSource(this.array);
+
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          loader.loading = false;
+        }, err => {
+          console.log(err);
+          loader.loading = false;
+        })
+      } else {
+        this.array.forEach((element: any) => {
+          if (element.requestId === Number(event.value)) {
+            farray.push(element);
+          }
+        });
+      }
     } else if (name === 'area') {
       if (event === 'All') {
         farray = this.array;
@@ -114,7 +153,7 @@ export class ListComponent implements OnInit {
     } else if (name === 'status') {
       let url = '';
       if (this.fromdate === '') {
-        url = 'patient?companyId=' + this.companyid 
+        url = 'patient?companyId=' + this.companyid
           + '&isDoctorCall=false&isNurseCall=false&searchStatus=' + event
       } else {
         url = 'patient?companyId=' + this.companyid + '&fromDate=' +
@@ -125,9 +164,22 @@ export class ListComponent implements OnInit {
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = data.details;
         this.array.forEach((o: any, i) => o.id = i + 1);
+
+        for (let index = 0; index < this.array.length; index++) {
+          const element: any = this.array[index];
   
+          if (element.recptionCallStatus === undefined) {
+            element.recptionCallStatus = ''
+          }
+  
+          if (element.recptionCallRemarks === undefined) {
+            element.recptionCallRemarks = ''
+          }
+  
+        }
+
         this.dataSource = new MatTableDataSource(this.array);
-  
+
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         loader.loading = false;
@@ -183,7 +235,17 @@ export class ListComponent implements OnInit {
     crmno.value = '';
     area.value = '';
     region.value = '';
-    statuss.value = ''; 
+    statuss.value = '';
+  }
+
+  clearcase(input: any, mobile: any, eid: any, crmno: any, area: any, region: any, statuss: any) {
+    input.value = '';
+    mobile.value = '';
+    eid.value = '';
+    crmno.value = '';
+    area.value = '';
+    region.value = '';
+    statuss.value = '';
   }
 
   getstatus(statuss: any) {
@@ -193,6 +255,19 @@ export class ListComponent implements OnInit {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
 
+      for (let index = 0; index < this.array.length; index++) {
+        const element: any = this.array[index];
+
+        if (element.recptionCallStatus === undefined) {
+          element.recptionCallStatus = ''
+        }
+
+        if (element.recptionCallRemarks === undefined) {
+          element.recptionCallRemarks = ''
+        }
+
+      }
+      
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
@@ -223,23 +298,37 @@ export class ListComponent implements OnInit {
       url = 'patient?companyId=' + this.companyid
     } else {
       if (this.fromdate === '') {
-        url = 'patient?companyId=' + this.companyid 
-        + '&isDoctorCall=false&isNurseCall=false'
+        url = 'patient?companyId=' + this.companyid
+          + '&isDoctorCall=false&isNurseCall=false'
       } else {
-      url = 'patient?companyId=' + this.companyid + '&fromDate=' +
-        this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
-        this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
-        + '&isDoctorCall=false&isNurseCall=false'}
+        url = 'patient?companyId=' + this.companyid + '&fromDate=' +
+          this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
+          this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
+          + '&isDoctorCall=false&isNurseCall=false'
+      }
     }
     this.commonService.getmethodws(url).subscribe((data) => {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
 
+      for (let index = 0; index < this.array.length; index++) {
+        const element: any = this.array[index];
+
+        if (element.recptionCallStatus === undefined) {
+          element.recptionCallStatus = ''
+        }
+
+        if (element.recptionCallRemarks === undefined) {
+          element.recptionCallRemarks = ''
+        }
+
+      }
+
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      loader.loading = false;
+      loader.loading = false; 
     }, err => {
       console.log(err);
       loader.loading = false;
@@ -320,7 +409,7 @@ export class ListComponent implements OnInit {
   //   const url = this.router.serializeUrl(
   //     this.router.createUrlTree(['apps/reception'])
   //   );
-  
+
   //   window.open(url, '_blank');
   // }
 }

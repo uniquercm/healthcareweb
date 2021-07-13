@@ -1,56 +1,65 @@
 /* Structure */
+
 table {
-  width: 100%;
+    width: 100%;
 }
 
 .mat-form-field {
-  font-size: 14px;
-  width: 100%;
+    font-size: 14px;
+    width: 100%;
 }
 
-img  {
-  cursor: pointer;
-  width: 30px;
+img {
+    cursor: pointer;
+    width: 30px;
 }
-  
- 
+
 th,
 td {
-  vertical-align: middle;
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
-  padding-left: 24px !important;
-  padding-right: 24px !important;
+    vertical-align: middle;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+td.mat-cell,
+td.mat-footer-cell {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
 }
 
 td {
-  font-size: 13px;
+    font-size: 13px;
 }
 
 tr.mat-row,
 tr.mat-footer-row {
-  height: 40px;
+    height: 40px;
 }
 
 th.mat-header-cell {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 1px; 
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
 }
 
 td.mat-cell {
-  border-bottom-style: none !important;
-  border-right: none !important;
+    border-bottom-style: none !important;
+    border-right: none !important;
 }
 
 .mat-row:nth-child(even) {
-  background-color: #f4f6f8;
+    background-color: #f4f6f8;
 }
 
 .mat-row:nth-child(odd) {
-  background-color: #fff;
+    background-color: #fff;
 }
 
 th.mat-header-cell {
-  border-bottom-color: #fff;
+    border-bottom-color: #fff;
 }
- 
+
+.my_class {
+    background-color: rgb(247, 194, 194) !important;
+}
