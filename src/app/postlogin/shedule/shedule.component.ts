@@ -391,6 +391,12 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.check = true;
         this.isHQP = true;
         this.dischargedate = false;
+      } else if (((this.firstFormGroup.controls['result'].value === 'positive')) && (this.firstFormGroup.controls['vaccinestatus'].value === 'no')) {
+        this.discharge = true;
+        this.isolation = true;
+        this.check = true;
+        this.isHQP = true;
+        this.dischargedate = false;
       } else {
         this.discharge = true;
         this.isolation = true;
@@ -399,7 +405,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.isHQP = true;
 
         let drpicker: Date = this.firstFormGroup.value.conducteddate;
-        drpicker.setDate(drpicker.getDate() + 3);
+        drpicker.setDate(drpicker.getDate() + 10);
 
         this.firstFormGroup.controls['dischargedate'].setValue(drpicker);
       }
