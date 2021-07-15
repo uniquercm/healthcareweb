@@ -43,6 +43,14 @@ export class RegisterComponent implements OnInit {
       nationality: ['', Validators.required],
       assignedDate: ['', Validators.nullValidator]
     });
+
+    if (localStorage.getItem('patientedit') !== null) {
+      let value: any = JSON.parse(localStorage.getItem('patientedit') || '{}');
+      editvalues.patientid = value.patientid;
+      editvalues.scheduleid = value.scheduleid;
+      editvalues.drcallid = value.drcallid;
+    }
+
   }
 
   ngOnInit(): void {
@@ -55,7 +63,7 @@ export class RegisterComponent implements OnInit {
 
   finalarray: any[] = [];
   onFileSelect(e: any): void {
-    try { 
+    try {
       loader.loading = true;
       const target: DataTransfer = <DataTransfer>(e.target);
       if (target.files.length !== 1) throw new Error('Cannot use multiple files');
@@ -79,14 +87,14 @@ export class RegisterComponent implements OnInit {
       reader.readAsBinaryString(target.files[0]);
 
       reader.onloadend = (e) => {
-        this.data.splice(0, 1); 
-        this.data.forEach(element => { 
+        this.data.splice(0, 1);
+        this.data.forEach(element => {
           let map = {
             "patientName": element[2],
             "companyId": this.localvalues.companyId,
             "requestCrmName": element[0],
             "crmNo": element[1],
-            "eidNo": element[3], 
+            "eidNo": element[3],
             "age": Number(element[7] === undefined ? '' : element[7]),
             "sex": element[6] === undefined ? '' : element[6],
             "address": "",
@@ -94,7 +102,7 @@ export class RegisterComponent implements OnInit {
             "area": "",
             "cityId": 0,
             "nationalityName": Number(element[8]),
-            "mobileNo":  element[4],
+            "mobileNo": element[4],
             "googleMapLink": "",
             "adultsCount": 0,
             "childrensCount": 0,
@@ -108,7 +116,7 @@ export class RegisterComponent implements OnInit {
             "assignedDate": element[9] === undefined ? '' : element[9]
           };
           this.finalarray.push(map);
-        });  
+        });
         loader.loading = false;
       }
     } catch (error) {
@@ -124,14 +132,14 @@ export class RegisterComponent implements OnInit {
     }
     this.commonService.postmethod('patient-file', maps).subscribe((data) => {
       loader.loading = false;
-      alert('Saved Successfully'); 
+      alert('Saved Successfully');
       this.router.navigateByUrl('/apps/list');
     }, err => {
       loader.loading = false;
-      alert('Error Occured'); 
+      alert('Error Occured');
       console.log(err);
     })
-  } 
+  }
 
   calculateAge(): void {
     var timeDiff = Math.abs(Date.now() - this.form.value.dob);

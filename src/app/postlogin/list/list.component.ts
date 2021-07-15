@@ -212,6 +212,7 @@ export class ListComponent implements OnInit {
     editvalues.scheduleid = element.scheduledId;
     editvalues.drcallid = element.drCallId
     editvalues.patientid = element.patientId
+    localStorage.setItem('patientedit', JSON.stringify(editvalues));
   }
 
   clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, statuss: any) {
@@ -364,7 +365,6 @@ export class ListComponent implements OnInit {
 
   }
 
-
   keyword = 'areaName';
   getarea() {
     this.commonService.getmethodws('area').subscribe((data) => {
@@ -405,11 +405,44 @@ export class ListComponent implements OnInit {
     })
   }
 
-  // reception() {
-  //   const url = this.router.serializeUrl(
-  //     this.router.createUrlTree(['apps/reception'])
-  //   );
+  reception() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['apps/reception'])
+    );
 
-  //   window.open(url, '_blank');
-  // }
+    window.open(url, '_blank');
+  }
+
+  scheduleroute() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['apps/schedule'])
+    );
+
+    window.open(url, '_blank');
+  }
+
+  drcellroute() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['apps/drcell'])
+    );
+
+    window.open(url, '_blank');
+  }
+  
+  nursecellroute() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['apps/nursecell'])
+    );
+
+    window.open(url, '_blank');
+  }
+
+  register() {
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree(['apps/home'])
+    );
+
+    window.open(url, '_blank');
+  }
+  
 }

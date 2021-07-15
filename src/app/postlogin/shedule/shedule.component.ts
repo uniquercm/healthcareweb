@@ -112,6 +112,11 @@ export class SheduleComponent implements OnInit, OnDestroy {
       dischargespicker: ['', Validators.nullValidator],
       dischargerpicker: ['', Validators.nullValidator]
     });
+
+    let value: any = JSON.parse(localStorage.getItem('patientedit') || '{}');
+    editvalues.patientid = value.patientid;
+    editvalues.scheduleid = value.scheduleid;
+    editvalues.drcallid = value.drcallid;
   }
 
   ngOnInit() {
@@ -126,7 +131,6 @@ export class SheduleComponent implements OnInit, OnDestroy {
           if (this.array.requestCrmName === 'HQP') {
             this.isHQP = false;
             this.check = false;
-            this.hqpdisabled = false;
 
             this.firstFormGroup.controls['conducteddate'].setValue(res.details[0].createdOn);
 
@@ -176,7 +180,6 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.isHQP = false;
         this.check = false;
 
-        this.hqpdisabled = true;
         if (document.getElementById('next-btn') !== null) {
           let myElement: HTMLElement | null = document.getElementById('next-btn');
 
@@ -187,13 +190,13 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
 
         let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-        drpicker.setDate(drpicker.getDate() + 1);
+        drpicker.setDate(drpicker.getDate());
 
         this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.array.pcrTestDate);
 
         let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-        fourpickers.setDate(fourpickers.getDate() + 3 - 1);
-        this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
+        fourpickers.setDate(fourpickers.getDate() + 1);
+        this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
         this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
 
@@ -213,8 +216,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpdisabled = false;
           return;
         }
-      } else {
         this.hqpdisabled = true;
+      } else {
         this.check = true;
 
         if (this.array.treatmentType === 'isolation') {
@@ -282,6 +285,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   radioChange(event: any, date: any) {
     if (this.array.requestCrmName === 'HQP') {
       if (this.firstFormGroup.controls['result'].value === 'positive') {
+        this.hqpdisabled = false;
         alert('Please change the Request/CRM No to HIP');
         if (document.getElementById('next-btn') !== null) {
           let myElement: HTMLElement | null = document.getElementById('next-btn');
@@ -289,6 +293,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
           if (myElement !== null)
             myElement.style.display = 'none';
         }
+
         return;
       }
 
@@ -306,12 +311,12 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
 
           let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          drpicker.setDate(drpicker.getDate() + 1);
+          drpicker.setDate(drpicker.getDate());
 
           this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
 
           let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+          fourpickers.setDate(fourpickers.getDate() + 1);
           this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
           let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
@@ -327,12 +332,12 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
 
           let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          drpicker.setDate(drpicker.getDate() - 1);
+          drpicker.setDate(drpicker.getDate());
 
           this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
 
           let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+          fourpickers.setDate(fourpickers.getDate() +1 );
           this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
           let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
@@ -350,13 +355,13 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpFormGroup.controls['hqpstartdate'].setValue(this.firstFormGroup.value.conducteddate);
 
           let drpicker: Date = new Date(this.firstFormGroup.value.conducteddate);
-          drpicker.setDate(drpicker.getDate() + 1);
+          drpicker.setDate(drpicker.getDate());
 
           this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
 
           let fourpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
-          fourpickers.setDate(fourpickers.getDate() + 3 - 1);
-          this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
+          fourpickers.setDate(fourpickers.getDate() + 1 );
+          this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
           let eightpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
           eightpickers.setDate(eightpickers.getDate() + 6 - 1);
@@ -371,13 +376,13 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpFormGroup.controls['hqpstartdate'].setValue(this.firstFormGroup.value.conducteddate);
 
           let drpicker: Date = new Date(this.firstFormGroup.value.conducteddate);
-          drpicker.setDate(drpicker.getDate() + 1);
+          drpicker.setDate(drpicker.getDate());
 
           this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
 
           let fourpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
-          fourpickers.setDate(fourpickers.getDate() + 3 - 1);
-          this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
+          fourpickers.setDate(fourpickers.getDate() + 1);
+          this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
           let eightpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
           eightpickers.setDate(eightpickers.getDate() + 11 - 1);
@@ -398,14 +403,14 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.isHQP = true;
         this.dischargedate = false;
       }
-       else if (((this.firstFormGroup.controls['result'].value === 'positive')) && (this.firstFormGroup.controls['vaccinestatus'].value === 'no')) {
+      else if (((this.firstFormGroup.controls['result'].value === 'positive')) && (this.firstFormGroup.controls['vaccinestatus'].value === 'no')) {
         this.discharge = true;
         this.isolation = true;
         this.check = true;
-        
+
         this.isHQP = true;
         this.dischargedate = false;
-      } 
+      }
       else {
         this.discharge = true;
         this.isolation = true;
@@ -419,7 +424,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.firstFormGroup.controls['dischargedate'].setValue(drpicker);
       }
     }
-
+    console.log(this.hqpdisabled)
   }
 
   showOptions(event: any) {
@@ -454,14 +459,15 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   changehqp(date: any) {
     let drpicker: Date = date.value;
-    drpicker.setDate(drpicker.getDate() + 1);
+    drpicker.setDate(drpicker.getDate());
 
     this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
+
 
     if (this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
 
       let fourpickers: Date = new Date(date.value);
-      fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+      fourpickers.setDate(fourpickers.getDate() + 2 );
       this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
 
       let eightpickers: Date = new Date(date.value);
@@ -479,7 +485,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
 
       let eightpickers: Date = new Date(date.value);
-      eightpickers.setDate(eightpickers.getDate() + 6 - 1);
+      eightpickers.setDate(eightpickers.getDate() + 6 );
 
       this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
 

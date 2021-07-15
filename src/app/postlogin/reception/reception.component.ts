@@ -22,6 +22,12 @@ export class ReceptionComponent implements OnInit, OnDestroy {
 
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService,
     public datepipe: DatePipe, private router: Router) {
+    if (localStorage.getItem('patientedit') !== null) {
+      let value: any = JSON.parse(localStorage.getItem('patientedit') || '{}');
+      editvalues.patientid = value.patientid;
+      editvalues.scheduleid = value.scheduleid;
+      editvalues.drcallid = value.drcallid;
+    }
 
     this.formGroup = this._formBuilder.group({
       crmType: ['', Validators.nullValidator],

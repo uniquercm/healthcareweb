@@ -76,7 +76,7 @@
                     </div>
                 </form>
             </mat-step>
-            <mat-step [stepControl]="hqpFormGroup" *ngIf="!isHQP && hqpdisabled">
+            <mat-step [stepControl]="hqpFormGroup" *ngIf="hqpdisabled">
                 <form [formGroup]="hqpFormGroup">
                     <ng-template matStepLabel>Home Quarantine Duration</ng-template>
                     <div class="row">
