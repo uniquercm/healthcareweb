@@ -29,6 +29,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   edit = false;
   isHQP = true;
   disablevalue = true;
+  hqpdisabled = false;
 
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
@@ -125,6 +126,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
           if (this.array.requestCrmName === 'HQP') {
             this.isHQP = false;
             this.check = false;
+            this.hqpdisabled = false;
 
             this.firstFormGroup.controls['conducteddate'].setValue(res.details[0].createdOn);
 
@@ -174,17 +176,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.isHQP = false;
         this.check = false;
 
-        if (this.firstFormGroup.controls['result'].value === 'positive') {
-          alert('Please change the Request/CRM No to HIP');
-          if (document.getElementById('next-btn') !== null) {
-            let myElement: HTMLElement | null = document.getElementById('next-btn');
-
-            if (myElement !== null)
-              myElement.style.display = 'none';
-          }
-          return;
-        }
-
+        this.hqpdisabled = true;
         if (document.getElementById('next-btn') !== null) {
           let myElement: HTMLElement | null = document.getElementById('next-btn');
 
@@ -208,7 +200,21 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
         this.hqpFormGroup.controls['hqpdischargepicker'].setValue(this.array.dischargeDate);
 
+
+        if (this.firstFormGroup.controls['result'].value === 'positive') {
+          alert('Please change the Request/CRM No to HIP');
+          if (document.getElementById('next-btn') !== null) {
+            let myElement: HTMLElement | null = document.getElementById('next-btn');
+
+            if (myElement !== null)
+              myElement.style.display = 'none';
+          }
+          this.isHQP = true
+          this.hqpdisabled = false;
+          return;
+        }
       } else {
+        this.hqpdisabled = true;
         this.check = true;
 
         if (this.array.treatmentType === 'isolation') {
@@ -273,7 +279,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
     });
   }
 
-  radioChange(event: any) {
+  radioChange(event: any, date: any) {
     if (this.array.requestCrmName === 'HQP') {
       if (this.firstFormGroup.controls['result'].value === 'positive') {
         alert('Please change the Request/CRM No to HIP');
@@ -292,7 +298,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         if (myElement !== null)
           myElement.style.display = 'inline-flex';
       }
-
+      this.hqpdisabled = true;
       if (this.edit) {
 
         if (this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
@@ -391,21 +397,24 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.check = true;
         this.isHQP = true;
         this.dischargedate = false;
-      } else if (((this.firstFormGroup.controls['result'].value === 'positive')) && (this.firstFormGroup.controls['vaccinestatus'].value === 'no')) {
+      }
+       else if (((this.firstFormGroup.controls['result'].value === 'positive')) && (this.firstFormGroup.controls['vaccinestatus'].value === 'no')) {
         this.discharge = true;
         this.isolation = true;
         this.check = true;
+        
         this.isHQP = true;
         this.dischargedate = false;
-      } else {
+      } 
+      else {
         this.discharge = true;
         this.isolation = true;
         this.dischargedate = true;
         this.check = false;
         this.isHQP = true;
 
-        let drpicker: Date = this.firstFormGroup.value.conducteddate;
-        drpicker.setDate(drpicker.getDate() + 10);
+        let drpicker: Date = new Date(date);
+        drpicker.setDate(drpicker.getDate() + 9);
 
         this.firstFormGroup.controls['dischargedate'].setValue(drpicker);
       }

@@ -21,7 +21,7 @@
             </div>
         </form>
 
-        <mat-horizontal-stepper labelPosition="bottom" #stepper>
+        <mat-horizontal-stepper labelPosition="bottom" #stepper [linear]="true">
             <mat-step [stepControl]="firstFormGroup">
                 <form [formGroup]="firstFormGroup">
                     <ng-template matStepLabel>Initial PCR test</ng-template>
@@ -37,7 +37,7 @@
                         <div class="col-lg-4 col-md-2 col-sm-12">
                             <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Result</mat-label>
-                                <mat-select formControlName="result" (selectionChange)="radioChange($event)">
+                                <mat-select formControlName="result" (selectionChange)="radioChange($event, conducteddate.value)">
                                     <mat-option value='positive'>Positive </mat-option>
                                     <mat-option value='negative'> Negative</mat-option>
                                 </mat-select>
@@ -46,7 +46,7 @@
                         <div class="col-lg-4 col-md-2 col-sm-12 margin-auto">
                             <section class="example-section">
                                 <label class="example-margin mr-5">Vaccine Status</label>
-                                <mat-radio-group formControlName="vaccinestatus" (change)="radioChange($event)">
+                                <mat-radio-group formControlName="vaccinestatus" (change)="radioChange($event, conducteddate.value)">
                                     <mat-radio-button class="example-margin" value="yes">Yes</mat-radio-button>
                                     <mat-radio-button class="example-margin ml-5" value="no">No</mat-radio-button>
                                 </mat-radio-group>
@@ -76,7 +76,7 @@
                     </div>
                 </form>
             </mat-step>
-            <mat-step [stepControl]="hqpFormGroup" *ngIf="!isHQP">
+            <mat-step [stepControl]="hqpFormGroup" *ngIf="!isHQP && hqpdisabled">
                 <form [formGroup]="hqpFormGroup">
                     <ng-template matStepLabel>Home Quarantine Duration</ng-template>
                     <div class="row">
