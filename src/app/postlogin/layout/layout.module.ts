@@ -20,8 +20,7 @@ import { LayoutComponent } from './layout.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { ListuserComponent } from '../user/listuser/listuser.component';
-
-
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -47,6 +46,7 @@ import { ListuserComponent } from '../user/listuser/listuser.component';
     DemoMaterialModule,
     ChartsModule,
     AutocompleteLibModule,
+    NgSelectModule,
     NgxMaskModule.forRoot(),
   ],
   providers: [

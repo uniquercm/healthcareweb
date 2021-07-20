@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +12,7 @@ import * as XLSX from 'xlsx';
   templateUrl: './supervisor.component.html',
   styleUrls: ['./supervisor.component.scss']
 })
-export class SupervisorComponent implements OnInit {
+export class SupervisorComponent implements OnInit, OnDestroy {
 
   // displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'edit', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks', 'pcr4date', 'pcr4result',
   //   'pcr8date', 'pcr8result',
@@ -508,6 +508,13 @@ export class SupervisorComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+  }
 
+  
+  ngOnDestroy() {
+    editvalues.drcallid = 0
+    editvalues.patientid = 0
+    editvalues.scheduleid = 0
+    localStorage.removeItem('patientedit');
   }
 }

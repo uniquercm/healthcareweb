@@ -117,169 +117,181 @@ export class SheduleComponent implements OnInit, OnDestroy {
     editvalues.patientid = value.patientid;
     editvalues.scheduleid = value.scheduleid;
     editvalues.drcallid = value.drcallid;
+    editvalues.headerbuttclick = value.headerbuttclick;//Thanam
   }
 
   ngOnInit() {
-    this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
-      if (data.details.length === 0) {
-        this.commonService.getmethod('patient?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((res) => {
-          this.formGroup.controls['name'].setValue(res.details[0].patientName);
-          this.formGroup.controls['age'].setValue(res.details[0].age);
-          this.edit = false;
-          this.array = res.details[0];
+    if(!editvalues.headerbuttclick)//Thanam
+    {
+      this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
+        if (data.details.length === 0) {
+          this.commonService.getmethod('patient?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((res) => {
+            this.formGroup.controls['name'].setValue(res.details[0].patientName);
+            this.formGroup.controls['age'].setValue(res.details[0].age);
+            this.edit = false;
+            this.array = res.details[0];
 
-          if (this.array.requestCrmName === 'HQP') {
-            this.isHQP = false;
-            this.check = false;
+            if (this.array.requestCrmName === 'HQP') {
+              this.isHQP = false;
+              this.check = false;
 
-            this.firstFormGroup.controls['conducteddate'].setValue(res.details[0].createdOn);
+              this.firstFormGroup.controls['conducteddate'].setValue(res.details[0].createdOn);
 
-            this.hqpFormGroup.controls['hqpstartdate'].setValue(res.details[0].createdOn);
+              this.hqpFormGroup.controls['hqpstartdate'].setValue(res.details[0].createdOn);
 
-            let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-            drpicker.setDate(drpicker.getDate() + 1);
+              let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+              drpicker.setDate(drpicker.getDate() + 1);
 
-            this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.hqpFormGroup.controls['hqpstartdate'].value);
+              this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.hqpFormGroup.controls['hqpstartdate'].value);
 
-            let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-            fourpickers.setDate(fourpickers.getDate() + 3 - 1);
-            this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
+              let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+              fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+              this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
 
-            let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-            eightpickers.setDate(eightpickers.getDate() + 6);
+              let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+              eightpickers.setDate(eightpickers.getDate() + 6);
 
-            this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
+              this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
 
-            let startdates: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-            startdates.setDate(startdates.getDate() + 7);
-            this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
-            this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
+              let startdates: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+              startdates.setDate(startdates.getDate() + 7);
+              this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
+              this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
 
-          } else {
-            this.check = true;
-          }
+            } else {
+              this.check = true;
+            }
 
-          return;
-        }, err => {
-          console.log(err);
-        })
-      }
-
-      this.array = data.details[0];
-      this.edit = true;
-      this.formGroup.controls['name'].setValue(this.array.patientName);
-      this.formGroup.controls['age'].setValue(this.array.age);
-
-      this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
-      this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
-
-      this.firstFormGroup.controls['dischargedate'].setValue(this.array.dischargeDate);
-      this.check = true;
-
-      if (this.array.requestCrmName === 'HQP') {
-        this.isHQP = false;
-        this.check = false;
-
-        if (document.getElementById('next-btn') !== null) {
-          let myElement: HTMLElement | null = document.getElementById('next-btn');
-
-          if (myElement !== null)
-            myElement.style.display = 'inline-flex';
+            return;
+          }, err => {
+            console.log(err);
+          })
         }
 
-        this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
+        this.array = data.details[0];
+        this.edit = true;
+        this.formGroup.controls['name'].setValue(this.array.patientName);
+        this.formGroup.controls['age'].setValue(this.array.age);
 
-        let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-        drpicker.setDate(drpicker.getDate());
+        this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
+        this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
 
-        this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.array.pcrTestDate);
+        this.firstFormGroup.controls['dischargedate'].setValue(this.array.dischargeDate);
+        this.check = true;
 
-        let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-        fourpickers.setDate(fourpickers.getDate() + 1);
-        this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
+        if (this.array.requestCrmName === 'HQP') {
+          this.isHQP = false;
+          this.check = false;
 
-        this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
-
-        this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
-        this.hqpFormGroup.controls['hqpdischargepicker'].setValue(this.array.dischargeDate);
-
-
-        if (this.firstFormGroup.controls['result'].value === 'positive') {
-          alert('Please change the Request/CRM No to HIP');
           if (document.getElementById('next-btn') !== null) {
             let myElement: HTMLElement | null = document.getElementById('next-btn');
 
             if (myElement !== null)
-              myElement.style.display = 'none';
+              myElement.style.display = 'inline-flex';
           }
-          this.isHQP = true
-          this.hqpdisabled = false;
-          return;
-        }
-        this.hqpdisabled = true;
-      } else {
-        this.check = true;
 
-        if (this.array.treatmentType === 'isolation') {
-          this.isolation = false;
-          this.type = 'isolation';
-          this.firstFormGroup.controls['quarantine'].setValue('isolation');
-        } else if (this.array.treatmentType === 'quarantine') {
-          this.discharge = false;
-          this.type = 'quarantine';
-          this.firstFormGroup.controls['quarantine'].setValue('quarantine');
+          this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
+
+          let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+          drpicker.setDate(drpicker.getDate());
+
+          this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.array.pcrTestDate);
+
+          let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+          fourpickers.setDate(fourpickers.getDate() + 1);
+          this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
+
+          this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
+
+          this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
+          this.hqpFormGroup.controls['hqpdischargepicker'].setValue(this.array.dischargeDate);
+
+
+          if (this.firstFormGroup.controls['result'].value === 'positive') {
+            alert('Please change the Request/CRM No to HIP');
+            if (document.getElementById('next-btn') !== null) {
+              let myElement: HTMLElement | null = document.getElementById('next-btn');
+
+              if (myElement !== null)
+                myElement.style.display = 'none';
+            }
+            this.isHQP = true
+            this.hqpdisabled = false;
+            return;
+          }
+          this.hqpdisabled = true;
         } else {
-          this.check = false;
-          this.dischargedate = true;
+          this.check = true;
+
+          if (this.array.treatmentType === 'isolation') {
+            this.isolation = false;
+            this.type = 'isolation';
+            this.firstFormGroup.controls['quarantine'].setValue('isolation');
+          } else if (this.array.treatmentType === 'quarantine') {
+            this.discharge = false;
+            this.type = 'quarantine';
+            this.firstFormGroup.controls['quarantine'].setValue('quarantine');
+          } else {
+            this.check = false;
+            this.dischargedate = true;
+          }
+
+          if (this.array.treatmentType === 'isolation') {
+            this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
+            this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
+            this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+            this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+            this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
+            this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
+            this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+            this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+            // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
+            this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
+            this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
+            this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+
+            this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+
+            this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
+            this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
+            this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
+            this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+
+            this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+
+            this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+
+            this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+          } else {
+            this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate);
+            this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate);
+            this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate);
+            this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate);
+            this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult);
+            this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate);
+            this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate);
+            this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult);
+            this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate);
+            this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+            this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+            this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+            this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+          }
         }
 
-        if (this.array.treatmentType === 'isolation') {
-          this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
-          this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
-          this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
-          this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
-          this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
-          this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
-          this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
-          this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
-          // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
-          this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
-          this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
-          this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+        this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
+      }, err => {
+        console.log(err);
+      });
+    }
 
-          this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
-
-          this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
-          this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
-          this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
-          this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
-
-          this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
-
-          this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
-
-          this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
-        } else {
-          this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate);
-          this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate);
-          this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate);
-          this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate);
-          this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult);
-          this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate);
-          this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate);
-          this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult);
-          this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate);
-          this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
-          this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
-          this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
-          this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
-        }
-      }
-
-      this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
-    }, err => {
-      console.log(err);
-    });
+    //Thanam
+    if(!editvalues.headerbuttclick)
+    {
+      editvalues.headerbuttclick = true;
+      localStorage.setItem('patientedit', JSON.stringify(editvalues));
+    }
+    //*************************** */
   }
 
   radioChange(event: any, date: any) {
@@ -605,6 +617,16 @@ export class SheduleComponent implements OnInit, OnDestroy {
       }
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
+        //Thanam
+        //if(!editvalues.headerbuttclick)
+        {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+          localStorage.setItem('patientedit', JSON.stringify(editvalues));
+        }
+        //*************************** */
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);
@@ -642,6 +664,16 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
+        //Thanam
+        //if(!editvalues.headerbuttclick)
+        {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+          localStorage.setItem('patientedit', JSON.stringify(editvalues));
+        }
+        //*************************** */
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);
@@ -684,6 +716,16 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
+        //Thanam
+        //if(!editvalues.headerbuttclick)
+        {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+          localStorage.setItem('patientedit', JSON.stringify(editvalues));
+        }
+        //*************************** */
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);
@@ -721,6 +763,16 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
+        //Thanam
+        //if(!editvalues.headerbuttclick)
+        {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+          localStorage.setItem('patientedit', JSON.stringify(editvalues));
+        }
+        //*************************** */
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);
@@ -751,6 +803,16 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
+        //Thanam
+        //if(!editvalues.headerbuttclick)
+        {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+          localStorage.setItem('patientedit', JSON.stringify(editvalues));
+        }
+        //*************************** */
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);
@@ -778,6 +840,16 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
+        //Thanam
+        //if(!editvalues.headerbuttclick)
+        {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+          localStorage.setItem('patientedit', JSON.stringify(editvalues));
+        }
+        //*************************** */
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);
@@ -823,6 +895,16 @@ export class SheduleComponent implements OnInit, OnDestroy {
       }
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
+        //Thanam
+        //if(!editvalues.headerbuttclick)
+        {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+          localStorage.setItem('patientedit', JSON.stringify(editvalues));
+        }
+        //*************************** */
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);
@@ -859,6 +941,16 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
+        //Thanam
+        //if(!editvalues.headerbuttclick)
+        {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+          localStorage.setItem('patientedit', JSON.stringify(editvalues));
+        }
+        //*************************** */
         this.router.navigateByUrl('/apps/list');
       }, err => {
         console.log(err);
@@ -872,6 +964,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
     editvalues.drcallid = 0
     editvalues.patientid = 0
     editvalues.scheduleid = 0
+    editvalues.headerbuttclick = true;//Thanam
+    localStorage.setItem('patientedit', JSON.stringify(editvalues));//Thanam
   }
 
 }

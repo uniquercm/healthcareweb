@@ -57,6 +57,14 @@ export class ListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  
+  crmfilter(event: Event) {
+    
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+
   getreq() {
     this.commonService.getmethodws('requestCRM').subscribe((data) => {
       this.requestarray = data.details;
@@ -81,6 +89,7 @@ export class ListComponent implements OnInit {
     }
   }
 
+  selectedArea = [];
   select(name: string, event: any) {
     let farray: any = [];
     if (name === 'case') {
@@ -139,11 +148,47 @@ export class ListComponent implements OnInit {
 
         return;
       }
-      this.array.forEach((element: any) => {
-        if (element.area === (event)) {
-          farray.push(element);
+      // this.array.forEach((element: any) => {
+      //   if (element.area === (event)) {
+      //     farray.push(element);
+      //   }
+      // });
+      let url = '';
+      if (this.fromdate === '') {
+        url = 'patient?companyId=' + this.companyid
+          + '&isDoctorCall=false&isNurseCall=false&areaNames=' + this.selectedArea
+      } else {
+        url = 'patient?companyId=' + this.companyid + '&fromDate=' +
+          this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
+          this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
+          + '&isDoctorCall=false&isNurseCall=false&areaNames=' + this.selectedArea
+      }
+      this.commonService.getmethodws(url).subscribe((data) => {
+        this.array = data.details;
+        this.array.forEach((o: any, i) => o.id = i + 1);
+
+        for (let index = 0; index < this.array.length; index++) {
+          const element: any = this.array[index];
+  
+          if (element.recptionCallStatus === undefined) {
+            element.recptionCallStatus = ''
+          }
+  
+          if (element.recptionCallRemarks === undefined) {
+            element.recptionCallRemarks = ''
+          }
+  
         }
-      });
+
+        this.dataSource = new MatTableDataSource(this.array);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        loader.loading = false;
+      }, err => {
+        console.log(err);
+        loader.loading = false;
+      })
     } else if (name === 'city') {
       this.array.forEach((element: any) => {
         if (element.cityId === Number(event)) {
@@ -215,38 +260,39 @@ export class ListComponent implements OnInit {
     localStorage.setItem('patientedit', JSON.stringify(editvalues));
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, statuss: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any,  region: any, statuss: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
     crm.value = '';
     crmno.value = '';
-    area.value = '';
+    this.selectedArea = []; 
     region.value = '';
     statuss.value = '';
 
     this.getPatent('');
   }
 
-  clearf(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, statuss: any) {
+  clearf(input: any, mobile: any, eid: any, crm: any, crmno: any,   region: any, statuss: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
     crm.value = '';
     crmno.value = '';
-    area.value = '';
+    this.selectedArea = [];
     region.value = '';
     statuss.value = '';
   }
 
-  clearcase(input: any, mobile: any, eid: any, crmno: any, area: any, region: any, statuss: any) {
+  clearcase(input: any, mobile: any, eid: any, crmno: any,  region: any, statuss: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
-    crmno.value = '';
-    area.value = '';
+    crmno.value = ''; 
     region.value = '';
     statuss.value = '';
+
+    this.selectedArea = [];
   }
 
   getstatus(statuss: any) {

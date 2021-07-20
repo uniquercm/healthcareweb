@@ -15,6 +15,7 @@ export class LayoutComponent implements OnInit {
   constructor(private router: Router) {
 
     this.title = this.localvalues.companyName;
+    //localStorage.clear();//Thanam
 
     if (this.localvalues.userType === 1) {
       this.array = [
@@ -193,6 +194,7 @@ export class LayoutComponent implements OnInit {
 
   logout() {
     if (confirm("Are you sure to Logout")) {
+      localStorage.clear();//Thanam
       this.router.navigateByUrl('/login');
     }
   }

@@ -18,31 +18,31 @@
                 </mat-form-field>
             </div>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 12%;">
                 <mat-label>Name</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #input>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 12%;">
                 <mat-label>Mobile Number</mat-label>
                 <input matInput (keyup)="applyFilter($event)" mask="0000000000" #mobile>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 11%;">
                 <mat-label>EID</mat-label>
                 <input matInput (keyup)="applyFilter($event)" #eid>
             </mat-form-field>
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Request/Case Type </mat-label>
-                <mat-select (selectionChange)="select('case', $event); clearcase(input, mobile,eid,crmno,area, region, statuss)" #crm>
+                <mat-select (selectionChange)="select('case', $event); clearcase(input, mobile,eid,crmno,region, statuss)" #crm>
                     <mat-option value="all">All</mat-option>
                     <mat-option *ngFor="let value of requestarray" [value]="value.requestCRMId">
                         {{value.requestCRMName}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 7%;">
+            <mat-form-field class="col-4" style="width: 12%;">
                 <mat-label> Gmap Status </mat-label>
                 <mat-select (selectionChange)="select('map' , $event)" #crm>
                     <mat-option value="all">All</mat-option>
@@ -51,23 +51,10 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 7%;">
+            <mat-form-field class="col-4" style="width: 12%;">
                 <mat-label>CRM No</mat-label>
                 <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #crmno>
             </mat-form-field>
-
-            <div class="ng-autocomplete" style="width: 15%;">
-                <ng-autocomplete [data]="area" [searchKeyword]="keyword" placeholder="Enter Area" (selected)="select('area', $event.areaName)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate let-item>
-                    <a [innerHTML]="item.areaName"></a>
-                </ng-template>
-
-                <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                </ng-template>
-            </div>
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Region </mat-label>
@@ -86,29 +73,29 @@
                         <mat-option value="pending">Pending</mat-option>
                         <mat-option value="scheduled">Scheduled</mat-option>
                         <mat-option value="notscheduled">Not Scheduled</mat-option>
+                        <mat-option value="closed">Closed</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
-            <!-- <div class="col-3" style="width: 10%;">
-                <mat-form-field>
-                    <mat-label> Sticker/Tracker Status </mat-label>
-                    <mat-select #ststatus>
-                        <mat-option value="all">All</mat-option>
-                        <mat-option value="applied">Applied</mat-option>
-                        <mat-option value="removed">Removed</mat-option>
-                        <mat-option value="replace">Replace</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
-
             <div class="col-3" style="width: 5%;">
-                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, statuss)">Clear</button>
+                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,region, statuss)">Clear</button>
+            </div>
+
+            <div style="width: 40%;" class="d-flex">
+                <div class="pt-2" style="width: 100%;">
+                    <ng-select [multiple]="true" [(ngModel)]="selectedArea" placeholder="select area">
+                        <ng-option *ngFor="let are of area" [value]="are.areaId">{{are.areaName}}</ng-option>
+                    </ng-select>
+                </div>
+                <div class="ml-4">
+                    <button mat-raised-button color="primary" class="mt-2" style="color: white;" (click)="clear(input, mobile,eid,crm,crmno, region, statuss)">Search</button>
+                </div>
             </div>
 
         </div>
 
-        <div class="row">
+        <div class="row mt-2">
             <mat-form-field class="col-3" style="width: auto;" appearance="outline">
                 <mat-label>Assigned From Date</mat-label>
                 <input matInput [matDatepicker]="picker" [(ngModel)]="fromdate">
@@ -124,7 +111,7 @@
             </mat-form-field>
 
             <div class="col-3">
-                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent('submit');clearf(input, mobile,eid,crm,crmno,area, region, statuss)">Search</button>
+                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent('submit');clearf(input, mobile,eid,crm,crmno, region, statuss)">Search</button>
             </div>
 
             <div class="col-3">

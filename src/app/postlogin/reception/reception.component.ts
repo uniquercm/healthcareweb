@@ -228,10 +228,12 @@ export class ReceptionComponent implements OnInit, OnDestroy {
       console.log(err);
     })
   }
-
+ 
   ngOnDestroy() {
-    editvalues.patientid = 0;
-    editvalues.drcallid = 0;
+    editvalues.drcallid = 0
+    editvalues.patientid = 0
+    editvalues.scheduleid = 0
+    localStorage.removeItem('patientedit');
   }
 
 }
