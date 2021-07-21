@@ -49,6 +49,44 @@ export class NurseComponent implements OnInit {
     })
   }
 
+  crmfilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.crmNo.includes(((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
+
+  Mobilefilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    console.log(Number((event.target as HTMLInputElement).value));
+    const result = this.array.filter((s: any) => s.mobileNo.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
+
+  eidfilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.eidNo.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
+
+  namefilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.patientName.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
+  
+  farray: any[] = [];
   selectarea(name: string, event: any) {
     let farray: any = [];
     if (name === 'case') {
@@ -196,6 +234,8 @@ export class NurseComponent implements OnInit {
           elam.calledDate = ''
         }
       });
+
+      this.farray = this.array;
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
@@ -271,6 +311,8 @@ export class NurseComponent implements OnInit {
           elam.calledDate = ''
         }
       });
+
+      this.farray = this.array;
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
@@ -310,6 +352,7 @@ export class NurseComponent implements OnInit {
         }
       });
 
+      this.farray = this.array;
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;

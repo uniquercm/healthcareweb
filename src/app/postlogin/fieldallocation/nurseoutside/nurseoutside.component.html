@@ -38,6 +38,9 @@
                         <input matInput formControlName="mobileno" required readonly>
                     </mat-form-field>
                 </div>
+                <div class="col-lg-4 col-md-2 col-sm-12 pt-0 margin-auto">
+                    Link: <a class="ml-3" [href]="firstFormGroup.value.map" target="_blank"> {{firstFormGroup.value.map}} </a>
+                </div>
             </div>
         </form>
 

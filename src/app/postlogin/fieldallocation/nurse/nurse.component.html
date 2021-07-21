@@ -8,17 +8,17 @@
         <div class="row">
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Name</mat-label>
-                <input matInput (keyup)="applyFilter($event)" #input>
+                <input matInput (keyup)="namefilter($event)" #input>
             </mat-form-field>
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Mobile Number</mat-label>
-                <input matInput (keyup)="applyFilter($event)" #mobile>
+                <input matInput (keyup)="Mobilefilter($event)" mask="0000000000" #mobile>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 13%;">
+            <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>EID</mat-label>
-                <input matInput (keyup)="applyFilter($event)" #eid>
+                <input matInput (keyup)="eidfilter($event)" type="number" #eid>
             </mat-form-field>
 
             <mat-form-field class="col-4" style="width: 10%;">
@@ -32,7 +32,7 @@
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>CRM No</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #crmno>
+                <input matInput (keyup)="crmfilter($event)" placeholder="Ex. ium" #crmno>
             </mat-form-field>
 
 

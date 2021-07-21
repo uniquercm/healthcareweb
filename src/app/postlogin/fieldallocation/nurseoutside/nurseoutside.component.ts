@@ -171,7 +171,7 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
 
       this.fourthFormGroup.controls['vstatus'].setValue(this.nursevalue.teamStatus);
       this.fourthFormGroup.controls['vremark'].setValue(this.nursevalue.teamRemark);
-      this.fourthFormGroup.controls['vdate'].setValue(this.nursevalue.teamStatusDate);
+      this.fourthFormGroup.controls['vdate'].setValue(this.nursevalue.teamStatusDate === '0001-01-01T00:00:00' ? '' : this.nursevalue.teamStatusDate);
 
     }, err => {
       console.log(err);
