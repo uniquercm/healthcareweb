@@ -61,6 +61,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
   }
 
+  selectedArea: any;
   select(name: string, event: any) {
     let farray: any = [];
     if (name === 'case') {
@@ -69,8 +70,8 @@ export class SupervisorComponent implements OnInit, OnDestroy {
           farray.push(element);
         }
       });
-    } else if (name === 'area') {
-      if (event === 'All') {
+    } else if (name === 'area') { 
+      if (this.selectedArea === 'All' || this.selectedArea === null) {
         farray = this.array;
 
         this.dataSource = new MatTableDataSource(farray);
@@ -81,7 +82,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         return;
       }
       this.array.forEach((element: any) => {
-        if (element.patientInformation.area === (event)) {
+        if (element.patientInformation.area === (this.selectedArea)) {
           farray.push(element);
         }
       });
@@ -147,11 +148,38 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    console.log(this.dataSource);
+    const filterValue = (event.target as HTMLInputElement).value; 
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  farray: any = [];
+  crmfilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.crmNo.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
+
+
+  Mobilefilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.mobileNo.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
+
+  eidfilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.eidNo.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
 
   apply(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -248,6 +276,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
           element.trackerRemoval = element.patientInformation.trackerRemoval
         }
 
+        this.farray = this.array;
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
@@ -286,6 +315,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
           element.trackerRemoval = element.patientInformation.trackerRemoval
         });
 
+        this.farray = this.array;
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
@@ -310,6 +340,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       this.array = data.details;
       this.array.forEach((o: any, i: number) => o.id = i + 1);
 
+      this.farray = this.array;
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
@@ -347,6 +378,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       this.array = data.details;
       this.array.forEach((o: any, i: number) => o.id = i + 1);
 
+      this.farray = this.array;
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
@@ -418,12 +450,15 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         }
         else if (element.areaName === '') {
 
-        } else {
+        }else if (element.areaId === 0) {
+
+        }  else {
           this.area.push(element)
         }
 
       });
 
+      console.log(this.area);
     }, err => {
       console.log(err);
     })
@@ -515,6 +550,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     editvalues.drcallid = 0
     editvalues.patientid = 0
     editvalues.scheduleid = 0
+    editvalues.headerbuttclick = true;
     localStorage.removeItem('patientedit');
   }
 }

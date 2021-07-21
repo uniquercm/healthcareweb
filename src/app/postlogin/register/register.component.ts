@@ -44,11 +44,15 @@ export class RegisterComponent implements OnInit {
       assignedDate: ['', Validators.nullValidator]
     });
 
-    if (localStorage.getItem('patientedit') !== null) {
-      let value: any = JSON.parse(localStorage.getItem('patientedit') || '{}');
-      editvalues.patientid = value.patientid;
-      editvalues.scheduleid = value.scheduleid;
-      editvalues.drcallid = value.drcallid;
+    if (editvalues.headerbuttclick) {
+      if (localStorage.getItem('patientedit') !== null) {
+        let value: any = JSON.parse(localStorage.getItem('patientedit') || '{}');
+        editvalues.patientid = value.patientid;
+        editvalues.scheduleid = value.scheduleid;
+        editvalues.drcallid = value.drcallid;
+      }
+    } else {
+      editvalues.patientid = 0;
     }
 
   }

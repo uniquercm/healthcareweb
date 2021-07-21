@@ -39,6 +39,7 @@ export class CommonService {
         'Content-Type': 'application/json',
         // 'Authorization': 'Bearer ' + this.value.jwToken
       }),
+      
       body: {}
     };
   }

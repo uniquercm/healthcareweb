@@ -13,12 +13,12 @@
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>Mobile Number</mat-label>
-                <input matInput (keyup)="applyFilter($event)" #mobile>
+                <input matInput (keyup)="Mobilefilter($event)" mask="0000000000" #mobile>
             </mat-form-field>
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>EID</mat-label>
-                <input matInput (keyup)="applyFilter($event)" #eid>
+                <input matInput (keyup)="eidfilter($event)" type="number" #eid>
             </mat-form-field>
 
             <mat-form-field class="col-4" style="width: 10%;">
@@ -31,11 +31,11 @@
 
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label>CRM No</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #crmno>
+                <input matInput (keyup)="crmfilter($event)" placeholder="Ex. 123" #crmno>
             </mat-form-field>
 
-            <div class="ng-autocomplete" style="width: 15%;">
-                <ng-autocomplete [data]="area" [searchKeyword]="keyword" placeholder="Enter Area" (selected)="select('area', $event.areaName)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+            <div class="ng-autocomplete" style="width: 15%; padding-top: 5px;">
+                <!-- <ng-autocomplete [data]="area" #area [searchKeyword]="keyword" placeholder="Enter Area" (selected)="select('area', $event.areaName)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
                 </ng-autocomplete>
 
                 <ng-template #itemTemplate let-item>
@@ -44,7 +44,12 @@
 
                 <ng-template #notFoundTemplate let-notFound>
                     <div [innerHTML]="notFound"></div>
-                </ng-template>
+                </ng-template> -->
+
+                <ng-select [multiple]="false" [(ngModel)]="selectedArea" placeholder="select area" (change)="select('area', $event)">
+                    <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
+                </ng-select>
+
             </div>
 
             <mat-form-field class="col-4" style="width: 10%;">

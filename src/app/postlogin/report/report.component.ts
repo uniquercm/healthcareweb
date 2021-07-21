@@ -15,12 +15,12 @@ import * as XLSX from 'xlsx';
 })
 export class ReportComponent implements OnInit {
 
-  displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
+  displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'details','asigndate', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
     'pcr6date', 'pcr6result', 'pcr8date', 'pcr8result', 'pcr11date', 'pcr11result',
     'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus', 'extracteddata', 'sentclaim', 'senton', 'save'];
   dataSource: any;
 
-  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'reception', 'drcell', 'pcr6day', 'pcr8day', 'pcr11day', 'nursecall',
+  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'asigndate','reception', 'drcell', 'pcr6day', 'pcr8day', 'pcr11day', 'nursecall',
     'discharge', 'extracteddata', 'sentclaim', 'senton', 'save']
   secondcolumn = ['receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
     'pcr6date', 'pcr6result', 'pcr8date', 'pcr8result', 'pcr11date', 'pcr11result',
@@ -186,6 +186,9 @@ export class ReportComponent implements OnInit {
         if (element.recptionCallDate === '0001-01-01T00:00:00') {
           element.recptionCallDate = ''
         }
+        if (element.assignedDate === '0001-01-01T00:00:00') {
+          element.assignedDate = ''
+        }
         if (undefined == (element.isSendClaim)) {
           element.isSendClaim = ''
         }
@@ -218,7 +221,7 @@ export class ReportComponent implements OnInit {
       delete element['companyId'];
       delete element['requestId'];
       delete element['cityName'];
-      delete element['nationalityId'];
+      delete element['nationalityId'];6
       delete element['drCallId'];
       delete element['scheduledId'];
       delete element['createdBy'];

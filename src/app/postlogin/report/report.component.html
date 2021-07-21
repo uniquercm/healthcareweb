@@ -186,6 +186,12 @@
                             </th>
                             <td mat-cell *matCellDef="let data" class="text-center">{{data.enrolledCount}}</td>
                         </ng-container>
+                        <ng-container matColumnDef="asigndate">
+                            <th mat-header-cell *matHeaderCellDef [attr.rowspan]="10" class="text-center" style="background-color: #343a40; color: white;">
+                                Assigned Date
+                            </th>
+                            <td mat-cell *matCellDef="let data" class="text-center">{{data.assignedDate | date: 'MM-dd-yyyy'}}</td>
+                        </ng-container>
                         <ng-container matColumnDef="details">
                             <th mat-header-cell *matHeaderCellDef [attr.rowspan]="10" class="text-center" style="background-color: #343a40; color: white;">
                                 Enrolled Details

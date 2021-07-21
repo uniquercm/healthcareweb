@@ -28,7 +28,6 @@ export class ReceptionComponent implements OnInit, OnDestroy {
       editvalues.scheduleid = value.scheduleid;
       editvalues.drcallid = value.drcallid;
     }
-
     this.formGroup = this._formBuilder.group({
       crmType: ['', Validators.nullValidator],
       crmNo: ['', Validators.nullValidator],
@@ -72,12 +71,8 @@ export class ReceptionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getdata();
-    // this.commonService.getmethode('http://service-dev.logisticsmate.in/v1/tracker?trackerId=track1').subscribe((data) => {
-    //   console.log(data);
-    // }, err => {
-    //   console.log(err);
-    // })
+    if (editvalues.headerbuttclick)
+      this.getdata();
   }
 
   getcity() {
@@ -89,19 +84,9 @@ export class ReceptionComponent implements OnInit, OnDestroy {
 
   }
 
-  // next(stepper: any) {
-  //   if (this.firstFormGroup.value.area === '' ||
-  //     this.firstFormGroup.value.region === '') {
-  //     alert('Please fill Area and Region');
-  //     return;
-  //   }
-  //   stepper.next();
-  // }
-
   keyword = 'areaName';
   areas = '';
-  select(event: any) {
-    // this.firstFormGroup.controls['area'].setValue(event.areaName);
+  select(event: any) { 
     this.areas = event.areaName;
   }
 
@@ -200,7 +185,11 @@ export class ReceptionComponent implements OnInit, OnDestroy {
 
     this.commonService.putmethod('patient', map).subscribe((data) => {
       alert('Updated Successfully');
-      this.router.navigateByUrl('/apps/list')
+
+      if (editvalues.headerbuttclick)
+        window.close();
+      else
+        this.router.navigateByUrl('/apps/list');
     }, err => {
       console.log(err);
     })
@@ -228,11 +217,12 @@ export class ReceptionComponent implements OnInit, OnDestroy {
       console.log(err);
     })
   }
- 
+
   ngOnDestroy() {
-    editvalues.drcallid = 0
-    editvalues.patientid = 0
-    editvalues.scheduleid = 0
+    editvalues.drcallid = 0;
+    editvalues.patientid = 0;
+    editvalues.scheduleid = 0;
+    editvalues.headerbuttclick = true;
     localStorage.removeItem('patientedit');
   }
 

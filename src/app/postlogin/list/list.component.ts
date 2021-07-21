@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ListComponent implements OnInit {
 
-  array = [];
+  array: any = [];
   displayedColumns: string[] = ['id', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'adultsCount', 'childrensCount', 'edit', 'reception', 'schedule', 'drcall', 'nursecall'];
   dataSource: any = new MatTableDataSource([]);
 
@@ -57,13 +57,32 @@ export class ListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  
   crmfilter(event: Event) {
-    
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.crmNo.includes(((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
   }
 
+  Mobilefilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.mobileNo.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
+
+  eidfilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.eidNo.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
 
   getreq() {
     this.commonService.getmethodws('requestCRM').subscribe((data) => {
@@ -106,21 +125,22 @@ export class ListComponent implements OnInit {
         }
         this.commonService.getmethodws(url).subscribe((data) => {
           this.array = data.details;
-          this.array.forEach((o: any, i) => o.id = i + 1);
+          this.array.forEach((o: any, i: any) => o.id = i + 1);
 
           for (let index = 0; index < this.array.length; index++) {
             const element: any = this.array[index];
-    
+
             if (element.recptionCallStatus === undefined) {
               element.recptionCallStatus = ''
             }
-    
+
             if (element.recptionCallRemarks === undefined) {
               element.recptionCallRemarks = ''
             }
-    
+
           }
 
+          this.farray = this.array
           this.dataSource = new MatTableDataSource(this.array);
 
           this.dataSource.paginator = this.paginator;
@@ -153,33 +173,37 @@ export class ListComponent implements OnInit {
       //     farray.push(element);
       //   }
       // });
+      console.log(this.selectedArea.toString())
+
       let url = '';
       if (this.fromdate === '') {
         url = 'patient?companyId=' + this.companyid
-          + '&isDoctorCall=false&isNurseCall=false&areaNames=' + this.selectedArea
+          + '&isDoctorCall=false&isNurseCall=false&areaNames=' + decodeURI(this.selectedArea.toString());
+        console.log(url);
       } else {
         url = 'patient?companyId=' + this.companyid + '&fromDate=' +
           this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
           this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
-          + '&isDoctorCall=false&isNurseCall=false&areaNames=' + this.selectedArea
+          + '&isDoctorCall=false&isNurseCall=false&areaNames=' + this.selectedArea.toString()
       }
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = data.details;
-        this.array.forEach((o: any, i) => o.id = i + 1);
+        this.array.forEach((o: any, i: any) => o.id = i + 1);
 
         for (let index = 0; index < this.array.length; index++) {
           const element: any = this.array[index];
-  
+
           if (element.recptionCallStatus === undefined) {
             element.recptionCallStatus = ''
           }
-  
+
           if (element.recptionCallRemarks === undefined) {
             element.recptionCallRemarks = ''
           }
-  
+
         }
 
+        this.farray = this.array
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
@@ -208,21 +232,22 @@ export class ListComponent implements OnInit {
       }
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = data.details;
-        this.array.forEach((o: any, i) => o.id = i + 1);
+        this.array.forEach((o: any, i: any) => o.id = i + 1);
 
         for (let index = 0; index < this.array.length; index++) {
           const element: any = this.array[index];
-  
+
           if (element.recptionCallStatus === undefined) {
             element.recptionCallStatus = ''
           }
-  
+
           if (element.recptionCallRemarks === undefined) {
             element.recptionCallRemarks = ''
           }
-  
+
         }
 
+        this.farray = this.array
         this.dataSource = new MatTableDataSource(this.array);
 
         this.dataSource.paginator = this.paginator;
@@ -257,23 +282,24 @@ export class ListComponent implements OnInit {
     editvalues.scheduleid = element.scheduledId;
     editvalues.drcallid = element.drCallId
     editvalues.patientid = element.patientId
+    editvalues.headerbuttclick = false;
     localStorage.setItem('patientedit', JSON.stringify(editvalues));
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any,  region: any, statuss: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, region: any, statuss: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
     crm.value = '';
     crmno.value = '';
-    this.selectedArea = []; 
+    this.selectedArea = [];
     region.value = '';
     statuss.value = '';
 
     this.getPatent('');
   }
 
-  clearf(input: any, mobile: any, eid: any, crm: any, crmno: any,   region: any, statuss: any) {
+  clearf(input: any, mobile: any, eid: any, crm: any, crmno: any, region: any, statuss: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -284,11 +310,11 @@ export class ListComponent implements OnInit {
     statuss.value = '';
   }
 
-  clearcase(input: any, mobile: any, eid: any, crmno: any,  region: any, statuss: any) {
+  clearcase(input: any, mobile: any, eid: any, crmno: any, region: any, statuss: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
-    crmno.value = ''; 
+    crmno.value = '';
     region.value = '';
     statuss.value = '';
 
@@ -300,7 +326,7 @@ export class ListComponent implements OnInit {
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
-      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((o: any, i: any) => o.id = i + 1);
 
       for (let index = 0; index < this.array.length; index++) {
         const element: any = this.array[index];
@@ -314,7 +340,8 @@ export class ListComponent implements OnInit {
         }
 
       }
-      
+
+      this.farray = this.array
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
@@ -356,7 +383,7 @@ export class ListComponent implements OnInit {
     }
     this.commonService.getmethodws(url).subscribe((data) => {
       this.array = data.details;
-      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((o: any, i: any) => o.id = i + 1);
 
       for (let index = 0; index < this.array.length; index++) {
         const element: any = this.array[index];
@@ -371,16 +398,19 @@ export class ListComponent implements OnInit {
 
       }
 
+      this.farray = this.array
       this.dataSource = new MatTableDataSource(this.array);
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      loader.loading = false; 
+      loader.loading = false;
     }, err => {
       console.log(err);
       loader.loading = false;
     })
   }
+
+  farray: any = [];
 
   export() {
     for (let index = 0; index < this.dataSource.filteredData.length; index++) {
@@ -474,7 +504,7 @@ export class ListComponent implements OnInit {
 
     window.open(url, '_blank');
   }
-  
+
   nursecellroute() {
     const url = this.router.serializeUrl(
       this.router.createUrlTree(['apps/nursecell'])
@@ -490,5 +520,5 @@ export class ListComponent implements OnInit {
 
     window.open(url, '_blank');
   }
-  
+
 }

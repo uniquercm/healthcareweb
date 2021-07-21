@@ -627,7 +627,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
         }
         //*************************** */
-        this.router.navigateByUrl('/apps/list');
+        // this.router.navigateByUrl('/apps/list');
+        window.close();
       }, err => {
         console.log(err);
       })
@@ -674,7 +675,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
         }
         //*************************** */
-        this.router.navigateByUrl('/apps/list');
+        // this.router.navigateByUrl('/apps/list');
+        window.close();
       }, err => {
         console.log(err);
       })
@@ -726,7 +728,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
         }
         //*************************** */
-        this.router.navigateByUrl('/apps/list');
+        // this.router.navigateByUrl('/apps/list');
+        window.close();
       }, err => {
         console.log(err);
       })
@@ -773,7 +776,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
         }
         //*************************** */
-        this.router.navigateByUrl('/apps/list');
+        // this.router.navigateByUrl('/apps/list');
+        window.close();
       }, err => {
         console.log(err);
       })
@@ -813,7 +817,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
         }
         //*************************** */
-        this.router.navigateByUrl('/apps/list');
+        // this.router.navigateByUrl('/apps/list');
+        window.close();
       }, err => {
         console.log(err);
       })
@@ -850,7 +855,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
         }
         //*************************** */
-        this.router.navigateByUrl('/apps/list');
+        // this.router.navigateByUrl('/apps/list');
+        window.close();
       }, err => {
         console.log(err);
       })
@@ -905,7 +911,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
         }
         //*************************** */
-        this.router.navigateByUrl('/apps/list');
+        // this.router.navigateByUrl('/apps/list');
+        window.close();
       }, err => {
         console.log(err);
       })
@@ -951,7 +958,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
         }
         //*************************** */
-        this.router.navigateByUrl('/apps/list');
+        // this.router.navigateByUrl('/apps/list');
+        window.close();
       }, err => {
         console.log(err);
       })
