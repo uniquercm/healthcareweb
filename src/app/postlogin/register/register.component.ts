@@ -136,6 +136,7 @@ export class RegisterComponent implements OnInit {
     }
     this.commonService.postmethod('patient-file', maps).subscribe((data) => {
       loader.loading = false;
+      editvalues.headerbuttclick = true;
       alert('Saved Successfully');
       this.router.navigateByUrl('/apps/list');
     }, err => {
@@ -263,7 +264,11 @@ export class RegisterComponent implements OnInit {
       this.commonService.postmethod('patient', map).subscribe((data) => {
         alert('Saved Successfully');
         this.form.reset();
-        editvalues.patientid = data.id;
+        
+        editvalues.patientid = data.id; 
+        editvalues.headerbuttclick = false;
+        localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
         if (this.localvalues.userType === 6) {
           this.router.navigateByUrl('/apps/reception');
         } else {

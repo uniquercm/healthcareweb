@@ -131,6 +131,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     region.value = '';
     fallocation.value = '';
     service.value = '';
+    this.selectedArea = '';
 
     this.getPatent('');
   }
@@ -145,6 +146,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     region.value = '';
     fallocation.value = '';
     service.value = '';
+    this.selectedArea = '';
   }
 
   applyFilter(event: Event) {

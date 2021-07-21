@@ -121,6 +121,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    debugger
     if(!editvalues.headerbuttclick)//Thanam
     {
       this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {

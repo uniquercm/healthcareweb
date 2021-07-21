@@ -71,6 +71,7 @@ export class ListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.farray);
       return;
     }
+    console.log(Number((event.target as HTMLInputElement).value));
     const result = this.array.filter((s: any) => s.mobileNo.includes(Number((event.target as HTMLInputElement).value)));
     this.dataSource = new MatTableDataSource(result);
   }
@@ -84,6 +85,14 @@ export class ListComponent implements OnInit {
     this.dataSource = new MatTableDataSource(result);
   }
 
+  namefilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.patientName.includes(Number((event.target as HTMLInputElement).value)));
+    this.dataSource = new MatTableDataSource(result);
+  }
   getreq() {
     this.commonService.getmethodws('requestCRM').subscribe((data) => {
       this.requestarray = data.details;
