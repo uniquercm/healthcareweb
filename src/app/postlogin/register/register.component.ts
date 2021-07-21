@@ -267,6 +267,8 @@ export class RegisterComponent implements OnInit {
         
         editvalues.patientid = data.id; 
         editvalues.headerbuttclick = false;
+        editvalues.registertab = true;
+        
         localStorage.setItem('patientedit', JSON.stringify(editvalues));
 
         if (this.localvalues.userType === 6) {

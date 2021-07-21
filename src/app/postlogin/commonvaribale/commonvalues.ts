@@ -3,7 +3,8 @@ export const editvalues = {
     scheduleid: 0,
     patientid: 0,
     nurse: {},
-    headerbuttclick : true
+    headerbuttclick : true,
+    registertab : false
 }
 
 export const edituser = { 

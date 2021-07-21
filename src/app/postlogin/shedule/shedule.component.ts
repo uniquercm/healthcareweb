@@ -120,7 +120,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
     editvalues.patientid = value.patientid;
     editvalues.scheduleid = value.scheduleid;
     editvalues.drcallid = value.drcallid;
-    editvalues.headerbuttclick = value.headerbuttclick;//Thanam
+    editvalues.headerbuttclick = value.headerbuttclick;
   }
 
   ngOnInit() {
@@ -295,13 +295,12 @@ export class SheduleComponent implements OnInit, OnDestroy {
         console.log(err);
       });
     }
+ 
+    // if (!editvalues.headerbuttclick) {
+    //   editvalues.headerbuttclick = true;
+    //   localStorage.setItem('patientedit', JSON.stringify(editvalues));
+    // } 
 
-    //Thanam
-    if (!editvalues.headerbuttclick) {
-      editvalues.headerbuttclick = true;
-      localStorage.setItem('patientedit', JSON.stringify(editvalues));
-    }
-    //*************************** */
   }
 
   radioChange(event: any, date: any) {
@@ -550,7 +549,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
     this.thirdFormGroup.controls['drpicker'].setValue(drpicker);
     this.thirdFormGroup.controls['trapicker'].setValue(drpicker);
-    
+
     let thpicker: Date = date.value;
     thpicker.setDate(thpicker.getDate() + 3 - 2);
 
@@ -628,18 +627,18 @@ export class SheduleComponent implements OnInit, OnDestroy {
       }
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
-        //Thanam
-        //if(!editvalues.headerbuttclick)
-        {
+        
+        if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
           editvalues.drcallid = 0;
           editvalues.headerbuttclick = true;
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
         }
-        //*************************** */
-        // this.router.navigateByUrl('/apps/list');
-        window.close();
       }, err => {
         console.log(err);
       })
@@ -676,18 +675,18 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
-        //Thanam
-        //if(!editvalues.headerbuttclick)
-        {
+       
+        if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
           editvalues.drcallid = 0;
           editvalues.headerbuttclick = true;
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
         }
-        //*************************** */
-        // this.router.navigateByUrl('/apps/list');
-        window.close();
       }, err => {
         console.log(err);
       })
@@ -729,18 +728,18 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
-        //Thanam
-        //if(!editvalues.headerbuttclick)
-        {
+       
+        if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
           editvalues.drcallid = 0;
           editvalues.headerbuttclick = true;
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
         }
-        //*************************** */
-        // this.router.navigateByUrl('/apps/list');
-        window.close();
       }, err => {
         console.log(err);
       })
@@ -778,17 +777,19 @@ export class SheduleComponent implements OnInit, OnDestroy {
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
         //Thanam
-        //if(!editvalues.headerbuttclick)
-        {
+
+        if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
           editvalues.drcallid = 0;
           editvalues.headerbuttclick = true;
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
-        }
-        //*************************** */
-        // this.router.navigateByUrl('/apps/list');
-        window.close();
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
+        } 
+
       }, err => {
         console.log(err);
       })
@@ -818,18 +819,19 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
-        //Thanam
-        //if(!editvalues.headerbuttclick)
-        {
+
+        if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
           editvalues.drcallid = 0;
           editvalues.headerbuttclick = true;
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
         }
-        //*************************** */
-        // this.router.navigateByUrl('/apps/list');
-        window.close();
+
       }, err => {
         console.log(err);
       })
@@ -856,18 +858,19 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
-        //Thanam
-        //if(!editvalues.headerbuttclick)
-        {
+         
+        if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
           editvalues.drcallid = 0;
           editvalues.headerbuttclick = true;
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
         }
-        //*************************** */
-        // this.router.navigateByUrl('/apps/list');
-        window.close();
+
       }, err => {
         console.log(err);
       })
@@ -912,18 +915,18 @@ export class SheduleComponent implements OnInit, OnDestroy {
       }
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
-        //Thanam
-        //if(!editvalues.headerbuttclick)
-        {
+        
+        if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
           editvalues.drcallid = 0;
           editvalues.headerbuttclick = true;
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
         }
-        //*************************** */
-        // this.router.navigateByUrl('/apps/list');
-        window.close();
       }, err => {
         console.log(err);
       })
@@ -959,24 +962,22 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
-        //Thanam
-        //if(!editvalues.headerbuttclick)
-        {
+ 
+        if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
           editvalues.drcallid = 0;
           editvalues.headerbuttclick = true;
           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
         }
-        //*************************** */
-        // this.router.navigateByUrl('/apps/list');
-        window.close();
       }, err => {
         console.log(err);
       })
-
     }
-
   }
 
   ngOnDestroy() {
