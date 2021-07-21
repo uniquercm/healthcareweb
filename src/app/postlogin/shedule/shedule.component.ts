@@ -124,7 +124,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if(!editvalues.headerbuttclick)//Thanam
+    if (!editvalues.headerbuttclick)//Thanam
     {
       this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
         if (data.details.length === 0) {
@@ -239,7 +239,6 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.dischargedate = true;
           }
 
-          console.log(this.array);
           if (this.array.treatmentType === 'isolation') {
             this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
             this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
@@ -249,6 +248,14 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
             this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
             this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+
+            if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
+              this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
+            } else {
+              this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
+              this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
+            }
+
             // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
             this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
             this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
@@ -290,8 +297,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
     }
 
     //Thanam
-    if(!editvalues.headerbuttclick)
-    {
+    if (!editvalues.headerbuttclick) {
       editvalues.headerbuttclick = true;
       localStorage.setItem('patientedit', JSON.stringify(editvalues));
     }
@@ -353,7 +359,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
 
           let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          fourpickers.setDate(fourpickers.getDate() +1 );
+          fourpickers.setDate(fourpickers.getDate() + 1);
           this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
           let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
@@ -376,7 +382,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpFormGroup.controls['hqpdrpicker'].setValue(drpicker);
 
           let fourpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
-          fourpickers.setDate(fourpickers.getDate() + 1 );
+          fourpickers.setDate(fourpickers.getDate() + 1);
           this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
           let eightpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
@@ -483,7 +489,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
     if (this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
 
       let fourpickers: Date = new Date(date.value);
-      fourpickers.setDate(fourpickers.getDate() + 2 );
+      fourpickers.setDate(fourpickers.getDate() + 2);
       this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
 
       let eightpickers: Date = new Date(date.value);
@@ -501,7 +507,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
 
       let eightpickers: Date = new Date(date.value);
-      eightpickers.setDate(eightpickers.getDate() + 6 );
+      eightpickers.setDate(eightpickers.getDate() + 6);
 
       this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
 
@@ -543,7 +549,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
     drpicker.setDate(drpicker.getDate() + 1);
 
     this.thirdFormGroup.controls['drpicker'].setValue(drpicker);
-
+    this.thirdFormGroup.controls['trapicker'].setValue(drpicker);
+    
     let thpicker: Date = date.value;
     thpicker.setDate(thpicker.getDate() + 3 - 2);
 

@@ -82,7 +82,7 @@ export class NurseComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.farray);
       return;
     }
-    const result = this.array.filter((s: any) => s.patientName.includes(Number((event.target as HTMLInputElement).value)));
+    const result = this.array.filter((s: any) => s.patientName.toLowerCase().includes(((event.target as HTMLInputElement).value).toLowerCase()));
     this.dataSource = new MatTableDataSource(result);
   }
   

@@ -190,6 +190,16 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       (book: any) => book.patientInformation.eidNo === filterValue);
   }
 
+  
+  namefilter(event: Event) {
+    if ((event.target as HTMLInputElement).value === '') {
+      this.dataSource = new MatTableDataSource(this.farray);
+      return;
+    }
+    const result = this.array.filter((s: any) => s.patientName.toLowerCase().includes(((event.target as HTMLInputElement).value).toLowerCase()));
+    this.dataSource = new MatTableDataSource(result);
+  }
+
   export() {
     for (let index = 0; index < this.dataSource.filteredData.length; index++) {
       let element: any = this.dataSource.filteredData[index];

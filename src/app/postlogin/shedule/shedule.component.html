@@ -428,14 +428,14 @@
                                 <div class="p-4">
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Schedule Date</mat-label>
-                                        <input matInput [matDatepicker]="trapicker" [disabled]="disablevalue" formControlName="fourpicker" #fordate>
+                                        <input matInput [matDatepicker]="fourpicker" [disabled]="disablevalue" formControlName="trapicker" #fordate>
                                         <mat-datepicker-toggle matSuffix [for]="fourpicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fourpicker disabled="true"></mat-datepicker>
                                     </mat-form-field>
 
                                     <mat-form-field class="full-width" appearance="outline">
                                         <mat-label>Applied Date</mat-label>
-                                        <input matInput [matDatepicker]="traapicker" [disabled]="disablevalue" formControlName="fourspicker">
+                                        <input matInput [matDatepicker]="fourspicker" [disabled]="disablevalue" formControlName="traapicker">
                                         <mat-datepicker-toggle matSuffix [for]="fourspicker"></mat-datepicker-toggle>
                                         <mat-datepicker touchUi #fourspicker disabled="true"></mat-datepicker>
                                     </mat-form-field>
