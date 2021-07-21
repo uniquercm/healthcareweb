@@ -423,6 +423,38 @@
                         <div class="col-lg-3 col-md-2 col-sm-12">
                             <mat-card class="quar">
                                 <mat-card-header>
+                                    Tracker/Sticker Application
+                                </mat-card-header>
+                                <div class="p-4">
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Schedule Date</mat-label>
+                                        <input matInput [matDatepicker]="trapicker" [disabled]="disablevalue" formControlName="fourpicker" #fordate>
+                                        <mat-datepicker-toggle matSuffix [for]="fourpicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #fourpicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Applied Date</mat-label>
+                                        <input matInput [matDatepicker]="traapicker" [disabled]="disablevalue" formControlName="fourspicker">
+                                        <mat-datepicker-toggle matSuffix [for]="fourspicker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #fourspicker disabled="true"></mat-datepicker>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="full-width" appearance="outline">
+                                        <mat-label>Result</mat-label>
+                                        <mat-select formControlName="traresult" [disabled]="disablevalue">
+                                            <mat-option value='positive'>Positive </mat-option>
+                                            <mat-option value='negative'> Negative</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                </div>
+                            </mat-card>
+                        </div>
+
+                        <div class="col-lg-3 col-md-2 col-sm-12">
+                            <mat-card class="quar">
+                                <mat-card-header>
                                     3 Day-Nurse Call
                                 </mat-card-header>
                                 <div class="p-4">

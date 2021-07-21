@@ -90,10 +90,10 @@ export class ListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.farray);
       return;
     }
-    const result = this.array.filter((s: any) => s.patientName.includes(Number((event.target as HTMLInputElement).value)));
+    const result = this.array.filter((s: any) => s.patientName.includes(((event.target as HTMLInputElement).value)));
     this.dataSource = new MatTableDataSource(result);
   }
-  
+
   getreq() {
     this.commonService.getmethodws('requestCRM').subscribe((data) => {
       this.requestarray = data.details;

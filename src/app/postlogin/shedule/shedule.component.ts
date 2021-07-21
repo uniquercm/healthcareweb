@@ -89,6 +89,9 @@ export class SheduleComponent implements OnInit, OnDestroy {
       drspicker: ['', Validators.nullValidator],
       eightpicker: ['', Validators.nullValidator],
       callstatus: ['', Validators.nullValidator],
+      trapicker: ['', Validators.nullValidator],
+      traapicker: ['', Validators.nullValidator],
+      traresult: ['', Validators.nullValidator],
       drremark: ['', Validators.nullValidator],
       fppicker: ['', Validators.nullValidator],
       fpspicker: ['', Validators.nullValidator],
@@ -121,7 +124,6 @@ export class SheduleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    debugger
     if(!editvalues.headerbuttclick)//Thanam
     {
       this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
@@ -237,6 +239,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.dischargedate = true;
           }
 
+          console.log(this.array);
           if (this.array.treatmentType === 'isolation') {
             this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
             this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
