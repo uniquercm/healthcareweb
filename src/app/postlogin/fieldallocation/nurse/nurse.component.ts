@@ -87,6 +87,7 @@ export class NurseComponent implements OnInit {
   }
   
   farray: any[] = [];
+  selectedArea: any;
   selectarea(name: string, event: any) {
     let farray: any = [];
     if (name === 'case') {
@@ -195,6 +196,7 @@ export class NurseComponent implements OnInit {
     crmno.value = '';
     area.value = '';
     region.value = '';
+    this.selectedArea = '';
 
     this.getvalue();
   }
@@ -209,6 +211,7 @@ export class NurseComponent implements OnInit {
     region.value = '';
     callstatus.value = '';
     service.value = '';
+    this.selectedArea = '';
   }
 
   getvalue() {

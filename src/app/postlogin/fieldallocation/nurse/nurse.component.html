@@ -37,7 +37,8 @@
 
 
             <div class="ng-autocomplete" style="width: 20%;">
-                <ng-autocomplete [data]="area" [searchKeyword]="keyword" placeholder="Enter Area" (selected)="selectarea('area', $event.areaName)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                <!-- <ng-autocomplete [data]="area" [searchKeyword]="keyword" placeholder="Enter Area" (selected)="selectarea('area', $event.areaName)"
+                 [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
                 </ng-autocomplete>
 
                 <ng-template #itemTemplate let-item>
@@ -46,7 +47,12 @@
 
                 <ng-template #notFoundTemplate let-notFound>
                     <div [innerHTML]="notFound"></div>
-                </ng-template>
+                </ng-template> -->
+
+                <ng-select [multiple]="false" [(ngModel)]="selectedArea" placeholder="select area" (change)="selectarea('area', $event)">
+                    <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
+                </ng-select>
+
             </div>
 
             <mat-form-field class="col-4" style="width: 10%;">
