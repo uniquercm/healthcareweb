@@ -44,7 +44,7 @@
 
             <mat-form-field class="col-4" style="width: 12%;">
                 <mat-label> Gmap Status </mat-label>
-                <mat-select (selectionChange)="select('map' , $event)" #crm>
+                <mat-select (selectionChange)="select('map' , $event)" #gmap>
                     <mat-option value="all">All</mat-option>
                     <mat-option value="yes">Yes</mat-option>
                     <mat-option value="no">No</mat-option>
@@ -79,7 +79,7 @@
             </div>
 
             <div class="col-3" style="width: 5%;">
-                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,region, statuss)">Clear</button>
+                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,region, statuss, gmap)">Clear</button>
             </div>
 
             <div style="width: 40%;" class="d-flex">

@@ -176,9 +176,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     })
-
-  }
-
+  } 
 
   getreq() {
     this.commonService.getmethod('requestCRM').subscribe((data) => {
@@ -188,7 +186,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
     })
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, calls: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -196,6 +194,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
     crmno.value = '';
     area.value = '';
     region.value = '';
+    calls.value = '';
 
     this.getPatent('');
   }

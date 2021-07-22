@@ -123,43 +123,14 @@ export class ListComponent implements OnInit {
     let farray: any = [];
     if (name === 'case') {
       if (event.value === 'all') {
-        let url = '';
-        if (this.fromdate === '') {
-          url = 'patient?companyId=' + this.companyid
-            + '&isDoctorCall=false&isNurseCall=false&searchStatus=' + event
-        } else {
-          url = 'patient?companyId=' + this.companyid + '&fromDate=' +
-            this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
-            this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
-            + '&isDoctorCall=false&isNurseCall=false&searchStatus=' + event
-        }
-        this.commonService.getmethodws(url).subscribe((data) => {
-          this.array = data.details;
-          this.array.forEach((o: any, i: any) => o.id = i + 1);
+        farray = this.array;
 
-          for (let index = 0; index < this.array.length; index++) {
-            const element: any = this.array[index];
+        this.dataSource = new MatTableDataSource(farray);
 
-            if (element.recptionCallStatus === undefined) {
-              element.recptionCallStatus = ''
-            }
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
-            if (element.recptionCallRemarks === undefined) {
-              element.recptionCallRemarks = ''
-            }
-
-          }
-
-          this.farray = this.array
-          this.dataSource = new MatTableDataSource(this.array);
-
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-          loader.loading = false;
-        }, err => {
-          console.log(err);
-          loader.loading = false;
-        })
+        return;
       } else {
         this.array.forEach((element: any) => {
           if (element.requestId === Number(event.value)) {
@@ -296,7 +267,7 @@ export class ListComponent implements OnInit {
     localStorage.setItem('patientedit', JSON.stringify(editvalues));
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, region: any, statuss: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, region: any, statuss: any, gmap: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -305,6 +276,7 @@ export class ListComponent implements OnInit {
     this.selectedArea = [];
     region.value = '';
     statuss.value = '';
+    gmap.value = '';
 
     this.getPatent('');
   }

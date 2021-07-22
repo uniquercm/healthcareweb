@@ -131,6 +131,10 @@ export class RegisterComponent implements OnInit {
   }
 
   upload() {
+    if (this.finalarray.length=== 0) {
+      alert('Please upload file...!');
+      return;
+    }
     let maps = {
       patientRequestList: this.finalarray
     }
@@ -166,9 +170,8 @@ export class RegisterComponent implements OnInit {
       this.form.controls['sex'].setValue(this.datas.sex);
       this.form.controls['dob'].setValue(this.datas.dateOfBirth);
       this.form.controls['nationality'].setValue(this.datas.nationalityId);
-      this.form.controls['assignedDate'].setValue(this.datas.assignedDate);
-
-
+      this.form.controls['assignedDate'].setValue(this.datas.assignedDate === '0001-01-01T00:00:00' ? '' : this.datas.assignedDate);
+ 
     }, err => {
       console.log(err);
     })
