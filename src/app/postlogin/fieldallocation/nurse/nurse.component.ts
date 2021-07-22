@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
-import { editvalues } from '../../commonvaribale/commonvalues';
+import { editvalues, loader } from '../../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-nurse',
@@ -18,7 +18,7 @@ export class NurseComponent implements OnInit {
   dataSource: any = new MatTableDataSource([]);
 
   title = 'DR Call';
-  array = [];
+  array: any = [];
   requestarray: any[] = [];
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
@@ -85,7 +85,7 @@ export class NurseComponent implements OnInit {
     const result = this.array.filter((s: any) => s.patientName.toLowerCase().includes(((event.target as HTMLInputElement).value).toLowerCase()));
     this.dataSource = new MatTableDataSource(result);
   }
-  
+
   farray: any[] = [];
   selectedArea: any;
   selectarea(name: string, event: any) {
@@ -111,12 +111,60 @@ export class NurseComponent implements OnInit {
 
         return;
       }
-      this.array.forEach((element: any) => {
-        if (element.area === (event)) {
-          farray.push(element);
+
+      let url = '';
+      if (this.fromdate == '') {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+          + '&teamUserName=' + this.localvalues.userName + '&areaNames=' + this.selectedArea;
+      } else if (this.searchtype !== '') {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+          + '&teamUserName=' + this.localvalues.userName + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+          + '&dateSearchType=' + this.searchtype + '&areaNames=' + this.selectedArea;
+      } else if (this.call !== '') {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call +
+          '&teamUserName=' + this.localvalues.userName + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&areaNames=' + this.selectedArea;
+      } else {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+          '&teamUserName=' + this.localvalues.userName + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+          + '&areaNames=' + this.selectedArea;
+      }
+
+      this.commonService.getmethodws(url).subscribe((data) => {
+        this.array = [];
+        this.array = data.details;
+        this.array.forEach((o: any, i: number) => o.id = i + 1);
+
+        for (let index = 0; index < this.array.length; index++) {
+          const element = this.array[index];
+
+          element.area = element.patientInformation.area
+          element.cityId = element.patientInformation.cityId
+          element.cityName = element.patientInformation.cityName
+          element.crmNo = element.patientInformation.crmNo
+          element.eidNo = element.patientInformation.eidNo
+          element.mobileNo = element.patientInformation.mobileNo
+          element.requestId = element.patientInformation.requestId
+          element.stickerApplication = element.patientInformation.stickerApplication
+          element.stickerRemoval = element.patientInformation.stickerRemoval
+          element.trackerApplication = element.patientInformation.trackerApplication
+          element.trackerRemoval = element.patientInformation.trackerRemoval
         }
-      });
-    } else if (name === 'city') {
+
+        this.farray = this.array;
+        this.dataSource = new MatTableDataSource(this.array);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        loader.loading = false;
+      }, err => {
+        console.log(err);
+        loader.loading = false;
+      })
+    }
+    else if (name === 'city') {
       this.array.forEach((element: any) => {
         if (element.cityId === (event.value)) {
           farray.push(element);
@@ -226,7 +274,7 @@ export class NurseComponent implements OnInit {
       }
       this.array = [];
       this.array = data.details;
-      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((o: any, i: any) => o.id = i + 1);
       this.array.forEach((elam: any) => {
         if (elam.emrDone === 'yes') {
           elam.emrDone = true
@@ -303,7 +351,7 @@ export class NurseComponent implements OnInit {
 
       this.array = [];
       this.array = data.details;
-      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((o: any, i: any) => o.id = i + 1);
       this.array.forEach((elam: any) => {
         if (elam.emrDone === 'yes') {
           elam.emrDone = true
@@ -346,7 +394,7 @@ export class NurseComponent implements OnInit {
       }
       this.array = [];
       this.array = data.details;
-      this.array.forEach((o: any, i) => o.id = i + 1);
+      this.array.forEach((o: any, i: any) => o.id = i + 1);
       this.array.forEach((elam: any) => {
         if (elam.emrDone === 'yes') {
           elam.emrDone = true

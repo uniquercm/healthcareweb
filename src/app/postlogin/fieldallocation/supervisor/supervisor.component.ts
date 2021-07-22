@@ -70,8 +70,8 @@ export class SupervisorComponent implements OnInit, OnDestroy {
           farray.push(element);
         }
       });
-    } else if (name === 'area') { 
-      if (this.selectedArea === 'All' || this.selectedArea === null) {
+    } else if (name === 'area') {
+      if (event === 'All') {
         farray = this.array;
 
         this.dataSource = new MatTableDataSource(farray);
@@ -81,11 +81,51 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
         return;
       }
-      this.array.forEach((element: any) => {
-        if (element.patientInformation.area === (this.selectedArea)) {
-          farray.push(element);
+      // this.array.forEach((element: any) => {
+      //   if (element.area === (event)) {
+      //     farray.push(element);
+      //   }
+      // });
+      console.log(this.selectedArea.toString())
+
+      let url = '';
+      url = 'scheduled?isFieldAllocation=false&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
+        + '&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate='
+        + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isTeam=false&areaNames=' + this.selectedArea.toString()
+
+
+      this.commonService.getmethodws(url).subscribe((data) => {
+        this.array = [];
+        this.array = data.details;
+        this.array.forEach((o: any, i: number) => o.id = i + 1);
+
+        for (let index = 0; index < this.array.length; index++) {
+          const element = this.array[index];
+ 
+          element.area = element.patientInformation.area
+          element.cityId = element.patientInformation.cityId
+          element.cityName = element.patientInformation.cityName
+          element.crmNo = element.patientInformation.crmNo
+          element.eidNo = element.patientInformation.eidNo
+          element.mobileNo = element.patientInformation.mobileNo 
+          element.requestId = element.patientInformation.requestId
+          element.stickerApplication = element.patientInformation.stickerApplication
+          element.stickerRemoval = element.patientInformation.stickerRemoval
+          element.trackerApplication = element.patientInformation.trackerApplication
+          element.trackerRemoval = element.patientInformation.trackerRemoval
         }
-      });
+
+        this.farray = this.array;
+        this.dataSource = new MatTableDataSource(this.array);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        loader.loading = false;
+      }, err => {
+        console.log(err);
+        loader.loading = false;
+      })
     } else if (name === 'city') {
       this.array.forEach((element: any) => {
         if (element.patientInformation.cityId === Number(event)) {
@@ -150,7 +190,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value; 
+    const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -190,7 +230,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       (book: any) => book.patientInformation.eidNo === filterValue);
   }
 
-  
+
   namefilter(event: Event) {
     if ((event.target as HTMLInputElement).value === '') {
       this.dataSource = new MatTableDataSource(this.farray);
@@ -272,15 +312,13 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
         for (let index = 0; index < this.array.length; index++) {
           const element = this.array[index];
-
-          element.age = element.patientInformation.age
+ 
           element.area = element.patientInformation.area
           element.cityId = element.patientInformation.cityId
           element.cityName = element.patientInformation.cityName
           element.crmNo = element.patientInformation.crmNo
           element.eidNo = element.patientInformation.eidNo
-          element.mobileNo = element.patientInformation.mobileNo
-          element.patientName = element.patientInformation.patientName
+          element.mobileNo = element.patientInformation.mobileNo 
           element.requestId = element.patientInformation.requestId
           element.stickerApplication = element.patientInformation.stickerApplication
           element.stickerRemoval = element.patientInformation.stickerRemoval
@@ -310,16 +348,14 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         this.array = data.details;
         this.array.forEach((o: any, i: number) => o.id = i + 1);
 
-        this.array.forEach((element: any) => {
-          element.age = element.patientInformation.age
+        this.array.forEach((element: any) => { 
           element.area = element.patientInformation.area
           element.cityId = element.patientInformation.cityId
           element.cityName = element.patientInformation.cityName
           element.crmNo = element.patientInformation.crmNo
           element.eidNo = element.patientInformation.eidNo
           element.mobileNo = element.patientInformation.mobileNo
-          element.requestCrmName = element.patientInformation.requestCrmName
-          element.patientName = element.patientInformation.patientName
+          element.requestCrmName = element.patientInformation.requestCrmName 
           element.requestId = element.patientInformation.requestId
           element.stickerApplication = element.patientInformation.stickerApplication
           element.stickerRemoval = element.patientInformation.stickerRemoval
@@ -462,9 +498,9 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         }
         else if (element.areaName === '') {
 
-        }else if (element.areaId === 0) {
+        } else if (element.areaId === 0) {
 
-        }  else {
+        } else {
           this.area.push(element)
         }
 
@@ -557,7 +593,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     })
   }
 
-  
+
   ngOnDestroy() {
     editvalues.drcallid = 0
     editvalues.patientid = 0

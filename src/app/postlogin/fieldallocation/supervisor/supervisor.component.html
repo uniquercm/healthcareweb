@@ -6,17 +6,17 @@
 <div class="p-4">
     <mat-card>
         <div class="row">
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 13%;">
                 <mat-label>Name</mat-label>
                 <input matInput (keyup)="namefilter($event)" #input>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 13%;">
                 <mat-label>Mobile Number</mat-label>
                 <input matInput (keyup)="Mobilefilter($event)" mask="0000000000" #mobile>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 12%;">
                 <mat-label>EID</mat-label>
                 <input matInput (keyup)="eidfilter($event)" type="number" #eid>
             </mat-form-field>
@@ -29,30 +29,18 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 11%;">
                 <mat-label>CRM No</mat-label>
                 <input matInput (keyup)="crmfilter($event)" placeholder="Ex. 123" #crmno>
             </mat-form-field>
 
-            <div class="ng-autocomplete" style="width: 15%; padding-top: 5px;">
-                <!-- <ng-autocomplete [data]="area" #area [searchKeyword]="keyword" placeholder="Enter Area" (selected)="select('area', $event.areaName)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate let-item>
-                    <a [innerHTML]="item.areaName"></a>
-                </ng-template>
-
-                <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                </ng-template> -->
-
-                <ng-select [multiple]="false" [(ngModel)]="selectedArea" placeholder="select area" (change)="select('area', $event)">
+            <!-- <div class="ng-autocomplete" style="width: 15%; padding-top: 5px;">
+                  <ng-select [multiple]="false" [(ngModel)]="selectedArea" placeholder="select area" (change)="select('area', $event)">
                     <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
                 </ng-select>
+            </div> -->
 
-            </div>
-
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 13%;">
                 <mat-label> Region </mat-label>
                 <mat-select (selectionChange)="select('city', $event.value)" #region>
                     <mat-option *ngFor="let value of city" [value]="value.cityId">
@@ -61,7 +49,7 @@
             </mat-form-field>
 
 
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 13%;">
                 <mat-label>Field Allocation Status</mat-label>
                 <mat-select #fallocation (selectionChange)="selectf($event)">
                     <mat-option value="all">All</mat-option>
@@ -76,8 +64,10 @@
                     <mat-option value="all">All</mat-option>
                     <mat-option value="sticker">Sticker</mat-option>
                     <mat-option value="tracker">Tracker</mat-option>
-                    <!-- <mat-option value="four"> 4 day PCR</mat-option> -->
+                    <!-- <mat-option value="4pcr"> 4 day PCR</mat-option> -->
+                    <mat-option value="6pcr"> 6 day PCR</mat-option>
                     <mat-option value="8pcr"> 8 day PCR</mat-option>
+                    <mat-option value="11pcr"> 11 day PCR</mat-option>
                     <mat-option value="discharge"> Discharge</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -85,6 +75,18 @@
             <div class="col-3" style="width: 5%;">
                 <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, fallocation, service)">Clear</button>
             </div>
+
+            <div style="width: 40%;" class="d-flex">
+                <div class="pt-2" style="width: 100%;">
+                    <ng-select [multiple]="true" [(ngModel)]="selectedArea" placeholder="select area">
+                        <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
+                    </ng-select>
+                </div>
+                <div class="ml-4">
+                    <button mat-raised-button color="primary" class="mt-2" style="color: white;" (click)="select('area', selectedArea)">Search</button>
+                </div>
+            </div>
+
         </div>
 
         <div class="row" style="margin-top: 10px">

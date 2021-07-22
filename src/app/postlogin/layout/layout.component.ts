@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { editvalues } from '../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-layout',
@@ -190,6 +191,7 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(editvalues.headerbuttclick);
   }
 
   logout() {

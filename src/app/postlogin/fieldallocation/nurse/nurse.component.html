@@ -35,26 +35,6 @@
                 <input matInput (keyup)="crmfilter($event)" placeholder="Ex. ium" #crmno>
             </mat-form-field>
 
-
-            <div class="ng-autocomplete" style="width: 20%;">
-                <!-- <ng-autocomplete [data]="area" [searchKeyword]="keyword" placeholder="Enter Area" (selected)="selectarea('area', $event.areaName)"
-                 [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
-                </ng-autocomplete>
-
-                <ng-template #itemTemplate let-item>
-                    <a [innerHTML]="item.areaName"></a>
-                </ng-template>
-
-                <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                </ng-template> -->
-
-                <ng-select [multiple]="false" [(ngModel)]="selectedArea" placeholder="select area" (change)="selectarea('area', $event)">
-                    <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
-                </ng-select>
-
-            </div>
-
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Region </mat-label>
                 <mat-select (selectionChange)="selectarea('city', $event.value)" #region>
@@ -87,8 +67,10 @@
                         <mat-option value="all">All</mat-option>
                         <mat-option value="sticker">Sticker</mat-option>
                         <mat-option value="tracker">Tracker</mat-option>
-                        <!-- <mat-option value="four"> 4 day PCR</mat-option> -->
+                        <!-- <mat-option value="4pcr"> 4 day PCR</mat-option> -->
+                        <mat-option value="6pcr"> 6 day PCR</mat-option>
                         <mat-option value="8pcr"> 8 day PCR</mat-option>
+                        <mat-option value="11pcr"> 11 day PCR</mat-option>
                         <mat-option value="discharge"> Discharge</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -96,6 +78,17 @@
 
             <div class="col-3 ml-5" style="width: 5%;">
                 <button mat-raised-button class="mt-2 ml-5" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
+            </div>
+
+            <div style="width: 40%;" class="d-flex">
+                <div class="pt-2" style="width: 100%;">
+                    <ng-select [multiple]="true" [(ngModel)]="selectedArea" placeholder="select area">
+                        <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
+                    </ng-select>
+                </div>
+                <div class="ml-4">
+                    <button mat-raised-button color="primary" class="mt-2" style="color: white;" (click)="selectarea('area', selectedArea)">Search</button>
+                </div>
             </div>
         </div>
 
@@ -124,6 +117,7 @@
             <div class="col-3">
                 <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent();clearf(input, mobile,eid,crm,crmno,area, region,callstatus, service)">Search</button>
             </div>
+
         </div>
 
         <form #a="ngForm">

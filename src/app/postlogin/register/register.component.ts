@@ -225,7 +225,18 @@ export class RegisterComponent implements OnInit {
       this.commonService.putmethod('patient', map).subscribe((data) => {
         alert('Updated Successfully');
         this.form.reset();
-        this.router.navigateByUrl('/apps/list');
+
+        if (!editvalues.registertab) {
+          editvalues.patientid = 0;
+          editvalues.scheduleid = 0;
+          editvalues.drcallid = 0;
+          editvalues.headerbuttclick = true;
+
+          window.close();
+        } else {
+          this.router.navigateByUrl('/apps/list');
+        }
+
       }, err => {
         console.log(err);
       })
@@ -268,7 +279,7 @@ export class RegisterComponent implements OnInit {
         editvalues.patientid = data.id; 
         editvalues.headerbuttclick = false;
         editvalues.registertab = true;
-        
+
         localStorage.setItem('patientedit', JSON.stringify(editvalues));
 
         if (this.localvalues.userType === 6) {
