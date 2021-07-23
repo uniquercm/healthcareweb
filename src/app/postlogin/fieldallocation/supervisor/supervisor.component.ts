@@ -89,7 +89,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       console.log(this.selectedArea.toString())
 
       let url = '';
-      url = 'scheduled?isFieldAllocation=false&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
+      url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
         + '&fromDate='
         + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate='
         + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isTeam=false&areaNames=' + this.selectedArea.toString()

@@ -132,7 +132,7 @@ export class RegisterComponent implements OnInit {
 
   upload() {
     if (this.finalarray.length=== 0) {
-      alert('Please upload file...!');
+      alert('Please select file...!');
       return;
     }
     let maps = {

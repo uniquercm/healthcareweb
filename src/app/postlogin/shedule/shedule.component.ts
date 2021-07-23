@@ -274,19 +274,19 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
             this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
           } else {
-            this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate);
-            this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate);
-            this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate);
-            this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate);
-            this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult);
-            this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate);
-            this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate);
-            this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult);
-            this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate);
-            this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
-            this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
-            this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
-            this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+            this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentFromDate) ;
+            this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentToDate);
+            this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayTestDate);
+            this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DaySampleDate);
+            this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayResult);
+            this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayTestDate);
+            this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DaySampleDate);
+            this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayResult);
+            this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate === '0001-01-01T00:00:00' ? '' : this.array.dischargeDate);
+            this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.callScheduledDate);
+            this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.calledDate);
+            this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus === '0001-01-01T00:00:00' ? '' : this.array.dischargeStatus);
+            this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks === '0001-01-01T00:00:00' ? '' : this.array.dischargeRemarks);
           }
         }
 
