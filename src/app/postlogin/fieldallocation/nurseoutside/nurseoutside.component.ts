@@ -95,8 +95,8 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
 
       this.firstFormGroup.controls['address'].setValue(this.data.patientInformation.address);
       this.firstFormGroup.controls['landmark'].setValue(this.data.patientInformation.landMark);
-      this.firstFormGroup.controls['area'].setValue(this.data.patientInformation.area);
-      this.firstFormGroup.controls['region'].setValue(this.data.patientInformation.region);
+      this.firstFormGroup.controls['area'].setValue(this.data.patientInformation.area); 
+      this.firstFormGroup.controls['region'].setValue(this.data.patientInformation.cityName);
       this.firstFormGroup.controls['map'].setValue(this.data.patientInformation.googleMapLink);
 
       this.secondFormGroup.controls['adults'].setValue(this.data.patientInformation.adultsCount);
