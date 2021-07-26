@@ -38,6 +38,7 @@
             <mat-form-field class="col-4" style="width: 10%;">
                 <mat-label> Region </mat-label>
                 <mat-select (selectionChange)="selectarea('city', $event.value)" #region>
+                    <mat-option value="all">All</mat-option>
                     <mat-option *ngFor="let value of city" [value]="value.cityId">
                         {{value.cityName}}</mat-option>
                 </mat-select>
@@ -92,7 +93,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row mt-2">
             <div class="col-2 pt-3">
                 <mat-radio-group aria-label="Select an option" [(ngModel)]="searchtype">
                     <mat-radio-button value="schedule">Schedule</mat-radio-button>

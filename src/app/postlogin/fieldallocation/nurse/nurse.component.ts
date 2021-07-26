@@ -164,12 +164,21 @@ export class NurseComponent implements OnInit {
         loader.loading = false;
       })
     }
-    else if (name === 'city') {
-      this.array.forEach((element: any) => {
-        if (element.cityId === (event.value)) {
-          farray.push(element);
-        }
-      });
+    else if (name === 'city') { 
+      if (event === 'all') {
+        this.array = this.farray;
+        this.dataSource = new MatTableDataSource(this.array);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort; 
+        return;
+      } else {
+        this.array.forEach((element: any) => {
+          if (element.cityId === (event.value)) {
+            farray.push(element);
+          }
+        });
+      }
     } else if (name === 'status') {
       this.array.forEach((element: any) => {
         if (element.recptionCallStatus === Number(event.value)) {
@@ -245,6 +254,8 @@ export class NurseComponent implements OnInit {
     area.value = '';
     region.value = '';
     this.selectedArea = '';
+    this.fromdate = '';
+    this.todate = '';
 
     this.getvalue();
   }
