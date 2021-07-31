@@ -29,6 +29,7 @@ export class ListComponent implements OnInit {
 
   requestarray: any[] = [];
   area: any[] = [];
+  liststatus = 'pending';
 
   constructor(private commonService: CommonService, public datepipe: DatePipe,
     private router: Router) {
@@ -41,7 +42,7 @@ export class ListComponent implements OnInit {
     this.getreq();
     this.getCity();
     this.getCompany();
-    this.getPatent('');
+    this.getPatent('inital');
   }
 
   ngOnInit(): void {
@@ -89,7 +90,7 @@ export class ListComponent implements OnInit {
     if ((event.target as HTMLInputElement).value === '') {
       this.dataSource = new MatTableDataSource(this.farray);
       return;
-    } 
+    }
     const result = this.array.filter((s: any) => s.patientName.toLowerCase().includes(((event.target as HTMLInputElement).value).toLowerCase()));
     this.dataSource = new MatTableDataSource(result);
   }
@@ -350,7 +351,9 @@ export class ListComponent implements OnInit {
 
   getPatent(value: any) {
     let url = '';
-    if (value === '') {
+    if (value = 'inital') {
+      url = 'patient?companyId=' + this.companyid + '&searchStatus=pending';
+    } else if (value === '') {
       url = 'patient?companyId=' + this.companyid
     } else {
       if (this.fromdate === '') {

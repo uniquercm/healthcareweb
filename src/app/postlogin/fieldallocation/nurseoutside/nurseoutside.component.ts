@@ -106,9 +106,9 @@ export class NurseoutsideComponent implements OnInit, OnDestroy {
         for (let index = 1; index < JSON.parse(this.data.patientInformation.enrolledDetails).length; index++) {
           this.addPhone();
         }
-
         this.secondFormGroup.controls['phones'].setValue(JSON.parse(this.data.patientInformation.enrolledDetails));
       }
+      
       this.thirdFormGroup.controls['stickerapp'].setValue(this.data.patientInformation.stickerApplication);
       this.thirdFormGroup.controls['dischargestatus'].setValue(this.data.patientInformation.dischargeStatus);
       this.thirdFormGroup.controls['trackerapp'].setValue(this.data.patientInformation.trackerApplication);

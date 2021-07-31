@@ -58,6 +58,17 @@
                 </mat-form-field>
             </div>
 
+            <div class="col-3" style="width: 10%;">
+                <mat-form-field>
+                    <mat-label>Call Status</mat-label>
+                    <mat-select (selectionChange)="statuschange('calls', $event)" #calls>
+                        <mat-option value="all">All</mat-option>
+                        <mat-option value="called">Called</mat-option>
+                        <mat-option value="pending">Pending</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
             <div class="col-3" style="width: 2%;">
             </div>
 
@@ -78,7 +89,7 @@
             </div>
 
             <div class="col-3 ml-5" style="width: 5%;">
-                <button mat-raised-button class="mt-2 ml-5" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
+                <button mat-raised-button class="mt-2 ml-5" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, calls)">Clear</button>
             </div>
 
             <div style="width: 40%;" class="d-flex">
@@ -116,7 +127,7 @@
             </mat-form-field>
 
             <div class="col-3">
-                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent();clearf(input, mobile,eid,crm,crmno,area, region,callstatus, service)">Search</button>
+                <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent();clearf(input, mobile,eid,crm,crmno,area, region,callstatus, service, calls)">Search</button>
             </div>
 
         </div>

@@ -86,21 +86,21 @@
             </mat-form-field>
 
             <div class="col-3" style="width: auto;">
-                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region)">Clear</button>
+                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, fromdate, todate)">Clear</button>
             </div>
         </div>
 
         <div class="row">
             <!-- <div class="col-12 row"> -->
             <mat-form-field class="col-3" style="width: auto;" appearance="outline">
-                <mat-label>SendOn From Date</mat-label>
+                <mat-label>Assigned On From Date</mat-label>
                 <input matInput [matDatepicker]="picker" #fromdate>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #picker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field class="col-3" style="width: auto;" appearance="outline">
-                <mat-label>SendOn To Date</mat-label>
+                <mat-label>Assigned On To Date</mat-label>
                 <input matInput [matDatepicker]="tpicker" #todate>
                 <mat-datepicker-toggle matSuffix [for]="tpicker"></mat-datepicker-toggle>
                 <mat-datepicker touchUi #tpicker></mat-datepicker>

@@ -156,12 +156,15 @@ export class DrcellComponent implements OnInit, OnDestroy {
       this.array.forEach((o: any, i) => o.id = i + 1);
       this.array.forEach((elam: any) => {
         if (elam.emrDone === 'yes') {
-          elam.emrDone = true
+          elam.emrDone = true;
         } else {
-          elam.emrDone = false
+          elam.emrDone = false;
         }
         if (elam.calledDate === '0001-01-01T00:00:00') {
-          elam.calledDate = ''
+          elam.calledDate = '';
+        }
+        if (elam.callStatus === '' || elam.callStatus === null) {
+          elam.callStatus = 'pending';
         }
       });
       this.dataSource = new MatTableDataSource(this.array);
@@ -176,7 +179,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     })
-  } 
+  }
 
   getreq() {
     this.commonService.getmethod('requestCRM').subscribe((data) => {
@@ -195,6 +198,8 @@ export class DrcellComponent implements OnInit, OnDestroy {
     area.value = '';
     region.value = '';
     calls.value = '';
+    this.fromdate = '';
+    this.todate = '';
 
     this.getPatent('');
   }
@@ -293,15 +298,20 @@ export class DrcellComponent implements OnInit, OnDestroy {
       url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false'
 
       if (this.router.url === '/apps/drcell') {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=' + event.value + '&isFieldAllow=false'
-        // if (editvalues.drcallid !== 0) {
-        //   url = 'doctor-nurse-team-call?callName=doctor&callStatus=' + event.value + '&isFieldAllow=false'
-        // }
+        if (this.fromdate === '') {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=' + event.value + '&isFieldAllow=false';
+        } else {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=' + event.value + '&isFieldAllow=false&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        }
       } else {
         url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=' + event.value + '&isFieldAllow=false'
-        // if (editvalues.patientid !== 0) {
-        //   url = 'doctor-nurse-team-call?callName=nurse&callStatus=' + event.value + '&isFieldAllow=false'
-        // }
+        if (this.fromdate === '') {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=' + event.value + '&isFieldAllow=false';
+        } else {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=' + event.value + '&isFieldAllow=false&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        }
       }
     } else {
 
@@ -390,12 +400,12 @@ export class DrcellComponent implements OnInit, OnDestroy {
     })
   }
 
- 
+
   ngOnDestroy() {
     editvalues.drcallid = 0
     editvalues.patientid = 0
     editvalues.scheduleid = 0
     localStorage.removeItem('patientedit');
   }
-  
+
 }

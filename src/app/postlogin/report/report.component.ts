@@ -131,7 +131,7 @@ export class ReportComponent implements OnInit {
     editvalues.patientid = element.patientId
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, fromdate: any, todate: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -139,7 +139,9 @@ export class ReportComponent implements OnInit {
     crmno.value = '';
     area.value = '';
     region.value = '';
-
+    fromdate.value = '';
+    todate.value = '';
+     
     this.getreq('', '', '');
   }
 

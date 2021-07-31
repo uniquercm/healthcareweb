@@ -96,6 +96,11 @@ body {
     height: 530px;
     overflow: auto;
     width: 100%;
+    position: relative;
+}
+
+.example-table-container {
+    position: relative;
 }
 
 .area {

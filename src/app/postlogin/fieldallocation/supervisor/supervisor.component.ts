@@ -172,6 +172,8 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     fallocation.value = '';
     service.value = '';
     this.selectedArea = '';
+    this.fromdate = '';
+    this.todate = '';
 
     this.getPatent('');
   }
