@@ -44,7 +44,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-                        <div class="col-lg-4 col-md-2 col-sm-12 margin-auto">
+                        <div class="col-lg-4 col-md-2 col-sm-12 margin-auto" *ngIf="!isHIP">
                             <section class="example-section">
                                 <label class="example-margin mr-5">Vaccine Status</label>
                                 <mat-radio-group formControlName="vaccinestatus" (change)="radioChange($event, conducteddate.value)">
@@ -73,6 +73,7 @@
                     </div>
                     <div class="text-end">
                         <button mat-raised-button class="login-button" id="next-btn" matStepperNext *ngIf="check || (!isHQP)"> Next</button>
+                        <!-- <button mat-raised-button class="login-button" id="next-btn" matStepperNext *ngIf="(isHIP)"> Next</button> -->
                         <button mat-raised-button class="login-button" matStepperNext *ngIf="(!check) && (isHQP)" (click)="fsave(conducteddate)">Save </button>
                     </div>
                 </form>

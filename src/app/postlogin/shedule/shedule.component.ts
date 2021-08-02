@@ -28,6 +28,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   array: any = '';
   edit = false;
   isHQP = true;
+  isHIP = true;
   disablevalue = true;
   hqpdisabled = false;
 
@@ -130,6 +131,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         if (data.details.length === 0) {
           this.commonService.getmethodpromise('patient?companyId=' + this.localvalues.companyId
             + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').then((res) => {
+
               this.formGroup.controls['name'].setValue(res.details[0].patientName);
               this.formGroup.controls['age'].setValue(res.details[0].age);
               this.edit = false;
@@ -168,137 +170,91 @@ export class SheduleComponent implements OnInit, OnDestroy {
                 this.isolation = true;
                 this.dischargedate = false;
                 this.type = 'isolation';
-                this.discharge = true;
+                this.discharge = false;
+                this.isHIP = true;
                 this.isolation = false;
                 this.firstFormGroup.controls['result'].setValue('waiting');
+                this.firstFormGroup.controls['vaccinestatus'].setValue('no');
+                console.log(this.firstFormGroup.value);
               } else {
                 this.check = true;
               }
-
-              return;
             }, err => {
               console.log(err);
             })
-        }
+        } else {
 
-        this.array = data.details[0];
-        this.edit = true;
-        this.formGroup.controls['name'].setValue(this.array.patientName);
-        this.formGroup.controls['age'].setValue(this.array.age);
+          this.array = data.details[0];
+          this.edit = true;
+          this.formGroup.controls['name'].setValue(this.array.patientName);
+          this.formGroup.controls['age'].setValue(this.array.age);
 
-        this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
-        this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
+          this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
+          this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
 
-        this.firstFormGroup.controls['dischargedate'].setValue(this.array.dischargeDate);
-        this.check = true;
+          this.firstFormGroup.controls['dischargedate'].setValue(this.array.dischargeDate);
+          this.check = true;
 
-        if (this.array.requestCrmName === 'HQP') {
-          this.isHQP = false;
-          this.check = false;
+          if (this.array.requestCrmName === 'HQP') {
+            this.isHQP = false;
+            this.check = false;
 
-          if (document.getElementById('next-btn') !== null) {
-            let myElement: HTMLElement | null = document.getElementById('next-btn');
-
-            if (myElement !== null)
-              myElement.style.display = 'inline-flex';
-          }
-
-          this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
-
-          let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          drpicker.setDate(drpicker.getDate());
-
-          this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.array.pcrTestDate);
-
-          let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          fourpickers.setDate(fourpickers.getDate() + 1);
-          this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
-
-          this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
-
-          this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
-          this.hqpFormGroup.controls['hqpdischargepicker'].setValue(this.array.dischargeDate);
-
-
-          if (this.firstFormGroup.controls['result'].value === 'positive') {
-            alert('Please change the Request/CRM No to HIP');
             if (document.getElementById('next-btn') !== null) {
               let myElement: HTMLElement | null = document.getElementById('next-btn');
 
               if (myElement !== null)
-                myElement.style.display = 'none';
+                myElement.style.display = 'inline-flex';
             }
-            this.isHQP = true
-            this.hqpdisabled = false;
-            return;
-          }
 
-          this.hqpdisabled = true;
-        } else if (this.array.requestCrmName === 'HIP') {
-          this.check = false;
-          this.isolation = true;
-          this.dischargedate = false;
-          this.type = 'isolation';
-          this.discharge = true;
-          this.isolation = false;
+            this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
 
-          this.firstFormGroup.controls['result'].setValue(this.array.pcrResult === '' ? 'waiting' : this.array.pcrResult);
+            let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+            drpicker.setDate(drpicker.getDate());
+
+            this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.array.pcrTestDate);
+
+            let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+            fourpickers.setDate(fourpickers.getDate() + 1);
+            this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
+
+            this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
+
+            this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
+            this.hqpFormGroup.controls['hqpdischargepicker'].setValue(this.array.dischargeDate);
 
 
-          this.firstFormGroup.controls['quarantine'].setValue('isolation');
-          this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
-          this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
-          this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
-          this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
-          this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
-          this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
-          this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
-          this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+            if (this.firstFormGroup.controls['result'].value === 'positive') {
+              alert('Please change the Request/CRM No to HIP');
+              if (document.getElementById('next-btn') !== null) {
+                let myElement: HTMLElement | null = document.getElementById('next-btn');
 
-          if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
-            this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
-          } else {
-            this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
-            this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
-          }
+                if (myElement !== null)
+                  myElement.style.display = 'none';
+              }
+              this.isHQP = true
+              this.hqpdisabled = false;
+              return;
+            }
 
-          // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
-          this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
-          this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
-          this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
-
-          this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
-
-          this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
-          this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
-          this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
-          this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
-
-          this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
-
-          this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
-
-          this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
-
-        } else {
-          this.check = true;
-
-          if (this.array.treatmentType === 'isolation') {
-            this.isolation = false;
-            this.type = 'isolation';
-            this.firstFormGroup.controls['quarantine'].setValue('isolation');
-          } else if (this.array.treatmentType === 'quarantine') {
-            this.discharge = false;
-            this.type = 'quarantine';
-            this.firstFormGroup.controls['quarantine'].setValue('quarantine');
-          } else {
+            this.hqpdisabled = true;
+          } else if (this.array.requestCrmName === 'HIP') {
             this.check = false;
-            this.dischargedate = true;
-          }
+            this.isolation = true;
+            this.dischargedate = false;
+            this.type = 'isolation';
+            this.discharge = true;
+            this.isHIP = true;
+            this.isHQP = false;
+            this.isolation = false;
 
-          if (this.array.treatmentType === 'isolation') {
-            this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
-            this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
+            this.firstFormGroup.controls['result'].setValue(this.array.pcrResult === '' ? 'waiting' : this.array.pcrResult);
+            this.firstFormGroup.controls['result'].setValue('waiting');
+            this.firstFormGroup.controls['vaccinestatus'].setValue('no');
+            console.log(this.array);
+
+            this.firstFormGroup.controls['quarantine'].setValue('isolation');
+            this.thirdFormGroup.controls['isostartdate'].setValue('0001-01-01T00:00:00' === this.array.treatmentFromDate ? '' : this.array.treatmentFromDate);
+            this.thirdFormGroup.controls['isoenddate'].setValue('0001-01-01T00:00:00' === this.array.treatmentToDate ? '' : this.array.treatmentToDate);
             this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
             this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
             this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
@@ -314,40 +270,92 @@ export class SheduleComponent implements OnInit, OnDestroy {
             }
 
             // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
-            this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
-            this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
-            this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+            this.thirdFormGroup.controls['resultpcr'].setValue('0001-01-01T00:00:00' === this.array.pcR4DayResult ? '' : this.array.pcR4DayResult);
+            this.thirdFormGroup.controls['fivepicker'].setValue('0001-01-01T00:00:00' === this.array.day5CallDetails.callScheduledDate ? '' : this.array.day5CallDetails.callScheduledDate);
+            this.thirdFormGroup.controls['sixpicker'].setValue('0001-01-01T00:00:00' === this.array.day6CallDetails.callScheduledDate ? '' : this.array.day6CallDetails.callScheduledDate);
 
-            this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+            this.thirdFormGroup.controls['sdpicker'].setValue('0001-01-01T00:00:00' === this.array.day7CallDetails.callScheduledDate ? '' : this.array.day7CallDetails.callScheduledDate);
 
-            this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
-            this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
-            this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
-            this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+            this.thirdFormGroup.controls['edppicker'].setValue('0001-01-01T00:00:00' === this.array.pcR8DayTestDate ? '' : this.array.pcR8DayTestDate);
+            this.thirdFormGroup.controls['edcpicker'].setValue('0001-01-01T00:00:00' === this.array.pcR8DaySampleDate ? '' : this.array.pcR8DaySampleDate);
+            this.thirdFormGroup.controls['eightresultpcr'].setValue('0001-01-01T00:00:00' === this.array.pcR8DayResult ? '' : this.array.pcR8DayResult);
+            this.thirdFormGroup.controls['nnpicker'].setValue('0001-01-01T00:00:00' === this.array.day9CallDetails.callScheduledDate ? '' : this.array.day9CallDetails.callScheduledDate);
 
-            this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+            this.thirdFormGroup.controls['isodispicker'].setValue('0001-01-01T00:00:00' === this.array.dischargeDate ? '' : this.array.dischargeDate);
 
-            this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+            this.thirdFormGroup.controls['dischargespicker'].setValue('0001-01-01T00:00:00' === this.array.dischargeStatus ? '' : this.array.dischargeStatus);
 
-            this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+            this.thirdFormGroup.controls['dischargerpicker'].setValue('0001-01-01T00:00:00' === this.array.dischargeRemarks ? '' : this.array.dischargeRemarks);
+
           } else {
-            this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentFromDate);
-            this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentToDate);
-            this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayTestDate);
-            this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DaySampleDate);
-            this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayResult);
-            this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayTestDate);
-            this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DaySampleDate);
-            this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayResult);
-            this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate === '0001-01-01T00:00:00' ? '' : this.array.dischargeDate);
-            this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.callScheduledDate);
-            this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.calledDate);
-            this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus === '0001-01-01T00:00:00' ? '' : this.array.dischargeStatus);
-            this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks === '0001-01-01T00:00:00' ? '' : this.array.dischargeRemarks);
-          }
-        }
+            this.check = true;
 
-        this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
+            if (this.array.treatmentType === 'isolation') {
+              this.isolation = false;
+              this.type = 'isolation';
+              this.firstFormGroup.controls['quarantine'].setValue('isolation');
+            } else if (this.array.treatmentType === 'quarantine') {
+              this.discharge = false;
+              this.type = 'quarantine';
+              this.firstFormGroup.controls['quarantine'].setValue('quarantine');
+            } else {
+              this.check = false;
+              this.dischargedate = true;
+            }
+
+            if (this.array.treatmentType === 'isolation') {
+              this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
+              this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
+              this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+              this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+              this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
+              this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
+              this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+              this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+
+              if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
+                this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
+              } else {
+                this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
+                this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
+              }
+
+              // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
+              this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
+              this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
+              this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+
+              this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+
+              this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
+              this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
+              this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
+              this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+
+              this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+
+              this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+
+              this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+            } else {
+              this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentFromDate);
+              this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentToDate);
+              this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayTestDate);
+              this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DaySampleDate);
+              this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayResult);
+              this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayTestDate);
+              this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DaySampleDate);
+              this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayResult);
+              this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate === '0001-01-01T00:00:00' ? '' : this.array.dischargeDate);
+              this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.callScheduledDate);
+              this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.calledDate);
+              this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus === '0001-01-01T00:00:00' ? '' : this.array.dischargeStatus);
+              this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks === '0001-01-01T00:00:00' ? '' : this.array.dischargeRemarks);
+            }
+          }
+
+          this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
+        }
       }, err => {
         console.log(err);
       });

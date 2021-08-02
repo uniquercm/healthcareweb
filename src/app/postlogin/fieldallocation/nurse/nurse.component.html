@@ -60,10 +60,11 @@
 
             <div class="col-3" style="width: 10%;">
                 <mat-form-field>
-                    <mat-label>Call Status</mat-label>
+                    <mat-label>Team Status</mat-label>
                     <mat-select (selectionChange)="statuschange('calls', $event)" #calls>
                         <mat-option value="all">All</mat-option>
-                        <mat-option value="called">Called</mat-option>
+                        <mat-option value="visited">Visited</mat-option>
+                        <mat-option value="notvisited">Not Visited</mat-option>
                         <mat-option value="pending">Pending</mat-option>
                     </mat-select>
                 </mat-form-field>
