@@ -278,6 +278,8 @@ export class ListComponent implements OnInit {
     region.value = '';
     statuss.value = '';
     gmap.value = '';
+    this.fromdate = '';
+    this.todate = '';
 
     this.getPatent('');
   }
@@ -291,6 +293,8 @@ export class ListComponent implements OnInit {
     this.selectedArea = [];
     region.value = '';
     statuss.value = '';
+    this.fromdate = '';
+    this.todate = '';
   }
 
   clearcase(input: any, mobile: any, eid: any, crmno: any, region: any, statuss: any) {
@@ -300,6 +304,8 @@ export class ListComponent implements OnInit {
     crmno.value = '';
     region.value = '';
     statuss.value = '';
+    this.fromdate = '';
+    this.todate = '';
 
     this.selectedArea = [];
   }

@@ -128,56 +128,57 @@ export class SheduleComponent implements OnInit, OnDestroy {
     {
       this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
         if (data.details.length === 0) {
-          this.commonService.getmethodpromise('patient?companyId=' + this.localvalues.companyId 
-          + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').then((res) => {
-            this.formGroup.controls['name'].setValue(res.details[0].patientName);
-            this.formGroup.controls['age'].setValue(res.details[0].age);
-            this.edit = false;
-            this.array = res.details[0];
+          this.commonService.getmethodpromise('patient?companyId=' + this.localvalues.companyId
+            + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').then((res) => {
+              this.formGroup.controls['name'].setValue(res.details[0].patientName);
+              this.formGroup.controls['age'].setValue(res.details[0].age);
+              this.edit = false;
+              this.array = res.details[0];
 
-            if (this.array.requestCrmName === 'HQP') {
-              this.formGroup.controls['result'].setValue('waiting');
-              this.isHQP = false;
-              this.check = false;
+              if (this.array.requestCrmName === 'HQP') {
+                this.formGroup.controls['result'].setValue('waiting');
+                this.isHQP = false;
+                this.check = false;
 
-              this.firstFormGroup.controls['conducteddate'].setValue(res.details[0].createdOn);
+                this.firstFormGroup.controls['conducteddate'].setValue(res.details[0].createdOn);
 
-              this.hqpFormGroup.controls['hqpstartdate'].setValue(res.details[0].createdOn);
+                this.hqpFormGroup.controls['hqpstartdate'].setValue(res.details[0].createdOn);
 
-              let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-              drpicker.setDate(drpicker.getDate() + 1);
+                let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+                drpicker.setDate(drpicker.getDate() + 1);
 
-              this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.hqpFormGroup.controls['hqpstartdate'].value);
+                this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.hqpFormGroup.controls['hqpstartdate'].value);
 
-              let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-              fourpickers.setDate(fourpickers.getDate() + 3 - 1);
-              this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
+                let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+                fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+                this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
 
-              let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-              eightpickers.setDate(eightpickers.getDate() + 6);
+                let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+                eightpickers.setDate(eightpickers.getDate() + 6);
 
-              this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
+                this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
 
-              let startdates: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-              startdates.setDate(startdates.getDate() + 7);
-              this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
-              this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
+                let startdates: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+                startdates.setDate(startdates.getDate() + 7);
+                this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
+                this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
 
-            } else if (this.array.requestCrmName === 'HIP') {
-              this.check = false;
-              this.isolation = true;
-              this.dischargedate = false;
-              this.type = 'isolation';
-              this.discharge = true;
-              this.isolation = false;
-            } else {
-              this.check = true;
-            }
+              } else if (this.array.requestCrmName === 'HIP') {
+                this.check = false;
+                this.isolation = true;
+                this.dischargedate = false;
+                this.type = 'isolation';
+                this.discharge = true;
+                this.isolation = false;
+                this.firstFormGroup.controls['result'].setValue('waiting');
+              } else {
+                this.check = true;
+              }
 
-            return;
-          }, err => {
-            console.log(err);
-          })
+              return;
+            }, err => {
+              console.log(err);
+            })
         }
 
         this.array = data.details[0];
@@ -186,7 +187,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         this.formGroup.controls['age'].setValue(this.array.age);
 
         this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
-        this.firstFormGroup.controls['result'].setValue(this.array.pcrResult === '' ? 'waiting' : this.array.pcrResult);
+        this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
 
         this.firstFormGroup.controls['dischargedate'].setValue(this.array.dischargeDate);
         this.check = true;
@@ -241,41 +242,44 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.discharge = true;
           this.isolation = false;
 
-          this.firstFormGroup.controls['quarantine'].setValue('isolation'); 
-            this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
-            this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
-            this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
-            this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
-            this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
-            this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
-            this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
-            this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+          this.firstFormGroup.controls['result'].setValue(this.array.pcrResult === '' ? 'waiting' : this.array.pcrResult);
 
-            if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
-              this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
-            } else {
-              this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
-              this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
-            }
 
-            // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
-            this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
-            this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
-            this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+          this.firstFormGroup.controls['quarantine'].setValue('isolation');
+          this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
+          this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
+          this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+          this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+          this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
+          this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
+          this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+          this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
 
-            this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+          if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
+            this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
+          } else {
+            this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
+            this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
+          }
 
-            this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
-            this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
-            this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
-            this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+          // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
+          this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
+          this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
+          this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
 
-            this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+          this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
 
-            this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+          this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
+          this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
+          this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
+          this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
 
-            this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
-        
+          this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+
+          this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+
+          this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+
         } else {
           this.check = true;
 
@@ -356,7 +360,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   }
 
-  radioChange(event: any, date: any) {  
+  radioChange(event: any, date: any) {
     if (this.array.requestCrmName === 'HQP') {
       if (this.firstFormGroup.controls['result'].value === 'positive') {
         this.hqpdisabled = false;

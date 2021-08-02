@@ -216,7 +216,7 @@
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns" style="background-color: #0bbca6; color: white;">
                         </tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.my_class]="row.recptionCallStatus === 'pending' && row.recptionCallRemarks !== '' ">
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'my_class' : (row.recptionCallStatus === 'pending' && row.recptionCallRemarks !== ''), 'my_class1' : (row.recptionCallStatus === 'pending' && row.recptionCallRemarks == '')}">
                         </tr>
 
                         <!-- Row shown when there is no matching data. -->
