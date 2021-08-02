@@ -74,6 +74,10 @@ export class CommonService {
     );
   }
 
+  getmethodpromise(url: string): Promise<any> { 
+    return this.httpClient.get<any>(environment.url + url).toPromise(); 
+  }
+
   getmethodws(url: string): Observable<any> { 
     return this.httpClient.get<any>(environment.url + url).pipe(
       map(response => { 
