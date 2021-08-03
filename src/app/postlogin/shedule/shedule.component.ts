@@ -216,15 +216,32 @@ export class SheduleComponent implements OnInit, OnDestroy {
             drpicker.setDate(drpicker.getDate());
 
             this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.array.pcrTestDate);
+            //Thanam
+            this.hqpFormGroup.controls['hqpdrspicker'].setValue(this.array.day2CallDetails.calledDate);
+            //******************** */
 
             let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
             fourpickers.setDate(fourpickers.getDate() + 1);
             this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
+            //Thanam
+            this.hqpFormGroup.controls['hqpfourspicker'].setValue(this.array.trackerAppliedDate);
+            this.hqpFormGroup.controls['hqpfourresult'].setValue(this.array.stickerTrackerResult);
+            //************ */
+
             this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
+
+            //Thanam
+            this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DaySampleDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DaySampleDate : this.array.pcR6DaySampleDate));
+            this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayResult : (this.array.pcR11DayResult !== '0001-01-01T00:00:00' ? this.array.pcR11DayResult : this.array.pcR6DayResult));
+            //************ */
 
             this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
             this.hqpFormGroup.controls['hqpdischargepicker'].setValue(this.array.dischargeDate);
+            //Thanam
+            this.hqpFormGroup.controls['hqpdischargespicker'].setValue(this.array.dischargeStatus);
+            this.hqpFormGroup.controls['hqpdischargerpicker'].setValue(this.array.dischargeRemarks);
+            //************** */
 
 
             if (this.firstFormGroup.controls['result'].value === 'positive') {
@@ -330,14 +347,30 @@ export class SheduleComponent implements OnInit, OnDestroy {
               // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
               this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
               this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
+              //Thanam
+              this.thirdFormGroup.controls['fivestatus'].setValue(this.array.day5CallDetails.callStatus);
+              this.thirdFormGroup.controls['fiveremark'].setValue(this.array.day5CallDetails.remarks);
+              //******************** */
               this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+              //Thanam
+              this.thirdFormGroup.controls['sixstatus'].setValue(this.array.day6CallDetails.callStatus);
+              this.thirdFormGroup.controls['sixremark'].setValue(this.array.day6CallDetails.remarks);
+              //******************** */
 
               this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+              //Thanam
+              this.thirdFormGroup.controls['sdstatus'].setValue(this.array.day7CallDetails.callStatus);
+              this.thirdFormGroup.controls['sdremark'].setValue(this.array.day7CallDetails.remarks);
+              //******************** */
 
               this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
               this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
               this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
               this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+              //Thanam
+              this.thirdFormGroup.controls['nnstatus'].setValue(this.array.day9CallDetails.callStatus);
+              this.thirdFormGroup.controls['nnremark'].setValue(this.array.day9CallDetails.remarks);
+              //******************** */
 
               this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
 

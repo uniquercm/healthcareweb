@@ -123,18 +123,22 @@
 
         <div class="row">
             <div class="col-4">
-                <h4>
+                <button button class="mt-10" style="background: white; color: black;" >Status Completed and Closed</button>
+                <!--h4>
                     White Color - Status Completed and Closed
-                </h4>
+                </h4-->
             </div>
             <div class="col-4">
-                <h4 style="color: rgb(247, 222, 156);  font-weight: bold;"> Yellow Color - Status Pending
-                </h4>
+                <button button class="mt-10" style="background: rgb(247, 222, 156); color: black;" >Status Pending</button>
+                <!--h4 style="color: rgb(247, 222, 156);  font-weight: bold;"> Yellow Color - Status Pending
+                </h4-->
             </div>
             <div class="col-4">
-                <h4 style="color: rgb(247, 194, 194); font-weight: bold;"> Red Color - Status Pending with remark
-                </h4>
+                <button button class="mt-10" style="background: rgb(247, 194, 194); color: black;" >Status Pending with remarks</button>
+                <!--h4 style="color: rgb(247, 194, 194); font-weight: bold;"> Red Color - Status Pending with remarks
+                </h4-->
             </div>
+            <div><h4></h4></div>
         </div>
 
         <div class="ml-2 mr-2 mb-4">
@@ -144,41 +148,41 @@
                         <!-- Position Column -->
                         <ng-container matColumnDef="id">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
-                            <td mat-cell *matCellDef="let element; let i = index;">
+                            <td mat-cell *matCellDef="let element; let i = index; " class="text-center">
                                 {{element.id}} </td>
                         </ng-container>
 
                         <!-- Name Column -->
                         <ng-container matColumnDef="requestCrmName">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Request/Case Type </th>
-                            <td mat-cell *matCellDef="let element"> {{element.requestCrmName}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-center"> {{element.requestCrmName}} </td>
                         </ng-container>
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="crmNo">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> CRM Number </th>
-                            <td mat-cell *matCellDef="let element"> {{element.crmNo}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-center"> {{element.crmNo}} </td>
                         </ng-container>
 
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="eidNo">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> EID </th>
-                            <td mat-cell *matCellDef="let element"> {{element.eidNo}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-center"> {{element.eidNo}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="mobileNo">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
-                            <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-center"> {{element.mobileNo}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="adultsCount">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Adults Count </th>
-                            <td mat-cell *matCellDef="let element"> {{element.adultsCount}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-center"> {{element.adultsCount}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="childrensCount">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header> Childrens Count </th>
-                            <td mat-cell *matCellDef="let element"> {{element.childrensCount}} </td>
+                            <td mat-cell *matCellDef="let element" class="text-center"> {{element.childrensCount}} </td>
                         </ng-container>
 
                         <ng-container matColumnDef="patientName">
@@ -188,35 +192,35 @@
 
                         <ng-container matColumnDef="reception">
                             <th mat-header-cell *matHeaderCellDef> Reception </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td mat-cell *matCellDef="let element" class="text-center">
                                 <img src='assets/images/reception.png' (click)="change(element); reception()">
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="schedule">
                             <th mat-header-cell *matHeaderCellDef> Schedule </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td mat-cell *matCellDef="let element" class="text-center">
                                 <img src="https://img.icons8.com/fluent/48/000000/overtime.png" (click)="change(element); scheduleroute()" />
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="drcall">
                             <th mat-header-cell *matHeaderCellDef> DR Call </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td mat-cell *matCellDef="let element" class="text-center">
                                 <img src='assets/images/doctor.png' (click)="change(element); drcellroute()">
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="nursecall">
                             <th mat-header-cell *matHeaderCellDef> Nurse Call </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td mat-cell *matCellDef="let element" class="text-center">
                                 <img src='assets/images/nurse.png' (click)="change(element); nursecellroute()">
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="print">
                             <th mat-header-cell *matHeaderCellDef> Print </th>
-                            <td mat-cell *matCellDef="let element">
+                            <td mat-cell *matCellDef="let element" class="text-center">
                                 <img src="https://img.icons8.com/color/48/000000/print.png" />
                             </td>
                         </ng-container>
@@ -224,7 +228,7 @@
 
                         <ng-container matColumnDef="edit">
                             <th mat-header-cell *matHeaderCellDef> Edit </th>
-                            <td mat-cell *matCellDef="let element" class="d-flex pt-2">
+                            <td mat-cell *matCellDef="let element" class="d-flex pt-2" class="text-center">
                                 <img src="https://img.icons8.com/color/48/000000/edit-property.png" (click)="change(element); register()" style="width: 25px;" />
                                 <img src="https://img.icons8.com/color/48/000000/delete-property.png" (click)="delete(element)" style="width: 25px;" />
                             </td>
@@ -245,7 +249,7 @@
                     <mat-paginator [pageSizeOptions]="[25, 50,75,100]" showFirstLastButtons></mat-paginator>
                 </div>
             </div>
-            <div class="row">
+            <!--div class="row">
                 <div class="col-4">
                     <h6>
                         White Color - Status Completed and Closed
@@ -259,7 +263,7 @@
                     <h6> Red Color - Status Pending with remark
                     </h6>
                 </div>
-            </div>
+            </div-->
         </div>
     </mat-card>
 </div>

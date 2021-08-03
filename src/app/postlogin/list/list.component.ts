@@ -276,7 +276,10 @@ export class ListComponent implements OnInit {
     crmno.value = '';
     this.selectedArea = [];
     region.value = '';
-    statuss.value = '';
+    //Thanam
+    //statuss.value = ''; 
+    statuss.value = 'pending';
+    //************ */
     gmap.value = '';
     this.fromdate = '';
     this.todate = '';
