@@ -159,8 +159,8 @@ export class ReportComponent implements OnInit {
     }
     else {
       url = 'report?companyId=' + this.companyid + '&sendOnFromDate=' +
-        this.datepipe.transform(value.toLocaleString(), 'MM-dd-yyyy') + '&sendOnToDate=' +
-        this.datepipe.transform(date.toLocaleString(), 'MM-dd-yyyy');
+      date + '&sendOnToDate=' +
+      status
     }
     this.commonService.getmethod(url).subscribe((data) => {
       this.reportarray = data.details;

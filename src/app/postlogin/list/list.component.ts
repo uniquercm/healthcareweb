@@ -281,6 +281,8 @@ export class ListComponent implements OnInit {
     this.fromdate = '';
     this.todate = '';
 
+    this.liststatus = 'pending';
+
     this.getPatent('');
   }
 
