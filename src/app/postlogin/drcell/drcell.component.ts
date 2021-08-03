@@ -314,13 +314,22 @@ export class DrcellComponent implements OnInit, OnDestroy {
             + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
         }
       } else {
+        //Thanam
         url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=' + event.value + '&isFieldAllow=false'
+        if (this.fromdate === '') {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=' + event.value + '&isFieldAllow=false';
+        } else {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=' + event.value + '&isFieldAllow=false&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        }
+        /*url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=' + event.value + '&isFieldAllow=false'
         if (this.fromdate === '') {
           url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=' + event.value + '&isFieldAllow=false';
         } else {
           url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=' + event.value + '&isFieldAllow=false&fromDate='
             + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
         }
+        //******************* */
       }
     } else {
 

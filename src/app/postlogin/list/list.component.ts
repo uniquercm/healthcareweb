@@ -292,7 +292,10 @@ export class ListComponent implements OnInit {
     crmno.value = '';
     this.selectedArea = [];
     region.value = '';
-    statuss.value = ''; 
+    //Thanam
+    //statuss.value = ''; 
+    statuss.value = 'pending';
+    //************ */
   }
 
   clearcase(input: any, mobile: any, eid: any, crmno: any, region: any, statuss: any) {
@@ -352,9 +355,19 @@ export class ListComponent implements OnInit {
   }
 
   getPatent(value: any) {
-    let url = '';
+    let url = '';//submit
     if (value = 'inital') {
-      url = 'patient?companyId=' + this.companyid + '&searchStatus=pending';
+      //Thanam
+      //url = 'patient?companyId=' + this.companyid + '&searchStatus=pending';
+      if (this.fromdate === '') {
+        url = 'patient?companyId=' + this.companyid + '&searchStatus=pending';
+      } else {
+        url = 'patient?companyId=' + this.companyid + '&fromDate=' +
+          this.datepipe.transform(this.fromdate.toLocaleString(), 'MM-dd-yyyy') + '&toDate=' +
+          this.datepipe.transform(this.todate.toLocaleString(), 'MM-dd-yyyy')
+          + '&isDoctorCall=false&isNurseCall=false&searchStatus=pending'
+      }
+      //**************** */
     } else if (value === '') {
       url = 'patient?companyId=' + this.companyid
     } else {

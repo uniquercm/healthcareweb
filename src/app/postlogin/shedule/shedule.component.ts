@@ -175,7 +175,10 @@ export class SheduleComponent implements OnInit, OnDestroy {
                 this.isHIP = true;
                 this.isHQP = false;
                 this.isolation = false;
-                this.firstFormGroup.controls['result'].setValue('waiting');
+                //Thanam
+                //this.firstFormGroup.controls['result'].setValue('waiting');
+                this.firstFormGroup.controls['result'].setValue('positive');
+                //************** */
                 this.firstFormGroup.controls['vaccinestatus'].setValue('no'); 
               } else {
                 this.check = true;
@@ -249,7 +252,10 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.isolation = false;
 
             this.firstFormGroup.controls['result'].setValue(this.array.pcrResult === '' ? 'waiting' : this.array.pcrResult);
-            this.firstFormGroup.controls['result'].setValue('waiting');
+            //Thanam
+            //this.firstFormGroup.controls['result'].setValue('waiting');
+            this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
+            //**************** */
             this.firstFormGroup.controls['vaccinestatus'].setValue('no');
             console.log(this.array);
 
