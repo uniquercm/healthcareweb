@@ -232,8 +232,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
 
             //Thanam
-            this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DaySampleDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DaySampleDate : this.array.pcR6DaySampleDate));
-            this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayResult : (this.array.pcR11DayResult !== '0001-01-01T00:00:00' ? this.array.pcR11DayResult : this.array.pcR6DayResult));
+            this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR6DaySampleDate : (this.array.pcR11DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR11DaySampleDate : this.array.pcR6DaySampleDate));
+            this.hqpFormGroup.controls['hqpeightresult'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayResult : (this.array.pcR11DayResult !== '0001-01-01T00:00:00' ? this.array.pcR11DayResult : this.array.pcR6DayResult));
             //************ */
 
             this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
@@ -291,6 +291,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
             } else {
               this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
               this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
+              this.thirdFormGroup.controls['traresult'].setValue(this.array.stickerTrackerResult);//Thanam
             }
 
             // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
@@ -335,17 +336,23 @@ export class SheduleComponent implements OnInit, OnDestroy {
               this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
               this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
               this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
-              this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
 
               if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
                 this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
               } else {
                 this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
                 this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
+                this.thirdFormGroup.controls['traresult'].setValue(this.array.stickerTrackerResult);//Thanam
               }
 
               // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
-              this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
+              //Thanam
+              //this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+              //this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
+              this.thirdFormGroup.controls['fppicker'].setValue(this.array.day4CallDetails.callScheduledDate);
+              this.thirdFormGroup.controls['resultpcr'].setValue(this.array.day4CallDetails.callStatus);
+              this.thirdFormGroup.controls['fpspicker'].setValue(this.array.day4CallDetails.remarks);
+              //************* */
               this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
               //Thanam
               this.thirdFormGroup.controls['fivestatus'].setValue(this.array.day5CallDetails.callStatus);
@@ -380,12 +387,15 @@ export class SheduleComponent implements OnInit, OnDestroy {
             } else {
               this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentFromDate);
               this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentToDate);
+
               this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayTestDate);
               this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DaySampleDate);
               this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayResult);
+
               this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayTestDate);
               this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DaySampleDate);
               this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayResult);
+
               this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate === '0001-01-01T00:00:00' ? '' : this.array.dischargeDate);
               this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.callScheduledDate);
               this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.calledDate);
