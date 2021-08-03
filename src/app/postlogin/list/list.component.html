@@ -118,8 +118,24 @@
                 <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="export()">Export</button>
             </div>
 
+
         </div>
 
+        <div class="row">
+            <div class="col-4">
+                <h6>
+                    White Color - Status Completed and Closed
+                </h6>
+            </div>
+            <div class="col-4">
+                <h6> Yellow Color - Status Pending
+                </h6>
+            </div>
+            <div class="col-4">
+                <h6> Red Color - Status Pending with remark
+                </h6>
+            </div>
+        </div>
 
         <div class="ml-2 mr-2 mb-4">
             <div class="example-container">
@@ -227,6 +243,21 @@
 
 
                     <mat-paginator [pageSizeOptions]="[25, 50,75,100]" showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <h6>
+                        White Color - Status Completed and Closed
+                    </h6>
+                </div>
+                <div class="col-4">
+                    <h6> Yellow Color - Status Pending
+                    </h6>
+                </div>
+                <div class="col-4">
+                    <h6> Red Color - Status Pending with remark
+                    </h6>
                 </div>
             </div>
         </div>
