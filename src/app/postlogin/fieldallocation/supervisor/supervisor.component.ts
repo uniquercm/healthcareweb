@@ -81,15 +81,11 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
         return;
       }
-      // this.array.forEach((element: any) => {
-      //   if (element.area === (event)) {
-      //     farray.push(element);
-      //   }
-      // }); 
-
-      let url = '';
+      console.log(this.selectedArea.toString() + ' ' + this.fromdate);
+      let url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all' +
+      '&isTeam=false&areaNames=' + this.selectedArea.toString();
       if (this.fromdate === '') {
-        url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
+        url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all' +
         '&isTeam=false&areaNames=' + this.selectedArea.toString()
       } else {
         url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
@@ -391,10 +387,10 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&fieldAllocationStatus=' + event.value;
     } else {
       url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&fieldAllocationStatus=' + event.value
-      + '&fromDate='
-      + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+        + '&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
     }
-     
+
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = [];
       this.array = data.details;
@@ -430,13 +426,13 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   selectstaus(event: any) {
     let url = '';
     if (this.fromdate === '') {
-      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&serviceName=' + event.value 
+      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&serviceName=' + event.value
     } else {
       url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&serviceName=' + event.value
-      + '&fromDate='
-      + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+        + '&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
     }
-   
+
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = [];
