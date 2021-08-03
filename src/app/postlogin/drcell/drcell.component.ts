@@ -146,9 +146,9 @@ export class DrcellComponent implements OnInit, OnDestroy {
   getvalue() {
     let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false';
     if (this.router.url === '/apps/drcell') {
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false';
+      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&serviceName=all&serviceStatus=all&dateSearchType=schedule&areaNames=all';
     } else {
-      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&isFieldAllow=false';
+      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&serviceName=all&serviceStatus=all&areaNames=all';
     }
 
     this.commonService.getmethod(url).subscribe((data) => {
@@ -227,42 +227,51 @@ export class DrcellComponent implements OnInit, OnDestroy {
   area: any[] = [];
 
   getPatent(value: any) {
-    let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false&fromDate='
+    let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&serviceName=all&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-
-    if (this.router.url === '/apps/drcell') {
-      if (this.fromdate === '') {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false';
+    if (value === 'submit') {
+      if (this.router.url === '/apps/drcell') {
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&serviceName=all&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       } else {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      }
-
-      if (editvalues.drcallid !== 0) {
-        if (this.fromdate === '') {
-          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&isFieldAllow=false';
-        } else {
-          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&isFieldAllow=false&fromDate='
-            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-        }
+        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&serviceName=all&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
       }
     } else {
-      if (this.fromdate === '') {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=tru&callStatus=all&isFieldAllow=false';
-      } else {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-      }
-      if (editvalues.patientid !== 0) {
+
+      if (this.router.url === '/apps/drcell') {
         if (this.fromdate === '') {
-          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=tru&callStatus=all&isFieldAllow=false';
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&serviceName=all';
         } else {
-          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&isFieldAllow=false&fromDate='
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&serviceName=all&fromDate='
             + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        }
+
+        if (editvalues.drcallid !== 0) {
+          if (this.fromdate === '') {
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&serviceName=all';
+          } else {
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=nurse&callStatus=all&serviceName=all&fromDate='
+              + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+          }
+        }
+      } else {
+        if (this.fromdate === '') {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=tru&callStatus=all&serviceName=all';
+        } else {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&serviceName=all&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        }
+        if (editvalues.patientid !== 0) {
+          if (this.fromdate === '') {
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=tru&callStatus=all&serviceName=all';
+          } else {
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=false&isNurseCall=true&callStatus=all&serviceName=all&fromDate='
+              + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+          }
         }
       }
     }
-
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = data.details;
       this.array.forEach((o: any, i) => o.id = i + 1);
