@@ -28,7 +28,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   array: any = '';
   edit = false;
   isHQP = true;
-  isHIP = true;
+  isHIP = false;
   disablevalue = true;
   hqpdisabled = false;
 
@@ -129,16 +129,17 @@ export class SheduleComponent implements OnInit, OnDestroy {
     {
       this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
         if (data.details.length === 0) {
+        
           this.commonService.getmethodpromise('patient?companyId=' + this.localvalues.companyId
             + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').then((res) => {
-
+               
               this.formGroup.controls['name'].setValue(res.details[0].patientName);
               this.formGroup.controls['age'].setValue(res.details[0].age);
               this.edit = false;
               this.array = res.details[0];
 
               if (this.array.requestCrmName === 'HQP') {
-                this.formGroup.controls['result'].setValue('waiting');
+                this.firstFormGroup.controls['result'].setValue('waiting');
                 this.isHQP = false;
                 this.check = false;
 
@@ -170,12 +171,12 @@ export class SheduleComponent implements OnInit, OnDestroy {
                 this.isolation = true;
                 this.dischargedate = false;
                 this.type = 'isolation';
-                this.discharge = false;
+                this.discharge = true;
                 this.isHIP = true;
+                this.isHQP = false;
                 this.isolation = false;
                 this.firstFormGroup.controls['result'].setValue('waiting');
-                this.firstFormGroup.controls['vaccinestatus'].setValue('no');
-                console.log(this.firstFormGroup.value);
+                this.firstFormGroup.controls['vaccinestatus'].setValue('no'); 
               } else {
                 this.check = true;
               }
@@ -370,6 +371,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   radioChange(event: any, date: any) {
     if (this.array.requestCrmName === 'HQP') {
+      this.check = false;
       if (this.firstFormGroup.controls['result'].value === 'positive') {
         this.hqpdisabled = false;
         alert('Please change the Request/CRM No to HIP');
@@ -516,8 +518,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
         this.firstFormGroup.controls['dischargedate'].setValue(drpicker);
       }
-    }
-    console.log(this.hqpdisabled)
+    } 
   }
 
   showOptions(event: any) {

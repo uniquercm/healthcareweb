@@ -227,7 +227,7 @@ export class DrcellComponent implements OnInit, OnDestroy {
   area: any[] = [];
 
   getPatent(value: any) {
-    let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&isDoctorCall=true&isNurseCall=false&callStatus=all&isFieldAllow=false&fromDate='
+    let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=doctor&callStatus=all&isFieldAllow=false&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
 
     if (this.router.url === '/apps/drcell') {

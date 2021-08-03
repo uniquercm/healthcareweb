@@ -34,8 +34,8 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
   user: any = [];
   finalarray: any = [];
-  fromdate: any = new Date();
-  todate: any = new Date();
+  fromdate: any = '';
+  todate: any = '';
 
   allocatedteam: any;
   reallocatedteam: any;
@@ -85,15 +85,18 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       //   if (element.area === (event)) {
       //     farray.push(element);
       //   }
-      // });
-      console.log(this.selectedArea.toString())
+      // }); 
 
       let url = '';
-      url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
-        + '&fromDate='
-        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate='
-        + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isTeam=false&areaNames=' + this.selectedArea.toString()
-
+      if (this.fromdate === '') {
+        url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
+        '&isTeam=false&areaNames=' + this.selectedArea.toString()
+      } else {
+        url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
+          + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate='
+          + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isTeam=false&areaNames=' + this.selectedArea.toString()
+      }
 
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = [];
@@ -102,13 +105,13 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
         for (let index = 0; index < this.array.length; index++) {
           const element = this.array[index];
- 
+
           element.area = element.patientInformation.area
           element.cityId = element.patientInformation.cityId
           element.cityName = element.patientInformation.cityName
           element.crmNo = element.patientInformation.crmNo
           element.eidNo = element.patientInformation.eidNo
-          element.mobileNo = element.patientInformation.mobileNo 
+          element.mobileNo = element.patientInformation.mobileNo
           element.requestId = element.patientInformation.requestId
           element.stickerApplication = element.patientInformation.stickerApplication
           element.stickerRemoval = element.patientInformation.stickerRemoval
@@ -304,9 +307,12 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   getPatent(value: any) {
     if (value === 'submit') {
       let url = '';
-      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&isTeam=false&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' +
-        this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-
+      if (this.fromdate === '') {
+        url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&isTeam=false'
+      } else {
+        url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&isTeam=false&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' +
+          this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+      }
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = [];
         this.array = data.details;
@@ -314,13 +320,13 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
         for (let index = 0; index < this.array.length; index++) {
           const element = this.array[index];
- 
+
           element.area = element.patientInformation.area
           element.cityId = element.patientInformation.cityId
           element.cityName = element.patientInformation.cityName
           element.crmNo = element.patientInformation.crmNo
           element.eidNo = element.patientInformation.eidNo
-          element.mobileNo = element.patientInformation.mobileNo 
+          element.mobileNo = element.patientInformation.mobileNo
           element.requestId = element.patientInformation.requestId
           element.stickerApplication = element.patientInformation.stickerApplication
           element.stickerRemoval = element.patientInformation.stickerRemoval
@@ -350,14 +356,14 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         this.array = data.details;
         this.array.forEach((o: any, i: number) => o.id = i + 1);
 
-        this.array.forEach((element: any) => { 
+        this.array.forEach((element: any) => {
           element.area = element.patientInformation.area
           element.cityId = element.patientInformation.cityId
           element.cityName = element.patientInformation.cityName
           element.crmNo = element.patientInformation.crmNo
           element.eidNo = element.patientInformation.eidNo
           element.mobileNo = element.patientInformation.mobileNo
-          element.requestCrmName = element.patientInformation.requestCrmName 
+          element.requestCrmName = element.patientInformation.requestCrmName
           element.requestId = element.patientInformation.requestId
           element.stickerApplication = element.patientInformation.stickerApplication
           element.stickerRemoval = element.patientInformation.stickerRemoval
@@ -381,10 +387,14 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
   selectf(event: any) {
     let url = '';
-    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&fieldAllocationStatus=' + event.value
+    if (this.fromdate === '') {
+      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&fieldAllocationStatus=' + event.value;
+    } else {
+      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&fieldAllocationStatus=' + event.value
       + '&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
-
+    }
+     
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = [];
       this.array = data.details;
@@ -419,9 +429,14 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
   selectstaus(event: any) {
     let url = '';
-    url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&serviceName=' + event.value
+    if (this.fromdate === '') {
+      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&serviceName=' + event.value 
+    } else {
+      url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&serviceName=' + event.value
       + '&fromDate='
       + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+    }
+   
 
     this.commonService.getmethod(url).subscribe((data) => {
       this.array = [];

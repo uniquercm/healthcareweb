@@ -292,9 +292,7 @@ export class ListComponent implements OnInit {
     crmno.value = '';
     this.selectedArea = [];
     region.value = '';
-    statuss.value = '';
-    this.fromdate = '';
-    this.todate = '';
+    statuss.value = ''; 
   }
 
   clearcase(input: any, mobile: any, eid: any, crmno: any, region: any, statuss: any) {
@@ -303,9 +301,7 @@ export class ListComponent implements OnInit {
     eid.value = '';
     crmno.value = '';
     region.value = '';
-    statuss.value = '';
-    this.fromdate = '';
-    this.todate = '';
+    statuss.value = ''; 
 
     this.selectedArea = [];
   }
