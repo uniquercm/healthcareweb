@@ -291,10 +291,11 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
             this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
             this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
-            // 
-
+ 
             if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
               this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
+              this.thirdFormGroup.controls['traapicker'].setValue('0001-01-01T00:00:00' === this.array.stickerAppliedDate ? '' : this.array.stickerAppliedDate);
+              this.thirdFormGroup.controls['traresult'].setValue(this.array.stickerTrackerResult);
             } else {
               this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
               this.thirdFormGroup.controls['traapicker'].setValue('0001-01-01T00:00:00' === this.array.trackerAppliedDate ? '' : this.array.trackerAppliedDate);
