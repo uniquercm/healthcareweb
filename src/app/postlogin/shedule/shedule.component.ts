@@ -295,7 +295,12 @@ export class SheduleComponent implements OnInit, OnDestroy {
             }
 
             // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
-            this.thirdFormGroup.controls['resultpcr'].setValue('0001-01-01T00:00:00' === this.array.pcR4DayResult ? '' : this.array.pcR4DayResult);
+            this.thirdFormGroup.controls['resultpcr'].setValue(this.array.day4CallDetails.callStatus);
+            this.thirdFormGroup.controls['fivestatus'].setValue(this.array.day5CallDetails.callStatus);
+            this.thirdFormGroup.controls['sixstatus'].setValue(this.array.day6CallDetails.callStatus);
+            this.thirdFormGroup.controls['sevenstatus'].setValue(this.array.day7CallDetails.callStatus);
+            this.thirdFormGroup.controls['ninestatus'].setValue(this.array.day9CallDetails.callStatus);
+
             this.thirdFormGroup.controls['fivepicker'].setValue('0001-01-01T00:00:00' === this.array.day5CallDetails.callScheduledDate ? '' : this.array.day5CallDetails.callScheduledDate);
             this.thirdFormGroup.controls['sixpicker'].setValue('0001-01-01T00:00:00' === this.array.day6CallDetails.callScheduledDate ? '' : this.array.day6CallDetails.callScheduledDate);
 
