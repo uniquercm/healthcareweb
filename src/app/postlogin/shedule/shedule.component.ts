@@ -282,17 +282,24 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
             this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
             this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
+            this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+            this.thirdFormGroup.controls['fpspicker'].setValue(this.array.day4CallDetails.remarks);
+            this.thirdFormGroup.controls['fiveremark'].setValue(this.array.day5CallDetails.remarks);
+            this.thirdFormGroup.controls['sixremark'].setValue(this.array.day6CallDetails.remarks);
+            this.thirdFormGroup.controls['sevenremark'].setValue(this.array.day7CallDetails.remarks);
+            
             this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
             this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
             this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+            // 
 
             if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
               this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
             } else {
               this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
-              this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
+              this.thirdFormGroup.controls['traapicker'].setValue('0001-01-01T00:00:00' === this.array.trackerAppliedDate ? '' : this.array.trackerAppliedDate);
               this.thirdFormGroup.controls['traresult'].setValue(this.array.stickerTrackerResult);//Thanam
-            }
+            } 
 
             // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
             this.thirdFormGroup.controls['resultpcr'].setValue(this.array.day4CallDetails.callStatus);
