@@ -245,7 +245,7 @@ export class NurseComponent implements OnInit {
     })
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, calls: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, calls: any, callstatus: any, service: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -257,6 +257,8 @@ export class NurseComponent implements OnInit {
     this.fromdate = '';
     this.todate = '';
     calls.value = '';
+    callstatus.value = '';
+    service.value = '';
 
     this.getvalue();
   }

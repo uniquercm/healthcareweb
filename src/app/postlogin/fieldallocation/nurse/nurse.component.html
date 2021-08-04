@@ -6,7 +6,7 @@
 <div class="p-4">
     <mat-card>
         <div class="row">
-            <mat-form-field class="col-4" style="width: 10%;">
+            <mat-form-field class="col-4" style="width: 15%;">
                 <mat-label>Name</mat-label>
                 <input matInput (keyup)="namefilter($event)" #input>
             </mat-form-field>
@@ -45,21 +45,7 @@
             </mat-form-field>
 
             <div class="col-3" style="width: 10%;">
-                <mat-form-field>
-                    <mat-label>Service Status</mat-label>
-                    <mat-select (selectionChange)="statuschange('call', $event)" #callstatus>
-                        <mat-option value="all">All</mat-option>
-                        <mat-option value="applied">Applied</mat-option>
-                        <mat-option value="removed">Removed</mat-option>
-                        <mat-option value="pending">Pending</mat-option>
-                        <mat-option value="replaced">Replaced</mat-option>
-                        <mat-option value="discharged">Discharged</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-3" style="width: 10%;">
-                <mat-form-field>
+                <mat-form-field style="width: 100%;">
                     <mat-label>Team Status</mat-label>
                     <mat-select (selectionChange)="statuschange('calls', $event)" #calls>
                         <mat-option value="all">All</mat-option>
@@ -70,11 +56,11 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-3" style="width: 2%;">
-            </div>
+            <!--div class="col-3" style="width: 2%;">
+            </div-->
 
-            <div class="col-3" style="width: 10%;">
-                <mat-form-field>
+            <div class="col-3" style="width: 9%;">
+                <mat-form-field style="width: 100%;">
                     <mat-label>Service Name</mat-label>
                     <mat-select #service (selectionChange)="statuschange('service', $event)">
                         <mat-option value="all">All</mat-option>
@@ -89,11 +75,25 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-3 ml-5" style="width: 5%;">
-                <button mat-raised-button class="mt-2 ml-5" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, calls)">Clear</button>
+            <div class="col-3" style="width: 10%;">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Service Status</mat-label>
+                    <mat-select (selectionChange)="statuschange('call', $event)" #callstatus>
+                        <mat-option value="all">All</mat-option>
+                        <mat-option value="applied">Applied</mat-option>
+                        <mat-option value="removed">Removed</mat-option>
+                        <mat-option value="pending">Pending</mat-option>
+                        <mat-option value="replaced">Replaced</mat-option>
+                        <mat-option value="discharged">Discharged</mat-option>
+                    </mat-select>
+                </mat-form-field>
             </div>
 
-            <div style="width: 40%;" class="d-flex">
+            <div class="col-3" style="width: 2%;">
+                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, calls, callstatus, service)">Clear</button>
+            </div>
+
+            <!--div style="width: 25%;" class="d-flex">
                 <div class="pt-2" style="width: 100%;">
                     <ng-select [multiple]="true" [(ngModel)]="selectedArea" placeholder="select area">
                         <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
@@ -102,7 +102,7 @@
                 <div class="ml-4">
                     <button mat-raised-button color="primary" class="mt-2" style="color: white;" (click)="selectarea('area', selectedArea)">Search</button>
                 </div>
-            </div>
+            </div-->
         </div>
 
         <div class="row mt-2">
@@ -127,10 +127,20 @@
                 <mat-datepicker touchUi #tpicker></mat-datepicker>
             </mat-form-field>
 
-            <div class="col-3">
+            <div class="col-3" style="width: 15%;">
                 <button mat-raised-button class="mt-2" style="background: #167f72; color: white;" (click)="getPatent();clearf(input, mobile,eid,crm,crmno,area, region,callstatus, service, calls)">Search</button>
             </div>
 
+            <div style="width: 25%;" class="d-flex">
+                <div class="pt-2" style="width: 100%;">
+                    <ng-select [multiple]="true" [(ngModel)]="selectedArea" placeholder="select area">
+                        <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
+                    </ng-select>
+                </div>
+                <div class="ml-4">
+                    <button mat-raised-button color="primary" class="mt-2" style="color: white;" (click)="selectarea('area', selectedArea)">Search</button>
+                </div>
+            </div>
         </div>
 
         <form #a="ngForm">
