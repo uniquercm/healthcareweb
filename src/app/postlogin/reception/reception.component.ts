@@ -86,7 +86,7 @@ export class ReceptionComponent implements OnInit, OnDestroy {
 
   keyword = 'areaName';
   areas = '';
-  select(event: any) { 
+  select(event: any) {
     this.areas = event.areaName;
   }
 
@@ -193,6 +193,23 @@ export class ReceptionComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     })
+  }
+
+  areaname = '';
+  onChangeSearch(event: any) {
+    this.areaname = event;
+  }
+
+  next(stepper: any) {
+    if (this.firstFormGroup.value.area === undefined) {
+
+    } else {
+      if (this.firstFormGroup.value.area.areaName === undefined && this.areaname !== '') {
+        alert('Invalid Area');
+        return;
+      }
+    }
+    stepper.next();
   }
 
   area: any[] = [];

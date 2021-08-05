@@ -60,8 +60,7 @@
                         </div>
 
                         <div class="ng-autocomplete" class="col-lg-4 col-md-2 col-sm-12">
-                            <ng-autocomplete [data]="area" [searchKeyword]="keyword" formControlName="area" placeholder="Enter Area"
-                             (selected)="select($event.areaName)" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                            <ng-autocomplete [data]="area" [searchKeyword]="keyword" formControlName="area" placeholder="Enter Area" (selected)="select($event.areaName)" (inputChanged)='onChangeSearch($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
                             </ng-autocomplete>
 
                             <ng-template #itemTemplate let-item>
@@ -101,7 +100,7 @@
                         </div>
                     </div>
                     <div class="text-end">
-                        <button mat-raised-button class="login-button" matStepperNext>Next</button>
+                        <button mat-raised-button class="login-button" (click)="next(stepper)">Next</button>
                     </div>
                 </form>
             </mat-step>
