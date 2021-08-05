@@ -91,6 +91,9 @@ MIT
 @angular/router
 MIT
 
+@ng-select/ng-select
+MIT
+
 angular-ng-autocomplete
 MIT
 
