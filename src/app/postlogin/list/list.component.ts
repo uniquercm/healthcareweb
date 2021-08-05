@@ -96,8 +96,8 @@ export class ListComponent implements OnInit {
   }
 
   getreq() {
-    this.commonService.getmethodws('requestCRM').subscribe((data) => {
-      this.requestarray = data.details;
+    this.commonService.getmethodws('requestCRM').subscribe((req) => {
+      this.requestarray = req.details;
     }, err => {
       console.log(err);
     })
@@ -448,9 +448,9 @@ export class ListComponent implements OnInit {
 
   keyword = 'areaName';
   getarea() {
-    this.commonService.getmethodws('area').subscribe((data) => {
+    this.commonService.getmethodws('area').subscribe((area) => {
       let array;
-      array = data.details;
+      array = area.details;
 
       let map = {
         areaName: 'All',
@@ -479,8 +479,8 @@ export class ListComponent implements OnInit {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethodws('city').subscribe((data) => {
-      this.city = data.details;
+    this.commonService.getmethodws('city').subscribe((res) => {
+      this.city = res.details;
     }, err => {
       console.log(err);
     })
