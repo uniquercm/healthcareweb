@@ -80,8 +80,8 @@ export class DrcellComponent implements OnInit, OnDestroy {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethod('city').subscribe((data) => {
-      this.city = data.details;
+    this.commonService.getmethod('city').subscribe((datas) => {
+      this.city = datas.details;
     }, err => {
       console.log(err);
     })

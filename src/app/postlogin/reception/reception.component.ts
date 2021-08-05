@@ -76,8 +76,8 @@ export class ReceptionComponent implements OnInit, OnDestroy {
   }
 
   getcity() {
-    this.commonService.getmethod('city').subscribe((data) => {
-      this.cityarray = data.details;
+    this.commonService.getmethod('city').subscribe((datas) => {
+      this.cityarray = datas.details;
     }, err => {
       console.log(err);
     })
