@@ -144,50 +144,55 @@
         </div>
 
         <form #a="ngForm">
-            <table mat-table [dataSource]="dataSource" class="mb-3">
+            <table mat-table [dataSource]="dataSource" class="mb-3" matSort>
 
                 <ng-container matColumnDef="no">
-                    <th mat-header-cell *matHeaderCellDef> No. </th>
-                    <td mat-cell *matCellDef="let element; let i = index;"> {{element.id}} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                    <td mat-cell *matCellDef="let element; let i = index;" class="text-center"> 
+                        {{element.id}} </td>
                 </ng-container>
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="crmtype">
-                    <th mat-header-cell *matHeaderCellDef> Request/Case Type </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Request/Case Type </th>
                     <td mat-cell *matCellDef="let element" class="text-center"> {{element.requestCrmName}} </td>
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="crmno">
-                    <th mat-header-cell *matHeaderCellDef> CRM Number </th>
-                    <td mat-cell *matCellDef="let element"> {{element.crmNo}} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CRM Number </th>
+                    <td mat-cell *matCellDef="let element" class="text-center"> {{element.crmNo}} </td>
                 </ng-container>
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="eid">
-                    <th mat-header-cell *matHeaderCellDef> EID </th>
-                    <td mat-cell *matCellDef="let element"> {{element.eidNo}} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> EID </th>
+                    <td mat-cell *matCellDef="let element" class="text-center"> {{element.eidNo}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="mobile">
-                    <th mat-header-cell *matHeaderCellDef> Mobile Number </th>
-                    <td mat-cell *matCellDef="let element"> {{element.mobileNo}} </td>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile Number </th>
+                    <td mat-cell *matCellDef="let element" class="text-center"> {{element.mobileNo}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="sdate">
-                    <th mat-header-cell *matHeaderCellDef> Schedule Date </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Schedule Date </th>
                     <td mat-cell *matCellDef="let element">
                         {{element.callScheduledDate | date: 'MM-dd-yyyy'}} </td>
                 </ng-container>
 
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Patient Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+                <ng-container matColumnDef="adate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Allocated Date </th>
+                    <!--Thanam 07-06-21-->
+                    <td mat-cell *matCellDef="let element"> {{element.teamAllocatedDate | date: 'MM-dd-yyyy'}} </td>
+                    <!--td mat-cell *matCellDef="let element"> 
+                        {{localvalues === element.allocatedTeamName ? element.allocatedDate : element.reAllocatedDate }} 
+                    </td-->
                 </ng-container>
 
-                <ng-container matColumnDef="adate">
-                    <th mat-header-cell *matHeaderCellDef> Allocated Date </th>
-                    <td mat-cell *matCellDef="let element"> {{localvalues === element.allocatedTeamName ? element.allocatedDate : element.reAllocatedDate }} </td>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="view">
