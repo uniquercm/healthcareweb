@@ -106,10 +106,10 @@
         </div>
 
         <div class="row mt-2">
-            <div class="col-2 pt-3">
+            <div class="col-1 pt-3">
                 <mat-radio-group aria-label="Select an option" [(ngModel)]="searchtype">
                     <mat-radio-button value="schedule">Schedule</mat-radio-button>
-                    <mat-radio-button value="allocated" class="ml-4">Allocated</mat-radio-button>
+                    <!-- <mat-radio-button value="allocated" class="ml-4">Allocated</mat-radio-button> -->
                 </mat-radio-group>
             </div>
 
@@ -183,6 +183,11 @@
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Patient Name </th>
                     <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="adate">
+                    <th mat-header-cell *matHeaderCellDef> Allocated Date </th>
+                    <td mat-cell *matCellDef="let element"> {{localvalues === element.allocatedTeamName ? element.allocatedDate : element.reAllocatedDate }} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="view">
