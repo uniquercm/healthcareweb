@@ -479,8 +479,8 @@ export class ListComponent implements OnInit {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethodws('city').subscribe((res) => {
-      this.city = res.details;
+    this.commonService.getmethodws('city').subscribe((datas) => {
+      this.city = datas.details;
     }, err => {
       console.log(err);
     })

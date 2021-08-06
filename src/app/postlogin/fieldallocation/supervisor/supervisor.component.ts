@@ -82,6 +82,19 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         return;
       }
       console.log(this.selectedArea.toString() + ' ' + this.fromdate);
+      //Thanam 06-08-21
+      let url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all' +
+      '&isTeam=false&areaNames=' + this.selectedArea.toString();
+      if (this.fromdate === '') {
+        url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all' +
+        '&isTeam=false&areaNames=' + this.selectedArea.toString()
+      } else {
+        url = 'scheduled?companyId=' + this.localvalues.companyId + '&isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all'
+          + '&fromDate='
+          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate='
+          + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isTeam=false&areaNames=' + this.selectedArea.toString()
+      }
+      /*
       let url = 'scheduled?isFieldAllocation=true&fieldAllocationStatus=all&serviceName=all&serviceStatus=all' +
       '&isTeam=false&areaNames=' + this.selectedArea.toString();
       if (this.fromdate === '') {
@@ -92,7 +105,8 @@ export class SupervisorComponent implements OnInit, OnDestroy {
           + '&fromDate='
           + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate='
           + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&isTeam=false&areaNames=' + this.selectedArea.toString()
-      }
+      }*/
+      //*************************** */
 
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = [];
@@ -391,13 +405,30 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
     }
 
-    this.commonService.getmethod(url).subscribe((data) => {
+    this.commonService.getmethod(url).subscribe((datas) => {
       this.array = [];
-      this.array = data.details;
+      this.array = datas.details;
       this.array.forEach((o: any, i: number) => o.id = i + 1);
 
+      //Thanam 06-08-21 
+      this.array.forEach((element: any) => {
+        element.area = element.patientInformation.area
+        element.cityId = element.patientInformation.cityId
+        element.cityName = element.patientInformation.cityName
+        element.crmNo = element.patientInformation.crmNo
+        element.eidNo = element.patientInformation.eidNo
+        element.mobileNo = element.patientInformation.mobileNo
+        element.requestCrmName = element.patientInformation.requestCrmName
+        element.requestId = element.patientInformation.requestId
+        element.stickerApplication = element.patientInformation.stickerApplication
+        element.stickerRemoval = element.patientInformation.stickerRemoval
+        element.trackerApplication = element.patientInformation.trackerApplication
+        element.trackerRemoval = element.patientInformation.trackerRemoval
+      });
+      //****************************** */
+
       this.farray = this.array;
-      this.dataSource = new MatTableDataSource(this.array);
+      this.dataSource = new MatTableDataSource(datas.details);
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -438,6 +469,23 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i: number) => o.id = i + 1);
+
+      //Thanam 06-08-21 
+      this.array.forEach((element: any) => {
+        element.area = element.patientInformation.area
+        element.cityId = element.patientInformation.cityId
+        element.cityName = element.patientInformation.cityName
+        element.crmNo = element.patientInformation.crmNo
+        element.eidNo = element.patientInformation.eidNo
+        element.mobileNo = element.patientInformation.mobileNo
+        element.requestCrmName = element.patientInformation.requestCrmName
+        element.requestId = element.patientInformation.requestId
+        element.stickerApplication = element.patientInformation.stickerApplication
+        element.stickerRemoval = element.patientInformation.stickerRemoval
+        element.trackerApplication = element.patientInformation.trackerApplication
+        element.trackerRemoval = element.patientInformation.trackerRemoval
+      });
+      //****************************** */
 
       this.farray = this.array;
       this.dataSource = new MatTableDataSource(this.array);
@@ -527,8 +575,8 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethodws('city').subscribe((data) => {
-      this.city = data.details;
+    this.commonService.getmethodws('city').subscribe((datas) => {
+      this.city = datas.details;
     }, err => {
       console.log(err);
     })
