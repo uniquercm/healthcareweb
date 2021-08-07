@@ -14,7 +14,7 @@ import { editvalues, loader } from '../../commonvaribale/commonvalues';
 })
 export class NurseComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'crmno', 'sdate', 'name', 'adate', 'eid', 'mobile', 'view'];
+  displayedColumns: string[] = ['no', 'crmno', 'sdate', 'name', 'adate', 'eid', 'mobile', 'servicename', 'view'];
   dataSource: any = new MatTableDataSource([]);
 
   title = 'DR Call';
