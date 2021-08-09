@@ -21,6 +21,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { ListuserComponent } from '../user/listuser/listuser.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatBadgeModule,
     DemoMaterialModule,
     ChartsModule,
+    MatSortModule,
     AutocompleteLibModule,
     NgSelectModule,
     NgxMaskModule.forRoot(),

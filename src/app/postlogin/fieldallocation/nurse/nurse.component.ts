@@ -14,7 +14,7 @@ import { editvalues, loader } from '../../commonvaribale/commonvalues';
 })
 export class NurseComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'crmno', 'sdate', 'name', 'eid', 'mobile', 'adate', 'view'];
+  displayedColumns: string[] = ['id', 'crmNo', 'requestCrmName', 'callScheduledDate', 'patientName', 'eidNo', 'mobileNo', 'allocatedTeamName', 'view'];
   dataSource: any = new MatTableDataSource([]);
 
   title = 'DR Call';
@@ -29,6 +29,8 @@ export class NurseComponent implements OnInit {
 
   fromdate: any = '';
   todate: any = '';
+
+  teamstatuss = 'notvisited';
 
   constructor(private router: Router, private commonService: CommonService, public datepipe: DatePipe) {
     this.getvalue();
@@ -63,7 +65,6 @@ export class NurseComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.farray);
       return;
     }
-    console.log(Number((event.target as HTMLInputElement).value));
     const result = this.array.filter((s: any) => s.mobileNo.includes(Number((event.target as HTMLInputElement).value)));
     this.dataSource = new MatTableDataSource(result);
   }
@@ -101,68 +102,73 @@ export class NurseComponent implements OnInit {
         });
       }
     } else if (name === 'area') {
-      if (event === 'All') {
-        farray = this.array;
+      if (Array.isArray(event)) {
+        if (event[0] === 'All') {
+          farray = this.array;
 
-        this.dataSource = new MatTableDataSource(farray);
+          this.dataSource = new MatTableDataSource(farray);
 
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
 
-        return;
-      }
+          return;
+        } else {
 
-      let url = '';
-      if (this.fromdate == '') {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
-          + '&teamUserName=' + this.localvalues.userName + '&areaNames=' + this.selectedArea;
-      } else if (this.searchtype !== '') {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
-          + '&teamUserName=' + this.localvalues.userName + '&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-          + '&dateSearchType=' + this.searchtype + '&areaNames=' + this.selectedArea;
-      } else if (this.call !== '') {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call +
-          '&teamUserName=' + this.localvalues.userName + '&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&areaNames=' + this.selectedArea;
-      } else {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
-          '&teamUserName=' + this.localvalues.userName + '&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-          + '&areaNames=' + this.selectedArea;
-      }
+          let url = '';
+          if (this.fromdate == '') {
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+              + '&teamUserName=' + this.localvalues.userName + '&areaNames=' + this.selectedArea;
+          } else if (this.searchtype !== '') {
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+              + '&teamUserName=' + this.localvalues.userName + '&fromDate='
+              + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+              + '&dateSearchType=' + this.searchtype + '&areaNames=' + this.selectedArea;
+          } else if (this.call !== '') {
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call +
+              '&teamUserName=' + this.localvalues.userName + '&fromDate='
+              + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy') + '&areaNames=' + this.selectedArea;
+          } else {
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+              '&teamUserName=' + this.localvalues.userName + '&fromDate='
+              + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+              + '&areaNames=' + this.selectedArea;
+          }
 
-      this.commonService.getmethodws(url).subscribe((data) => {
-        this.array = [];
-        this.array = data.details;
-        this.array.forEach((o: any, i: number) => o.id = i + 1);
+          this.commonService.getmethodws(url).subscribe((data) => {
+            this.array = [];
+            this.array = data.details;
+            this.array.forEach((o: any, i: number) => o.id = i + 1);
 
-        for (let index = 0; index < this.array.length; index++) {
-          const element = this.array[index];
+            for (let index = 0; index < this.array.length; index++) {
+              const element = this.array[index];
 
-          element.area = element.patientInformation.area
-          element.cityId = element.patientInformation.cityId
-          element.cityName = element.patientInformation.cityName
-          element.crmNo = element.patientInformation.crmNo
-          element.eidNo = element.patientInformation.eidNo
-          element.mobileNo = element.patientInformation.mobileNo
-          element.requestId = element.patientInformation.requestId
-          element.stickerApplication = element.patientInformation.stickerApplication
-          element.stickerRemoval = element.patientInformation.stickerRemoval
-          element.trackerApplication = element.patientInformation.trackerApplication
-          element.trackerRemoval = element.patientInformation.trackerRemoval
+              element.area = element.patientInformation.area
+              element.cityId = element.patientInformation.cityId
+              element.cityName = element.patientInformation.cityName
+              element.crmNo = element.patientInformation.crmNo
+              element.eidNo = element.patientInformation.eidNo
+              element.mobileNo = element.patientInformation.mobileNo
+              element.requestId = element.patientInformation.requestId
+              element.stickerApplication = element.patientInformation.stickerApplication
+              element.stickerRemoval = element.patientInformation.stickerRemoval
+              element.trackerApplication = element.patientInformation.trackerApplication
+              element.trackerRemoval = element.patientInformation.trackerRemoval
+            }
+
+            this.farray = this.array;
+            this.dataSource = new MatTableDataSource(this.array);
+
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            loader.loading = false;
+          }, err => {
+            console.log(err);
+            loader.loading = false;
+          })
         }
+      }
 
-        this.farray = this.array;
-        this.dataSource = new MatTableDataSource(this.array);
 
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        loader.loading = false;
-      }, err => {
-        console.log(err);
-        loader.loading = false;
-      })
     }
     else if (name === 'city') {
       if (event === 'all') {
@@ -256,7 +262,7 @@ export class NurseComponent implements OnInit {
     this.selectedArea = '';
     this.fromdate = '';
     this.todate = '';
-    calls.value = '';
+    calls.value = 'notvisited';
     callstatus.value = '';
     service.value = '';
 
@@ -278,7 +284,7 @@ export class NurseComponent implements OnInit {
   }
 
   getvalue() {
-    let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName=' + this.localvalues.userName;
+    let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=notvisited&callStatus=all&teamUserName=' + this.localvalues.userName;
 
     this.commonService.getmethod(url).subscribe((data) => {
       if (data.details.length === 0) {
@@ -427,6 +433,7 @@ export class NurseComponent implements OnInit {
     }
 
     this.commonService.getmethod(url).subscribe((data) => {
+      debugger
       if (data.details.length === 0) {
         this.dataSource = new MatTableDataSource([]);
         alert('No data Found');
@@ -505,6 +512,40 @@ export class NurseComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+  sortDir = 1;
+
+  onSortClick(event: any, name: any) {
+    let target = event.currentTarget,
+      classList = target.classList;
+
+    if (classList.contains('fa-chevron-up')) {
+      classList.remove('fa-chevron-up');
+      classList.add('fa-chevron-down');
+      this.sortDir = -1;
+    } else {
+      classList.add('fa-chevron-up');
+      classList.remove('fa-chevron-down');
+      this.sortDir = 1;
+    }
+    this.sortArr(name);
+  }
+
+  sortArr(colName: any) {
+    this.farray.sort((a, b) => {
+      if (a[colName] === null) {
+        a[colName] = '';
+      }
+      if (b[colName] === null) {
+        b[colName] = '';
+      }
+      a = a[colName].toLowerCase();
+      b = b[colName].toLowerCase();
+
+      return a.localeCompare(b) * this.sortDir;
+    });
+  }
+
 
 }
 
