@@ -222,7 +222,10 @@ export class RegisterComponent implements OnInit {
         "mobileNo": this.form.value.mobileno,
         "modifiedBy": this.localvalues.userId,
         "isUpdate": true,
-        assignedDate: this.form.value.assignedDate
+        //Thanam-08-08-21
+        //assignedDate: this.form.value.assignedDate
+        assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'MM-dd-yyyy')
+        //*********************** */
       }
 
       this.commonService.putmethod('patient', map).subscribe((data) => {
@@ -271,7 +274,10 @@ export class RegisterComponent implements OnInit {
         "createdBy": this.localvalues.userId,
         "isUpdate": false,
         "isReception": false,
-        assignedDate: this.form.value.assignedDate
+        //Thanam-08-08-21
+        //assignedDate: this.form.value.assignedDate
+        assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'MM-dd-yyyy')
+        //*********************** */
       }
 
 
