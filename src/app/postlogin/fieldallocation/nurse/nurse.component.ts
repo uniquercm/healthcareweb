@@ -90,6 +90,7 @@ export class NurseComponent implements OnInit {
   farray: any[] = [];
   selectedArea: any;
   selectarea(name: string, event: any) {
+    loader.loading = true;//Thanam 09-08-21
     let farray: any = [];
     if (name === 'case') {
       if (event.value === 'all') {
@@ -103,23 +104,76 @@ export class NurseComponent implements OnInit {
       }
     } else if (name === 'area') {
       if (Array.isArray(event)) {
+        //Thanam 09-08-21
+        let url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+                  '&teamUserName=' + this.localvalues.userName;
+          if (this.fromdate !== '') {
+            url += '&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+          }
+          if (this.teamstatuss !== '') {
+            url += '&callStatus=' + this.teamstatuss;
+          }else{
+            url += '&callStatus=notvisited';
+          }
+          if (this.searchtype !== '') {
+            url += '&dateSearchType=' + this.searchtype;
+          }else{
+            url += '&dateSearchType=schedule';
+          }
+          if (this.call !== '') {
+            url += '&serviceStatus=' + this.call;
+          }else{
+            url += '&serviceStatus=all';
+          } 
+          if (this.selectedArea !== '') {
+            url += '&areaNames=' + this.selectedArea;
+          }else{
+            url += '&areaNames=all';
+          }
+          //************************** */
         if (event[0] === 'All') {
-          farray = this.array;
+          this.commonService.getmethod(url).subscribe((datas) => {
+            if (datas.details.length === 0) {
+              this.dataSource = new MatTableDataSource([]);
+              alert('No data Found');
+              return;
+            }
+            this.array = [];
+            this.array = datas.details;
+            this.array.forEach((o: any, i: any) => o.id = i + 1);
+            this.array.forEach((elam: any) => {
+              if (elam.emrDone === 'yes') {
+                elam.emrDone = true
+              } else {
+                elam.emrDone = false
+              }
+            });
+      
+            this.farray = this.array;
+            this.dataSource = new MatTableDataSource(this.array);
+      
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            return;
+          }, err => {
+            console.log(err);
+          })
+          /*farray = this.array;
 
           this.dataSource = new MatTableDataSource(farray);
 
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
 
-          return;
-        } else {
-
-          let url = '';
+          return;*/
+        } else {//Thanam 09-08-21
+          /*let url = '';
           if (this.fromdate == '') {
-            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team'
               + '&teamUserName=' + this.localvalues.userName + '&areaNames=' + this.selectedArea;
           } else if (this.searchtype !== '') {
-            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team' +
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team'
               + '&teamUserName=' + this.localvalues.userName + '&fromDate='
               + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
               + '&dateSearchType=' + this.searchtype + '&areaNames=' + this.selectedArea;
@@ -132,7 +186,8 @@ export class NurseComponent implements OnInit {
               '&teamUserName=' + this.localvalues.userName + '&fromDate='
               + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
               + '&areaNames=' + this.selectedArea;
-          }
+          }*/
+          //************************ */
 
           this.commonService.getmethodws(url).subscribe((data) => {
             this.array = [];
@@ -167,8 +222,6 @@ export class NurseComponent implements OnInit {
           })
         }
       }
-
-
     }
     else if (name === 'city') {
       if (event === 'all') {
@@ -209,6 +262,7 @@ export class NurseComponent implements OnInit {
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    loader.loading = false;//Thanam 09-08-21
   }
 
   area: any = [];
@@ -324,6 +378,7 @@ export class NurseComponent implements OnInit {
   services: any = '';
 
   statuschange(name: string, value: any) {
+    loader.loading = true;//Thanam 09-08-21
     let url = '';
 
     //Thanam 09-08-21
@@ -379,7 +434,7 @@ export class NurseComponent implements OnInit {
       }
     }*/
     if (name === 'calls') {
-      this.call = value.value;
+      //this.call = value.value;
       if (this.services === '') {
         if (this.fromdate === '') {
           url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value +
@@ -474,6 +529,7 @@ export class NurseComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+    loader.loading = false;//Thanam 09-08-21
 
   }
 
@@ -531,6 +587,7 @@ export class NurseComponent implements OnInit {
   }
 
   save(element: any) {
+    loader.loading = true;//Thanam 09-08-21
     let map = {
       "callId": editvalues.drcallid,
       "scheduledId": editvalues.scheduleid,
@@ -549,6 +606,7 @@ export class NurseComponent implements OnInit {
     }, err => {
       console.log(err);
     })
+    loader.loading = false;//Thanam 09-08-21
 
   }
 
@@ -574,6 +632,7 @@ export class NurseComponent implements OnInit {
   sortDir = 1;
 
   onSortClick(event: any, name: any) {
+    loader.loading = true;//Thanam 09-08-21
     let target = event.currentTarget,
       classList = target.classList;
 
@@ -587,6 +646,7 @@ export class NurseComponent implements OnInit {
       this.sortDir = 1;
     }
     this.sortArr(name);
+    loader.loading = false;//Thanam 09-08-21
   }
 
   sortArr(colName: any) {

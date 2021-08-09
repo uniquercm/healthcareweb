@@ -258,6 +258,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   }
 
   export() {
+    loader.loading = true;//Thanam 09-08-21
     for (let index = 0; index < this.dataSource.filteredData.length; index++) {
       let element: any = this.dataSource.filteredData[index];
 
@@ -314,9 +315,11 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
     XLSX.writeFile(wb, 'patient.xlsx');
+    loader.loading = false;//Thanam 09-08-21
   }
 
   getPatent(value: any) {
+    loader.loading = true;//Thanam 09-08-21
     if (value === 'submit') {
       let url = '';
       if (this.fromdate === '') {
@@ -395,6 +398,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         console.log(err);
       })
     }
+    loader.loading = false;//Thanam 09-08-21
   }
 
   selectf(event: any) {
@@ -589,6 +593,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   }
 
   save() {
+    loader.loading = true;//Thanam 09-08-21
     if (this.selectall) {
       this.array.forEach((element: any) => {
         let map = {
@@ -636,7 +641,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     })
-
+    loader.loading = false;//Thanam 09-08-21
   }
 
   saveind() {
@@ -644,6 +649,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       alert('Please select the team');
       return;
     }
+    loader.loading = true;//Thanam 09-08-21
 
     let map = {
       fieldAllocationDetailsList: this.finalarray
@@ -658,6 +664,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     })
+    loader.loading = false;//Thanam 09-08-21
   }
 
 
