@@ -63,6 +63,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
   selectedArea: any;
   select(name: string, event: any) {
+    loader.loading = true;//Thanam 09-08-21
     let farray: any = [];
     if (name === 'case') {
       this.array.forEach((element: any) => {
@@ -151,6 +152,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    loader.loading = false;//Thanam 09-08-21
   }
 
   getUser() {
@@ -396,6 +398,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   }
 
   selectf(event: any) {
+    loader.loading = true;//Thanam 09-08-21
     let url = '';
     if (this.fromdate === '') {
       url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&fieldAllocationStatus=' + event.value;
@@ -432,8 +435,10 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      loader.loading = false;//Thanam 09-08-21
     }, err => {
       console.log(err);
+      loader.loading = false;//Thanam 09-08-21
     })
 
   }
@@ -455,6 +460,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   }
 
   selectstaus(event: any) {
+    loader.loading = true;//Thanam 09-08-21
     let url = '';
     if (this.fromdate === '') {
       url = 'scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&isFieldAllocation=true&serviceName=' + event.value
@@ -495,7 +501,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     }, err => {
       console.log(err);
     })
-
+    loader.loading = false;//Thanam 09-08-21
   }
 
   change(checked: any, element: any) {
