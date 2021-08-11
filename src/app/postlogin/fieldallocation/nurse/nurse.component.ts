@@ -535,14 +535,26 @@ export class NurseComponent implements OnInit {
 
   getPatent() {
     let url = '';
+    //Thanam 09-08-21
     if (this.fromdate !== '') {
+      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus='
+        + this.teamstatuss + '&teamUserName=' + this.localvalues.userName + '&fromDate='
+        + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+        + '&serviceStatus=all' + '&dateSearchType=' + this.searchtype;
+    } else {
+      url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus='
+        + this.teamstatuss + '&teamUserName='
+        + this.localvalues.userName + '&serviceStatus=all'
+    }
+    /*if (this.fromdate !== '') {
       url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName=' + this.localvalues.userName + '&fromDate='
         + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
         + '&serviceStatus=all' + '&dateSearchType=' + this.searchtype;
     } else {
       url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=all&teamUserName='
         + this.localvalues.userName + '&serviceStatus=all'
-    }
+    }*/
+    //******************************** */
 
     this.commonService.getmethod(url).subscribe((data) => {
       //Thanam 09-08-21
@@ -666,4 +678,3 @@ export class NurseComponent implements OnInit {
 
 
 }
-
