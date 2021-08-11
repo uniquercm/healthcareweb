@@ -196,11 +196,21 @@ export class ListComponent implements OnInit {
         loader.loading = false;
       })
     } else if (name === 'city') {
+      //Thanam 11-08-21
+      if (event === 'all') {
+        this.array = this.farray;
+        this.dataSource = new MatTableDataSource(this.array);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        loader.loading = false;//Thanam 11-08-21
+        return;
+      } else {//********************* */
       this.array.forEach((element: any) => {
         if (element.cityId === Number(event)) {
           farray.push(element);
         }
-      });
+      });}
     } else if (name === 'status') {
       let url = '';
       if (this.fromdate === '') {

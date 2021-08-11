@@ -230,10 +230,14 @@ export class NurseComponent implements OnInit {
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        loader.loading = false;//Thanam 11-08-21
         return;
       } else {
+        //debugger
         this.array.forEach((element: any) => {
-          if (element.cityId === (event.value)) {
+          //Thanam 11-08-21
+          //if (element.cityId === (event.value)) {
+          if (element.cityId === Number(event)) {//*************** */
             farray.push(element);
           }
         });
@@ -298,8 +302,8 @@ export class NurseComponent implements OnInit {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethod('city').subscribe((datas) => {
-      this.city = datas.details;
+    this.commonService.getmethod('city').subscribe((datac) => {
+      this.city = datac.details;
     }, err => {
       console.log(err);
     })
@@ -517,7 +521,7 @@ export class NurseComponent implements OnInit {
     if (this.searchtype !== '')
       url += '&dateSearchType=' + this.searchtype;
 
-      if (this.teamstatuss !== '')
+    if (this.teamstatuss !== '')
         url += '&callStatus=' + this.teamstatuss;
     //******************************* */
 
