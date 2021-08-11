@@ -430,12 +430,12 @@ export class NurseComponent implements OnInit {
             + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
             + '&dateSearchType=' + this.searchtype;
         }
-
       }
     }*/
     if (name === 'calls') {
-      //this.call = value.value;
-      if (this.services === '') {
+      this.teamstatuss = value.value;
+      //Thanam 12-08-21
+      /*if (this.services === '') {
         if (this.fromdate === '') {
           url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&callStatus=' + value.value +
             '&teamUserName=' + this.localvalues.userName
@@ -456,11 +456,12 @@ export class NurseComponent implements OnInit {
             + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
             + '&dateSearchType=' + this.searchtype;
         }
-
-      }
+      }*/
+      //****************** */
     }else if (name === 'call') {
       this.call = value.value;
-      if (this.services === '') {
+      //Thanam 12-08-21
+      /*if (this.services === '') {
         if (this.fromdate === '') {
           url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call +
             '&teamUserName=' + this.localvalues.userName
@@ -481,23 +482,44 @@ export class NurseComponent implements OnInit {
             + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
             + '&dateSearchType=' + this.searchtype;
         }
-
-      }
+      }*/
     }//********************************* */
      else {
       this.services = value.value;
-      if (this.call === '') {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&teamUserName=' + this.localvalues.userName
-          + '&serviceName=' + this.services + '&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-          + '&dateSearchType=' + this.searchtype;
+      //Thanam 12-08-21
+      /*if (this.call === '') {
+          url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&teamUserName=' + this.localvalues.userName
+            + '&serviceName=' + this.services + '&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+            + '&dateSearchType=' + this.searchtype;
       } else {
-        url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call + '&teamUserName=' + this.localvalues.userName
-          + '&serviceName=' + this.services + '&fromDate='
-          + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
-          + '&dateSearchType=' + this.searchtype;
-      }
+            url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId + '&callName=team&serviceStatus=' + this.call + '&teamUserName=' + this.localvalues.userName
+            + '&serviceName=' + this.services + '&fromDate='
+            + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy')
+            + '&dateSearchType=' + this.searchtype;
+      }*/
+      //*********************** */
     }
+
+    //Thanam 12-08-21
+    url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId 
+    + '&callName=team&teamUserName=' + this.localvalues.userName;
+    if (this.call !== '')
+      url += '&serviceStatus=' + this.call;
+
+    if (this.fromdate !== '')
+      url += '&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') 
+      + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+
+    if (this.services !== '')
+      url += '&serviceName=' + this.services;
+
+    if (this.searchtype !== '')
+      url += '&dateSearchType=' + this.searchtype;
+
+      if (this.teamstatuss !== '')
+        url += '&callStatus=' + this.teamstatuss;
+    //******************************* */
 
     this.commonService.getmethod(url).subscribe((data) => {
       if (data.details.length === 0) {
