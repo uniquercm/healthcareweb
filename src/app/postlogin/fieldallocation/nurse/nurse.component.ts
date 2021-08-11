@@ -237,7 +237,7 @@ export class NurseComponent implements OnInit {
         this.array.forEach((element: any) => {
           //Thanam 11-08-21
           //if (element.cityId === (event.value)) {
-          if (element.cityId === Number(event)) {//*************** */
+          if (element.cityId === (event)) {//*************** */
             farray.push(element);
           }
         });
