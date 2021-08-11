@@ -32,6 +32,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
   disablevalue = true;
   hqpdisabled = false;
 
+  isEditable = false;
+
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
   constructor(private _formBuilder: FormBuilder, private commonService: CommonService, private router: Router,
@@ -42,7 +44,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
     });
 
     this.firstFormGroup = this._formBuilder.group({
-      conducteddate: ['', Validators.required],
+      conducteddate: [new Date(), Validators.required],
       result: ['', Validators.required],
       vaccinestatus: ['', Validators.required],
       dischargedate: ['', Validators.nullValidator],

@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
       sex: ['', Validators.nullValidator],
       dob: ['', Validators.nullValidator],
       nationality: ['', Validators.required],
-      assignedDate: ['', Validators.nullValidator]
+      assignedDate: [new Date(), Validators.nullValidator]
     });
 
     if (editvalues.headerbuttclick) {

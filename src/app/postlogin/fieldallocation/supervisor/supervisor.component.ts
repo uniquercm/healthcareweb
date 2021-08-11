@@ -25,7 +25,8 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     'nc3day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
 
   array: any = [];
-  displayedColumns: string[] = ['item', 'select', 'crmtype', 'crmno', 'name', 'eid', 'mobile', 'area', 'adultsCount', 'childrensCount', 'schedule', 'drcall', 'print'];
+  displayedColumns: string[] = ['id', 'select', 'requestCrmName', 'crmNo', 'patientName', 'eidNo', 'mobileNo', 'area',
+   'adultsCount', 'childrensCount', 'allocatedTeamName', 'reAllocatedTeamName', 'print'];
   dataSource: any = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
@@ -117,6 +118,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         for (let index = 0; index < this.array.length; index++) {
           const element = this.array[index];
 
+          element.id = index + 1;
           element.area = element.patientInformation.area
           element.cityId = element.patientInformation.cityId
           element.cityName = element.patientInformation.cityName
@@ -336,6 +338,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         for (let index = 0; index < this.array.length; index++) {
           const element = this.array[index];
 
+          element.id = index + 1;
           element.area = element.patientInformation.area
           element.cityId = element.patientInformation.cityId
           element.cityName = element.patientInformation.cityName
@@ -347,6 +350,11 @@ export class SupervisorComponent implements OnInit, OnDestroy {
           element.stickerRemoval = element.patientInformation.stickerRemoval
           element.trackerApplication = element.patientInformation.trackerApplication
           element.trackerRemoval = element.patientInformation.trackerRemoval
+          element.requestCrmName = element.patientInformation.requestCrmName;
+          element.eidNo = element.patientInformation.eidNo;
+          element.mobileNo = element.patientInformation.mobileNo;
+          element.adultsCount = element.patientInformation.adultsCount;
+          element.childrensCount = element.patientInformation.childrensCount;
         }
 
         this.farray = this.array;
@@ -370,21 +378,28 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       this.commonService.getmethodws(url).subscribe((data) => {
         this.array = data.details;
         this.array.forEach((o: any, i: number) => o.id = i + 1);
+       
+        for (let index = 0; index < this.array.length; index++) {
+          const element = this.array[index];
 
-        this.array.forEach((element: any) => {
+          element.id = index + 1;
           element.area = element.patientInformation.area
           element.cityId = element.patientInformation.cityId
           element.cityName = element.patientInformation.cityName
           element.crmNo = element.patientInformation.crmNo
           element.eidNo = element.patientInformation.eidNo
           element.mobileNo = element.patientInformation.mobileNo
-          element.requestCrmName = element.patientInformation.requestCrmName
           element.requestId = element.patientInformation.requestId
           element.stickerApplication = element.patientInformation.stickerApplication
           element.stickerRemoval = element.patientInformation.stickerRemoval
           element.trackerApplication = element.patientInformation.trackerApplication
           element.trackerRemoval = element.patientInformation.trackerRemoval
-        });
+          element.requestCrmName = element.patientInformation.requestCrmName;
+          element.eidNo = element.patientInformation.eidNo;
+          element.mobileNo = element.patientInformation.mobileNo;
+          element.adultsCount = element.patientInformation.adultsCount;
+          element.childrensCount = element.patientInformation.childrensCount;
+        }
 
         this.farray = this.array;
         this.dataSource = new MatTableDataSource(this.array);
@@ -417,22 +432,27 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       this.array = datas.details;
       this.array.forEach((o: any, i: number) => o.id = i + 1);
 
-      //Thanam 06-08-21 
-      this.array.forEach((element: any) => {
+      for (let index = 0; index < this.array.length; index++) {
+        const element = this.array[index];
+
+        element.id = index + 1;
         element.area = element.patientInformation.area
         element.cityId = element.patientInformation.cityId
         element.cityName = element.patientInformation.cityName
         element.crmNo = element.patientInformation.crmNo
         element.eidNo = element.patientInformation.eidNo
         element.mobileNo = element.patientInformation.mobileNo
-        element.requestCrmName = element.patientInformation.requestCrmName
         element.requestId = element.patientInformation.requestId
         element.stickerApplication = element.patientInformation.stickerApplication
         element.stickerRemoval = element.patientInformation.stickerRemoval
         element.trackerApplication = element.patientInformation.trackerApplication
         element.trackerRemoval = element.patientInformation.trackerRemoval
-      });
-      //****************************** */
+        element.requestCrmName = element.patientInformation.requestCrmName;
+        element.eidNo = element.patientInformation.eidNo;
+        element.mobileNo = element.patientInformation.mobileNo;
+        element.adultsCount = element.patientInformation.adultsCount;
+        element.childrensCount = element.patientInformation.childrensCount;
+      }
 
       this.farray = this.array;
       this.dataSource = new MatTableDataSource(datas.details);
@@ -480,22 +500,27 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       this.array = data.details;
       this.array.forEach((o: any, i: number) => o.id = i + 1);
 
-      //Thanam 06-08-21 
-      this.array.forEach((element: any) => {
+      for (let index = 0; index < this.array.length; index++) {
+        const element = this.array[index];
+
+        element.id = index + 1;
         element.area = element.patientInformation.area
         element.cityId = element.patientInformation.cityId
         element.cityName = element.patientInformation.cityName
         element.crmNo = element.patientInformation.crmNo
         element.eidNo = element.patientInformation.eidNo
         element.mobileNo = element.patientInformation.mobileNo
-        element.requestCrmName = element.patientInformation.requestCrmName
         element.requestId = element.patientInformation.requestId
         element.stickerApplication = element.patientInformation.stickerApplication
         element.stickerRemoval = element.patientInformation.stickerRemoval
         element.trackerApplication = element.patientInformation.trackerApplication
         element.trackerRemoval = element.patientInformation.trackerRemoval
-      });
-      //****************************** */
+        element.requestCrmName = element.patientInformation.requestCrmName;
+        element.eidNo = element.patientInformation.eidNo;
+        element.mobileNo = element.patientInformation.mobileNo;
+        element.adultsCount = element.patientInformation.adultsCount;
+        element.childrensCount = element.patientInformation.childrensCount;
+      }
 
       this.farray = this.array;
       this.dataSource = new MatTableDataSource(this.array);
