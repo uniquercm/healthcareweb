@@ -31,6 +31,10 @@ export class NurseComponent implements OnInit {
   todate: any = '';
 
   teamstatuss = 'notvisited';
+  //Thanam 12-08-21
+  callstatus = '';
+  service = '';
+  //*************** */
 
   constructor(private router: Router, private commonService: CommonService, public datepipe: DatePipe) {
     this.getvalue();
@@ -320,6 +324,12 @@ export class NurseComponent implements OnInit {
     this.selectedArea = '';
     this.fromdate = '';
     this.todate = '';
+    //Thanam 12-08-21
+    this.callstatus = '';
+    this.services = '';
+    this.call = '';
+    this.teamstatuss = 'notvisited';
+    //*************** */
     calls.value = 'notvisited';
     callstatus.value = '';
     service.value = '';
@@ -337,6 +347,12 @@ export class NurseComponent implements OnInit {
     region.value = '';
     callstatus.value = '';
     service.value = '';
+    //Thanam 12-08-21
+    this.callstatus = '';
+    this.services = '';
+    this.call = '';
+    this.teamstatuss = 'notvisited';
+    //*************** */
     calls.value = 'notvisited';
     this.selectedArea = '';
   }
@@ -510,6 +526,8 @@ export class NurseComponent implements OnInit {
     + '&callName=team&teamUserName=' + this.localvalues.userName;
     if (this.call !== '')
       url += '&serviceStatus=' + this.call;
+    else
+      url += '&serviceStatus=all';
 
     if (this.fromdate !== '')
       url += '&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') 
@@ -517,12 +535,18 @@ export class NurseComponent implements OnInit {
 
     if (this.services !== '')
       url += '&serviceName=' + this.services;
+      else
+        url += '&serviceName=all';
 
     if (this.searchtype !== '')
       url += '&dateSearchType=' + this.searchtype;
+    else
+      url += '&dateSearchType=schedule';
 
     if (this.teamstatuss !== '')
-        url += '&callStatus=' + this.teamstatuss;
+      url += '&callStatus=' + this.teamstatuss;
+    else
+      url += '&callStatus=notvisited';
     //******************************* */
 
     this.commonService.getmethod(url).subscribe((data) => {
