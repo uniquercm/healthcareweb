@@ -62,7 +62,7 @@
             <div class="col-3" style="width: 9%;">
                 <mat-form-field style="width: 100%;">
                     <mat-label>Service Name</mat-label>
-                    <mat-select #service (selectionChange)="statuschange('service', $event)">
+                    <mat-select #service (selectionChange)="statuschange('service', $event)" [(ngModel)]="servicename" >
                         <mat-option value="all">All</mat-option>
                         <mat-option value="sticker">Sticker</mat-option>
                         <mat-option value="tracker">Tracker</mat-option>
@@ -78,7 +78,7 @@
             <div class="col-3" style="width: 10%;">
                 <mat-form-field style="width: 100%;">
                     <mat-label>Service Status</mat-label>
-                    <mat-select (selectionChange)="statuschange('call', $event)" #callstatus>
+                    <mat-select (selectionChange)="statuschange('call', $event)" [(ngModel)]="servicestatuss" #callstatus>
                         <mat-option value="all">All</mat-option>
                         <mat-option value="applied">Applied</mat-option>
                         <mat-option value="removed">Removed</mat-option>

@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CommonService } from 'src/app/service/common.service';
-import { editvalues, loader } from '../../commonvaribale/commonvalues';
+import { editvalues, loader, teamfilter } from '../../commonvaribale/commonvalues';
 
 @Component({
   selector: 'app-nurse',
@@ -31,12 +31,15 @@ export class NurseComponent implements OnInit {
   todate: any = '';
 
   teamstatuss = 'notvisited';
+  servicestatuss = '';
+  servicename = '';
   //Thanam 12-08-21
   callstatus = '';
   service = '';
   //*************** */
 
   constructor(private router: Router, private commonService: CommonService, public datepipe: DatePipe) {
+    loader.loading = true;
     this.getvalue();
     this.getreq();
     this.getarea();
@@ -44,6 +47,15 @@ export class NurseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.call = teamfilter.call
+    this.callstatus = teamfilter.callstatus
+    this.fromdate = teamfilter.fromdate
+    this.selectedArea = teamfilter.selectedArea
+    this.services = teamfilter.services
+    this.teamstatuss = teamfilter.teamstatuss
+    this.todate = teamfilter.todate;
+    this.statuschange('back', '');
+    loader.loading = false;/**/
   }
 
 
@@ -504,6 +516,8 @@ export class NurseComponent implements OnInit {
         }
       }*/
     }//********************************* */
+    else if (name === 'back') {
+    }
      else {
       this.services = value.value;
       //Thanam 12-08-21
@@ -524,29 +538,35 @@ export class NurseComponent implements OnInit {
     //Thanam 12-08-21
     url = 'doctor-nurse-team-call?companyId=' + this.localvalues.companyId 
     + '&callName=team&teamUserName=' + this.localvalues.userName;
-    if (this.call !== '')
-      url += '&serviceStatus=' + this.call;
-    else
-      url += '&serviceStatus=all';
 
     if (this.fromdate !== '')
       url += '&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') 
       + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
 
-    if (this.services !== '')
-      url += '&serviceName=' + this.services;
-      else
-        url += '&serviceName=all';
+    debugger
+    if (this.teamstatuss !== '' && this.teamstatuss !== 'all')
+      url += '&callStatus=' + this.teamstatuss;
+    else if(this.teamstatuss !== 'all')
+      url += '&callStatus=notvisited';
+    else
+      url += '&callStatus=all';
+
+    if (this.call !== '' && this.call !== 'all')
+      url += '&serviceStatus=' + this.call;
+    else
+      url += '&serviceStatus=all';
+    this.servicestatuss = this.call;
+
+    if (this.services !== '' && this.services !== 'all')
+    url += '&serviceName=' + this.services;
+    else
+      url += '&serviceName=all';
+    this.servicename = this.services;
 
     if (this.searchtype !== '')
       url += '&dateSearchType=' + this.searchtype;
     else
       url += '&dateSearchType=schedule';
-
-    if (this.teamstatuss !== '')
-      url += '&callStatus=' + this.teamstatuss;
-    else
-      url += '&callStatus=notvisited';
     //******************************* */
 
     this.commonService.getmethod(url).subscribe((data) => {
@@ -669,12 +689,18 @@ export class NurseComponent implements OnInit {
       console.log(err);
     })
     loader.loading = false;//Thanam 09-08-21
-
   }
 
   click(element: any) {
     editvalues.patientid = element.patientId
     editvalues.nurse = element;
+    teamfilter.call = this.call
+    teamfilter.callstatus = this.callstatus
+    teamfilter.fromdate = this.fromdate
+    teamfilter.selectedArea = this.selectedArea
+    teamfilter.services = this.services
+    teamfilter.teamstatuss = this.teamstatuss
+    teamfilter.todate = this.todate;
   }
 
   select(event: any) {
