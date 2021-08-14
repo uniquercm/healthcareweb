@@ -47,7 +47,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   area: any[] = [];
 
   constructor(private commonService: CommonService, private datepipe: DatePipe) {
-    loader.loading = true;
+    loader.loading = true; 
     this.getUser();
     this.getreq();
     this.getarea();
@@ -330,8 +330,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     loader.loading = false;//Thanam 09-08-21
   }
 
-  getPatent(value: any) {
-    loader.loading = true;//Thanam 09-08-21
+  getPatent(value: any) { 
     if (value === 'submit') {
       let url = '';
       if (this.fromdate === '') {
@@ -422,8 +421,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         loader.loading = false;
         console.log(err);
       })
-    }
-    loader.loading = false;//Thanam 09-08-21
+    } 
   }
 
   selectf(event: any) {
