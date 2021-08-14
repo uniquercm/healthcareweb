@@ -331,6 +331,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
   }
 
   getPatent(value: any) { 
+    loader.loading = true;
     if (value === 'submit') {
       let url = '';
       if (this.fromdate === '') {
@@ -503,7 +504,7 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     }
 
 
-    this.commonService.getmethod(url).subscribe((data) => {
+    this.commonService.getmethodws(url).subscribe((data) => {
       this.array = [];
       this.array = data.details;
       this.array.forEach((o: any, i: number) => o.id = i + 1);
@@ -535,10 +536,12 @@ export class SupervisorComponent implements OnInit, OnDestroy {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      loader.loading = false; 
     }, err => {
+      loader.loading = false; 
       console.log(err);
     })
-    loader.loading = false;//Thanam 09-08-21
+   
   }
 
   change(checked: any, element: any) {
