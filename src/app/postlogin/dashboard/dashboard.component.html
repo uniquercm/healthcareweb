@@ -313,7 +313,7 @@
             </div>
         </mat-tab>
         <mat-tab label="Team Details">
-            <div class="row m-4">
+            <div class="row mt-4 mb-4">
                 <div class="col-3 mb-3 mr-2" *ngFor="let value of teamStatusDetailsList">
                     <mat-card class="hover">
                         <h2 class="text-center">{{value.teamName}}</h2>
@@ -329,6 +329,19 @@
                                 <td class="text-center p-3">{{value.callStatusVisitedCount}}</td>
                                 <td class="text-center p-3">{{value.callStatusPendingCount}}</td>
                             </tr>
+
+                            <tr>
+                                <th class="text-center">Visited Count</th>
+                                <th class="text-center">Allocated Count</th>
+                                <th class="text-center">Team UserName</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center p-3">{{value.callStatusVisitedCount}}</td>
+                                <td class="text-center p-3">{{value.previousAutomaticAllocatedCount}}</td>
+                                <td class="text-center p-3">{{value.teamUserName}}</td>
+                            </tr>
+
+
                         </table>
                     </mat-card>
                 </div>

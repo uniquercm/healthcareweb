@@ -72,7 +72,7 @@ export class ListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.farray);
       return;
     }
-    console.log(Number((event.target as HTMLInputElement).value));
+    // console.log(Number((event.target as HTMLInputElement).value));
     const result = this.array.filter((s: any) => s.mobileNo.includes(Number((event.target as HTMLInputElement).value)));
     this.dataSource = new MatTableDataSource(result);
   }
@@ -155,8 +155,9 @@ export class ListComponent implements OnInit {
       //     farray.push(element);
       //   }
       // });
-      console.log(this.selectedArea.toString())
+      // console.log(this.selectedArea.toString())
 
+      loader.loading = true;
       let url = '';
       if (this.fromdate === '') {
         url = 'patient?companyId=' + this.companyid
@@ -175,6 +176,7 @@ export class ListComponent implements OnInit {
         for (let index = 0; index < this.array.length; index++) {
           const element: any = this.array[index];
 
+          element.id = index + 1; 
           if (element.recptionCallStatus === undefined) {
             element.recptionCallStatus = ''
           }
@@ -206,12 +208,14 @@ export class ListComponent implements OnInit {
         loader.loading = false;//Thanam 11-08-21
         return;
       } else {//********************* */
-      this.array.forEach((element: any) => {
-        if (element.cityId === Number(event)) {
-          farray.push(element);
-        }
-      });}
+        this.array.forEach((element: any) => {
+          if (element.cityId === Number(event)) {
+            farray.push(element);
+          }
+        });
+      }
     } else if (name === 'status') {
+      loader.loading = true;
       let url = '';
       if (this.fromdate === '') {
         url = 'patient?companyId=' + this.companyid
@@ -229,6 +233,7 @@ export class ListComponent implements OnInit {
         for (let index = 0; index < this.array.length; index++) {
           const element: any = this.array[index];
 
+          element.id = index + 1; 
           if (element.recptionCallStatus === undefined) {
             element.recptionCallStatus = ''
           }
@@ -319,12 +324,14 @@ export class ListComponent implements OnInit {
     eid.value = '';
     crmno.value = '';
     region.value = '';
-    statuss.value = ''; 
+    statuss.value = '';
 
     this.selectedArea = [];
   }
 
   getstatus(statuss: any) {
+    loader.loading = true;
+
     let url = 'patient?companyId' + this.companyid + '&gMapLinkSatus=' + statuss.value
 
     this.commonService.getmethod(url).subscribe((data) => {
@@ -334,6 +341,7 @@ export class ListComponent implements OnInit {
       for (let index = 0; index < this.array.length; index++) {
         const element: any = this.array[index];
 
+        element.id = index + 1; 
         if (element.recptionCallStatus === undefined) {
           element.recptionCallStatus = ''
         }
@@ -349,7 +357,9 @@ export class ListComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      loader.loading = false;
     }, err => {
+      loader.loading = false;
       console.log(err);
     })
   }
@@ -370,6 +380,7 @@ export class ListComponent implements OnInit {
   }
 
   getPatent(value: any) {
+    loader.loading = true;
     let url = '';//submit
     if (value = 'inital') {
       //Thanam
@@ -403,6 +414,7 @@ export class ListComponent implements OnInit {
       for (let index = 0; index < this.array.length; index++) {
         const element: any = this.array[index];
 
+        element.id = index + 1; 
         if (element.recptionCallStatus === undefined) {
           element.recptionCallStatus = ''
         }
@@ -428,31 +440,37 @@ export class ListComponent implements OnInit {
   farray: any = [];
 
   export() {
-    for (let index = 0; index < this.dataSource.filteredData.length; index++) {
-      let element: any = this.dataSource.filteredData[index];
+    loader.loading = true;
+    setTimeout(() => {
+      for (let index = 0; index < this.dataSource.filteredData.length; index++) {
+        let element: any = this.dataSource.filteredData[index];
 
-      delete element['patientId'];
-      delete element['companyId'];
-      delete element['requestId'];
-      delete element['cityName'];
-      delete element['nationalityId'];
-      delete element['drCallId'];
-      delete element['scheduledId'];
-      delete element['createdBy'];
-      delete element['cityId'];
-      delete element['id'];
-      if (element.modifiedBy === undefined) { } else {
-        delete element['modifiedBy'];
+        delete element['patientId'];
+        delete element['companyId'];
+        delete element['requestId'];
+        delete element['cityName'];
+        delete element['nationalityId'];
+        delete element['drCallId'];
+        delete element['scheduledId'];
+        delete element['createdBy'];
+        delete element['cityId'];
+        delete element['id'];
+        if (element.modifiedBy === undefined) { } else {
+          delete element['modifiedBy'];
+        }
+
       }
 
-    }
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      /* save to file */
+      XLSX.writeFile(wb, 'patient.xlsx');
 
-    /* save to file */
-    XLSX.writeFile(wb, 'patient.xlsx');
+      loader.loading = false;
+    }, 1000);
+
 
   }
 

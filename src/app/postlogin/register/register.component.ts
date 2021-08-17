@@ -280,7 +280,6 @@ export class RegisterComponent implements OnInit {
         //*********************** */
       }
 
-
       this.commonService.postmethod('patient', map).subscribe((data) => {
         alert('Saved Successfully');
         this.form.reset();
@@ -291,11 +290,12 @@ export class RegisterComponent implements OnInit {
 
         localStorage.setItem('patientedit', JSON.stringify(editvalues));
 
-        if (this.localvalues.userType === 6) {
-          this.router.navigateByUrl('/apps/reception');
-        } else {
-          this.router.navigateByUrl('/apps/schedule');
-        }
+        // if (this.localvalues.userType === 6) {
+        //   this.router.navigateByUrl('/apps/reception');
+        // } else {
+        //   this.router.navigateByUrl('/apps/schedule');
+        // }
+        this.router.navigateByUrl('/apps/schedule');
       }, err => {
         console.log(err);
       })

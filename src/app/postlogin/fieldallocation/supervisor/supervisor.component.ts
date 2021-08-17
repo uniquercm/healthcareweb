@@ -330,6 +330,9 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     loader.loading = false;//Thanam 09-08-21
   }
 
+    
+
+
   getPatent(value: any) { 
     loader.loading = true;
     if (value === 'submit') {
