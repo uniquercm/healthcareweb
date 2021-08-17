@@ -703,7 +703,6 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     loader.loading = false;//Thanam 09-08-21
   }
 
-
   ngOnDestroy() {
     editvalues.drcallid = 0
     editvalues.patientid = 0
