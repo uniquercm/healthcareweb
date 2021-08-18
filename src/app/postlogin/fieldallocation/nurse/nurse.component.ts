@@ -543,7 +543,7 @@ export class NurseComponent implements OnInit {
       url += '&fromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy') 
       + '&toDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
 
-    debugger
+    //debugger
     if (this.teamstatuss !== '' && this.teamstatuss !== 'all')
       url += '&callStatus=' + this.teamstatuss;
     else if(this.teamstatuss !== 'all')
