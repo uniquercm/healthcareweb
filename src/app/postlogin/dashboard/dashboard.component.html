@@ -318,7 +318,36 @@
                     <mat-card class="hover">
                         <h2 class="text-center">{{value.teamName}}</h2>
 
+                        <!--Thanam 18-08-21-->
                         <table style="width: 100%;">
+                            <tr>
+                                <th class="text-center">Scheduled (Automatic)</th>
+                                <th class="text-center"></th>
+                                <th class="text-center">Allocated (Manual)</th>
+                                <th class="text-center"></th>
+                                <th class="text-center">Not Visited</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center p-3">{{value.previousAutomaticAllocatedCount}}</td>
+                                <td class="text-center p-3"></td>
+                                <td class="text-center p-3">{{value.allocatedCount}}</td>
+                                <td class="text-center p-3"></td>
+                                <td class="text-center p-3">{{value.callStatusNotVisitedCount}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-center"></th>
+                                <th class="text-center">Visited</th>
+                                <th class="text-center"></th>
+                                <th class="text-center">Pending</th>
+                            </tr>
+                            <tr>
+                                <td class="text-center p-3"></td>
+                                <td class="text-center p-3">{{value.callStatusVisitedCount}}</td>
+                                <td class="text-center p-3"></td>
+                                <td class="text-center p-3">{{value.callStatusPendingCount}}</td>
+                            </tr>
+                        </table>
+                        <!--table style="width: 100%;">
                             <tr>
                                 <th class="text-center">Allocated Count</th>
                                 <th class="text-center">Visited</th>
@@ -340,9 +369,8 @@
                                 <td class="text-center p-3">{{value.previousAutomaticAllocatedCount}}</td>
                                 <td class="text-center p-3">{{value.teamUserName}}</td>
                             </tr>
-
-
-                        </table>
+                        </table-->
+                        <!--********************-->
                     </mat-card>
                 </div>
             </div>
