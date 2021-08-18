@@ -449,6 +449,7 @@ export class ListComponent implements OnInit {
         let element: any = this.dataSource.filteredData[index];
 
         delete element['patientId'];
+        delete element['primaryPatientId'];
         delete element['companyId'];
         delete element['requestId'];
         delete element['cityName'];
