@@ -121,6 +121,7 @@ export class ListComponent implements OnInit {
 
   selectedArea = [];
   select(name: string, event: any) {
+    loader.loading = true; //Thanam 18-08-21
     let farray: any = [];
     if (name === 'case') {
       if (event.value === 'all') {
@@ -198,6 +199,7 @@ export class ListComponent implements OnInit {
         loader.loading = false;
       })
     } else if (name === 'city') {
+      loader.loading = true;//Thanam 18-08-21
       //Thanam 11-08-21
       if (event === 'all') {
         this.array = this.farray;
@@ -214,6 +216,7 @@ export class ListComponent implements OnInit {
           }
         });
       }
+      loader.loading = false;//Thanam 18-08-21
     } else if (name === 'status') {
       loader.loading = true;
       let url = '';
@@ -507,8 +510,8 @@ export class ListComponent implements OnInit {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethodws('city').subscribe((datas) => {
-      this.city = datas.details;
+    this.commonService.getmethodws('city').subscribe((region) => {
+      this.city = region.details;
     }, err => {
       console.log(err);
     })
