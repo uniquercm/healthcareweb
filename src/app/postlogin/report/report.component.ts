@@ -5,7 +5,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/service/common.service';
-import { editvalues } from '../commonvaribale/commonvalues';
+import { editvalues, loader } from '../commonvaribale/commonvalues';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -35,14 +35,18 @@ export class ReportComponent implements OnInit {
   requestarray: any[] = [];
 
   constructor(private commonService: CommonService, public datepipe: DatePipe) {
+    loader.loading = true;//Thanam 18-08-21
     this.getarea();
     this.getCity();
     this.getCompany();
+
   }
 
   ngOnInit(): void {
+    loader.loading = true;//Thanam 18-08-21
     this.getreq('', '', '');
     this.getreqst();
+    loader.loading = false;//Thanam 18-08-21
   }
 
   ngAfterViewInit() {
@@ -88,6 +92,7 @@ export class ReportComponent implements OnInit {
   }
 
   select(name: string, event: any) {
+    loader.loading = true;//18-08-21
     let farray: any = [];
     if (name === 'case') {
       this.reportarray.forEach((element: any) => {
@@ -104,6 +109,7 @@ export class ReportComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
 
+        loader.loading = false;//18-08-21
         return;
       }
       this.reportarray.forEach((element: any) => {
@@ -123,6 +129,7 @@ export class ReportComponent implements OnInit {
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    loader.loading = false;//18-08-21
   }
 
   change(element: any) {
@@ -147,6 +154,7 @@ export class ReportComponent implements OnInit {
 
 
   getreq(value: any, date: any, status: any) {
+    loader.loading = true;//18-08-21
     let url = '';
     if (value === '') {
       url = 'report?companyId=' + this.companyid;
@@ -176,11 +184,14 @@ export class ReportComponent implements OnInit {
         if (element.pcR6DayTestDate === '0001-01-01T00:00:00') {
           element.pcR6DayTestDate = ''
         }
-        if (element.pcR11DayTestDate === '0001-01-01T00:00:00') {
-          element.pcR11DayTestDate = ''
-        }
         if (element.pcR8DayTestDate === '0001-01-01T00:00:00') {
           element.pcR8DayTestDate = ''
+        }
+        if (element.pcR9DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR9DayTestDate = ''
+        }
+        if (element.pcR11DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR11DayTestDate = ''
         }
         if (element.dischargeDate === '0001-01-01T00:00:00') {
           element.dischargeDate = ''
@@ -205,25 +216,60 @@ export class ReportComponent implements OnInit {
 
       this.dataSource = new MatTableDataSource(this.reportarray);
 
-
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }, err => {
       console.log(err);
     });
+    loader.loading = false;//18-08-21
   }
 
 
 
   export() {
+    loader.loading = true;//Thanam 18-08-21
     for (let index = 0; index < this.dataSource.filteredData.length; index++) {
       let element: any = this.dataSource.filteredData[index];
+
+      //Thanam 18-08-21
+      //element['Patient Name'] = element['patientName'];
+
+      element['assignedDate'] = element['assignedDate'].toString().replace("T00:00:00","");
+      element['assignedDate'] = element['assignedDate'].toString().replace("0001-01-01","");
+      
+      element['recptionCallDate'] = element['recptionCallDate'].toString().replace("T00:00:00","");
+      element['recptionCallDate'] = element['recptionCallDate'].toString().replace("0001-01-01","");
+      
+      element['pcR6DayTestDate'] = element['pcR6DayTestDate'].toString().replace("T00:00:00","");
+      element['pcR6DayTestDate'] = element['pcR6DayTestDate'].toString().replace("0001-01-01","");
+      
+      element['pcR6DaySampleDate'] = element['pcR6DaySampleDate'].toString().replace("T00:00:00","");
+      element['pcR6DaySampleDate'] = element['pcR6DaySampleDate'].toString().replace("0001-01-01","");
+      
+      element['pcR8DayTestDate'] = element['pcR8DayTestDate'].toString().replace("T00:00:00","");
+      element['pcR8DayTestDate'] = element['pcR8DayTestDate'].toString().replace("0001-01-01","");
+      
+      element['pcR8DaySampleDate'] = element['pcR8DaySampleDate'].toString().replace("T00:00:00","");
+      element['pcR8DaySampleDate'] = element['pcR8DaySampleDate'].toString().replace("0001-01-01","");
+      
+      element['pcR11DayTestDate'] = element['pcR11DayTestDate'].toString().replace("T00:00:00","");
+      element['pcR11DayTestDate'] = element['pcR11DayTestDate'].toString().replace("0001-01-01","");
+      
+      element['pcR11DaySampleDate'] = element['pcR11DaySampleDate'].toString().replace("T00:00:00","");
+      element['pcR11DaySampleDate'] = element['pcR11DaySampleDate'].toString().replace("0001-01-01","");
+      
+      element['dischargeDate'] = element['dischargeDate'].toString().replace("T00:00:00","");
+      element['dischargeDate'] = element['dischargeDate'].toString().replace("0001-01-01","");
+      
+      element['sendingClaimDate'] = element['sendingClaimDate'].toString().replace("T00:00:00","");
+      element['sendingClaimDate'] = element['sendingClaimDate'].toString().replace("0001-01-01","");
+      //***************** */
 
       delete element['patientId'];
       delete element['companyId'];
       delete element['requestId'];
       delete element['cityName'];
-      delete element['nationalityId'];6
+      delete element['nationalityId'];
       delete element['drCallId'];
       delete element['scheduledId'];
       delete element['createdBy'];
@@ -251,11 +297,12 @@ export class ReportComponent implements OnInit {
 
     /* save to file */
     XLSX.writeFile(wb, 'patient.xlsx');
-
+    loader.loading = false;//Thanam 18-08-21
   }
 
 
   save(element: any) {
+    loader.loading = true;//Thanam 18-08-21
     let map = {
       scheduledId: element.scheduledId,
       patientId: element.patientId,
@@ -305,15 +352,13 @@ export class ReportComponent implements OnInit {
     }, err => {
       console.log(err);
     })
-
+    loader.loading = false;//Thanam 18-08-21
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-
 
   keyword = 'areaName';
   getarea() {

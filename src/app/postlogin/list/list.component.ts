@@ -444,12 +444,28 @@ export class ListComponent implements OnInit {
 
   export() {
     loader.loading = true;
+    debugger
     setTimeout(() => {
-      for (let index = 0; index < this.dataSource.filteredData.length; index++) {
-        let element: any = this.dataSource.filteredData[index];
+      for (let index = 0; index < this.dataSource.filteredData.length; index++) 
+      {
+        let element: any = this.dataSource.filteredData[index];//.toString().replace("T00:00:00","");
+
+        //Thanam 18-08-21
+        //0001-01-01T00:00:00
+        element['assignedDate'] = element['assignedDate'].toString().replace("T00:00:00","");
+        element['assignedDate'] = element['assignedDate'].toString().replace("0001-01-01","");
+        element['createdOn'] = element['createdOn'].toString().replace("T00:00:00","");
+        element['createdOn'] = element['createdOn'].toString().replace("0001-01-01","");
+        element['dateOfBirth'] = element['dateOfBirth'].toString().replace("T00:00:00","");
+        element['dateOfBirth'] = element['dateOfBirth'].toString().replace("0001-01-01","");
+        element['recptionCallDate'] = element['recptionCallDate'].toString().replace("T00:00:00","");
+        element['recptionCallDate'] = element['recptionCallDate'].toString().replace("0001-01-01","");
+        //************************ */
 
         delete element['patientId'];
+        //Thanam 18-08-21
         delete element['primaryPatientId'];
+        //***************************** */
         delete element['companyId'];
         delete element['requestId'];
         delete element['cityName'];
@@ -464,6 +480,8 @@ export class ListComponent implements OnInit {
         }
 
       }
+
+      debugger
 
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
       const wb: XLSX.WorkBook = XLSX.utils.book_new();

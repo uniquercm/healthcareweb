@@ -274,9 +274,131 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     for (let index = 0; index < this.dataSource.filteredData.length; index++) {
       let element: any = this.dataSource.filteredData[index];
 
+      //Thanam 18-08-21
+      //0001-01-01T00:00:00
+      element['pcrTestDate'] = element['pcrTestDate'].toString().replace("T00:00:00","");
+      element['pcrTestDate'] = element['pcrTestDate'].toString().replace("0001-01-01","");
+      
+      element['treatmentFromDate'] = element['treatmentFromDate'].toString().replace("T00:00:00","");
+      element['treatmentFromDate'] = element['treatmentFromDate'].toString().replace("0001-01-01","");
+      
+      element['treatmentToDate'] = element['treatmentToDate'].toString().replace("T00:00:00","");
+      element['treatmentToDate'] = element['treatmentToDate'].toString().replace("0001-01-01","");
+      
+      element['allocatedDate'] = element['allocatedDate'].toString().replace("T00:00:00","");
+      element['allocatedDate'] = element['allocatedDate'].toString().replace("0001-01-01","");
+      
+      element['reAllocatedDate'] = element['reAllocatedDate'].toString().replace("T00:00:00","");
+      element['reAllocatedDate'] = element['reAllocatedDate'].toString().replace("0001-01-01","");
+      
+      element['dischargeDate'] = element['dischargeDate'].toString().replace("T00:00:00","");
+      element['dischargeDate'] = element['dischargeDate'].toString().replace("0001-01-01","");
+      
+      element['dischargeTeamStatusDate'] = element['dischargeTeamStatusDate'].toString().replace("T00:00:00","");
+      element['dischargeTeamStatusDate'] = element['dischargeTeamStatusDate'].toString().replace("0001-01-01","");
+      element['trackerScheduleDate'] = element['trackerScheduleDate'].toString().replace("T00:00:00","");
+      element['trackerScheduleDate'] = element['trackerScheduleDate'].toString().replace("0001-01-01","");
+      
+      element['trackerAppliedDate'] = element['trackerAppliedDate'].toString().replace("T00:00:00","");
+      element['trackerAppliedDate'] = element['trackerAppliedDate'].toString().replace("0001-01-01","");
+      
+      element['trackerTeamStatusDate'] = element['trackerTeamStatusDate'].toString().replace("T00:00:00","");
+      element['trackerTeamStatusDate'] = element['trackerTeamStatusDate'].toString().replace("0001-01-01","");
+      
+      element['stickerScheduleDate'] = element['stickerScheduleDate'].toString().replace("T00:00:00","");
+      element['stickerScheduleDate'] = element['stickerScheduleDate'].toString().replace("0001-01-01","");
+      
+      element['stickerRemovedDate'] = element['stickerRemovedDate'].toString().replace("T00:00:00","");
+      element['stickerRemovedDate'] = element['stickerRemovedDate'].toString().replace("0001-01-01","");
+      
+      element['stickerTeamStatusDate'] = element['stickerTeamStatusDate'].toString().replace("T00:00:00","");
+      element['stickerTeamStatusDate'] = element['stickerTeamStatusDate'].toString().replace("0001-01-01","");
+      
+      element['trackerReplacedDate'] = element['trackerReplacedDate'].toString().replace("T00:00:00","");
+      element['trackerReplacedDate'] = element['trackerReplacedDate'].toString().replace("0001-01-01","");
+      
+      element['trackerReplaceTeamStatusDate'] = element['trackerReplaceTeamStatusDate'].toString().replace("T00:00:00","");
+      element['trackerReplaceTeamStatusDate'] = element['trackerReplaceTeamStatusDate'].toString().replace("0001-01-01","");
+      
+      if(element['requestCrmName'].toString() === 'HQP')
+      {
+        element['pcR6DayTestDate'] = element['pcR6DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR6DayTestDate'] = element['pcR6DayTestDate'].toString().replace("0001-01-01","");
+        
+        element['pcR6DaySampleDate'] = element['pcR6DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR6DaySampleDate'] = element['pcR6DaySampleDate'].toString().replace("0001-01-01","");
+        
+        element['pcR6DayTeamStatusDate'] = element['pcR6DayTeamStatusDate'].toString().replace("T00:00:00","");
+        element['pcR6DayTeamStatusDate'] = element['pcR6DayTeamStatusDate'].toString().replace("0001-01-01","");
+        
+        element['pcR9DayTestDate'] = element['pcR9DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR9DayTestDate'] = element['pcR9DayTestDate'].toString().replace("0001-01-01","");
+        
+        element['pcR9DaySampleDate'] = element['pcR9DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR9DaySampleDate'] = element['pcR9DaySampleDate'].toString().replace("0001-01-01","");
+        
+        element['pcR9DayTeamStatusDate'] = element['pcR9DayTeamStatusDate'].toString().replace("T00:00:00","");
+        element['pcR9DayTeamStatusDate'] = element['pcR9DayTeamStatusDate'].toString().replace("0001-01-01","");
+        
+        element['pcR11DayTestDate'] = element['pcR11DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR11DayTestDate'] = element['pcR11DayTestDate'].toString().replace("0001-01-01","");
+        
+        element['pcR11DaySampleDate'] = element['pcR11DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR11DaySampleDate'] = element['pcR11DaySampleDate'].toString().replace("0001-01-01","");
+        
+        element['pcR11DayTeamStatusDate'] = element['pcR11DayTeamStatusDate'].toString().replace("T00:00:00","");
+        element['pcR11DayTeamStatusDate'] = element['pcR11DayTeamStatusDate'].toString().replace("0001-01-01","");
+        
+        element['pcR4DayTestDate'] = "";
+        element['pcR4DaySampleDate'] = "";
+        element['pcR4DayTeamStatusDate'] = "";
+
+        element['pcR8DayTestDate'] = "";
+        element['pcR8DaySampleDate'] = "";
+        element['pcR8DayTeamStatusDate'] = "";
+      }
+      else
+      {
+        element['pcR4DayTestDate'] = element['pcR4DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR4DayTestDate'] = element['pcR4DayTestDate'].toString().replace("0001-01-01","");
+        
+        element['pcR4DaySampleDate'] = element['pcR4DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR4DaySampleDate'] = element['pcR4DaySampleDate'].toString().replace("0001-01-01","");
+        
+        element['pcR4DayTeamStatusDate'] = element['pcR4DayTeamStatusDate'].toString().replace("T00:00:00","");
+        element['pcR4DayTeamStatusDate'] = element['pcR4DayTeamStatusDate'].toString().replace("0001-01-01","");
+        
+        element['pcR8DayTestDate'] = element['pcR8DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR8DayTestDate'] = element['pcR8DayTestDate'].toString().replace("0001-01-01","");
+        
+        element['pcR8DaySampleDate'] = element['pcR8DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR8DaySampleDate'] = element['pcR8DaySampleDate'].toString().replace("0001-01-01","");
+        
+        element['pcR8DayTeamStatusDate'] = element['pcR8DayTeamStatusDate'].toString().replace("T00:00:00","");
+        element['pcR8DayTeamStatusDate'] = element['pcR8DayTeamStatusDate'].toString().replace("0001-01-01","");
+
+        element['pcR6DayTestDate'] = "";
+        element['pcR6DaySampleDate'] = "";
+        element['pcR6DayTeamStatusDate'] = "";
+        
+        element['pcR9DayTestDate'] = "";
+        element['pcR9DaySampleDate'] = "";
+        element['pcR9DayTeamStatusDate'] = "";
+        
+        element['pcR11DayTestDate'] = "";
+        element['pcR11DaySampleDate'] = "";
+        element['pcR11DayTeamStatusDate'] = "";
+      }
+      
+      //***************** */
+
       delete element['patientId'];
       delete element['companyId'];
       delete element['requestId'];
+      delete element['patientStaffId'];
+      delete element['patientInformation'];
+      delete element['cityId'];
+      delete element['status'];
       delete element['cityName'];
       delete element['nationalityId'];
       delete element['drCallId'];
@@ -298,24 +420,24 @@ export class SupervisorComponent implements OnInit, OnDestroy {
       delete element['day2CallDetails'];
       delete element['day2CallId'];
       delete element['stickerTrackerNumber'];
-      delete element['stickerRemovedDate'];
-      delete element['stickerScheduleDate'];
-      delete element['trackerAppliedDate'];
-      delete element['trackerScheduleDate'];
-      delete element['pcR8DayResult'];
-      delete element['pcR8DaySampleDate'];
-      delete element['pcR8DayTestDate'];
-      delete element['pcR4DayResult'];
-      delete element['pcR4DaySampleDate'];
-      delete element['pcR4DayTestDate'];
-      delete element['patientStaffId'];
-      delete element['patientInformation'];
-      delete element['cityId'];
       delete element['stickerApplication'];
       delete element['stickerRemoval'];
       delete element['trackerApplication'];
-      delete element['status'];
       delete element['trackerRemoval'];
+      //Thanam 18-08-21
+      //delete element['stickerRemovedDate'];
+      //delete element['stickerScheduleDate'];
+      //delete element['trackerAppliedDate'];
+      //delete element['trackerScheduleDate'];
+      //***************** */
+      delete element['pcR8DayResult'];
+      delete element['pcR4DayResult'];
+      //Thanam 18-08-21
+      //delete element['pcR8DaySampleDate'];
+      //delete element['pcR8DayTestDate'];
+      //delete element['pcR4DaySampleDate'];
+      //delete element['pcR4DayTestDate'];
+      //***************** */
 
       if (element.modifiedBy === undefined) { } else {
         delete element['modifiedBy'];
@@ -329,8 +451,6 @@ export class SupervisorComponent implements OnInit, OnDestroy {
     XLSX.writeFile(wb, 'patient.xlsx');
     loader.loading = false;//Thanam 09-08-21
   }
-
-    
 
 
   getPatent(value: any) { 
