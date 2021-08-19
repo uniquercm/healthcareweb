@@ -232,37 +232,79 @@ export class ReportComponent implements OnInit {
       let element: any = this.dataSource.filteredData[index];
 
       //Thanam 18-08-21
-      //element['Patient Name'] = element['patientName'];
+      //element['Patient Name'] = element['patientName'];      
 
-      element['assignedDate'] = element['assignedDate'].toString().replace("T00:00:00","");
-      element['assignedDate'] = element['assignedDate'].toString().replace("0001-01-01","");
+      if(element['assignedDate'].toString() !== "")
+      {
+        element['assignedDate'] = this.datepipe.transform(element['assignedDate'], 'dd-MM-yyyy');//element['assignedDate'].toString().replace("T00:00:00","");
+        element['assignedDate'] = element['assignedDate'].toString().replace("01-01-0001","");
+      }
       
-      element['recptionCallDate'] = element['recptionCallDate'].toString().replace("T00:00:00","");
-      element['recptionCallDate'] = element['recptionCallDate'].toString().replace("0001-01-01","");
+      if(element['recptionCallDate'].toString() !== "")
+      {
+        element['recptionCallDate'] = this.datepipe.transform(element['recptionCallDate'], 'dd-MM-yyyy');//element['recptionCallDate'].toString().replace("T00:00:00","");
+        element['recptionCallDate'] = element['recptionCallDate'].toString().replace("01-01-0001","");
+      }
       
-      element['pcR6DayTestDate'] = element['pcR6DayTestDate'].toString().replace("T00:00:00","");
-      element['pcR6DayTestDate'] = element['pcR6DayTestDate'].toString().replace("0001-01-01","");
+      if(element['pcR6DayTestDate'].toString() !== "")
+      {
+        element['pcR6DayTestDate'] = this.datepipe.transform(element['pcR6DayTestDate'], 'dd-MM-yyyy');//element['pcR6DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR6DayTestDate'] = element['pcR6DayTestDate'].toString().replace("01-01-0001","");
+      }
       
-      element['pcR6DaySampleDate'] = element['pcR6DaySampleDate'].toString().replace("T00:00:00","");
-      element['pcR6DaySampleDate'] = element['pcR6DaySampleDate'].toString().replace("0001-01-01","");
+      if(element['pcR6DaySampleDate'].toString() !== "")
+      {
+        element['pcR6DaySampleDate'] = this.datepipe.transform(element['pcR6DaySampleDate'], 'dd-MM-yyyy');//element['pcR6DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR6DaySampleDate'] = element['pcR6DaySampleDate'].toString().replace("01-01-0001","");
+      }
       
-      element['pcR8DayTestDate'] = element['pcR8DayTestDate'].toString().replace("T00:00:00","");
-      element['pcR8DayTestDate'] = element['pcR8DayTestDate'].toString().replace("0001-01-01","");
+      if(element['pcR8DayTestDate'].toString() !== "")
+      {
+        element['pcR8DayTestDate'] = this.datepipe.transform(element['pcR8DayTestDate'], 'dd-MM-yyyy');//element['pcR8DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR8DayTestDate'] = element['pcR8DayTestDate'].toString().replace("01-01-0001","");
+      }
       
-      element['pcR8DaySampleDate'] = element['pcR8DaySampleDate'].toString().replace("T00:00:00","");
-      element['pcR8DaySampleDate'] = element['pcR8DaySampleDate'].toString().replace("0001-01-01","");
+      if(element['pcR8DaySampleDate'].toString() !== "")
+      {
+        element['pcR8DaySampleDate'] = this.datepipe.transform(element['pcR8DaySampleDate'], 'dd-MM-yyyy');//element['pcR8DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR8DaySampleDate'] = element['pcR8DaySampleDate'].toString().replace("01-01-0001","");
+      }
       
-      element['pcR11DayTestDate'] = element['pcR11DayTestDate'].toString().replace("T00:00:00","");
-      element['pcR11DayTestDate'] = element['pcR11DayTestDate'].toString().replace("0001-01-01","");
+      if(element['pcR9DayTestDate'].toString() !== "")
+      {
+        element['pcR9DayTestDate'] = this.datepipe.transform(element['pcR9DayTestDate'], 'dd-MM-yyyy');//element['pcR9DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR9DayTestDate'] = element['pcR9DayTestDate'].toString().replace("01-01-0001","");
+      }
       
-      element['pcR11DaySampleDate'] = element['pcR11DaySampleDate'].toString().replace("T00:00:00","");
-      element['pcR11DaySampleDate'] = element['pcR11DaySampleDate'].toString().replace("0001-01-01","");
+      if(element['pcR9DaySampleDate'].toString() !== "")
+      {
+        element['pcR9DaySampleDate'] = this.datepipe.transform(element['pcR9DaySampleDate'], 'dd-MM-yyyy');//element['pcR9DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR9DaySampleDate'] = element['pcR9DaySampleDate'].toString().replace("01-01-0001","");
+      }
       
-      element['dischargeDate'] = element['dischargeDate'].toString().replace("T00:00:00","");
-      element['dischargeDate'] = element['dischargeDate'].toString().replace("0001-01-01","");
+      if(element['pcR11DayTestDate'].toString() !== "")
+      {
+        element['pcR11DayTestDate'] = this.datepipe.transform(element['pcR11DayTestDate'], 'dd-MM-yyyy');//element['pcR11DayTestDate'].toString().replace("T00:00:00","");
+        element['pcR11DayTestDate'] = element['pcR11DayTestDate'].toString().replace("01-01-0001","");
+      }
       
-      element['sendingClaimDate'] = element['sendingClaimDate'].toString().replace("T00:00:00","");
-      element['sendingClaimDate'] = element['sendingClaimDate'].toString().replace("0001-01-01","");
+      if(element['pcR11DaySampleDate'].toString() !== "")
+      {
+        element['pcR11DaySampleDate'] = this.datepipe.transform(element['pcR11DaySampleDate'], 'dd-MM-yyyy');//element['pcR11DaySampleDate'].toString().replace("T00:00:00","");
+        element['pcR11DaySampleDate'] = element['pcR11DaySampleDate'].toString().replace("01-01-0001","");
+      }
+      
+      if(element['dischargeDate'].toString() !== "")
+      {
+        element['dischargeDate'] = this.datepipe.transform(element['dischargeDate'], 'dd-MM-yyyy');//element['dischargeDate'].toString().replace("T00:00:00","");
+        element['dischargeDate'] = element['dischargeDate'].toString().replace("01-01-0001","");
+      }
+      
+      if(element['sendingClaimDate'].toString() !== "")
+      {
+        element['sendingClaimDate'] = this.datepipe.transform(element['sendingClaimDate'], 'dd-MM-yyyy');//element['sendingClaimDate'].toString().replace("T00:00:00","");
+        element['sendingClaimDate'] = element['sendingClaimDate'].toString().replace("01-01-0001","");
+      }
       //***************** */
 
       delete element['patientId'];

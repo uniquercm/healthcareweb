@@ -17,8 +17,13 @@
             </div>
 
             <div class="col-ls-4  col-xl-4 col-md-5 col-sm-12" style="width: 29%;">
+                <!--div class="pt-2" style="width: 100%;">
+                    <ng-select  placeholder="area">
+                        <ng-option *ngFor="let are of area" [value]="are.areaName">{{are.areaName}}</ng-option>
+                    </ng-select>
+                </div-->
                 <div style="width: 400px;">
-                    <ng-autocomplete [data]="data" [searchKeyword]="keyword" placeholder="Enter Area" (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                    <ng-autocomplete [data]="data" [searchKeyword]="keyword" placeholder="Enter Area" (selected)='selectEvent($event)' (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)' [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" [clearTemplate]="">
                     </ng-autocomplete>
 
                     <ng-template #itemTemplate let-item>
@@ -27,6 +32,10 @@
 
                     <ng-template #notFoundTemplate let-notFound>
                         <div [innerHTML]="notFound"></div>
+                    </ng-template>//
+
+                    <ng-template #clearTemplate let-clear>
+                        <div [innerHTML]=""></div>
                     </ng-template>
                 </div>
             </div>

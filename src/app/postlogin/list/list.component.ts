@@ -453,7 +453,6 @@ export class ListComponent implements OnInit {
 
   export() {
     loader.loading = true;
-    debugger
     setTimeout(() => {
       for (let index = 0; index < this.dataSource.filteredData.length; index++) 
       {
@@ -461,14 +460,29 @@ export class ListComponent implements OnInit {
 
         //Thanam 18-08-21
         //0001-01-01T00:00:00
-        element['assignedDate'] = element['assignedDate'].toString().replace("T00:00:00","");
-        element['assignedDate'] = element['assignedDate'].toString().replace("0001-01-01","");
-        element['createdOn'] = element['createdOn'].toString().replace("T00:00:00","");
-        element['createdOn'] = element['createdOn'].toString().replace("0001-01-01","");
-        element['dateOfBirth'] = element['dateOfBirth'].toString().replace("T00:00:00","");
-        element['dateOfBirth'] = element['dateOfBirth'].toString().replace("0001-01-01","");
-        element['recptionCallDate'] = element['recptionCallDate'].toString().replace("T00:00:00","");
-        element['recptionCallDate'] = element['recptionCallDate'].toString().replace("0001-01-01","");
+        if(element['assignedDate'].toString() !== "")
+        {
+          element['assignedDate'] = this.datepipe.transform(element['assignedDate'], 'dd-MM-yyyy');//toString('dd-MM-yyyy');//.replace("T00:00:00","");
+          element['assignedDate'] = element['assignedDate'].toString().replace("01-01-0001","");
+        }
+        
+        if(element['createdOn'].toString() !== "")
+        {
+          element['createdOn'] = this.datepipe.transform(element['createdOn'], 'dd-MM-yyyy');//element['createdOn'].toString().replace("T00:00:00","");
+          element['createdOn'] = element['createdOn'].toString().replace("01-01-0001","");
+        }
+        
+        if(element['dateOfBirth'].toString() !== "")
+        {
+          element['dateOfBirth'] = this.datepipe.transform(element['dateOfBirth'], 'dd-MM-yyyy');//element['dateOfBirth'].toString().replace("T00:00:00","");
+          element['dateOfBirth'] = element['dateOfBirth'].toString().replace("01-01-0001","");
+        }
+        
+        if(element['recptionCallDate'].toString() !== "")
+        {
+          element['recptionCallDate'] = this.datepipe.transform(element['recptionCallDate'], 'dd-MM-yyyy');//element['recptionCallDate'].toString().replace("T00:00:00","");
+          element['recptionCallDate'] = element['recptionCallDate'].toString().replace("01-01-0001","");
+        }
         //************************ */
 
         delete element['patientId'];
@@ -490,7 +504,7 @@ export class ListComponent implements OnInit {
 
       }
 
-      debugger
+      //debugger
 
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
