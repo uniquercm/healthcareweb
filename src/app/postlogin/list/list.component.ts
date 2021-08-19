@@ -43,6 +43,7 @@ export class ListComponent implements OnInit {
     this.getCity();
     this.getCompany();
     this.getPatent('inital');
+    //loader.loading = false;//19-08-21
   }
 
   ngOnInit(): void {
@@ -72,8 +73,9 @@ export class ListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.farray);
       return;
     }
-    // console.log(Number((event.target as HTMLInputElement).value));
+    //console.log(Number((event.target as HTMLInputElement).value));
     const result = this.array.filter((s: any) => s.mobileNo.includes(Number((event.target as HTMLInputElement).value)));
+    
     this.dataSource = new MatTableDataSource(result);
   }
 
@@ -132,6 +134,8 @@ export class ListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
 
+        loader.loading = false;//19-08-21
+
         return;
       } else {
         this.array.forEach((element: any) => {
@@ -148,6 +152,8 @@ export class ListComponent implements OnInit {
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+
+        loader.loading = false;//19-08-21
 
         return;
       }
@@ -258,6 +264,7 @@ export class ListComponent implements OnInit {
         loader.loading = false;
       })
     } else {
+      loader.loading = true;
       this.array.forEach((element: any) => {
         if (event.value === 'yes') {
           if (element.googleMapLink !== '')
@@ -269,6 +276,7 @@ export class ListComponent implements OnInit {
           farray.push(element);
         }
       });
+      loader.loading = false;//19-08-21
     }
 
     this.dataSource = new MatTableDataSource(farray);
@@ -330,6 +338,7 @@ export class ListComponent implements OnInit {
     statuss.value = '';
 
     this.selectedArea = [];
+    loader.loading = false;//19-08-21
   }
 
   getstatus(statuss: any) {
