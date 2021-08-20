@@ -236,9 +236,7 @@ displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'de
     this.fromdate = '';
     this.todate = '';    
     //fromdate.value = '';
-    //todate.value = '';    
-    this.sent = '';
-    this.extract = '';
+    //todate.value = '';
     sent.value = '';
     extract.value = '';
     //*************
