@@ -217,10 +217,7 @@ export class RegisterComponent implements OnInit {
         "requestId": this.form.value.requestType,
         "crmNo": this.form.value.crm,
         "eidNo": this.form.value.eid,
-        //Thanam-20-08-21
-        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'dd-MM-yyyy'),
-        //"dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
-        //************ */
+        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
         "age": Number(this.form.value.age),
         "sex": this.form.value.sex,
         "nationalityId": Number(this.form.value.nationality),
@@ -261,8 +258,7 @@ export class RegisterComponent implements OnInit {
         "requestId": this.form.value.requestType,
         "crmNo": this.form.value.crm,
         "eidNo": this.form.value.eid,
-        //"dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
-        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'dd-MM-yyyy'),
+        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
         "age": Number(this.form.value.age),
         "sex": this.form.value.sex,
         "address": "",
