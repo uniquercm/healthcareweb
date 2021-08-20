@@ -28,7 +28,35 @@ export class RegisterComponent implements OnInit {
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
   datas: any;
 
+  //Thanam 20-08-21
+  constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService,
+    public datepipe: DatePipe) {
+    this.form = this._formBuilder.group({
+      requestType: ['', Validators.required],
+      crm: ['', Validators.required],
+      name: ['', Validators.nullValidator],
+      mobileno: ['', [Validators.nullValidator, Validators.maxLength(10), Validators.minLength(10)]],
+      age: ['', Validators.nullValidator],
+      sex: ['', Validators.nullValidator],
+      dob: ['', Validators.nullValidator],
+      nationality: ['', Validators.required],
+      assignedDate: [new Date(), Validators.nullValidator]
+    });
 
+    if (editvalues.headerbuttclick) {
+      if (localStorage.getItem('patientedit') !== null) {
+        let value: any = JSON.parse(localStorage.getItem('patientedit') || '{}');
+        editvalues.patientid = value.patientid;
+        editvalues.scheduleid = value.scheduleid;
+        editvalues.drcallid = value.drcallid;
+      }
+    } else {
+      editvalues.patientid = 0;
+    }
+
+  }
+
+/*
   constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService,
     public datepipe: DatePipe) {
     this.form = this._formBuilder.group({
@@ -58,7 +86,7 @@ export class RegisterComponent implements OnInit {
     }
 
   }
-
+*/
   ngOnInit(): void {
     this.getnationality();
     this.getreq();
@@ -218,8 +246,8 @@ export class RegisterComponent implements OnInit {
         "crmNo": this.form.value.crm,
         "eidNo": this.form.value.eid,
         //Thanam-20-08-21
-        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'dd-MM-yyyy'),
-        //"dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
+        //"dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'dd-MM-yyyy'),
+        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
         //************ */
         "age": Number(this.form.value.age),
         "sex": this.form.value.sex,
@@ -229,8 +257,8 @@ export class RegisterComponent implements OnInit {
         "isUpdate": true,
         //Thanam-08-08-21
         //assignedDate: this.form.value.assignedDate
-        //assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'MM-dd-yyyy')
-        assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'dd-MM-yyyy')
+        assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'MM-dd-yyyy')
+        //assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'dd-MM-yyyy')
         //*********************** */
       }
 
@@ -262,8 +290,8 @@ export class RegisterComponent implements OnInit {
         "crmNo": this.form.value.crm,
         "eidNo": this.form.value.eid,
         //Thanam-20-08-21
-        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'dd-MM-yyyy'),
-        //"dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
+        //"dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'dd-MM-yyyy'),
+        "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
         //************ */
         "age": Number(this.form.value.age),
         "sex": this.form.value.sex,
@@ -285,8 +313,8 @@ export class RegisterComponent implements OnInit {
         "isReception": false,
         //Thanam-08-08-21
         //assignedDate: this.form.value.assignedDate
-        assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'dd-MM-yyyy')
-        //assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'MM-dd-yyyy')
+        //assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'dd-MM-yyyy')
+        assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'MM-dd-yyyy')
         //*********************** */
       }
 
