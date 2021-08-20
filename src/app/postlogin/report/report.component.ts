@@ -48,22 +48,21 @@ displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'de
   fromdate: any = '';
   todate: any = '';
 
+
   constructor(private commonService: CommonService, public datepipe: DatePipe) {
     loader.loading = true;//Thanam 18-08-21
     this.getarea();
     this.getCity();
     this.getCompany();
+    this.getreqst();
+    this.getreq('', '', '');
 
   }
 
   ngOnInit(): void {
-    loader.loading = true;//Thanam 18-08-21
-    this.getreq('', '', '');
-    this.getreqst();
   }
 
   ngAfterViewInit() {
-    loader.loading = true;//Thanam 18-08-21
   }
 
   getreqst() {
@@ -225,7 +224,7 @@ displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'de
     editvalues.patientid = element.patientId
   }
 
-  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, fromdate: any, todate: any) {
+  clear(input: any, mobile: any, eid: any, crm: any, crmno: any, area: any, region: any, fromdate: any, todate: any, sent: any, extract: any) {
     input.value = '';
     mobile.value = '';
     eid.value = '';
@@ -233,15 +232,22 @@ displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'de
     crmno.value = '';
     area.value = '';
     region.value = '';
-    fromdate.value = '';
-    todate.value = '';
-     
+    //Thanam 20-08-21
+    this.fromdate = '';
+    this.todate = '';    
+    //fromdate.value = '';
+    //todate.value = '';    
+    this.sent = '';
+    this.extract = '';
+    sent.value = '';
+    extract.value = '';
+    //*************
     this.getreq('', '', '');
   }
 
 //Thanam 20-08-21
   getreq(value: any, date: any, status: any) {
-    loader.loading = true;
+    //loader.loading = true;
     let url = 'report?companyId=' + this.companyid;
     
     if (this.fromdate !== '')
@@ -303,7 +309,7 @@ displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'de
         }
       });
 
-      console.log(this.reportarray)
+      //console.log(this.reportarray)
 
       this.dataSource = new MatTableDataSource(this.reportarray);
 
@@ -312,7 +318,6 @@ displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'de
     }, err => {
       console.log(err);
     });
-    //loader.loading = false;//18-08-21
   }
 /*
   getreq(value: any, date: any, status: any) {

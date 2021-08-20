@@ -71,7 +71,7 @@
 
             <mat-form-field class="col-4" style="width: 20%;" appearance="outline">
                 <mat-label>Extract Data</mat-label>
-                <mat-select #extract (selectionChange)="getreq('extract', $event, sent.value)">
+                <mat-select (selectionChange)="getreq('extract', $event, sent.value)" #extract>
                     <mat-option value="all">All</mat-option>
                     <mat-option value="yes">Yes</mat-option>
                     <mat-option value="no"> No</mat-option>
@@ -80,7 +80,7 @@
 
             <mat-form-field class="col-4" style="width: 20%;" appearance="outline">
                 <mat-label>Sent Claim</mat-label>
-                <mat-select #sent (selectionChange)="getreq('sent', extract.value, $event)">
+                <mat-select (selectionChange)="getreq('sent', extract.value, $event)" #sent>
                     <mat-option value="all">All</mat-option>
                     <mat-option value="yes">Yes</mat-option>
                     <mat-option value="no"> No</mat-option>
@@ -88,7 +88,7 @@
             </mat-form-field>
 
             <div class="col-3" style="width: auto;">
-                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, fromdate, todate)">Clear</button>
+                <button mat-raised-button class="mt-2" style="background: #f9a610; color: white;" (click)="clear(input, mobile,eid,crm,crmno,area, region, fromdate, todate, sent, extract)">Clear</button>
             </div>
         </div>
 
