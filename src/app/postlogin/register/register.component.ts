@@ -35,7 +35,9 @@ export class RegisterComponent implements OnInit {
       requestType: ['', Validators.required],
       crm: ['', Validators.required],
       name: ['', Validators.nullValidator],
-      eid: ['', Validators.required],
+      //Thanam 20-08-21
+      //eid: ['', Validators.required],
+      //************
       mobileno: ['', [Validators.nullValidator, Validators.maxLength(10), Validators.minLength(10)]],
       age: ['', Validators.nullValidator],
       sex: ['', Validators.nullValidator],

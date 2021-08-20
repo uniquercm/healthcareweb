@@ -14,7 +14,8 @@ import * as XLSX from 'xlsx';
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit {
-
+  //Thanam 20-08-21
+/*
   displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'details','asigndate', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
     'pcr6date', 'pcr6result', 'pcr8date', 'pcr8result', 'pcr11date', 'pcr11result',
     'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus', 'extracteddata', 'sentclaim', 'senton', 'save'];
@@ -25,7 +26,18 @@ export class ReportComponent implements OnInit {
   secondcolumn = ['receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
     'pcr6date', 'pcr6result', 'pcr8date', 'pcr8result', 'pcr11date', 'pcr11result',
     'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
+*/
+displayColumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll',  'details','asigndate', 'receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
+    'pcr6date', 'pcr6result', 'pcr8date', 'pcr8result', 'pcr9date', 'pcr9result', 'pcr11date', 'pcr11result',
+    'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus', 'extracteddata', 'sentclaim', 'senton', 'save'];
+  dataSource: any;
 
+  firstcolumn = ['sno', 'cype', 'crmno', 'name', 'eid', 'mobile', 'enroll', 'details', 'asigndate','reception', 'drcell', 'pcr6day', 'pcr8day', 'pcr9day', 'pcr11day', 'nursecall',
+    'discharge', 'extracteddata', 'sentclaim', 'senton', 'save']
+  secondcolumn = ['receptiondate', 'receptionstauts', 'recremarks', 'drcellstatus', 'drremarks',
+    'pcr6date', 'pcr6result', 'pcr8date', 'pcr8result', 'pcr9date', 'pcr9result', 'pcr11date', 'pcr11result',
+    'nc3day', 'nc4day', 'nc5day', 'nc6day', 'nc7day', 'nc9day', 'dischargedate', 'dischargestatus']
+//********************** */
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
   @ViewChild(MatSort) sort: MatSort = new MatSort();
 
@@ -33,6 +45,8 @@ export class ReportComponent implements OnInit {
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
   requestarray: any[] = [];
+  fromdate: any = '';
+  todate: any = '';
 
   constructor(private commonService: CommonService, public datepipe: DatePipe) {
     loader.loading = true;//Thanam 18-08-21
@@ -46,11 +60,10 @@ export class ReportComponent implements OnInit {
     loader.loading = true;//Thanam 18-08-21
     this.getreq('', '', '');
     this.getreqst();
-    loader.loading = false;//Thanam 18-08-21
   }
 
   ngAfterViewInit() {
-
+    loader.loading = true;//Thanam 18-08-21
   }
 
   getreqst() {
@@ -60,21 +73,6 @@ export class ReportComponent implements OnInit {
       console.log(err);
     })
   }
-
-  // select(event: any) {
-  //   let farray: any = [];
-  //   this.reportarray.forEach((element: any) => {
-  //     if (element.requestId === Number(event.value)) {
-  //       farray.push(element);
-  //     }
-  //   });
-
-  //   this.dataSource = new MatTableDataSource(farray);
-
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
-
 
   companyid: any = this.localvalues.companyId;
   companyarray: any[] = [];
@@ -91,6 +89,83 @@ export class ReportComponent implements OnInit {
     this.getreq('', '', '');
   }
 
+  //Thanam 20-08-21
+  selectedArea: any;
+  select(name: string, event: any) {
+    loader.loading = true;
+    let farray: any = [];
+    if (name === 'case') 
+    {
+      if (event.value === 'all') {
+        farray = this.reportarray;
+        this.dataSource = new MatTableDataSource(farray);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      } else {
+          this.reportarray.forEach((element: any) => {
+          if (element.requestId === Number(event.value)) {
+            farray.push(element);
+          }
+        });
+      }
+      loader.loading = false;
+    } 
+    else if (name === 'area') 
+    {
+      let url = 'report?companyId=' + this.localvalues.companyId + '&extractData=all&sendClaim=all';
+        
+        if (this.fromdate !== '')
+          url += '&sendOnFromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy');
+
+        if (this.todate !== '')
+          url += '&sendOnToDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+
+        if (event === 'All')
+          url += '&areaNames=all';
+        else
+          url += '&areaNames=' + event.toString();
+
+        this.commonService.getmethodws(url).subscribe((data) => {
+        this.reportarray = [];
+        this.reportarray = data.details;
+        this.reportarray.forEach((o: any, i: number) => o.id = i + 1);
+
+        farray = this.reportarray;
+        this.dataSource = new MatTableDataSource(this.reportarray);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        loader.loading = false;
+      }, err => {
+        console.log(err);
+        loader.loading = false;
+      });
+    } 
+    else if (name === 'city') 
+    {
+      if (event === 'all') {
+        farray = this.reportarray;
+        this.dataSource = new MatTableDataSource(farray);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      } else {
+        this.reportarray.forEach((element: any) => {
+          if (element.cityId === Number(event)) {
+            farray.push(element);
+          }
+        });
+      }
+      loader.loading = false;
+    }
+
+    this.dataSource = new MatTableDataSource(farray);
+
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+  /*
   select(name: string, event: any) {
     loader.loading = true;//18-08-21
     let farray: any = [];
@@ -109,7 +184,7 @@ export class ReportComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
 
-        loader.loading = false;//18-08-21
+        //loader.loading = false;//18-08-21
         return;
       }
       this.reportarray.forEach((element: any) => {
@@ -118,19 +193,31 @@ export class ReportComponent implements OnInit {
         }
       });
     } else if (name === 'city') {
-      this.reportarray.forEach((element: any) => {
-        if (element.cityId === Number(event)) {
-          farray.push(element);
-        }
-      });
+      //Thanam 20-08-21
+      if (event === 'all') {
+        farray = this.reportarray;
+        this.dataSource = new MatTableDataSource(farray);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        loader.loading = false;
+        return;
+      } else {//********************* 
+        this.reportarray.forEach((element: any) => {
+          if (element.cityId === Number(event)) {
+            farray.push(element);
+          }
+        });
+      }
     }
 
     this.dataSource = new MatTableDataSource(farray);
 
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    loader.loading = false;//18-08-21
+    loader.loading = false;//20-08-21
   }
+  */
 
   change(element: any) {
     editvalues.scheduleid = element.scheduledId;
@@ -152,7 +239,82 @@ export class ReportComponent implements OnInit {
     this.getreq('', '', '');
   }
 
+//Thanam 20-08-21
+  getreq(value: any, date: any, status: any) {
+    loader.loading = true;
+    let url = 'report?companyId=' + this.companyid;
+    
+    if (this.fromdate !== '')
+      url += '&sendOnFromDate=' + this.datepipe.transform(this.fromdate, 'MM-dd-yyyy');
 
+      if (this.todate !== '')
+      url += '&sendOnToDate=' + this.datepipe.transform(this.todate, 'MM-dd-yyyy');
+
+    if (value === 'extract') 
+    {
+      let claim = status === undefined ? 'all' : status;
+      url += '&extractData=' + date.value + '&sendClaim=' + claim;
+    } 
+    else if (value === 'sent') 
+    {
+      let claim = date === undefined ? 'all' : date;
+      url += '&extractData=' + claim + '&sendClaim=' + status.value;
+    } 
+
+    this.commonService.getmethod(url).subscribe((data) => {
+      this.reportarray = data.details;
+      this.reportarray.forEach((o: any, i: number) => o.id = i + 1);
+
+      this.reportarray.forEach((element: any) => {
+        if (element.sendingClaimDate === '0001-01-01T00:00:00') {
+          element.sendingClaimDate = ''
+        }
+        if (element.pcR4DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR4DayTestDate = ''
+        }
+        if (element.pcR6DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR6DayTestDate = ''
+        }
+        if (element.pcR8DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR8DayTestDate = ''
+        }
+        if (element.pcR9DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR9DayTestDate = ''
+        }
+        if (element.pcR11DayTestDate === '0001-01-01T00:00:00') {
+          element.pcR11DayTestDate = ''
+        }
+        if (element.dischargeDate === '0001-01-01T00:00:00') {
+          element.dischargeDate = ''
+        }
+        if (element.recptionCallDate === '0001-01-01T00:00:00') {
+          element.recptionCallDate = ''
+        }
+        if (element.assignedDate === '0001-01-01T00:00:00') {
+          element.assignedDate = ''
+        }
+        if (undefined == (element.isSendClaim)) {
+          element.isSendClaim = ''
+        }
+        if (undefined == (element.enrolledDetails)) {
+          element.enrolledDetails = '';
+        } else {
+          // element.enrolledDetails = element.enrolledDetails;
+        }
+      });
+
+      console.log(this.reportarray)
+
+      this.dataSource = new MatTableDataSource(this.reportarray);
+
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }, err => {
+      console.log(err);
+    });
+    //loader.loading = false;//18-08-21
+  }
+/*
   getreq(value: any, date: any, status: any) {
     loader.loading = true;//18-08-21
     let url = '';
@@ -164,11 +326,9 @@ export class ReportComponent implements OnInit {
     } else if (value === 'sent') {
       let claim = date === undefined ? 'all' : date;
       url = 'report?companyId=' + this.companyid + '&extractData=' + claim + '&sendClaim=' + status.value;
-    }
-    else {
+    } else{
       url = 'report?companyId=' + this.companyid + '&sendOnFromDate=' +
-      date + '&sendOnToDate=' +
-      status
+      date + '&sendOnToDate=' + status;
     }
     this.commonService.getmethod(url).subscribe((data) => {
       this.reportarray = data.details;
@@ -221,9 +381,9 @@ export class ReportComponent implements OnInit {
     }, err => {
       console.log(err);
     });
-    loader.loading = false;//18-08-21
+    //loader.loading = false;//18-08-21
   }
-
+*/
 
 
   export() {

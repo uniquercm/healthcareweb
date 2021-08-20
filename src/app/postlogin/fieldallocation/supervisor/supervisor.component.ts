@@ -153,11 +153,12 @@ export class SupervisorComponent implements OnInit, OnDestroy {
         loader.loading = false;//Thanam 11-08-21
         return;
       } else {//********************* */
-      this.array.forEach((element: any) => {
-        if (element.patientInformation.cityId === Number(event)) {
-          farray.push(element);
-        }
-      });}
+        this.array.forEach((element: any) => {
+          if (element.patientInformation.cityId === Number(event)) {
+            farray.push(element);
+          }
+        });
+      }
     }
 
     this.dataSource = new MatTableDataSource(farray);
