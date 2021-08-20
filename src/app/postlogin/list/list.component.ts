@@ -43,6 +43,7 @@ export class ListComponent implements OnInit {
     this.getCity();
     this.getCompany();
     this.getPatent('inital');
+    //loader.loading = false;//19-08-21
   }
 
   ngOnInit(): void {
@@ -72,8 +73,9 @@ export class ListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.farray);
       return;
     }
-    console.log(Number((event.target as HTMLInputElement).value));
+    //console.log(Number((event.target as HTMLInputElement).value));
     const result = this.array.filter((s: any) => s.mobileNo.includes(Number((event.target as HTMLInputElement).value)));
+    
     this.dataSource = new MatTableDataSource(result);
   }
 
@@ -121,6 +123,7 @@ export class ListComponent implements OnInit {
 
   selectedArea = [];
   select(name: string, event: any) {
+    loader.loading = true; //Thanam 18-08-21
     let farray: any = [];
     if (name === 'case') {
       if (event.value === 'all') {
@@ -130,6 +133,8 @@ export class ListComponent implements OnInit {
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+
+        loader.loading = false;//19-08-21
 
         return;
       } else {
@@ -148,6 +153,8 @@ export class ListComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
 
+        loader.loading = false;//19-08-21
+
         return;
       }
       // this.array.forEach((element: any) => {
@@ -155,8 +162,9 @@ export class ListComponent implements OnInit {
       //     farray.push(element);
       //   }
       // });
-      console.log(this.selectedArea.toString())
+      // console.log(this.selectedArea.toString())
 
+      loader.loading = true;
       let url = '';
       if (this.fromdate === '') {
         url = 'patient?companyId=' + this.companyid
@@ -175,6 +183,7 @@ export class ListComponent implements OnInit {
         for (let index = 0; index < this.array.length; index++) {
           const element: any = this.array[index];
 
+          element.id = index + 1; 
           if (element.recptionCallStatus === undefined) {
             element.recptionCallStatus = ''
           }
@@ -196,6 +205,7 @@ export class ListComponent implements OnInit {
         loader.loading = false;
       })
     } else if (name === 'city') {
+      loader.loading = true;//Thanam 18-08-21
       //Thanam 11-08-21
       if (event === 'all') {
         this.array = this.farray;
@@ -206,12 +216,15 @@ export class ListComponent implements OnInit {
         loader.loading = false;//Thanam 11-08-21
         return;
       } else {//********************* */
-      this.array.forEach((element: any) => {
-        if (element.cityId === Number(event)) {
-          farray.push(element);
-        }
-      });}
+        this.array.forEach((element: any) => {
+          if (element.cityId === Number(event)) {
+            farray.push(element);
+          }
+        });
+      }
+      loader.loading = false;//Thanam 18-08-21
     } else if (name === 'status') {
+      loader.loading = true;
       let url = '';
       if (this.fromdate === '') {
         url = 'patient?companyId=' + this.companyid
@@ -229,6 +242,7 @@ export class ListComponent implements OnInit {
         for (let index = 0; index < this.array.length; index++) {
           const element: any = this.array[index];
 
+          element.id = index + 1; 
           if (element.recptionCallStatus === undefined) {
             element.recptionCallStatus = ''
           }
@@ -250,6 +264,7 @@ export class ListComponent implements OnInit {
         loader.loading = false;
       })
     } else {
+      loader.loading = true;
       this.array.forEach((element: any) => {
         if (event.value === 'yes') {
           if (element.googleMapLink !== '')
@@ -261,6 +276,7 @@ export class ListComponent implements OnInit {
           farray.push(element);
         }
       });
+      loader.loading = false;//19-08-21
     }
 
     this.dataSource = new MatTableDataSource(farray);
@@ -319,12 +335,15 @@ export class ListComponent implements OnInit {
     eid.value = '';
     crmno.value = '';
     region.value = '';
-    statuss.value = ''; 
+    statuss.value = '';
 
     this.selectedArea = [];
+    loader.loading = false;//19-08-21
   }
 
   getstatus(statuss: any) {
+    loader.loading = true;
+
     let url = 'patient?companyId' + this.companyid + '&gMapLinkSatus=' + statuss.value
 
     this.commonService.getmethod(url).subscribe((data) => {
@@ -334,6 +353,7 @@ export class ListComponent implements OnInit {
       for (let index = 0; index < this.array.length; index++) {
         const element: any = this.array[index];
 
+        element.id = index + 1; 
         if (element.recptionCallStatus === undefined) {
           element.recptionCallStatus = ''
         }
@@ -349,7 +369,9 @@ export class ListComponent implements OnInit {
 
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      loader.loading = false;
     }, err => {
+      loader.loading = false;
       console.log(err);
     })
   }
@@ -370,6 +392,7 @@ export class ListComponent implements OnInit {
   }
 
   getPatent(value: any) {
+    loader.loading = true;
     let url = '';//submit
     if (value = 'inital') {
       //Thanam
@@ -403,6 +426,7 @@ export class ListComponent implements OnInit {
       for (let index = 0; index < this.array.length; index++) {
         const element: any = this.array[index];
 
+        element.id = index + 1; 
         if (element.recptionCallStatus === undefined) {
           element.recptionCallStatus = ''
         }
@@ -428,31 +452,70 @@ export class ListComponent implements OnInit {
   farray: any = [];
 
   export() {
-    for (let index = 0; index < this.dataSource.filteredData.length; index++) {
-      let element: any = this.dataSource.filteredData[index];
+    loader.loading = true;
+    setTimeout(() => {
+      for (let index = 0; index < this.dataSource.filteredData.length; index++) 
+      {
+        let element: any = this.dataSource.filteredData[index];//.toString().replace("T00:00:00","");
 
-      delete element['patientId'];
-      delete element['companyId'];
-      delete element['requestId'];
-      delete element['cityName'];
-      delete element['nationalityId'];
-      delete element['drCallId'];
-      delete element['scheduledId'];
-      delete element['createdBy'];
-      delete element['cityId'];
-      delete element['id'];
-      if (element.modifiedBy === undefined) { } else {
-        delete element['modifiedBy'];
+        //Thanam 18-08-21
+        //0001-01-01T00:00:00
+        if(element['assignedDate'].toString() !== "")
+        {
+          element['assignedDate'] = this.datepipe.transform(element['assignedDate'], 'dd-MM-yyyy');//toString('dd-MM-yyyy');//.replace("T00:00:00","");
+          element['assignedDate'] = element['assignedDate'].toString().replace("01-01-0001","");
+        }
+        
+        if(element['createdOn'].toString() !== "")
+        {
+          element['createdOn'] = this.datepipe.transform(element['createdOn'], 'dd-MM-yyyy');//element['createdOn'].toString().replace("T00:00:00","");
+          element['createdOn'] = element['createdOn'].toString().replace("01-01-0001","");
+        }
+        
+        if(element['dateOfBirth'].toString() !== "")
+        {
+          element['dateOfBirth'] = this.datepipe.transform(element['dateOfBirth'], 'dd-MM-yyyy');//element['dateOfBirth'].toString().replace("T00:00:00","");
+          element['dateOfBirth'] = element['dateOfBirth'].toString().replace("01-01-0001","");
+        }
+        
+        if(element['recptionCallDate'].toString() !== "")
+        {
+          element['recptionCallDate'] = this.datepipe.transform(element['recptionCallDate'], 'dd-MM-yyyy');//element['recptionCallDate'].toString().replace("T00:00:00","");
+          element['recptionCallDate'] = element['recptionCallDate'].toString().replace("01-01-0001","");
+        }
+        //************************ */
+
+        delete element['patientId'];
+        //Thanam 18-08-21
+        delete element['primaryPatientId'];
+        //***************************** */
+        delete element['companyId'];
+        delete element['requestId'];
+        delete element['cityName'];
+        delete element['nationalityId'];
+        delete element['drCallId'];
+        delete element['scheduledId'];
+        delete element['createdBy'];
+        delete element['cityId'];
+        delete element['id'];
+        if (element.modifiedBy === undefined) { } else {
+          delete element['modifiedBy'];
+        }
+
       }
 
-    }
+      //debugger
 
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    /* save to file */
-    XLSX.writeFile(wb, 'patient.xlsx');
+      /* save to file */
+      XLSX.writeFile(wb, 'patient.xlsx');
+
+      loader.loading = false;
+    }, 1000);
+
 
   }
 
@@ -489,8 +552,8 @@ export class ListComponent implements OnInit {
 
   city: any[] = [];
   getCity() {
-    this.commonService.getmethodws('city').subscribe((datas) => {
-      this.city = datas.details;
+    this.commonService.getmethodws('city').subscribe((region) => {
+      this.city = region.details;
     }, err => {
       console.log(err);
     })

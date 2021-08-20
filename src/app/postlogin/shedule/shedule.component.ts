@@ -126,19 +126,329 @@ export class SheduleComponent implements OnInit, OnDestroy {
     editvalues.headerbuttclick = value.headerbuttclick;
   }
 
+  //Thanam 18-08-21
+  // ngOnInit() {
+  //   if (!editvalues.headerbuttclick)//Thanam
+  //   {
+  //     this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
+  //       if (data.details.length === 0) {
+
+  //         this.commonService.getmethodpromise('patient?companyId=' + this.localvalues.companyId
+  //           + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').then((res) => {
+
+  //             this.formGroup.controls['name'].setValue(res.details[0].patientName);
+  //             this.formGroup.controls['age'].setValue(res.details[0].age);
+  //             this.edit = false;
+  //             this.array = res.details[0];
+
+  //             if (this.array.requestCrmName === 'HQP') {
+  //               this.firstFormGroup.controls['result'].setValue('waiting');
+  //               this.isHQP = false;
+  //               this.check = false;
+
+  //               this.firstFormGroup.controls['conducteddate'].setValue(res.details[0].createdOn);
+
+  //               this.hqpFormGroup.controls['hqpstartdate'].setValue(res.details[0].createdOn);
+
+  //               let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+  //               drpicker.setDate(drpicker.getDate() + 1);
+
+  //               this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.hqpFormGroup.controls['hqpstartdate'].value);
+
+  //               let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+  //               fourpickers.setDate(fourpickers.getDate() + 3 - 1);
+  //               this.hqpFormGroup.controls['hqpfourpicker'].setValue(drpicker);
+
+  //               let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+  //               eightpickers.setDate(eightpickers.getDate() + 6);
+
+  //               this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
+
+  //               let startdates: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+  //               startdates.setDate(startdates.getDate() + 7);
+  //               this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
+  //               this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
+
+  //             } else if (this.array.requestCrmName === 'HIP') {
+  //               this.check = false;
+  //               this.isolation = true;
+  //               this.dischargedate = false;
+  //               this.type = 'isolation';
+  //               this.discharge = true;
+  //               this.isHIP = true;
+  //               this.isHQP = false;
+  //               this.isolation = false;
+  //               //Thanam
+  //               //this.firstFormGroup.controls['result'].setValue('waiting');
+  //               this.firstFormGroup.controls['result'].setValue('positive');
+  //               //************** */
+  //               this.firstFormGroup.controls['vaccinestatus'].setValue('no');
+  //             } else {
+  //               this.check = true;
+  //             }
+  //           }, err => {
+  //             console.log(err);
+  //           })
+  //       } else {
+
+  //         this.array = data.details[0];
+  //         this.edit = true;
+  //         this.formGroup.controls['name'].setValue(this.array.patientName);
+  //         this.formGroup.controls['age'].setValue(this.array.age);
+
+  //         this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
+  //         this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
+
+  //         this.firstFormGroup.controls['dischargedate'].setValue(this.array.dischargeDate);
+  //         this.check = true;
+
+  //         if (this.array.requestCrmName === 'HQP') {
+  //           this.isHQP = false;
+  //           this.check = false;
+
+  //           if (document.getElementById('next-btn') !== null) {
+  //             let myElement: HTMLElement | null = document.getElementById('next-btn');
+
+  //             if (myElement !== null)
+  //               myElement.style.display = 'inline-flex';
+  //           }
+
+  //           this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
+
+  //           let drpicker: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+  //           drpicker.setDate(drpicker.getDate());
+
+  //           this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.array.pcrTestDate);
+  //           //Thanam
+  //           this.hqpFormGroup.controls['hqpdrspicker'].setValue(this.array.day2CallDetails.calledDate);
+  //           //******************** */
+
+  //           let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
+  //           fourpickers.setDate(fourpickers.getDate() + 1);
+  //           this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
+
+  //           //Thanam
+  //           this.hqpFormGroup.controls['hqpfourspicker'].setValue(this.array.trackerAppliedDate);
+  //           this.hqpFormGroup.controls['hqpfourresult'].setValue(this.array.stickerTrackerResult);
+  //           //************ */
+
+  //           this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
+
+  //           //Thanam
+  //           this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR6DaySampleDate : (this.array.pcR11DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR11DaySampleDate : this.array.pcR6DaySampleDate));
+  //           this.hqpFormGroup.controls['hqpeightresult'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayResult : (this.array.pcR11DayResult !== '0001-01-01T00:00:00' ? this.array.pcR11DayResult : this.array.pcR6DayResult));
+  //           //************ */
+
+  //           this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
+  //           this.hqpFormGroup.controls['hqpdischargepicker'].setValue(this.array.dischargeDate);
+  //           //Thanam
+  //           this.hqpFormGroup.controls['hqpdischargespicker'].setValue(this.array.dischargeStatus);
+  //           this.hqpFormGroup.controls['hqpdischargerpicker'].setValue(this.array.dischargeRemarks);
+  //           //************** */
+
+
+  //           if (this.firstFormGroup.controls['result'].value === 'positive') {
+  //             alert('Please change the Request/CRM No to HIP');
+  //             if (document.getElementById('next-btn') !== null) {
+  //               let myElement: HTMLElement | null = document.getElementById('next-btn');
+
+  //               if (myElement !== null)
+  //                 myElement.style.display = 'none';
+  //             }
+  //             this.isHQP = true
+  //             this.hqpdisabled = false;
+  //             return;
+  //           }
+
+  //           this.hqpdisabled = true;
+  //         } else if (this.array.requestCrmName === 'HIP') {
+  //           this.check = false;
+  //           this.isolation = true;
+  //           this.dischargedate = false;
+  //           this.type = 'isolation';
+  //           this.discharge = true;
+  //           this.isHIP = true;
+  //           this.isHQP = false;
+  //           this.isolation = false;
+
+  //           this.firstFormGroup.controls['result'].setValue(this.array.pcrResult === '' ? 'waiting' : this.array.pcrResult);
+  //           //Thanam
+  //           //this.firstFormGroup.controls['result'].setValue('waiting');
+  //           this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
+  //           //**************** */
+  //           this.firstFormGroup.controls['vaccinestatus'].setValue('no');
+  //           console.log(this.array);
+
+  //           this.firstFormGroup.controls['quarantine'].setValue('isolation');
+  //           this.thirdFormGroup.controls['isostartdate'].setValue('0001-01-01T00:00:00' === this.array.treatmentFromDate ? '' : this.array.treatmentFromDate);
+  //           this.thirdFormGroup.controls['isoenddate'].setValue('0001-01-01T00:00:00' === this.array.treatmentToDate ? '' : this.array.treatmentToDate);
+  //           this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+  //           this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+  //           this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
+  //           this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+  //           this.thirdFormGroup.controls['fpspicker'].setValue(this.array.day4CallDetails.remarks);
+  //           this.thirdFormGroup.controls['fiveremark'].setValue(this.array.day5CallDetails.remarks);
+  //           this.thirdFormGroup.controls['sixremark'].setValue(this.array.day6CallDetails.remarks);
+  //           this.thirdFormGroup.controls['sevenremark'].setValue(this.array.day7CallDetails.remarks);
+
+  //           this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
+  //           this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+  //           this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+
+  //           if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
+  //             this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
+  //             this.thirdFormGroup.controls['traapicker'].setValue('0001-01-01T00:00:00' === this.array.stickerAppliedDate ? '' : this.array.stickerAppliedDate);
+  //             this.thirdFormGroup.controls['traresult'].setValue(this.array.stickerTrackerResult);
+  //           } else {
+  //             this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
+  //             this.thirdFormGroup.controls['traapicker'].setValue('0001-01-01T00:00:00' === this.array.trackerAppliedDate ? '' : this.array.trackerAppliedDate);
+  //             this.thirdFormGroup.controls['traresult'].setValue(this.array.stickerTrackerResult);//Thanam
+  //           }
+
+  //           // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
+  //           this.thirdFormGroup.controls['resultpcr'].setValue(this.array.day4CallDetails.callStatus);
+  //           this.thirdFormGroup.controls['fivestatus'].setValue(this.array.day5CallDetails.callStatus);
+  //           this.thirdFormGroup.controls['sixstatus'].setValue(this.array.day6CallDetails.callStatus);
+  //           this.thirdFormGroup.controls['sevenstatus'].setValue(this.array.day7CallDetails.callStatus);
+  //           this.thirdFormGroup.controls['ninestatus'].setValue(this.array.day9CallDetails.callStatus);
+
+  //           this.thirdFormGroup.controls['fivepicker'].setValue('0001-01-01T00:00:00' === this.array.day5CallDetails.callScheduledDate ? '' : this.array.day5CallDetails.callScheduledDate);
+  //           this.thirdFormGroup.controls['sixpicker'].setValue('0001-01-01T00:00:00' === this.array.day6CallDetails.callScheduledDate ? '' : this.array.day6CallDetails.callScheduledDate);
+
+  //           this.thirdFormGroup.controls['sdpicker'].setValue('0001-01-01T00:00:00' === this.array.day7CallDetails.callScheduledDate ? '' : this.array.day7CallDetails.callScheduledDate);
+
+  //           this.thirdFormGroup.controls['edppicker'].setValue('0001-01-01T00:00:00' === this.array.pcR8DayTestDate ? '' : this.array.pcR8DayTestDate);
+  //           this.thirdFormGroup.controls['edcpicker'].setValue('0001-01-01T00:00:00' === this.array.pcR8DaySampleDate ? '' : this.array.pcR8DaySampleDate);
+  //           this.thirdFormGroup.controls['eightresultpcr'].setValue('0001-01-01T00:00:00' === this.array.pcR8DayResult ? '' : this.array.pcR8DayResult);
+  //           this.thirdFormGroup.controls['nnpicker'].setValue('0001-01-01T00:00:00' === this.array.day9CallDetails.callScheduledDate ? '' : this.array.day9CallDetails.callScheduledDate);
+
+  //           this.thirdFormGroup.controls['isodispicker'].setValue('0001-01-01T00:00:00' === this.array.dischargeDate ? '' : this.array.dischargeDate);
+
+  //           this.thirdFormGroup.controls['dischargespicker'].setValue('0001-01-01T00:00:00' === this.array.dischargeStatus ? '' : this.array.dischargeStatus);
+
+  //           this.thirdFormGroup.controls['dischargerpicker'].setValue('0001-01-01T00:00:00' === this.array.dischargeRemarks ? '' : this.array.dischargeRemarks);
+
+  //         } else {
+  //           this.check = true;
+
+  //           if (this.array.treatmentType === 'isolation') {
+  //             this.isolation = false;
+  //             this.type = 'isolation';
+  //             this.firstFormGroup.controls['quarantine'].setValue('isolation');
+  //           } else if (this.array.treatmentType === 'quarantine') {
+  //             this.discharge = false;
+  //             this.type = 'quarantine';
+  //             this.firstFormGroup.controls['quarantine'].setValue('quarantine');
+  //           } else {
+  //             this.check = false;
+  //             this.dischargedate = true;
+  //           }
+
+  //           if (this.array.treatmentType === 'isolation') {
+  //             this.thirdFormGroup.controls['isostartdate'].setValue(this.array.treatmentFromDate);
+  //             this.thirdFormGroup.controls['isoenddate'].setValue(this.array.treatmentToDate);
+  //             this.thirdFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate);
+  //             this.thirdFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate);
+  //             this.thirdFormGroup.controls['eightpicker'].setValue(this.array.day3CallDetails.callScheduledDate);
+  //             this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
+  //             this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
+
+  //             if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
+  //               this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
+  //             } else {
+  //               this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
+  //               this.thirdFormGroup.controls['traapicker'].setValue(this.array.trackerAppliedDate);
+  //               this.thirdFormGroup.controls['traresult'].setValue(this.array.stickerTrackerResult);//Thanam
+  //             }
+
+  //             // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
+  //             //Thanam
+  //             //this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
+  //             //this.thirdFormGroup.controls['resultpcr'].setValue(this.array.pcR4DayResult);
+  //             this.thirdFormGroup.controls['fppicker'].setValue(this.array.day4CallDetails.callScheduledDate);
+  //             this.thirdFormGroup.controls['resultpcr'].setValue(this.array.day4CallDetails.callStatus);
+  //             this.thirdFormGroup.controls['fpspicker'].setValue(this.array.day4CallDetails.remarks);
+  //             //************* */
+  //             this.thirdFormGroup.controls['fivepicker'].setValue(this.array.day5CallDetails.callScheduledDate);
+  //             //Thanam
+  //             this.thirdFormGroup.controls['fivestatus'].setValue(this.array.day5CallDetails.callStatus);
+  //             this.thirdFormGroup.controls['fiveremark'].setValue(this.array.day5CallDetails.remarks);
+  //             //******************** */
+  //             this.thirdFormGroup.controls['sixpicker'].setValue(this.array.day6CallDetails.callScheduledDate);
+  //             //Thanam
+  //             this.thirdFormGroup.controls['sixstatus'].setValue(this.array.day6CallDetails.callStatus);
+  //             this.thirdFormGroup.controls['sixremark'].setValue(this.array.day6CallDetails.remarks);
+  //             //******************** */
+
+  //             this.thirdFormGroup.controls['sdpicker'].setValue(this.array.day7CallDetails.callScheduledDate);
+  //             //Thanam
+  //             this.thirdFormGroup.controls['sdstatus'].setValue(this.array.day7CallDetails.callStatus);
+  //             this.thirdFormGroup.controls['sdremark'].setValue(this.array.day7CallDetails.remarks);
+  //             //******************** */
+
+  //             this.thirdFormGroup.controls['edppicker'].setValue(this.array.pcR8DayTestDate);
+  //             this.thirdFormGroup.controls['edcpicker'].setValue(this.array.pcR8DaySampleDate);
+  //             this.thirdFormGroup.controls['eightresultpcr'].setValue(this.array.pcR8DayResult);
+  //             this.thirdFormGroup.controls['nnpicker'].setValue(this.array.day9CallDetails.callScheduledDate);
+  //             //Thanam
+  //             this.thirdFormGroup.controls['nnstatus'].setValue(this.array.day9CallDetails.callStatus);
+  //             this.thirdFormGroup.controls['nnremark'].setValue(this.array.day9CallDetails.remarks);
+  //             //******************** */
+
+  //             this.thirdFormGroup.controls['isodispicker'].setValue(this.array.dischargeDate);
+
+  //             this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus);
+
+  //             this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks);
+  //           } else {
+  //             this.secondFormGroup.controls['startdate'].setValue(this.array.treatmentFromDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentFromDate);
+  //             this.secondFormGroup.controls['enddate'].setValue(this.array.treatmentToDate === '0001-01-01T00:00:00' ? '' : this.array.treatmentToDate);
+
+  //             this.secondFormGroup.controls['fourpicker'].setValue(this.array.pcR4DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayTestDate);
+  //             this.secondFormGroup.controls['fourspicker'].setValue(this.array.pcR4DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR4DaySampleDate);
+  //             this.secondFormGroup.controls['fourresult'].setValue(this.array.pcR4DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR4DayResult);
+
+  //             this.secondFormGroup.controls['eightpicker'].setValue(this.array.pcR8DayTestDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayTestDate);
+  //             this.secondFormGroup.controls['eightspicker'].setValue(this.array.pcR8DaySampleDate === '0001-01-01T00:00:00' ? '' : this.array.pcR8DaySampleDate);
+  //             this.secondFormGroup.controls['eightresult'].setValue(this.array.pcR8DayResult === '0001-01-01T00:00:00' ? '' : this.array.pcR8DayResult);
+
+  //             this.secondFormGroup.controls['dischargepicker'].setValue(this.array.dischargeDate === '0001-01-01T00:00:00' ? '' : this.array.dischargeDate);
+  //             this.secondFormGroup.controls['drpicker'].setValue(this.array.day2CallDetails.callScheduledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.callScheduledDate);
+  //             this.secondFormGroup.controls['drspicker'].setValue(this.array.day2CallDetails.calledDate === '0001-01-01T00:00:00' ? '' : this.array.day2CallDetails.calledDate);
+  //             this.thirdFormGroup.controls['dischargespicker'].setValue(this.array.dischargeStatus === '0001-01-01T00:00:00' ? '' : this.array.dischargeStatus);
+  //             this.thirdFormGroup.controls['dischargerpicker'].setValue(this.array.dischargeRemarks === '0001-01-01T00:00:00' ? '' : this.array.dischargeRemarks);
+  //           }
+  //         }
+
+  //         this.firstFormGroup.controls['vaccinestatus'].setValue(this.array.haveVaccine);
+  //       }
+  //     }, err => {
+  //       console.log(err);
+  //     });
+  //   }
+
+  //   // if (!editvalues.headerbuttclick) {
+  //   //   editvalues.headerbuttclick = true;
+  //   //   localStorage.setItem('patientedit', JSON.stringify(editvalues));
+  //   // } 
+
+  // }
+
   ngOnInit() {
     if (!editvalues.headerbuttclick)//Thanam
     {
       this.commonService.getmethod('scheduled?companyId=' + this.localvalues.companyId + '&isTeam=false&patientId=' + editvalues.patientid + '&isFieldAllocation=false').subscribe((data) => {
         if (data.details.length === 0) {
-        
+
           this.commonService.getmethodpromise('patient?companyId=' + this.localvalues.companyId
             + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').then((res) => {
-               
+
               this.formGroup.controls['name'].setValue(res.details[0].patientName);
               this.formGroup.controls['age'].setValue(res.details[0].age);
               this.edit = false;
               this.array = res.details[0];
+
+              //
 
               if (this.array.requestCrmName === 'HQP') {
                 this.firstFormGroup.controls['result'].setValue('waiting');
@@ -177,11 +487,10 @@ export class SheduleComponent implements OnInit, OnDestroy {
                 this.isHIP = true;
                 this.isHQP = false;
                 this.isolation = false;
-                //Thanam
-                //this.firstFormGroup.controls['result'].setValue('waiting');
+                
                 this.firstFormGroup.controls['result'].setValue('positive');
-                //************** */
-                this.firstFormGroup.controls['vaccinestatus'].setValue('no'); 
+                
+                this.firstFormGroup.controls['vaccinestatus'].setValue('no');
               } else {
                 this.check = true;
               }
@@ -194,6 +503,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.edit = true;
           this.formGroup.controls['name'].setValue(this.array.patientName);
           this.formGroup.controls['age'].setValue(this.array.age);
+
+          //
 
           this.firstFormGroup.controls['conducteddate'].setValue(this.array.pcrTestDate);
           this.firstFormGroup.controls['result'].setValue(this.array.pcrResult);
@@ -218,24 +529,24 @@ export class SheduleComponent implements OnInit, OnDestroy {
             drpicker.setDate(drpicker.getDate());
 
             this.hqpFormGroup.controls['hqpdrpicker'].setValue(this.array.pcrTestDate);
-            //Thanam
+            
             this.hqpFormGroup.controls['hqpdrspicker'].setValue(this.array.day2CallDetails.calledDate);
-            //******************** */
 
             let fourpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
             fourpickers.setDate(fourpickers.getDate() + 1);
             this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
-            //Thanam
             this.hqpFormGroup.controls['hqpfourspicker'].setValue(this.array.trackerAppliedDate);
             this.hqpFormGroup.controls['hqpfourresult'].setValue(this.array.stickerTrackerResult);
-            //************ */
 
-            this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
+            //Thanam 18-08-21
+            //this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR11DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR11DayTestDate : this.array.pcR6DayTestDate));
+            this.hqpFormGroup.controls['hqpeightpicker'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayTestDate : (this.array.pcR9DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR9DayTestDate : this.array.pcR6DayTestDate));
 
-            //Thanam
-            this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR6DaySampleDate : (this.array.pcR11DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR11DaySampleDate : this.array.pcR6DaySampleDate));
-            this.hqpFormGroup.controls['hqpeightresult'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayResult : (this.array.pcR11DayResult !== '0001-01-01T00:00:00' ? this.array.pcR11DayResult : this.array.pcR6DayResult));
+            //this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR6DaySampleDate : (this.array.pcR11DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR11DaySampleDate : this.array.pcR6DaySampleDate));
+            //this.hqpFormGroup.controls['hqpeightresult'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayResult : (this.array.pcR11DayResult !== '0001-01-01T00:00:00' ? this.array.pcR11DayResult : this.array.pcR6DayResult));
+            this.hqpFormGroup.controls['hqpeightspicker'].setValue(this.array.pcR6DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR6DaySampleDate : (this.array.pcR9DayTestDate != '0001-01-01T00:00:00' ? this.array.pcR9DaySampleDate : this.array.pcR6DaySampleDate));
+            this.hqpFormGroup.controls['hqpeightresult'].setValue(this.array.pcR6DayTestDate !== '0001-01-01T00:00:00' ? this.array.pcR6DayResult : (this.array.pcR9DayResult !== '0001-01-01T00:00:00' ? this.array.pcR9DayResult : this.array.pcR6DayResult));
             //************ */
 
             this.hqpFormGroup.controls['hqpenddate'].setValue(this.array.treatmentToDate);
@@ -270,6 +581,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.isHQP = false;
             this.isolation = false;
 
+            //
+
             this.firstFormGroup.controls['result'].setValue(this.array.pcrResult === '' ? 'waiting' : this.array.pcrResult);
             //Thanam
             //this.firstFormGroup.controls['result'].setValue('waiting');
@@ -289,11 +602,11 @@ export class SheduleComponent implements OnInit, OnDestroy {
             this.thirdFormGroup.controls['fiveremark'].setValue(this.array.day5CallDetails.remarks);
             this.thirdFormGroup.controls['sixremark'].setValue(this.array.day6CallDetails.remarks);
             this.thirdFormGroup.controls['sevenremark'].setValue(this.array.day7CallDetails.remarks);
-            
+
             this.thirdFormGroup.controls['callstatus'].setValue(this.array.day3CallDetails.callStatus);
             this.thirdFormGroup.controls['drremark'].setValue(this.array.day3CallDetails.remarks);
             this.thirdFormGroup.controls['fppicker'].setValue(this.array.pcR4DayTestDate);
- 
+
             if ('0001-01-01T00:00:00' === this.array.trackerScheduleDate) {
               this.thirdFormGroup.controls['trapicker'].setValue(this.array.stickerScheduleDate);
               this.thirdFormGroup.controls['traapicker'].setValue('0001-01-01T00:00:00' === this.array.stickerAppliedDate ? '' : this.array.stickerAppliedDate);
@@ -302,7 +615,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
               this.thirdFormGroup.controls['trapicker'].setValue(this.array.trackerScheduleDate);
               this.thirdFormGroup.controls['traapicker'].setValue('0001-01-01T00:00:00' === this.array.trackerAppliedDate ? '' : this.array.trackerAppliedDate);
               this.thirdFormGroup.controls['traresult'].setValue(this.array.stickerTrackerResult);//Thanam
-            } 
+            }
 
             // this.thirdFormGroup.controls['fpspicker'].setValue(this.array.pcR4DaySampleDate);
             this.thirdFormGroup.controls['resultpcr'].setValue(this.array.day4CallDetails.callStatus);
@@ -425,14 +738,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
         console.log(err);
       });
     }
-
-    // if (!editvalues.headerbuttclick) {
-    //   editvalues.headerbuttclick = true;
-    //   localStorage.setItem('patientedit', JSON.stringify(editvalues));
-    // } 
-
   }
-
+//************************* */
   radioChange(event: any, date: any) {
     if (this.array.requestCrmName === 'HQP') {
       this.check = false;
@@ -457,7 +764,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       }
       this.hqpdisabled = true;
       if (this.edit) {
-
+//
         if (this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
 
           this.hqpFormGroup.controls['hqpstartdate'].setValue(this.array.pcrTestDate);
@@ -493,16 +800,23 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
           let eightpickers: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          eightpickers.setDate(eightpickers.getDate() + 11 - 1);
+          //Thanam 18-08-21
+          eightpickers.setDate(eightpickers.getDate() + 9 - 1);
+          //eightpickers.setDate(eightpickers.getDate() + 11 - 1);
+          //*************** */
 
           this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
 
           let startdates: Date = new Date(this.hqpFormGroup.controls['hqpstartdate'].value);
-          startdates.setDate(startdates.getDate() + 12 - 1);
+          //Thanam 18-08-21
+          startdates.setDate(startdates.getDate() + 10 - 1);
+          //startdates.setDate(startdates.getDate() + 12 - 1);
+          //****************** */
           this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
           this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
         }
       } else {
+        //
         if (this.firstFormGroup.controls['vaccinestatus'].value === 'yes') {
           this.hqpFormGroup.controls['hqpstartdate'].setValue(this.firstFormGroup.value.conducteddate);
 
@@ -537,12 +851,18 @@ export class SheduleComponent implements OnInit, OnDestroy {
           this.hqpFormGroup.controls['hqpfourpicker'].setValue(fourpickers);
 
           let eightpickers: Date = new Date(this.firstFormGroup.value.conducteddate);
-          eightpickers.setDate(eightpickers.getDate() + 11 - 1);
+          //Thanam 18-08-21
+          eightpickers.setDate(eightpickers.getDate() + 9 - 1);
+          //eightpickers.setDate(eightpickers.getDate() + 11 - 1);
+          //******************* */
 
           this.hqpFormGroup.controls['hqpeightpicker'].setValue(eightpickers);
 
           let startdates: Date = new Date(this.firstFormGroup.value.conducteddate);
-          startdates.setDate(startdates.getDate() + 12 - 1);
+          //Thanam 18-08-21
+          startdates.setDate(startdates.getDate() + 10 - 1);
+          //startdates.setDate(startdates.getDate() + 12 - 1);
+          //************ */
           this.hqpFormGroup.controls['hqpenddate'].setValue(startdates);
           this.hqpFormGroup.controls['hqpdischargepicker'].setValue(startdates);
         }
@@ -582,7 +902,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
         this.firstFormGroup.controls['dischargedate'].setValue(drpicker);
       }
-    } 
+    }
   }
 
   showOptions(event: any) {
@@ -612,10 +932,12 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   updatehqpdate(date: any, picker: MatDatepicker<Date>) {
     picker.close();
+    //
     this.changehqp(date);
   }
 
   changehqp(date: any) {
+    //
     let drpicker: Date = date.value;
     drpicker.setDate(drpicker.getDate());
 
@@ -680,6 +1002,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   isolationdate(date: any, picker: MatDatepicker<Date>) {
     picker.close();
+    //
 
     let drpicker: Date = date.value;
     drpicker.setDate(drpicker.getDate() + 1);
@@ -733,6 +1056,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
     // if (this.firstFormGroup.invalid) {
     //   return;
     // }
+    //
     if (this.edit) {
       let map = {
         "scheduledId": editvalues.scheduleid,
@@ -764,7 +1088,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       }
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
-
+//
         if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
@@ -781,6 +1105,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       })
 
     } else {
+      //
       let map = {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
@@ -812,7 +1137,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
-
+//
         if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
@@ -833,7 +1158,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
   savehqp(stdate: any, fordate: any, etdate: any, dgdate: any) {
     if (this.edit) {
-
+//
       let map = {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
@@ -852,9 +1177,14 @@ export class SheduleComponent implements OnInit, OnDestroy {
         "pcR6DayTestDate": this.firstFormGroup.value.vaccinestatus === 'no' ? '01/01/0001' : etdate.value,
         "pcR6DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR6DayResult": "",
-        "pcR11DayTestDate": this.firstFormGroup.value.vaccinestatus === 'yes' ? '01/01/0001' : dgdate.value,
-        "pcR11DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
-        "pcR11DayResult": "",
+        //Thanam 18-08-21
+        "pcR9DayTestDate": this.firstFormGroup.value.vaccinestatus === 'yes' ? '01/01/0001' : dgdate.value,
+        "pcR9DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
+        "pcR9DayResult": "",
+        //"pcR11DayTestDate": this.firstFormGroup.value.vaccinestatus === 'yes' ? '01/01/0001' : dgdate.value,
+        //"pcR11DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
+        //"pcR11DayResult": "",
+        //******************* */
         "firstCallScheduledDate": stdate.value,
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
@@ -865,7 +1195,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
-
+//debugger
         if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
@@ -881,7 +1211,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
         console.log(err);
       })
 
-    } else {
+    } else {//
       let map = {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
@@ -900,9 +1230,14 @@ export class SheduleComponent implements OnInit, OnDestroy {
         "pcR6DayTestDate": this.firstFormGroup.value.vaccinestatus === 'no' ? '01/01/0001' : etdate.value,
         "pcR6DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
         "pcR6DayResult": "",
-        "pcR11DayTestDate": this.firstFormGroup.value.vaccinestatus === 'yes' ? '01/01/0001' : dgdate.value,
+        //Thanam 18-08-21
+        "pcR9DayTestDate": this.firstFormGroup.value.vaccinestatus === 'yes' ? '01/01/0001' : dgdate.value,
+        "pcR9DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
+        "pcR9DayResult": "",
+        /*"pcR11DayTestDate": this.firstFormGroup.value.vaccinestatus === 'yes' ? '01/01/0001' : dgdate.value,
         "pcR11DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
-        "pcR11DayResult": "",
+        "pcR11DayResult": "",*/
+        //********************* */
         "firstCallScheduledDate": stdate.value,
         "createdBy": this.localvalues.userId,
         "modifiedBy": this.localvalues.userId,
@@ -914,7 +1249,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
         //Thanam
-
+//
         if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
@@ -934,6 +1269,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
   }
 
   fsave(conducteddate: any) {
+    //
     if (this.edit) {
       let map = {
         "scheduledId": editvalues.scheduleid,
@@ -956,7 +1292,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
-
+//
         if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
@@ -974,6 +1310,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       })
 
     } else {
+      //
       let map = {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
@@ -995,7 +1332,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
 
       this.commonService.postmethod('scheduled', map).subscribe((data) => {
         alert('Saved Sucessfully');
-
+//
         if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
@@ -1015,18 +1352,119 @@ export class SheduleComponent implements OnInit, OnDestroy {
     }
   }
 
+//Thanam 18-08-21
+//   issave(sdate: any, fourndate: any, ninendate: any, dischargedate: any) {
+//     // if (this.firstFormGroup.invalid) {
+//     //   return;
+//     // }
+//     
 
-  issave(sdate: any, fourndate: any, ninendate: any, dischargedate: any) {
-    // if (this.firstFormGroup.invalid) {
-    //   return;
-    // }
+//     if (this.edit) {
+//       let map = {
+//         "scheduledId": editvalues.scheduleid,
+//         "patientStaffId": 1,
+//         "patientId": editvalues.patientid,
+//         "pcrTestDate": sdate.value,
+//         "pcrResult": this.firstFormGroup.value.result,
+//         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+//         "dischargeDate": dischargedate.value,
+//         "dischargeStatus": "",
+//         "dischargeRemarks": "",
+//         "allocatedTeamName": "",
+//         "reAllocatedTeamName": "",
+//         "treatmentType": this.type,
+//         "treatmentFromDate": sdate.value,
+//         "treatmentToDate": dischargedate.value,
+//         "pcR4DayTestDate": fourndate.value,
+//         "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
+//         "pcR4DayResult": '',
+//         "pcR8DayTestDate": ninendate.value,
+//         "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
+//         "pcR8DayResult": '',
+//         "firstCallScheduledDate": sdate.value,
+//         "createdBy": this.localvalues.userId,
+//         "modifiedBy": this.localvalues.userId,
+//         "isUpdate": true,
+//         "requestId": this.array.requestId,
+//         "requestCrmName": this.array.requestCrmName
+//       }
+//       this.commonService.putmethod('scheduled', map).subscribe((data) => {
+//         alert('Updated Sucessfully');
+
+//         
+//         if (!editvalues.registertab) {
+//           editvalues.patientid = 0;
+//           editvalues.scheduleid = 0;
+//           editvalues.drcallid = 0;
+//           editvalues.headerbuttclick = true;
+//           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+//           window.close();
+//         } else {
+//           this.router.navigateByUrl('/apps/list');
+//         }
+//       }, err => {
+//         console.log(err);
+//       })
+//     } else {
+//       let map = {
+//         "scheduledId": editvalues.scheduleid,
+//         "patientStaffId": 1,
+//         "patientId": editvalues.patientid,
+//         "pcrTestDate": sdate.value,
+//         "pcrResult": this.firstFormGroup.value.result,
+//         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
+//         "dischargeDate": dischargedate.value,
+//         "dischargeStatus": "",
+//         "dischargeRemarks": "",
+//         "allocatedTeamName": "",
+//         "reAllocatedTeamName": "",
+//         "treatmentType": this.type,
+//         "treatmentFromDate": sdate.value,
+//         "treatmentToDate": dischargedate.value,
+//         "pcR4DayTestDate": fourndate.value,
+//         "pcR4DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
+//         "pcR4DayResult": '',
+//         "pcR8DayTestDate": ninendate.value,
+//         "pcR8DaySampleDate": this.datepipe.transform(new Date(), 'MM/dd/yyyy'),
+//         "pcR8DayResult": '',
+//         "firstCallScheduledDate": sdate.value,
+//         "createdBy": this.localvalues.userId,
+//         "modifiedBy": this.localvalues.userId,
+//         "isUpdate": false,
+//         "requestId": this.array.requestId,
+//         "requestCrmName": this.array.requestCrmName
+//       }
+
+//       this.commonService.postmethod('scheduled', map).subscribe((data) => {
+//         alert('Saved Sucessfully');
+// 
+//         if (!editvalues.registertab) {
+//           editvalues.patientid = 0;
+//           editvalues.scheduleid = 0;
+//           editvalues.drcallid = 0;
+//           editvalues.headerbuttclick = true;
+//           localStorage.setItem('patientedit', JSON.stringify(editvalues));
+
+//           window.close();
+//         } else {
+//           this.router.navigateByUrl('/apps/list');
+//         }
+//       }, err => {
+//         console.log(err);
+//       })
+//     }
+//   }
+
+  issave(conducteddate: any, sdate: any, fourndate: any, ninendate: any, dischargedate: any) {
+    //
 
     if (this.edit) {
       let map = {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
         "patientId": editvalues.patientid,
-        "pcrTestDate": sdate.value,
+        "pcrTestDate": conducteddate.value,
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
         "dischargeDate": dischargedate.value,
@@ -1053,6 +1491,7 @@ export class SheduleComponent implements OnInit, OnDestroy {
       this.commonService.putmethod('scheduled', map).subscribe((data) => {
         alert('Updated Sucessfully');
 
+        //
         if (!editvalues.registertab) {
           editvalues.patientid = 0;
           editvalues.scheduleid = 0;
@@ -1068,11 +1507,12 @@ export class SheduleComponent implements OnInit, OnDestroy {
         console.log(err);
       })
     } else {
+      
       let map = {
         "scheduledId": editvalues.scheduleid,
         "patientStaffId": 1,
         "patientId": editvalues.patientid,
-        "pcrTestDate": sdate.value,
+        "pcrTestDate": conducteddate.value,
         "pcrResult": this.firstFormGroup.value.result,
         "haveVaccine": this.firstFormGroup.value.vaccinestatus,
         "dischargeDate": dischargedate.value,
@@ -1116,6 +1556,8 @@ export class SheduleComponent implements OnInit, OnDestroy {
       })
     }
   }
+
+  //****************************** */
 
   ngOnDestroy() {
     editvalues.drcallid = 0

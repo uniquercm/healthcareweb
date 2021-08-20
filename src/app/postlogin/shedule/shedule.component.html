@@ -164,7 +164,10 @@
                             <mat-card class="quar">
                                 <mat-card-header>
                                     <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='yes'">6 day PCR </span>
-                                    <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='no'">11 day PCR </span>
+                                    <!--Thanam 18-08-21-->
+                                    <!--span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='no'">11 day PCR </span-->
+                                    <span *ngIf="firstFormGroup.controls['vaccinestatus'].value=='no'">9 day PCR </span>
+                                    <!--**************-->
                                 </mat-card-header>
 
                                 <div class="p-4">
@@ -228,7 +231,7 @@
 
                     <div class="text-end">
                         <button mat-raised-button class="warning-button" matStepperPrevious>Back</button>
-                        <button mat-raised-button class="login-button ml-4" (click)="savehqp(stdate, fordate,etdate,dgdate)">Save</button>
+                        <button mat-raised-button class="login-button ml-4" (click)="savehqp(stdate, fordate, etdate, dgdate)">Save</button>
                     </div>
                 </form>
             </mat-step>
@@ -705,7 +708,10 @@
                     <div class="text-end">
                         <button mat-raised-button class="warning-button" matStepperPrevious>Back</button>
                         <!-- <button mat-raised-button class="login-button ml-4" (click)="stepper.reset()">Reset</button> -->
-                        <button mat-raised-button class="login-button ml-4" (click)="issave(sdate,fourndate,ninendate,dischargedate)">Save</button>
+                        <!--Thanam 18-08-21-->
+                        <button mat-raised-button class="login-button ml-4" (click)="issave(conducteddate, sdate, fourndate, ninendate, dischargedate)">Save</button>
+                        <!--button mat-raised-button class="login-button ml-4" (click)="issave(sdate,fourndate,ninendate,dischargedate)">Save</button-->
+                        <!--********************-->
                     </div>
                 </form>
             </mat-step>

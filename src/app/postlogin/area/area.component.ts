@@ -23,6 +23,16 @@ export class AreaComponent implements OnInit {
   }
 
   add(crm: any) {
+    if(crm.value === '' || crm.value === undefined)
+    {
+      alert('Invalid Region Name');
+      return;
+    }
+    if(this.area === '' || this.area === undefined)
+    {
+      alert('Invalid Area Name');
+      return;
+    }
     let map = {
       areaId: this.finalList.length + 1,
       regionName: crm.value.cityName,
@@ -31,6 +41,7 @@ export class AreaComponent implements OnInit {
     }
     this.commonService.postmethod('area', map).subscribe((data) => {
       alert('Added successfully');
+      //debugger
       crm = '';
       this.area = '';
       this.getarea();

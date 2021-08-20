@@ -7,6 +7,16 @@ export const editvalues = {
     registertab : false
 }
 
+export const teamfilter = {
+    callstatus : '',
+    services: '',
+    call : '',
+    teamstatuss : 'notvisited',
+    selectedArea : '',
+    fromdate : '',
+    todate : ''
+}
+
 export const edituser = { 
     edit: {}
 }

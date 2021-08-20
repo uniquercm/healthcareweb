@@ -36,17 +36,16 @@ export class DashboardComponent implements OnInit {
 
   constructor(private commonService: CommonService) {
     loader.loading = true;
-    this.getreq(this.localvalues.companyId);
     this.getCompany();
+    this.getreq(this.localvalues.companyId);
   }
 
   ngOnInit(): void {
 
   }
 
-  getreq(url: any) { 
-    loader.loading = true;
-    this.commonService.getmethod('dash-board?companyId=' + url).subscribe((data) => {
+  getreq(url: any) {  
+    this.commonService.getmethodws('dash-board?companyId=' + url).subscribe((data) => {
       this.dashboarddetails = data.details;
       this.teamStatusDetailsList = data.details.teamStatusDetailsList;
       let array = [];
@@ -56,17 +55,20 @@ export class DashboardComponent implements OnInit {
       array.push(this.dashboarddetails.allUserTypeDetails.totalNurseUserNumber);
       array.push(this.dashboarddetails.allUserTypeDetails.totalReceptionistUserNumber);
       array.push(this.dashboarddetails.allUserTypeDetails.totalTeamUserNumber);
-      this.barChartData[0].data = array;
+      this.barChartData[0].data = array; 
       loader.loading = false;
     }, err => {
+      loader.loading = false;
       console.log(err);
     })
   }
 
   getCompany() {
-    this.commonService.getmethod('company').subscribe((data) => {
+    this.commonService.getmethodws('company').subscribe((data) => {
       this.companyarray = data.details;
+      
     }, err => {
+      loader.loading = false;
       console.log(err);
     })
   }

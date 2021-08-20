@@ -28,14 +28,14 @@ export class RegisterComponent implements OnInit {
   localvalues = JSON.parse(localStorage.getItem('currentUser') || '{}');
   datas: any;
 
-
+  //Thanam 20-08-21
   constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService,
     public datepipe: DatePipe) {
     this.form = this._formBuilder.group({
       requestType: ['', Validators.required],
       crm: ['', Validators.required],
       name: ['', Validators.nullValidator],
-      eid: ['', Validators.required],
+      eid: ['', Validators.nullValidator],
       mobileno: ['', [Validators.nullValidator, Validators.maxLength(10), Validators.minLength(10)]],
       age: ['', Validators.nullValidator],
       sex: ['', Validators.nullValidator],
@@ -56,6 +56,39 @@ export class RegisterComponent implements OnInit {
     }
 
   }
+
+/*
+  constructor(private router: Router, public _formBuilder: FormBuilder, private commonService: CommonService,
+    public datepipe: DatePipe) {
+    this.form = this._formBuilder.group({
+      requestType: ['', Validators.required],
+      crm: ['', Validators.required],
+      name: ['', Validators.nullValidator],
+      //Thanam 20-08-21
+      //eid: ['', Validators.required],
+      //************
+      mobileno: ['', [Validators.nullValidator, Validators.maxLength(10), Validators.minLength(10)]],
+      age: ['', Validators.nullValidator],
+      sex: ['', Validators.nullValidator],
+      dob: ['', Validators.nullValidator],
+      nationality: ['', Validators.required],
+      assignedDate: [new Date(), Validators.nullValidator]
+    });
+
+    if (editvalues.headerbuttclick) {
+      if (localStorage.getItem('patientedit') !== null) {
+        let value: any = JSON.parse(localStorage.getItem('patientedit') || '{}');
+        editvalues.patientid = value.patientid;
+        editvalues.scheduleid = value.scheduleid;
+        editvalues.drcallid = value.drcallid;
+      }
+    } else {
+      editvalues.patientid = 0;
+    }
+
+  }
+*/
+
 
   ngOnInit(): void {
     this.getnationality();
@@ -160,6 +193,7 @@ export class RegisterComponent implements OnInit {
   getdata() {
     this.commonService.getmethod('patient?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
       this.datas = data.details[0];
+      
       this.form.controls['requestType'].setValue(this.datas.requestId);
       this.form.controls['crm'].setValue(this.datas.crmNo);
       this.form.controls['name'].setValue(this.datas.patientName);
@@ -170,8 +204,9 @@ export class RegisterComponent implements OnInit {
       this.form.controls['sex'].setValue(this.datas.sex);
       this.form.controls['dob'].setValue(this.datas.dateOfBirth);
       this.form.controls['nationality'].setValue(this.datas.nationalityId);
+      
       this.form.controls['assignedDate'].setValue(this.datas.assignedDate === '0001-01-01T00:00:00' ? '' : this.datas.assignedDate);
- 
+
     }, err => {
       console.log(err);
     })
@@ -215,7 +250,10 @@ export class RegisterComponent implements OnInit {
         "requestId": this.form.value.requestType,
         "crmNo": this.form.value.crm,
         "eidNo": this.form.value.eid,
+        //Thanam-20-08-21
+        //"dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'dd-MM-yyyy'),
         "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
+        //************ */
         "age": Number(this.form.value.age),
         "sex": this.form.value.sex,
         "nationalityId": Number(this.form.value.nationality),
@@ -225,6 +263,7 @@ export class RegisterComponent implements OnInit {
         //Thanam-08-08-21
         //assignedDate: this.form.value.assignedDate
         assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'MM-dd-yyyy')
+        //assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'dd-MM-yyyy')
         //*********************** */
       }
 
@@ -255,7 +294,10 @@ export class RegisterComponent implements OnInit {
         "requestId": this.form.value.requestType,
         "crmNo": this.form.value.crm,
         "eidNo": this.form.value.eid,
+        //Thanam-20-08-21
+        //"dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'dd-MM-yyyy'),
         "dateOfBirth": this.datepipe.transform(this.form.value.dob.toLocaleString(), 'MM-dd-yyyy'),
+        //************ */
         "age": Number(this.form.value.age),
         "sex": this.form.value.sex,
         "address": "",
@@ -276,10 +318,10 @@ export class RegisterComponent implements OnInit {
         "isReception": false,
         //Thanam-08-08-21
         //assignedDate: this.form.value.assignedDate
+        //assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'dd-MM-yyyy')
         assignedDate: this.datepipe.transform(this.form.value.assignedDate.toLocaleString(), 'MM-dd-yyyy')
         //*********************** */
       }
-
 
       this.commonService.postmethod('patient', map).subscribe((data) => {
         alert('Saved Successfully');
@@ -291,11 +333,12 @@ export class RegisterComponent implements OnInit {
 
         localStorage.setItem('patientedit', JSON.stringify(editvalues));
 
-        if (this.localvalues.userType === 6) {
-          this.router.navigateByUrl('/apps/reception');
-        } else {
-          this.router.navigateByUrl('/apps/schedule');
-        }
+        // if (this.localvalues.userType === 6) {
+        //   this.router.navigateByUrl('/apps/reception');
+        // } else {
+        //   this.router.navigateByUrl('/apps/schedule');
+        // }
+        this.router.navigateByUrl('/apps/schedule');
       }, err => {
         console.log(err);
       })
