@@ -35,6 +35,7 @@ export class RegisterComponent implements OnInit {
       requestType: ['', Validators.required],
       crm: ['', Validators.required],
       name: ['', Validators.nullValidator],
+      eid: ['', Validators.nullValidator],
       mobileno: ['', [Validators.nullValidator, Validators.maxLength(10), Validators.minLength(10)]],
       age: ['', Validators.nullValidator],
       sex: ['', Validators.nullValidator],
@@ -87,6 +88,8 @@ export class RegisterComponent implements OnInit {
 
   }
 */
+
+
   ngOnInit(): void {
     this.getnationality();
     this.getreq();
@@ -190,6 +193,7 @@ export class RegisterComponent implements OnInit {
   getdata() {
     this.commonService.getmethod('patient?companyId=' + this.localvalues.companyId + '&patientId=' + editvalues.patientid + '&isDoctorCall=false&isNurseCall=false').subscribe((data) => {
       this.datas = data.details[0];
+      
       this.form.controls['requestType'].setValue(this.datas.requestId);
       this.form.controls['crm'].setValue(this.datas.crmNo);
       this.form.controls['name'].setValue(this.datas.patientName);
@@ -200,8 +204,9 @@ export class RegisterComponent implements OnInit {
       this.form.controls['sex'].setValue(this.datas.sex);
       this.form.controls['dob'].setValue(this.datas.dateOfBirth);
       this.form.controls['nationality'].setValue(this.datas.nationalityId);
+      
       this.form.controls['assignedDate'].setValue(this.datas.assignedDate === '0001-01-01T00:00:00' ? '' : this.datas.assignedDate);
- 
+
     }, err => {
       console.log(err);
     })
